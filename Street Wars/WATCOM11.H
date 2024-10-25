@@ -1,0 +1,12 @@
+#define __386__
+#define __NT__
+#define _WIN32
+#include "H\stdio.h"
+#include "H\stdlib.h"
+#include "H\malloc.h"
+#include "H\string.h"
+#include "H\time.h"
+#include "H\ctype.h"
+#include "H\direct.h"
+#include "H\process.h"
+#include "H\NT\WindowsX.h"

@@ -1,0 +1,15 @@
+c0dl.obj+
+vesavbe.obj+
+svgasdk.obj+
+_svgasdk.obj+
+_linsdk.obj+
+font8x16.obj+
+vgapal.obj+
+cpu.obj
+svga62.dll, svga62.map
+pmpro62.lib+
+wdir62.lib+
+noehwl.lib+
+import.lib+
+cwl.lib
+svga62.def

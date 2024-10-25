@@ -1,0 +1,10 @@
+SUPERVGA KIT v5.1: The SuperVGA Kit is a full
+ Software Development Kit for writing VESA
+ VBE 2.0 applications for DOS and Windows.
+ SciTech Software's 'WinDirect' technology
+ enables full screen VBE 2.0 applications
+ under Windows. New hybrid 16/32 technology
+ allows 32 bit VBE 2.0 code and 32 bit linear
+ framebuffer code to be used from normal 16
+ bit Windows Apps.
+

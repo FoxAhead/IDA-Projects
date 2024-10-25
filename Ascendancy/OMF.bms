@@ -1,0 +1,23 @@
+# Constructor (script 0.1a)
+#   based on the slightly different format and encryption from https://github.com/shlainn/game-file-formats/wiki/Constructor
+# script for QuickBMS http://quickbms.aluigi.org
+
+get NAME basename
+get EXT extension
+get FILE_SIZE asize
+
+Do
+
+  SavePos OFFSET
+  Get RECORD_TYPE byte
+  If RECORD_TYPE != 0x00
+    Get RECORD_LENGTH short
+    Print "%OFFSET|h%: RECORD_TYPE: %RECORD_TYPE|x1%, RECORD_LENGTH: %RECORD_LENGTH|1x%"
+    GoTo RECORD_LENGTH 0 SEEK_CUR
+  EndIf
+  If RECORD_TYPE == 0xF1
+    Break
+  EndIf
+
+While OFFSET < FILE_SIZE
+

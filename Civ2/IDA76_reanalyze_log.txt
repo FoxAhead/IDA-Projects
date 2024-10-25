@@ -1,0 +1,7 @@
+63EC34: name has been deleted: V_ScienceAdvisorClientRect_stru_63EC34
+63EF6C: name has been deleted: V_CurrCivIndex_dword_63EF6C
+63EF70: name has been deleted: V_CurrScrollPos_dword_63EF70
+63EAB8: name has been deleted: V_TimesFont_unk_63EAB8
+63EB10: name has been deleted: V_ScienceAdvisorGraphicsInfo_byte_63EB10
+6ABF98: name has been deleted: V_SideBarFontInfo_dword_6ABF98
+6AC090: name has been deleted: V_ShieldFontInfo_unk_6AC090

@@ -1,0 +1,279 @@
+
+TYPE INFORMATION LIBRARY CONTENTS
+Description: Watcom v11.0 - DDraw
+Flags      : 0003 compressed macro_table_present
+Base tils  : 
+Compiler   : Unknown
+sizeof(near*) = 4 sizeof(far*) = 6 near code, near data
+default_align = 0 sizeof(bool) = 1 sizeof(long)  = 4 sizeof(llong) = 8
+sizeof(enum) = 4 sizeof(int) = 4 sizeof(short) = 2
+sizeof(long double) = 0
+
+SYMBOLS
+00000004 00000003          _EXCEPTION_DISPOSITION ExceptionCollidedUnwind;
+00000004 00000000          _EXCEPTION_DISPOSITION ExceptionContinueExecution;
+00000004 00000001          _EXCEPTION_DISPOSITION ExceptionContinueSearch;
+00000004 00000002          _EXCEPTION_DISPOSITION ExceptionNestedException;
+00000101 00000000 extern   const char _IsTable[257];
+FFFFFFFF 00000000 extern   int __isascii(int);
+FFFFFFFF 00000000 extern   int __iscsym(int);
+FFFFFFFF 00000000 extern   int __iscsymf(int);
+FFFFFFFF 00000000          int __cdecl _abnormal_termination();
+FFFFFFFF 00000000          EXCEPTION_DISPOSITION __cdecl _except_handler(struct _EXCEPTION_RECORD *ExceptionRecord, void *EstablisherFrame, struct _CONTEXT *ContextRecord, void *DispatcherContext);
+FFFFFFFF 00000000          unsigned int __cdecl _exception_code();
+FFFFFFFF 00000000          void *__cdecl _exception_info();
+FFFFFFFF 00000000 extern   int _tolower(int);
+FFFFFFFF 00000000 extern   int _toupper(int);
+FFFFFFFF 00000000 extern   int isalnum(int);
+FFFFFFFF 00000000 extern   int isalpha(int);
+FFFFFFFF 00000000 extern   int isascii(int);
+FFFFFFFF 00000000 extern   int iscntrl(int);
+FFFFFFFF 00000000 extern   int isdigit(int);
+FFFFFFFF 00000000 extern   int isgraph(int);
+FFFFFFFF 00000000 extern   int isleadbyte(int);
+FFFFFFFF 00000000 extern   int islower(int);
+FFFFFFFF 00000000 extern   int isprint(int);
+FFFFFFFF 00000000 extern   int ispunct(int);
+FFFFFFFF 00000000 extern   int isspace(int);
+FFFFFFFF 00000000 extern   int isupper(int);
+FFFFFFFF 00000000 extern   int iswalnum(wint_t);
+FFFFFFFF 00000000 extern   int iswalpha(wint_t);
+FFFFFFFF 00000000 extern   int iswascii(wint_t);
+FFFFFFFF 00000000 extern   int iswcntrl(wint_t);
+FFFFFFFF 00000000 extern   int iswctype(wint_t, wctype_t);
+FFFFFFFF 00000000 extern   int iswdigit(wint_t);
+FFFFFFFF 00000000 extern   int iswgraph(wint_t);
+FFFFFFFF 00000000 extern   int iswlower(wint_t);
+FFFFFFFF 00000000 extern   int iswprint(wint_t);
+FFFFFFFF 00000000 extern   int iswpunct(wint_t);
+FFFFFFFF 00000000 extern   int iswspace(wint_t);
+FFFFFFFF 00000000 extern   int iswupper(wint_t);
+FFFFFFFF 00000000 extern   int iswxdigit(wint_t);
+FFFFFFFF 00000000 extern   int isxdigit(int);
+FFFFFFFF 00000000 extern   int tolower(int);
+FFFFFFFF 00000000 extern   int toupper(int);
+FFFFFFFF 00000000 extern   wint_t towlower(wint_t);
+FFFFFFFF 00000000 extern   wint_t towupper(wint_t);
+FFFFFFFF 00000000 extern   wctype_t wctype(const char *);
+
+TYPES
+00000004 typedef int BOOL;
+00000001 typedef unsigned __int8 BYTE;
+00000001 typedef char CCHAR;
+00000001 typedef char CHAR;
+00000004 typedef unsigned int DWORD;
+00000008 typedef unsigned __int64 DWORDLONG;
+00000004 typedef enum _EXCEPTION_DISPOSITION EXCEPTION_DISPOSITION;
+00000001 typedef BYTE FCHAR;
+00000004 typedef float FLOAT;
+00000004 typedef DWORD FLONG;
+00000002 typedef WORD FSHORT;
+00000004 typedef PVOID HANDLE;
+00000004 typedef int INT;
+00000002 typedef WORD LANGID;
+00000008 typedef union _LARGE_INTEGER LARGE_INTEGER;
+00000004 typedef DWORD LCID;
+00000004 typedef int LONG;
+00000008 typedef __int64 LONGLONG;
+00000004 typedef BOOL *LPBOOL;
+00000004 typedef BYTE *LPBYTE;
+00000004 typedef const CHAR *LPCCH;
+00000004 typedef CHAR *LPCH;
+00000004 typedef const CHAR *LPCSTR;
+00000004 typedef LPCSTR LPCTSTR;
+00000004 typedef const void *LPCVOID;
+00000004 typedef const WCHAR *LPCWCH;
+00000004 typedef const WCHAR *LPCWSTR;
+00000004 typedef DWORD *LPDWORD;
+00000004 typedef int *LPINT;
+00000004 typedef int *LPLONG;
+00000004 typedef CHAR *LPSTR;
+00000004 typedef LPSTR LPTCH;
+00000004 typedef LPSTR LPTSTR;
+00000004 typedef void *LPVOID;
+00000004 typedef WCHAR *LPWCH;
+00000004 typedef WORD *LPWORD;
+00000004 typedef WCHAR *LPWSTR;
+00000008 typedef struct _LUID LUID;
+00000004 typedef CHAR *NPSTR;
+00000004 typedef WCHAR *NWPSTR;
+00000004 typedef BOOL *PBOOL;
+00000004 typedef BYTE *PBYTE;
+00000004 typedef const CHAR *PCCH;
+00000004 typedef CHAR *PCH;
+00000004 typedef CHAR *PCHAR;
+00000004 typedef const CHAR *PCSTR;
+00000004 typedef const WCHAR *PCWCH;
+00000004 typedef const WCHAR *PCWSTR;
+00000004 typedef DWORD *PDWORD;
+00000004 typedef DWORDLONG *PDWORDLONG;
+00000004 typedef FLOAT *PFLOAT;
+00000004 typedef HANDLE *PHANDLE;
+00000004 typedef int *PINT;
+00000004 typedef LARGE_INTEGER *PLARGE_INTEGER;
+00000004 typedef PDWORD PLCID;
+00000004 typedef LONG *PLONG;
+00000004 typedef LONGLONG *PLONGLONG;
+00000004 typedef struct _LUID *PLUID;
+00000004 typedef SHORT *PSHORT;
+00000004 typedef CHAR *PSTR;
+00000004 typedef char *PSZ;
+00000004 typedef unsigned __int8 *PTBYTE;
+00000004 typedef LPSTR PTCH;
+00000004 typedef char *PTCHAR;
+00000004 typedef LPSTR PTSTR;
+00000004 typedef UCHAR *PUCHAR;
+00000004 typedef unsigned int *PUINT;
+00000004 typedef ULARGE_INTEGER *PULARGE_INTEGER;
+00000004 typedef ULONG *PULONG;
+00000004 typedef USHORT *PUSHORT;
+00000004 typedef void *PVOID;
+00000004 typedef WCHAR *PWCH;
+00000004 typedef WCHAR *PWCHAR;
+00000004 typedef WORD *PWORD;
+00000004 typedef WCHAR *PWSTR;
+00000002 typedef __int16 SHORT;
+00000001 typedef unsigned __int8 TBYTE;
+00000001 typedef char TCHAR;
+00000001 typedef unsigned __int8 UCHAR;
+00000004 typedef unsigned int UINT;
+00000008 typedef union _ULARGE_INTEGER ULARGE_INTEGER;
+00000004 typedef unsigned int ULONG;
+00000002 typedef unsigned __int16 USHORT;
+00000008 typedef LONGLONG USN;
+00000002 typedef wchar_t WCHAR;
+00000002 typedef unsigned __int16 WORD;
+FFFFFFFF struct _CONTEXT;
+00000004 enum _EXCEPTION_DISPOSITION {ExceptionContinueExecution = 0x0,ExceptionContinueSearch = 0x1,ExceptionNestedException = 0x2,ExceptionCollidedUnwind = 0x3,};
+FFFFFFFF struct _EXCEPTION_RECORD;
+00000008 union _LARGE_INTEGER {struct {DWORD LowPart;LONG HighPart;};struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E u;LONGLONG QuadPart;};
+00000008 struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E {DWORD LowPart;LONG HighPart;};
+00000008 struct _LUID {DWORD LowPart;LONG HighPart;};
+00000008 union _ULARGE_INTEGER {struct {DWORD LowPart;DWORD HighPart;};struct _ULARGE_INTEGER::$0354AA9C204208F00D0965D07BBE7FAC u;DWORDLONG QuadPart;};
+00000008 struct _ULARGE_INTEGER::$0354AA9C204208F00D0965D07BBE7FAC {DWORD LowPart;DWORD HighPart;};
+00000004 typedef char *__va_list[1];
+00000004 typedef __va_list va_list;
+00000002 typedef unsigned __int16 wchar_t;
+00000002 typedef wchar_t wctype_t;
+00000002 typedef wchar_t wint_t;
+
+MACROS
+ANYSIZE_ARRAY 1
+APIENTRY WINAPI
+APIPRIVATE 
+APPLICATION_ERROR_MASK 0x20000000
+AbnormalTermination _abnormal_termination
+BASETYPES 
+CALLBACK 
+CDECL 
+COM_NO_WINDOWS_H 
+CONST const
+DECLARE_HANDLE(€) typedef HANDLE €
+DECLSPEC_IMPORT 
+ERROR_SEVERITY_ERROR 0xC0000000
+ERROR_SEVERITY_INFORMATIONAL 0x40000000
+ERROR_SEVERITY_SUCCESS 0x00000000
+ERROR_SEVERITY_WARNING 0x80000000
+EXCEPTION_CONTINUE_EXECUTION -1
+EXCEPTION_CONTINUE_SEARCH 0
+EXCEPTION_EXECUTE_HANDLER 1
+FALSE 0
+FAR far
+GetExceptionCode _exception_code
+GetExceptionInformation (struct _EXCEPTION_POINTERS *)_exception_info
+IN 
+MAXLONGLONG (0x7fffffffffffffff)
+MAX_PATH 260
+NEAR near
+NTAPI 
+NTSYSAPI DECLSPEC_IMPORT
+NULL ((void *)0)
+OPTIONAL 
+OUT 
+PASCAL pascal
+RESTRICTED_POINTER 
+TEXT(€) __TEXT(€)
+TRUE 1
+UNALIGNED 
+VOID void
+WINAPI 
+WINAPIV 
+WINVER 0x0400
+_CNTRL 0x01
+_COMDEF_H_INCLUDED 
+_CRTAPI1 
+_CRTAPI2 
+_CRTIMP _WCRTLINK
+_CTYPE_H_INCLUDED 
+_DIGIT 0x20
+_DWORDLONG_ 
+_EXCPT_H_INCLUDED 
+_INC_EXCPT 
+_INC_WINDOWS 
+_LOWER 0x80
+_LPTSTR_DEFINED 
+_PRINT 0x08
+_PUNCT 0x04
+_SPACE 0x02
+_STDARG_H_INCLUDED 
+_TCHAR_DEFINED 
+_UPPER 0x40
+_VA_LIST_DEFINED 
+_WCDATA _WCNEAR
+_WCFAR 
+_WCHAR_DEFINED 
+_WCHAR_T_DEFINED 
+_WCHAR_T_DEFINED_ 
+_WCHUGE 
+_WCI86FAR 
+_WCI86HUGE 
+_WCI86NEAR 
+_WCINTERRUPT 
+_WCIRTLINK _WCRTLINK
+_WCNEAR 
+_WCRTLINK 
+_WCTYPE_T_DEFINED 
+_WCTYPE_T_DEFINED_ 
+_WCUNALIGNED 
+_WINDEF_ 
+_WINDOWS_ 
+_WINNT_ 
+_WMIRTLINK 
+_WMRTLINK 
+_WPIRTLINK _WPRTLINK
+_WPRTLINK 
+_XDIGT 0x10
+__DDRAW_INCLUDED__ 
+__TEXT(€) €
+__except _except
+__finally _finally
+__isascii(€) ((unsigned)(€)<=0x7f)
+__iscsym(€) (isalnum(€)||((€)=='_'))
+__iscsymf(€) (isalpha(€)||((€)=='_'))
+__leave _leave
+__try _try
+_cdecl 
+abnormal_termination _abnormal_termination
+cdecl 
+exception_code _exception_code
+exception_info (struct _EXCEPTION_POINTERS *)_exception_info
+far 
+isalnum(€) (_IsTable[(unsigned char)((€)+1)]&(_LOWER|_UPPER|_DIGIT))
+isalpha(€) (_IsTable[(unsigned char)((€)+1)]&(_LOWER|_UPPER))
+isascii(€) ((unsigned)(€)<=0x7f)
+iscntrl(€) (_IsTable[(unsigned char)((€)+1)]&_CNTRL)
+isdigit(€) (_IsTable[(unsigned char)((€)+1)]&_DIGIT)
+isgraph(€) ((_IsTable[(unsigned char)((€)+1)]&(_PRINT|_SPACE))==_PRINT)
+islower(€) (_IsTable[(unsigned char)((€)+1)]&_LOWER)
+isprint(€) (_IsTable[(unsigned char)((€)+1)]&_PRINT)
+ispunct(€) (_IsTable[(unsigned char)((€)+1)]&_PUNCT)
+isspace(€) (_IsTable[(unsigned char)((€)+1)]&_SPACE)
+isupper(€) (_IsTable[(unsigned char)((€)+1)]&_UPPER)
+isxdigit(€) (_IsTable[(unsigned char)((€)+1)]&_XDIGT)
+near 
+pascal 
+va_arg(€,) ((€)[0]+=((sizeof()+sizeof(int)-1)&~(sizeof(int)-1)),(*( *)((€)[0]-((sizeof()+sizeof(int)-1)&~(sizeof(int)-1)))))
+va_end(€) ((€)[0]=0,(void)0)
+va_start(€,) ((€)[0]=(char *)&+((sizeof()+sizeof(int)-1)&~(sizeof(int)-1)),(void)0)
+
+Total 45 symbols, 99 types, 117 macros

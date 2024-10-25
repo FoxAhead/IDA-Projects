@@ -1,0 +1,293 @@
+
+                            The SuperVGA Kit
+                            ----------------
+
+                               Version 5.0
+
+                              22 August 1994
+
+
+The SuperVGA Kit is a set of routines for working with SuperVGA
+video cards that have a VESA VBE compliant Video BIOS. This library was
+an offshoot from the development of the Universal VESA VBE, which is an
+installable TSR to provide VESA VBE video BIOS extensions for most
+SuperVGA cards. It is intended to show how to program the SuperVGA
+cards through the VESA VBE and uses some of the more powerful features
+that the latest standard include in your own software.
+
+This library supports many of the extended features of today's SuperVGA
+adapters, such as being able to separately set the read and write banks
+and support for extended page flipping. This is all done via the
+standard VESA VBE programming interface.
+
+NOTE: All source code is formatted with 4 space tabs, including the
+      assembly language source.
+
+NOTE: This library has '386 specific code in it, so it will _not_ work
+      with machines without a '286 or lower processor. Some of the code
+      such as the screen clearing code etc uses fast 32 bit string
+      instructions to run at full speed on new VESA VLB Local Bus
+      video cards.
+
+Using it in your own programs
+-----------------------------
+
+The SuperVGA test programs all call upon a single C library to access the
+SuperVGA using the VESA VBE programming interface. You can use this
+same library to provide SuperVGA support in your own applications, or
+you can take the source code for the library as a starting point and
+expanding on it from there.
+
+Assembling the source files
+---------------------------
+
+All of the assembler source files have to be assembled with Borland's TASM,
+since they are written using TASM's IDEAL mode. If you do not have TASM,
+you can simply link with the pre-assembled object files provided.
+
+Test programs
+-------------
+
+The library now has only one single test program, that presents a set of
+menus for testing all of the available video modes that the library
+supports (and your hardware supports).
+
+Note that the test program requires a VESA VBE compliant SuperVGA in
+order to run, so if your video card does not have the VESA VBE in the BIOS,
+then you will need to install the Universal VESA VBE before running it.
+
+VBETest
+-------
+
+The SuperVGA Kit also includes the executable and source code for the
+VBETEST.EXE program. This program is a stress test program for the VESA
+VBE interface to check the BIOS of your video card (or the installed version
+of UniVBE if you are using this) for conformance. It fully tests all the
+standard and advanced functions of the VESA VBE 1.2 interface, and will
+report any errors that it detects to the VBETEST.LOG file.
+
+Unfortunately many video BIOS'es pass the conformance test, however the results
+that are displayed visually on the screen (such as when doing wide virtual
+screens and scrolling) are not correct. If this is the case then you can
+consider that the BIOS has failed the conformance test. If you have a BIOS
+that does not pass the test, you might like to contact your video card's
+manufacturer and report the problems to them.
+
+PM/Lite library
+---------------
+
+The SuperVGA Kit uses the PM/Lite library, which should also have come
+as pre-compiled library files in the same archive. If you wish to compile
+it up for a different extender, you will need to obtain the source code
+archive (see the file INSTALL.ME for details).
+
+Global Variables Reference
+--------------------------
+
+int     maxx,maxy;          Maximum device coordinate values (res-1)
+long    maxcolor,defcolor;  Maximum and default color values
+int     maxpage;            Maximum video page number (numpages-1)
+int     bytesperline;       Bytes in a logical scanline
+int     bytesperpixel;      Bytes in a pixel (if > 1)
+bool    twobanks;           True if separate banks available
+int     memory;             Video memory available in Kb
+short   modeList[];         List of available video modes (USE THIS!)
+char    OEMString[];        OEM string from VBE
+
+The following two globals are only valid if the enableSpecialFeatures
+flag is set to TRUE when initSuperVGA() is called.
+
+bool    extendedflipping;   True if we have extended flipping
+bool    widedac;            True if wide dac is supported
+
+The following globals defint the pixel format information, and is used by the
+rgbColor() routine to build the correct pixel for the current display mode.
+You can however use it yourself to build scanline information in the desired
+format if you need to optimise these routines for speed.
+
+uchar   redMask,greenMask,blueMask;  Color channel mask values
+int     redPos,greenPos,bluePos;     Starting position of color channel bits
+int     redAdjust,greenAdjust;       Shift factors need to adjust to correct
+int     blueAdjust;                     postition in pixel image
+
+Function Reference
+------------------
+
+int initSuperVGA(bool enableSpecialFeatures);
+
+        Initialise the SuperVGA Kit. The enableSpecialFeatures flag is
+        used to enable the detection of the 8 bit wide RAMDAC and SuperVGA
+        page flipping. In order to detect this, a SuperVGA video mode must
+        be started, so the screen will be cleared. Leaving this flag
+        false will not change the current video mode.
+
+        Returns the packed BCD version number for the VBE interface
+        detected, or 0 if none is present. For VBE 1.2 this is 0x102, for
+        VBE 2.0 this will be 0x200.
+
+bool setSuperVGAMode(int mode);
+
+        Set the specified video mode, given the internal VBE mode number.
+        DONT pass old style VBE mode numbers to this routine (ie: 0x101
+        for 640x480x256), although the will still work, the extensible
+        method is to search through the list of available video modes
+        for the one that has the desired resolution and color depth. This
+        will allow you code to work with all custom video resolutions
+        provided by different OEM VBE drivers (like UniVBE/Pro). Have a
+        look at the code in the HELLOVBE.C file that demonstrates how
+        to start any video mode given a user specified resolution.
+
+        The display page is always cleared to black when this routine is
+        called.
+
+        Returns FALSE is the mode could not be set correctly.
+
+void restoreMode(void);
+
+        Restores the previous video mode active befor the setSuperVGAMode
+        routine was called. Also correctly restores the VGA 50 line mode
+        if it was previously active.
+
+bool getSuperVGAModeInfo(int mode,int *xres,int *yres,int *bytesperline,
+    int *bitsperpixel,int *memmodel,int *maxpage,long *pagesize);
+
+        Returns the video mode information for the specified VBE internal
+        video mode number. The mode number must be valid, or this routine
+        will return FALSE. Check the modeList[] array which contains the
+        list of available video modes that you can use.
+
+bool setSuperVGADisplayStart(int x,int y);
+
+        Sets the CRTC display starting address to the specified value. You
+        can use this routine to implement hardware scrolling (if you wish
+        to set up a wide virtual screen, you will need to call VBE function
+        07h yourself, as we dont currently have this function implemented
+        in the SuperVGA Kit).
+
+        To perform double buffered animation, use the setActivePage() and
+        setVisualPage() routines instead.
+
+        Returns FALSE if the value could not be set.
+
+bool set8BitPalette(void);
+
+        This function enables the 8 bit wide palette if available and
+        returns TRUE. If an 8 bit wide palette is not available, this
+        routine returns FALSE and the palette width is unchanged.
+
+bool set6BitPalette(void);
+
+        This function restores the default VGA style 6 bit palette.
+
+void setPalette(int start, int num, palette *palbuf);
+
+        This function set the specified palette entries, by calling the
+        video BIOS. Eventually this will become a native VBE function
+        in VBE 2.0, and will eliminate all the problems associated with
+        snow.
+
+        The buffer is expected to be in the correct format, which will
+        be an array of 'palette' structures. If the palette is currently
+        in the default 6 bit VGA mode, this routine expects the values to
+        be 6 bits wide. If it is in an 8 bit palette mode, then the values
+        should be 8 bits wide (and hence you will need to do the
+        conversion yourself).
+
+void getPalette(int start, int num, palette *palbuf);
+
+        This function reads the current value of the paletet and stores
+        it in the buffer.
+
+long rgbColor(uchar r,uchar g,uchar b);
+
+        Packs a set of RGB values into a color value for passing to the
+        primitive drawing routines that is appropriate for the current
+        video mode. This routine is intended to work with RGB video modes
+        such as the 15, 16, 24 and 32 bits per pixel modes (in 8 bit modes
+        it will packed it into a simple 2:3:2 style pixel, so you can set
+        up your own pseudo RGB palette if you so desire).
+
+        You should use this routine to convert all color values to ensure
+        that they work correctly on the different types of direct color
+        video modes available.
+
+void writeText(int x,int y,char *str,long color);
+
+        Writes the text sting at the location x,y in the standard VGA
+        8x16 VGA font, and the specified color. The background between
+        the text is not erased.
+
+void setActivePage(int page);
+
+        Sets the currently active video page for output. Used to implement
+        SuperVGA double buffering for smooth animation.
+
+void setVisualPage(int page);
+
+        Sets the currently visible display page. Used to implement SuperVGA
+        double buffering for smooth animation.
+
+void setBank(int bank);
+
+        Set the current read/write bank values to the same location.
+
+void setReadBank(int bank);
+
+        Sets the read bank value to a different location. If you wish to
+        use separate read/write banks, you will need to first set the
+        read/write banks to the write bank location with the setBank()
+        routine above, then call this routine to change the read bank
+        to a different location.
+
+void putPixel(int x,int y,long color);
+
+        Plots a pixel at the specified (x,y) location in the specified
+        color. The color value MUST be in the correct format for the
+        current video mode (use rgbColor() to pack HiColor and TrueColor
+        RGB values). The pixel is plotted on the currently active
+        display page (which may possibly be hidden from view).
+
+void clear(long color);
+
+        Clears the currently active display page to the specified color.
+        The color value MUST be in the correct format for the current video
+        mode (use rgbColor() to pack HiColor and TrueColor RGB values).
+
+void line(int x1,int y1,int x2,int y2,long color);
+
+        Draws a line from the point (x1,y1) to (x2,y2) in the specified
+        color. The color value MUST be in the correct format for the
+        current video mode (use rgbColor() to pack HiColor and TrueColor
+        RGB values). The line is drawn on the currently active
+        display page (which may possibly be hidden from view).
+
+Where to get the latest version
+-------------------------------
+
+You can probably get the latest version of the package from Simtel20 or
+garbo (and their mirrors):
+
+    oak.oakland.edu:    pub/msdos/graphics/svgakt??.zip
+    garbo.uwasa.fi:     pc/graphics/svgakt??.zip
+
+If you have access to CompuServe, you can download the file from the
+IBMPRO VESA file library (12) as the file svkt??.zip (CompuServe has
+restrictive file naming conventions).
+
+Corrections, updates and queries
+--------------------------------
+
+If you have any corrections or updates to the code in this package, or
+you have any questions you would like asked, feel free to contact me
+through one of the following methods.
+
+Internet:       rcskb@minyos.xx.rmit.edu.au
+Compuserve:     100237,2213
+Fax:            +61 3 690 2137
+
+Snail Mail:     Kendall Bennett
+                SciTech Software Australia
+                Unit 5, 106 Southbank Boulevard
+                South Melbourne 3205
+                AUSTRALIA
+

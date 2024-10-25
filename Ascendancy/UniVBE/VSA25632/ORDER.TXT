@@ -1,0 +1,220 @@
+
+
+				ORDER FORM
+
+			VSA256 GRAPHICS LIBRARY
+
+				VERSION 3.2
+
+
+
+-------------------- REGISTRATION FOR PERSONAL USE ---------simtel--------
+
+To register your personal use of the VSA256 Graphics Library, please fill
+out the following information and send with a check or money order for
+$29.00 to:
+
+			Spyro Gumas
+			7910 W. Brookridge Drive
+			Middletown, MD 21769
+
+You will receive a program disk and printed documentation for the VSA256 
+Graphics Library Version 3.2, AND:
+
+	-       Royalty Free Use of VSA256 in Your Programs!
+	-       3D Graphics Library!    
+	-       Graphics Mouse Library!
+	-       Joystick Library & Source Code!
+	-       Image Processing Library & Source Code!
+	-       32 Bit WATCOM C Compiler compatible libraries!
+	-       On line support through CompuServe!
+	-       Printed Users Manual and Software Disk!
+	-       Half Price upgrade to next version!
+
+
+
+Diskette with programs and documentation files ...... $29          ______
+
+Diskette format (choose one)         5.25" disk ______   3.5" disk ______ 
+
+Act Now!  Register for the TIFF256 Graphics Library Extensions with 
+this order for only $15 more, and get the TIFF256 Program disk and printed 
+documentation, Big savings!         
+							___x  $15  ______
+
+
+(Please add $5.00 per package for overseas orders.)                ______
+
+Maryland residents add 5.00% sales tax.                            ______
+
+					 Total enclosed            ______
+
+
+
+
+				Page: 1
+					 
+-------------------- SITE LICENSE FOR BUSINESS USE ---------------------
+
+In addition to personal use, you can get a Site License* for business use 
+of VSA256 Graphics Library.  The Site License can be purchased at the 
+following rates:
+
+
+ 1 to  9 computers ..... at $29 each    # computers ___x $29     ______
+
+10 to 24 computers ..... at $26 each    # computers ___x $26     ______
+
+25 to 49 computers ..... at $21 each    # computers ___x $21     ______
+
+50 to 99 computers ..... at $15 each    # computers ___x $15     ______
+
+100 or more computers .. $1500 one time fee                      ______
+
+Diskette format (choose one)   ____ 5.25" disk ____ 3.5" disk 
+
+Extra program disk & documentation with purchase of site licenses of 2 
+or more available at $7.00 each.                      ___x  $7   ______
+
+Act Now!  Register for the TIFF256 Graphics Library Extensions with 
+this order for only $15 more per computer, and get the TIFF256 Program
+disk and printed documentation, Big savings!         
+						      ___x  $15  ______
+
+
+(Please add $5.00 per package for overseas orders.)              ______
+
+Maryland residents add 5.00% sales tax.                          ______
+
+					 Total enclosed          ______
+
+
+
+
+
+*Includes a program disk and printed documentation for the VSA256 
+Graphics Library Version 3.2. 
+
+
+				
+
+
+
+
+
+
+
+
+
+				
+				Page: 2
+					 
+------------------------ INFORMATION ABOUT YOU ------------------------
+
+Name & Title      __________________________________     Date: ________
+
+Company:          __________________________________
+
+Address:          __________________________________
+
+City,State & Zip: __________________________________
+
+Country:          __________________________________
+
+Phone Number:     __________________________________
+
+Your Application: __________________________________
+
+CompuServe ID:    __________________________________
+
+Internet Address: __________________________________
+
+Where Did First Hear of VSA256: ____________________
+(Important for Updating Obsolete Sources)
+
+
+
+-------------------- INFORMATION ABOUT YOUR SYSTEM --------------------
+
+Type of Computer (286, 386sx, etc):  _________ 
+
+Processor Speed (16Mhz, 33Mhz etc.): _________
+
+Coprocessor ?:                       _________
+
+Amount of RAM (640KB, 4MB, etc.):    _________
+
+Hard Disk Size (20MB, 100 MB, etc.): _________
+
+Floppy Drives (check applicable):    ___360kB 5.25" ___1.2MB 5.25"
+
+				     ___720kB 3.5"  ___1.4MB 3.5"
+
+Make and Model of Video Adapter:     _____________________________
+
+Amount of RAM in Video Adapter:      _____________________________
+
+Make and Model of Video Monitor:     _____________________________
+
+Compiler Language and Version(!):    _____________________________
+(Very Very Important!)
+
+Do You Do Windows?:                  _________
+
+
+				Page: 3
+					 
+____________________________ WISH LIST ________________________________
+
+Please Rank the following in order of importance to you. 
+(1 highest, 13 lowest)
+
+Graphical User Interface (GUI) Support  _____
+
+3-D Graphics Drawing Primitives         _____
+
+3-D Graphics Transformations Support    _____
+
+Fast Vector Drawing Speed               _____
+
+Fast Polygon Drawing Speed              _____
+
+Fast Raster Drawing Speed               _____
+
+Compressed TIFF File Support            _____
+
+Support for all Memory Models           _____
+
+Smaller Code Size                       _____
+
+Window support                          _____
+
+PostScript Output Support               _____
+
+Mouse Support                           _____
+
+Windows DLL code                        _____
+
+	
+	TELL ME WHAT IT IS THAT YOU WOULD LIKE VERSION 4.0 TO DO
+		(Take up as much space as necessary)
+
+
+
+
+
+
+						 
+						 
+						 
+						 
+						 
+						 
+						 
+				
+						 
+						 
+						 
+						 
+						 
+				Page: 4

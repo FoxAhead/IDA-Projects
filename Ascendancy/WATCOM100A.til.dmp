@@ -1,0 +1,778 @@
+
+TYPE INFORMATION LIBRARY CONTENTS
+Description: Watcom C++ v10.0a (32bit MSDOS)
+Flags      : 0103 compressed macro_table_present sizeof_long_double
+Base tils  : 
+Compiler   : Watcom C++
+sizeof(near*) = 4 sizeof(far*) = 6 near code, near data, fastcall
+default_align = 0 sizeof(bool) = 1 sizeof(long)  = 4 sizeof(llong) = 8
+sizeof(enum) = 4 sizeof(int) = 4 sizeof(short) = 2
+sizeof(long double) = 8
+
+SYMBOLS
+00000004 00000004          MACRO_ACCESS ACCESS_RD;
+00000004 00000002          MACRO_ACCESS ACCESS_WR;
+00000004 00001000          MACRO_BUFSIZ BUFSIZ;
+00000004 00000064          MACRO_CLK CLK_TCK;
+00000004 00000064          MACRO_CLOCKS CLOCKS_PER_SEC;
+00000004 00000001          MACRO_DOMAIN DOMAIN;
+00000004 00000000          MACRO_MODE DOS_MODE;
+00000004 FFFFFFFF          MACRO_EOF EOF;
+00000004 000000FF          MACRO_EXIT EXIT_FAILURE;
+00000004 00000000          MACRO_EXIT EXIT_SUCCESS;
+00000004 00000050          MACRO_MAX FILENAME_MAX;
+00000004 00000014          MACRO_MAX FOPEN_MAX;
+FFFFFFFF 00000000          unsigned __int16 __fastcall FP_SEG(void far *);
+00000004 00000000          MACRO_OK F_OK;
+00000004 00000010          $D229372A3490280A1D79088C14D8B580 INTR_AF;
+00000004 00000001          $D229372A3490280A1D79088C14D8B580 INTR_CF;
+00000004 00000400          $D229372A3490280A1D79088C14D8B580 INTR_DF;
+00000004 00000200          $D229372A3490280A1D79088C14D8B580 INTR_IF;
+00000004 00000800          $D229372A3490280A1D79088C14D8B580 INTR_OF;
+00000004 00000004          $D229372A3490280A1D79088C14D8B580 INTR_PF;
+00000004 00000080          $D229372A3490280A1D79088C14D8B580 INTR_SF;
+00000004 00000100          $D229372A3490280A1D79088C14D8B580 INTR_TF;
+00000004 00000040          $D229372A3490280A1D79088C14D8B580 INTR_ZF;
+00000004 0000000D          MACRO_L L_tmpnam;
+00000004 00000001          MACRO_MB MB_CUR_MAX;
+00000004 00000000          MACRO_NULL NULL;
+00000004 00000014          MACRO_MAX OPEN_MAX;
+00000004 00000001          MACRO_MODE OS2_MODE;
+00000004 00000003          MACRO_OVERFLOW OVERFLOW;
+00000004 00000010          MACRO_O O_APPEND;
+00000004 00000200          MACRO_O O_BINARY;
+00000004 00000020          MACRO_O O_CREAT;
+00000004 00000400          MACRO_O O_EXCL;
+00000004 00000080          MACRO_O O_NOINHERIT;
+00000004 00000000          MACRO_O O_RDONLY;
+00000004 00000002          MACRO_O O_RDWR;
+00000004 00000100          MACRO_O O_TEXT;
+00000004 00000040          MACRO_O O_TRUNC;
+00000004 00000001          MACRO_O O_WRONLY;
+00000004 0000008F          MACRO_MAX PATH_MAX;
+00000004 00000006          MACRO_PLOSS PLOSS;
+00000004 00007FFF          MACRO_RAND RAND_MAX;
+00000004 00000004          MACRO_OK R_OK;
+00000004 00000001          MACRO_SEEK SEEK_CUR;
+00000004 00000002          MACRO_SEEK SEEK_END;
+00000004 00000000          MACRO_SEEK SEEK_SET;
+00000004 00000002          MACRO_DOMAIN SING;
+00000004 00000003          MACRO_FILENO STDAUX_FILENO;
+00000004 00000002          MACRO_FILENO STDERR_FILENO;
+00000004 00000000          MACRO_FILENO STDIN_FILENO;
+00000004 00000001          MACRO_FILENO STDOUT_FILENO;
+00000004 00000004          MACRO_FILENO STDPRN_FILENO;
+00000004 00000040          MACRO_S S_IEXEC;
+00000004 00002000          MACRO_S S_IFCHR;
+00000004 00004000          MACRO_S S_IFDIR;
+00000004 0000F000          MACRO_S S_IFMT;
+00000004 00008000          MACRO_S S_IFREG;
+00000004 00000100          MACRO_S S_IREAD;
+00000004 00000020          MACRO_S S_IRGRP;
+00000004 00000004          MACRO_S S_IROTH;
+00000004 00000100          MACRO_S S_IRUSR;
+00000004 00000038          MACRO_S S_IRWXG;
+00000004 00000007          MACRO_S S_IRWXO;
+00000004 000001C0          MACRO_S S_IRWXU;
+00000004 00000400          MACRO_S S_ISGID;
+00000004 00000800          MACRO_S S_ISUID;
+00000004 00000200          MACRO_S S_ISVTX;
+00000004 00000010          MACRO_S S_IWGRP;
+00000004 00000002          MACRO_S S_IWOTH;
+00000004 00000080          MACRO_S S_IWRITE;
+00000004 00000080          MACRO_S S_IWUSR;
+00000004 00000008          MACRO_S S_IXGRP;
+00000004 00000001          MACRO_S S_IXOTH;
+00000004 00000040          MACRO_S S_IXUSR;
+00000004 00000005          MACRO_TLOSS TLOSS;
+00000004 000044A8          MACRO_TMP TMP_MAX;
+00000004 00000004          MACRO_OVERFLOW UNDERFLOW;
+00000004 00000002          MACRO_OK W_OK;
+00000004 00000001          MACRO_OK X_OK;
+00000004 00000080          MACRO__READ _APPEND;
+00000004 00000020          MACRO__A _A_ARCH;
+00000004 00000002          MACRO__A _A_HIDDEN;
+00000004 00000000          MACRO__A A_NORMAL;
+00000004 00000001          MACRO__A _A_RDONLY;
+00000004 00000010          MACRO__A _A_SUBDIR;
+00000004 00000004          MACRO__A _A_SYSTEM;
+00000004 00000008          MACRO__A _A_VOLID;
+00000004 00000008          MACRO__READ _BIGBUF;
+00000004 00000040          MACRO__BINARY _BINARY;
+00000004 00001000          MACRO__BINARY _DIRTY;
+00000004 00004000          MACRO__BINARY _DYNAMIC;
+00000004 00000010          MACRO__READ _EOF;
+00000004 00000001          MACRO__USEDENTRY _FREEENTRY;
+00000004 00000002          MACRO__HARDERR _HARDERR_ABORT;
+00000004 00000003          MACRO__HARDERR _HARDERR_FAIL;
+00000004 00000000          MACRO__HARDERR HARDERR_IGNORE;
+00000004 00000001          MACRO__HARDERR _HARDERR_RETRY;
+00000004 00000002          MACRO__HEAPOK _HEAPBADBEGIN;
+00000004 00000003          MACRO__HEAPBADNODE _HEAPBADNODE;
+00000004 00000005          MACRO__HEAPBADPTR _HEAPBADPTR;
+00000004 00000001          MACRO__HEAPOK _HEAPEMPTY;
+00000004 00000004          MACRO__HEAPBADNODE _HEAPEND;
+00000004 00000000          MACRO__HEAPOK HEAPOK;
+00000008 0000000000000000 extern   const double HugeValue;
+00000004 00000100          MACRO__BINARY _IOFBF;
+00000004 00000200          MACRO__BINARY _IOLBF;
+00000004 00000400          MACRO__BINARY _IONBF;
+00000004 00002000          MACRO__BINARY _ISTTY;
+00000004 00000082          MACRO__MAX _MAX_DIR;
+00000004 00000003          MACRO__MAX _MAX_DRIVE;
+00000004 00000005          MACRO__MAX _MAX_EXT;
+00000004 00000009          MACRO__MAX _MAX_FNAME;
+00000004 0000000D          MACRO__MAX _MAX_NAME;
+00000004 00000090          MACRO__MAX _MAX_PATH;
+00000004 00000093          MACRO__MAX _MAX_PATH2;
+00000004 00000014          MACRO__NFILES _NFILES;
+00000004 00000001          MACRO__READ _READ;
+00000004 00000020          MACRO__READ _SFERR;
+00000004 00000800          MACRO__BINARY _TMPFIL;
+00000004 00000004          MACRO__READ _UNGET;
+00000004 00000000          MACRO__USEDENTRY USEDENTRY;
+00000004 00000002          MACRO__READ _WRITE;
+00000004 000003E8          MACRO___WATCOMC __WATCOMC__;
+FFFFFFFF 00000000 extern   void __fastcall _assert(int, char *, char *, int);
+FFFFFFFF 00000000 extern   void near *__fastcall _brk(unsigned int new_brk_value);
+FFFFFFFF 00000000 extern   void *__fastcall _doalloca(size_t size);
+FFFFFFFF 00000000 extern   int __fastcall _fmemneed(size_t);
+FFFFFFFF 00000000 extern   int *__fastcall _get_doserrno_ptr();
+FFFFFFFF 00000000 extern   volatile int *__fastcall _get_errno_ptr();
+00000000 00000000 extern   FILE _iob[];
+00000004 00000000 extern   unsigned int _minreal;
+FFFFFFFF 00000000 extern   int __fastcall _nmemneed(size_t);
+00000004 00000000 extern   unsigned int _win_alloc_flags;
+00000004 00000000 extern   unsigned int _win_realloc_flags;
+FFFFFFFF 00000000 extern   int __fastcall access(const char *path, int mode);
+00000004 00000000 extern   unsigned int amblksiz;
+FFFFFFFF 00000000 extern   char *__fastcall asctime(const struct tm *timeptr, char *buf);
+FFFFFFFF 00000000 extern   int bprintf(char *buf, unsigned int bufsize, const char *fmt, ...);
+FFFFFFFF 00000000 extern   void __fastcall chain_intr(void (__fastcall __interrupt far *handler)());
+FFFFFFFF 00000000 extern   char *__fastcall ctime(const time_t *timer, char *buf);
+FFFFFFFF 00000000 extern   void disable(void);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_allocmem(unsigned int size, unsigned __int16 *seg);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_close(int handle);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_commit(int handle);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_creat(const char *path, unsigned int attr, int *handle);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_creatnew(const char *path, unsigned int attr, int *handle);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_findclose(struct find_t *buf);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_findfirst(const char *path, unsigned int attr, struct find_t *buf);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_findnext(struct find_t *buf);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_freemem(unsigned __int16 seg);
+FFFFFFFF 00000000 extern   void __fastcall dos_getdate(struct dosdate_t *date);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_getdiskfree(unsigned int drive, struct _diskfree_t *diskspace);
+FFFFFFFF 00000000 extern   void __fastcall dos_getdrive(unsigned int *drive);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_getfileattr(const char *path, unsigned int *attr);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_getftime(int handle, unsigned __int16 *date, unsigned __int16 *time);
+FFFFFFFF 00000000 extern   void __fastcall dos_gettime(struct dostime_t *time);
+FFFFFFFF 00000000 extern   void (__fastcall __interrupt far *__fastcall dos_getvect(int intnum))();
+FFFFFFFF 00000000 extern   void __fastcall dos_keep(unsigned int retcode, unsigned int memsize);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_open(const char *path, unsigned int mode, int *handle);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_read(int handle, void far *buf, unsigned int count, unsigned int *bytes);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_setblock(unsigned int size, unsigned __int16 seg, unsigned int *maxsize);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_setdate(struct dosdate_t *date);
+FFFFFFFF 00000000 extern   void __fastcall dos_setdrive(unsigned int drivenum, unsigned int *drives);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_setfileattr(const char *path, unsigned int attr);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_setftime(int handle, unsigned __int16 date, unsigned __int16 time);
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_settime(struct dostime_t *time);
+FFFFFFFF 00000000 extern   void __fastcall dos_setvect(int intnum, void (__fastcall __interrupt far *handler)());
+FFFFFFFF 00000000 extern   unsigned int __fastcall dos_write(int handle, const void far *buf, unsigned int count, unsigned int *bytes);
+FFFFFFFF 00000000 extern   int __fastcall dup(int handle);
+FFFFFFFF 00000000 extern   char *__fastcall ecvt(double val, int ndig, int *dec, int *sign);
+FFFFFFFF 00000000 extern   void enable(void);
+FFFFFFFF 00000000 extern   void __fastcall exit(int status);
+FFFFFFFF 00000000 extern   void *__fastcall expand(void *ptr, size_t size);
+FFFFFFFF 00000000 extern   void far *__fastcall fcalloc(size_t n, size_t size);
+FFFFFFFF 00000000 extern   char *__fastcall fcvt(double val, int ndig, int *dec, int *sign);
+FFFFFFFF 00000000 extern   void far *__fastcall fexpand(void far *ptr, size_t size);
+FFFFFFFF 00000000 extern   void __fastcall ffree(void far *ptr);
+FFFFFFFF 00000000 extern   int fheapchk(void);
+FFFFFFFF 00000000 extern   void fheapgrow(void);
+FFFFFFFF 00000000 extern   int fheapmin(void);
+FFFFFFFF 00000000 extern   int __fastcall fheapset(unsigned int fill);
+FFFFFFFF 00000000 extern   int fheapshrink(void);
+FFFFFFFF 00000000 extern   int __fastcall fheapwalk(struct _heapinfo *entry);
+FFFFFFFF 00000000 extern   void far *__fastcall fmalloc(size_t size);
+FFFFFFFF 00000000 extern   void far *__fastcall fmemccpy(void far *s1, const void far *s2, int c, size_t n);
+FFFFFFFF 00000000 extern   void far *__fastcall fmemchr(const void far *s, int c, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall fmemcmp(const void far *s1, const void far *s2, size_t n);
+FFFFFFFF 00000000 extern   void far *__fastcall fmemcpy(void far *s1, const void far *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall fmemicmp(const void far *s1, const void far *s2, size_t n);
+FFFFFFFF 00000000 extern   void far *__fastcall fmemmove(void far *s1, const void far *s2, size_t n);
+FFFFFFFF 00000000 extern   void far *__fastcall fmemset(void far *s, int c, size_t n);
+00000004 00000000 extern   int fmode;
+FFFFFFFF 00000000 extern   size_t __fastcall fmsize(void far *ptr);
+FFFFFFFF 00000000 extern   void far *__fastcall frealloc(void far *ptr, size_t size);
+FFFFFFFF 00000000 extern   unsigned int __fastcall freect(size_t size);
+FFFFFFFF 00000000 extern   FILE *__fastcall fsopen(const char *filename, const char *mode, int shflag);
+FFFFFFFF 00000000 extern   int __fastcall fstat(int, struct _stat *);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrcat(char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrchr(const char far *s, int c);
+FFFFFFFF 00000000 extern   int __fastcall fstrcmp(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrcpy(char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   size_t __fastcall fstrcspn(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrdup(const char far *string);
+FFFFFFFF 00000000 extern   int __fastcall fstricmp(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   size_t __fastcall fstrlen(const char far *s);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrlwr(char far *string);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrncat(char far *s1, const char far *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall fstrncmp(const char far *s1, const char far *s2, size_t n);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrncpy(char far *s1, const char far *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall fstrnicmp(const char far *s1, const char far *s2, size_t n);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrnset(char far *string, int c, size_t len);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrpbrk(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrrchr(const char far *s, int c);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrrev(char far *string);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrset(char far *string, int c);
+FFFFFFFF 00000000 extern   size_t __fastcall fstrspn(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrstr(const char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrtok(char far *s1, const char far *s2);
+FFFFFFFF 00000000 extern   char far *__fastcall fstrupr(char far *string);
+FFFFFFFF 00000000 extern   char *__fastcall fullpath(char *buf, const char *path, size_t size);
+FFFFFFFF 00000000 extern   char *__fastcall gcvt(double val, int ndig, char *buf);
+FFFFFFFF 00000000 extern   unsigned int __fastcall getdiskfree(unsigned int drive, struct _diskfree_t *diskspace);
+FFFFFFFF 00000000 extern   unsigned int getdrive(void);
+FFFFFFFF 00000000 extern   struct tm *__fastcall gmtime(const time_t *timer, struct tm *tmbuf);
+FFFFFFFF 00000000 extern   int __fastcall grow_handles(int new_count);
+FFFFFFFF 00000000 extern   void __fastcall harderr(int (__fastcall __far far *func)(unsigned int deverr, unsigned int errcode, unsigned int far *devhdr));
+FFFFFFFF 00000000 extern   void __fastcall hardresume(int result);
+FFFFFFFF 00000000 extern   void __fastcall hardretn(int error);
+FFFFFFFF 00000000 extern   int __fastcall hdopen(int handle, int mode);
+FFFFFFFF 00000000 extern   int heapchk(void);
+FFFFFFFF 00000000 extern   int __fastcall heapenable(int enabled);
+FFFFFFFF 00000000 extern   void heapgrow(void);
+FFFFFFFF 00000000 extern   int heapmin(void);
+FFFFFFFF 00000000 extern   int __fastcall heapset(unsigned int fill);
+FFFFFFFF 00000000 extern   int heapshrink(void);
+FFFFFFFF 00000000 extern   int __fastcall heapwalk(struct _heapinfo *entry);
+FFFFFFFF 00000000 extern   char *__fastcall itoa(int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   struct tm *__fastcall localtime(const time_t *timer, struct tm *tmbuf);
+FFFFFFFF 00000000 extern   unsigned int __fastcall lrotl(unsigned int value, unsigned int shift);
+FFFFFFFF 00000000 extern   unsigned int __fastcall lrotr(unsigned int value, unsigned int shift);
+FFFFFFFF 00000000 extern   int __fastcall lseek(int handle, int offset, int origin);
+FFFFFFFF 00000000 extern   char *__fastcall ltoa(int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   void __fastcall makepath(char *path, const char *drive, const char *dir, const char *fname, const char *ext);
+FFFFFFFF 00000000 extern   double __fastcall matherr(struct exception *);
+FFFFFFFF 00000000 extern   size_t memavl(void);
+FFFFFFFF 00000000 extern   int __fastcall memicmp(const void *s1, const void *s2, size_t n);
+FFFFFFFF 00000000 extern   size_t memmax(void);
+FFFFFFFF 00000000 extern   size_t __fastcall msize(void *ptr);
+FFFFFFFF 00000000 extern   void near *__fastcall ncalloc(size_t n, size_t size);
+FFFFFFFF 00000000 extern   void near *__fastcall nexpand(void near *ptr, size_t size);
+FFFFFFFF 00000000 extern   void __fastcall nfree(void near *ptr);
+FFFFFFFF 00000000 extern   int nheapchk(void);
+FFFFFFFF 00000000 extern   void nheapgrow(void);
+FFFFFFFF 00000000 extern   int nheapmin(void);
+FFFFFFFF 00000000 extern   int __fastcall nheapset(unsigned int fill);
+FFFFFFFF 00000000 extern   int nheapshrink(void);
+FFFFFFFF 00000000 extern   int __fastcall nheapwalk(struct _heapinfo *entry);
+FFFFFFFF 00000000 extern   void near *__fastcall nmalloc(size_t size);
+FFFFFFFF 00000000 extern   size_t __fastcall nmsize(void near *ptr);
+FFFFFFFF 00000000 extern   void near *__fastcall nrealloc(void near *ptr, size_t size);
+FFFFFFFF 00000000 extern   int __fastcall os_handle(int handle);
+00000001 00000000 extern   unsigned __int8 osmajor;
+00000001 00000000 extern   unsigned __int8 osminor;
+00000001 00000000 extern   unsigned __int8 osmode;
+00000004 00000000 extern   unsigned int psp;
+FFFFFFFF 00000000 extern   unsigned int __fastcall rotl(unsigned int value, unsigned int shift);
+FFFFFFFF 00000000 extern   unsigned int __fastcall rotr(unsigned int value, unsigned int shift);
+FFFFFFFF 00000000 extern   void __fastcall searchenv(const char *name, const char *env_var, char *buf);
+FFFFFFFF 00000000 extern   void __fastcall splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);
+FFFFFFFF 00000000 extern   void __fastcall splitpath2(const char *inp, char *outp, char **drive, char **dir, char **fn, char **ext);
+FFFFFFFF 00000000 extern   int __fastcall stat(const char *, struct _stat *);
+FFFFFFFF 00000000 extern   char *__fastcall strdate(char *buf);
+FFFFFFFF 00000000 extern   char *__fastcall strdup(const char *string);
+FFFFFFFF 00000000 extern   int __fastcall stricmp(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strlwr(char *string);
+FFFFFFFF 00000000 extern   char *__fastcall strrev(char *string);
+FFFFFFFF 00000000 extern   char *__fastcall strtime(char *buf);
+FFFFFFFF 00000000 extern   char *__fastcall strupr(char *string);
+FFFFFFFF 00000000 extern   int __fastcall vbprintf(char *s, unsigned int bufsize, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   void abort(void);
+FFFFFFFF 00000000 extern   int __fastcall abs(int j);
+FFFFFFFF 00000000 extern   int __fastcall access(const char *path, int mode);
+FFFFFFFF 00000000 extern   double __fastcall acos(double x);
+FFFFFFFF 00000000 extern   double __fastcall acosh(double x);
+FFFFFFFF 00000000 extern   void *__fastcall alloca(size_t size);
+FFFFFFFF 00000000 extern   char *__fastcall asctime(const struct tm *timeptr);
+FFFFFFFF 00000000 extern   double __fastcall asin(double x);
+FFFFFFFF 00000000 extern   double __fastcall asinh(double x);
+FFFFFFFF 00000000 extern   double __fastcall atan(double x);
+FFFFFFFF 00000000 extern   double __fastcall atan2(double y, double x);
+FFFFFFFF 00000000 extern   double __fastcall atanh(double x);
+FFFFFFFF 00000000 extern   int __fastcall atexit(void (*func)(void));
+FFFFFFFF 00000000 extern   double __fastcall atof(const char *nptr);
+FFFFFFFF 00000000 extern   int __fastcall atoi(const char *nptr);
+FFFFFFFF 00000000 extern   int __fastcall atol(const char *nptr);
+FFFFFFFF 00000000 extern   int __fastcall bdos(int dosfn, unsigned int dx, unsigned int al);
+FFFFFFFF 00000000 extern   void *__fastcall bsearch(const void *key, const void *base, size_t nmemb, size_t size, int (__fastcall *compar)(const void *pkey, const void *pbase));
+FFFFFFFF 00000000 extern   double __fastcall cabs(struct _complex);
+FFFFFFFF 00000000 extern   void *__fastcall calloc(size_t n, size_t size);
+FFFFFFFF 00000000 extern   double __fastcall ceil(double x);
+FFFFFFFF 00000000 extern   char *__fastcall cgets(char *buf);
+FFFFFFFF 00000000 extern   int __fastcall chmod(const char *path, int pmode);
+FFFFFFFF 00000000 extern   int __fastcall chsize(int handle, int size);
+FFFFFFFF 00000000 extern   void __fastcall clearerr(FILE *fp);
+FFFFFFFF 00000000 extern   clock_t clock(void);
+FFFFFFFF 00000000 extern   int __fastcall close(int handle);
+FFFFFFFF 00000000 extern   double __fastcall cos(double x);
+FFFFFFFF 00000000 extern   double __fastcall cosh(double x);
+FFFFFFFF 00000000 extern   int cprintf(const char *fmt, ...);
+FFFFFFFF 00000000 extern   int __fastcall cputs(const char *buf);
+FFFFFFFF 00000000 extern   int __fastcall creat(const char *path, int pmode);
+FFFFFFFF 00000000 extern   int cscanf(const char *fmt, ...);
+FFFFFFFF 00000000 extern   char *__fastcall ctime(const time_t *timer);
+00000004 00000000 extern   int daylight;
+FFFFFFFF 00000000 extern   void __fastcall delay(unsigned int milliseconds);
+FFFFFFFF 00000000 extern   double __fastcall difftime(time_t t1, time_t t0);
+FFFFFFFF 00000000 extern   div_t __fastcall div(int numer, int denom);
+FFFFFFFF 00000000 extern   int __fastcall dosexterr(struct _DOSERROR *);
+FFFFFFFF 00000000 extern   int __fastcall dup(int handle);
+FFFFFFFF 00000000 extern   int __fastcall dup2(int handle1, int handle2);
+FFFFFFFF 00000000 extern   char *__fastcall ecvt(double val, int ndig, int *dec, int *sign);
+00000004 00000000 extern   char **environ;
+FFFFFFFF 00000000 extern   int __fastcall eof(int handle);
+FFFFFFFF 00000000 extern   void __fastcall exit(int status);
+FFFFFFFF 00000000 extern   double __fastcall exp(double x);
+FFFFFFFF 00000000 extern   double __fastcall fabs(double x);
+FFFFFFFF 00000000 extern   int __fastcall fclose(FILE *fp);
+FFFFFFFF 00000000 extern   int fcloseall(void);
+FFFFFFFF 00000000 extern   char *__fastcall fcvt(double val, int ndig, int *dec, int *sign);
+FFFFFFFF 00000000 extern   FILE *__fastcall fdopen(int handle, const char *mode);
+FFFFFFFF 00000000 extern   int __fastcall feof(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall ferror(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fflush(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fgetc(FILE *fp);
+FFFFFFFF 00000000 extern   int fgetchar(void);
+FFFFFFFF 00000000 extern   int __fastcall fgetpos(FILE *fp, fpos_t *pos);
+FFFFFFFF 00000000 extern   char *__fastcall fgets(char *s, int n, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall filelength(int handle);
+FFFFFFFF 00000000 extern   double __fastcall floor(double x);
+FFFFFFFF 00000000 extern   int flushall(void);
+FFFFFFFF 00000000 extern   double __fastcall fmod(double x, double y);
+FFFFFFFF 00000000 extern   FILE *__fastcall fopen(const char *filename, const char *mode);
+FFFFFFFF 00000000 extern   int fprintf(FILE *fp, const char *format, ...);
+FFFFFFFF 00000000 extern   int __fastcall fputc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fputchar(int c);
+FFFFFFFF 00000000 extern   int __fastcall fputs(const char *s, FILE *fp);
+FFFFFFFF 00000000 extern   size_t __fastcall fread(void *ptr, size_t size, size_t n, FILE *fp);
+FFFFFFFF 00000000 extern   void __fastcall free(void *ptr);
+FFFFFFFF 00000000 extern   FILE *__fastcall freopen(const char *filename, const char *mode, FILE *fp);
+FFFFFFFF 00000000 extern   double __fastcall frexp(double value, int *exp);
+FFFFFFFF 00000000 extern   int fscanf(FILE *fp, const char *format, ...);
+FFFFFFFF 00000000 extern   int __fastcall fseek(FILE *fp, int offset, int whence);
+FFFFFFFF 00000000 extern   int __fastcall fsetpos(FILE *fp, const fpos_t *pos);
+FFFFFFFF 00000000 extern   int __fastcall fstat(int, struct stat *);
+FFFFFFFF 00000000 extern   int __fastcall ftell(FILE *fp);
+FFFFFFFF 00000000 extern   size_t __fastcall fwrite(const void *ptr, size_t size, size_t n, FILE *fp);
+FFFFFFFF 00000000 extern   char *__fastcall gcvt(double val, int ndig, char *buf);
+FFFFFFFF 00000000 extern   int __fastcall getc(FILE *fp);
+FFFFFFFF 00000000 extern   int getch(void);
+FFFFFFFF 00000000 extern   int getchar(void);
+FFFFFFFF 00000000 extern   int getche(void);
+FFFFFFFF 00000000 extern   char *__fastcall getenv(const char *name);
+FFFFFFFF 00000000 extern   char *__fastcall gets(char *s);
+FFFFFFFF 00000000 extern   struct tm *__fastcall gmtime(const time_t *timer);
+FFFFFFFF 00000000 extern   void far *__fastcall halloc(int n, size_t size);
+FFFFFFFF 00000000 extern   void __fastcall hfree(void far *);
+FFFFFFFF 00000000 extern   double __fastcall hypot(double x, double y);
+FFFFFFFF 00000000 extern   unsigned int __fastcall inp(unsigned int port);
+FFFFFFFF 00000000 extern   unsigned int __fastcall inpd(unsigned int port);
+FFFFFFFF 00000000 extern   unsigned int __fastcall inpw(unsigned int port);
+FFFFFFFF 00000000 extern   int __fastcall int386(int, union REGS *, union REGS *);
+FFFFFFFF 00000000 extern   int __fastcall int386x(int, union REGS *, union REGS *, struct SREGS *);
+FFFFFFFF 00000000 extern   int __fastcall intdos(union REGS *, union REGS *);
+FFFFFFFF 00000000 extern   int __fastcall intdosx(union REGS *, union REGS *, struct SREGS *);
+FFFFFFFF 00000000 extern   void __fastcall intr(int, union REGPACK *);
+FFFFFFFF 00000000 extern   int __fastcall isatty(int handle);
+FFFFFFFF 00000000 extern   char *__fastcall itoa(int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   double __fastcall j0(double x);
+FFFFFFFF 00000000 extern   double __fastcall j1(double x);
+FFFFFFFF 00000000 extern   double __fastcall jn(int n, double x);
+FFFFFFFF 00000000 extern   int kbhit(void);
+FFFFFFFF 00000000 extern   int __fastcall labs(int j);
+FFFFFFFF 00000000 extern   double __fastcall ldexp(double x, int exp);
+FFFFFFFF 00000000 extern   ldiv_t __fastcall ldiv(int numer, int denom);
+FFFFFFFF 00000000 extern   struct tm *__fastcall localtime(const time_t *timer);
+FFFFFFFF 00000000 extern   int __fastcall lock(int handle, unsigned int offset, unsigned int nbytes);
+FFFFFFFF 00000000 extern   double __fastcall log(double x);
+FFFFFFFF 00000000 extern   double __fastcall log10(double x);
+FFFFFFFF 00000000 extern   double __fastcall log2(double x);
+FFFFFFFF 00000000 extern   int __fastcall lseek(int handle, int offset, int origin);
+FFFFFFFF 00000000 extern   char *__fastcall ltoa(int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   int __fastcall main(int argc, char *argv[]);
+FFFFFFFF 00000000 extern   void *__fastcall malloc(size_t size);
+FFFFFFFF 00000000 extern   int __fastcall matherr(struct exception *);
+FFFFFFFF 00000000 extern   int __fastcall mblen(const char *s, size_t n);
+FFFFFFFF 00000000 extern   size_t __fastcall mbstowcs(wchar_t *pwcs, const char *s, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall mbtowc(wchar_t *pwc, const char *s, size_t n);
+FFFFFFFF 00000000 extern   void *__fastcall memccpy(void *s1, const void *s2, int c, size_t n);
+FFFFFFFF 00000000 extern   void *__fastcall memchr(const void *s, int c, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall memcmp(const void *s1, const void *s2, size_t n);
+FFFFFFFF 00000000 extern   void *__fastcall memcpy(void *s1, const void *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall memicmp(const void *s1, const void *s2, size_t n);
+FFFFFFFF 00000000 extern   void *__fastcall memmove(void *s1, const void *s2, size_t n);
+FFFFFFFF 00000000 extern   void *__fastcall memset(void *s, int c, size_t n);
+FFFFFFFF 00000000 extern   time_t __fastcall mktime(struct tm *timeptr);
+FFFFFFFF 00000000 extern   double __fastcall modf(double value, double *iptr);
+FFFFFFFF 00000000 extern   void __fastcall movedata(unsigned int srcseg, unsigned int srcoff, unsigned int tgtseg, unsigned int tgtoff, unsigned int len);
+FFFFFFFF 00000000 extern   void nosound(void);
+FFFFFFFF 00000000 extern   onexit_t __fastcall onexit(onexit_t func);
+FFFFFFFF 00000000 extern   int open(const char *path, int oflag, ...);
+FFFFFFFF 00000000 extern   unsigned int __fastcall outp(unsigned int port, unsigned int value);
+FFFFFFFF 00000000 extern   unsigned int __fastcall outpd(unsigned int port, unsigned int value);
+FFFFFFFF 00000000 extern   unsigned int __fastcall outpw(unsigned int port, unsigned int value);
+FFFFFFFF 00000000 extern   void __fastcall perror(const char *s);
+FFFFFFFF 00000000 extern   double __fastcall pow(double x, double y);
+FFFFFFFF 00000000 extern   int printf(const char *format, ...);
+FFFFFFFF 00000000 extern   int __fastcall putc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall putch(int c);
+FFFFFFFF 00000000 extern   int __fastcall putchar(int c);
+FFFFFFFF 00000000 extern   int __fastcall putenv(const char *string);
+FFFFFFFF 00000000 extern   int __fastcall puts(const char *s);
+FFFFFFFF 00000000 extern   void __fastcall qsort(void *base, size_t nmemb, size_t size, int (__fastcall *compar)(const void *, const void *));
+FFFFFFFF 00000000 extern   int rand(void);
+FFFFFFFF 00000000 extern   int __fastcall read(int handle, void *buf, unsigned int len);
+FFFFFFFF 00000000 extern   void *__fastcall realloc(void *ptr, size_t size);
+FFFFFFFF 00000000 extern   int __fastcall remove(const char *filename);
+FFFFFFFF 00000000 extern   int __fastcall rename(const char *old, const char *new);
+FFFFFFFF 00000000 extern   void __fastcall rewind(FILE *fp);
+FFFFFFFF 00000000 extern   void near *__fastcall sbrk(int increment);
+FFFFFFFF 00000000 extern   int scanf(const char *format, ...);
+FFFFFFFF 00000000 extern   void __fastcall segread(struct SREGS *);
+FFFFFFFF 00000000 extern   void __fastcall setbuf(FILE *fp, char *buf);
+FFFFFFFF 00000000 extern   int __fastcall setmode(int handle, int mode);
+FFFFFFFF 00000000 extern   int __fastcall setvbuf(FILE *fp, char *buf, int mode, size_t size);
+FFFFFFFF 00000000 extern   double __fastcall sin(double x);
+FFFFFFFF 00000000 extern   double __fastcall sinh(double x);
+FFFFFFFF 00000000 extern   void __fastcall sleep(unsigned int seconds);
+FFFFFFFF 00000000 extern   int sopen(const char *path, int oflag, int share, ...);
+FFFFFFFF 00000000 extern   void __fastcall sound(unsigned int frequency);
+FFFFFFFF 00000000 extern   int sprintf(char *s, const char *format, ...);
+FFFFFFFF 00000000 extern   double __fastcall sqrt(double x);
+FFFFFFFF 00000000 extern   void __fastcall srand(unsigned int seed);
+FFFFFFFF 00000000 extern   int sscanf(const char *s, const char *format, ...);
+FFFFFFFF 00000000 extern   unsigned int stackavail(void);
+FFFFFFFF 00000000 extern   int __fastcall stat(const char *, struct stat *);
+FFFFFFFF 00000000 extern   char *__fastcall strcat(char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strchr(const char *s, int c);
+FFFFFFFF 00000000 extern   int __fastcall strcmp(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   int __fastcall strcmpi(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   int __fastcall strcoll(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strcpy(char *s1, const char *s2);
+FFFFFFFF 00000000 extern   size_t __fastcall strcspn(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strdup(const char *string);
+FFFFFFFF 00000000 extern   char *__fastcall strerror(int errnum);
+FFFFFFFF 00000000 extern   size_t __fastcall strftime(char *s, size_t maxsiz, const char *fmt, const struct tm *tp);
+FFFFFFFF 00000000 extern   int __fastcall stricmp(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   size_t __fastcall strlen(const char *s);
+FFFFFFFF 00000000 extern   char *__fastcall strlwr(char *string);
+FFFFFFFF 00000000 extern   char *__fastcall strncat(char *s1, const char *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall strncmp(const char *s1, const char *s2, size_t n);
+FFFFFFFF 00000000 extern   char *__fastcall strncpy(char *s1, const char *s2, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall strnicmp(const char *s1, const char *s2, size_t n);
+FFFFFFFF 00000000 extern   char *__fastcall strnset(char *string, int c, size_t len);
+FFFFFFFF 00000000 extern   char *__fastcall strpbrk(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strrchr(const char *s, int c);
+FFFFFFFF 00000000 extern   char *__fastcall strrev(char *string);
+FFFFFFFF 00000000 extern   char *__fastcall strset(char *string, int c);
+FFFFFFFF 00000000 extern   size_t __fastcall strspn(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   char *__fastcall strstr(const char *s1, const char *s2);
+FFFFFFFF 00000000 extern   double __fastcall strtod(const char *nptr, char **endptr);
+FFFFFFFF 00000000 extern   char *__fastcall strtok(char *s1, const char *s2);
+FFFFFFFF 00000000 extern   int __fastcall strtol(const char *nptr, char **endptr, int base);
+FFFFFFFF 00000000 extern   unsigned int __fastcall strtoul(const char *nptr, char **endptr, int base);
+FFFFFFFF 00000000 extern   char *__fastcall strupr(char *string);
+FFFFFFFF 00000000 extern   size_t __fastcall strxfrm(char *s1, const char *s2, size_t n);
+FFFFFFFF 00000000 extern   void __fastcall swab(char *src, char *dest, int num);
+00000000 00000000 extern   char *sys_errlist[];
+00000004 00000000 extern   int sys_nerr;
+FFFFFFFF 00000000 extern   int __fastcall system(const char *string);
+FFFFFFFF 00000000 extern   double __fastcall tan(double x);
+FFFFFFFF 00000000 extern   double __fastcall tanh(double x);
+FFFFFFFF 00000000 extern   int __fastcall tell(int handle);
+FFFFFFFF 00000000 extern   time_t __fastcall time(time_t *timer);
+00000004 00000000 extern   int timezone;
+FFFFFFFF 00000000 extern   FILE *tmpfile(void);
+FFFFFFFF 00000000 extern   char *__fastcall tmpnam(char *s);
+00000008 0000000000000000 extern   char *tzname[2];
+FFFFFFFF 00000000 extern   void tzset(void);
+FFFFFFFF 00000000 extern   char *__fastcall ultoa(unsigned int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   int __fastcall umask(int permission);
+FFFFFFFF 00000000 extern   int __fastcall ungetc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall ungetch(int c);
+FFFFFFFF 00000000 extern   int __fastcall unlink(const char *path);
+FFFFFFFF 00000000 extern   int __fastcall unlock(int handle, unsigned int offset, unsigned int nbytes);
+FFFFFFFF 00000000 extern   char *__fastcall utoa(unsigned int value, char *buf, int radix);
+FFFFFFFF 00000000 extern   int __fastcall vcprintf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vcscanf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vfprintf(FILE *fp, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vfscanf(FILE *fp, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vprintf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vscanf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vsprintf(char *s, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vsscanf(const char *s, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   size_t __fastcall wcstombs(char *s, const wchar_t *pwcs, size_t n);
+FFFFFFFF 00000000 extern   int __fastcall wctomb(char *s, wchar_t wchar);
+FFFFFFFF 00000000 extern   int __fastcall write(int handle, const void *buf, unsigned int len);
+FFFFFFFF 00000000 extern   double __fastcall y0(double x);
+FFFFFFFF 00000000 extern   double __fastcall y1(double x);
+FFFFFFFF 00000000 extern   double __fastcall yn(int n, double x);
+
+TYPES
+00000008 struct $979FA3DE6ECCF956231BFC297C4278E6 {int quot;int rem;};
+00000004 enum $D229372A3490280A1D79088C14D8B580 {INTR_CF = 0x1,INTR_PF = 0x4,INTR_AF = 0x10,INTR_ZF = 0x40,INTR_SF = 0x80,INTR_TF = 0x100,INTR_IF = 0x200,INTR_DF = 0x400,INTR_OF = 0x800,};
+00000010 struct BYTEREGS {unsigned __int8 al;unsigned __int8 ah;unsigned __int16 _1;unsigned __int8 bl;unsigned __int8 bh;unsigned __int16 _2;unsigned __int8 cl;unsigned __int8 ch;unsigned __int16 _3;unsigned __int8 dl;unsigned __int8 dh;unsigned __int16 _4;};
+0000001C struct DWORDREGS {unsigned int eax;unsigned int ebx;unsigned int ecx;unsigned int edx;unsigned int esi;unsigned int edi;unsigned int cflag;};
+0000001A typedef struct __iobuf FILE;
+0000003C union INTPACK {struct INTPACKB h;struct INTPACKW w;struct INTPACKX x;};
+00000030 struct INTPACKB {unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int32 : 32;unsigned __int8 bl;unsigned __int8 bh;unsigned __int16 _1;unsigned __int8 dl;unsigned __int8 dh;unsigned __int16 _2;unsigned __int8 cl;unsigned __int8 ch;unsigned __int16 _3;unsigned __int8 al;unsigned __int8 ah;unsigned __int16 _4;};
+0000003C struct INTPACKW {unsigned __int16 gs;unsigned __int16 _1;unsigned __int16 fs;unsigned __int16 _2;unsigned __int16 es;unsigned __int16 _3;unsigned __int16 ds;unsigned __int16 _4;unsigned __int16 di;unsigned __int16 _5;unsigned __int16 si;unsigned __int16 _6;unsigned __int16 bp;unsigned __int16 _7;unsigned __int16 sp;unsigned __int16 _8;unsigned __int16 bx;unsigned __int16 _9;unsigned __int16 dx;unsigned __int16 _a;unsigned __int16 cx;unsigned __int16 _b;unsigned __int16 ax;unsigned __int16 _c;unsigned __int16 ip;unsigned __int16 _d;unsigned __int16 cs;unsigned __int16 _e;unsigned int flags;};
+0000003C struct INTPACKX {unsigned int gs;unsigned int fs;unsigned int es;unsigned int ds;unsigned int edi;unsigned int esi;unsigned int ebp;unsigned int esp;unsigned int ebx;unsigned int edx;unsigned int ecx;unsigned int eax;unsigned int eip;unsigned int cs;unsigned int flags;};
+00000004 enum MACRO_ACCESS {ACCESS_WR = 0x2,ACCESS_RD = 0x4,};
+00000004 enum MACRO_BUFSIZ {BUFSIZ = 4096,};
+00000004 enum MACRO_CLK {CLK_TCK = 100,};
+00000004 enum MACRO_CLOCKS {CLOCKS_PER_SEC = 100,};
+00000004 enum MACRO_DOMAIN {DOMAIN = 1,SING = 2,};
+00000004 enum MACRO_EOF {EOF = -1,};
+00000004 enum MACRO_EXIT {EXIT_SUCCESS = 0,EXIT_FAILURE = 255,};
+00000004 enum MACRO_FILENO {STDIN_FILENO = 0,STDOUT_FILENO = 1,STDERR_FILENO = 2,STDAUX_FILENO = 3,STDPRN_FILENO = 4,};
+00000004 enum MACRO_L {L_tmpnam = 13,};
+00000004 enum MACRO_MAX {FILENAME_MAX = 80,FOPEN_MAX = 20,OPEN_MAX = 20,PATH_MAX = 143,};
+00000004 enum MACRO_MB {MB_CUR_MAX = 1,};
+00000004 enum MACRO_MODE {DOS_MODE = 0,OS2_MODE = 1,};
+00000004 enum MACRO_NULL {NULL = 0,};
+00000004 enum MACRO_O {O_RDONLY = 0x0,O_WRONLY = 0x1,O_RDWR = 0x2,O_APPEND = 0x10,O_CREAT = 0x20,O_TRUNC = 0x40,O_NOINHERIT = 0x80,O_TEXT = 0x100,O_BINARY = 0x200,O_EXCL = 0x400,};
+00000004 enum MACRO_OK {R_OK = 4,W_OK = 2,X_OK = 1,F_OK = 0,};
+00000004 enum MACRO_OVERFLOW {OVERFLOW = 3,UNDERFLOW = 4,};
+00000004 enum MACRO_PLOSS {PLOSS = 6,};
+00000004 enum MACRO_RAND {RAND_MAX = 32767,};
+00000004 enum MACRO_S {S_IFMT = 0xF000,S_IFDIR = 0x4000,S_IFCHR = 0x2000,S_IFREG = 0x8000,S_IRWXU = 0x1C0,S_IRUSR = 0x100,S_IWUSR = 0x80,S_IXUSR = 0x40,S_IREAD = 0x100,S_IWRITE = 0x80,S_IEXEC = 0x40,S_IRWXG = 0x38,S_IRGRP = 0x20,S_IWGRP = 0x10,S_IXGRP = 0x8,S_IRWXO = 0x7,S_IROTH = 0x4,S_IWOTH = 0x2,S_IXOTH = 0x1,S_ISUID = 0x800,S_ISGID = 0x400,S_ISVTX = 0x200,};
+00000004 enum MACRO_SEEK {SEEK_SET = 0,SEEK_CUR = 1,SEEK_END = 2,};
+00000004 enum MACRO_TLOSS {TLOSS = 5,};
+00000004 enum MACRO_TMP {TMP_MAX = 17576,};
+00000004 enum MACRO__A {_A_NORMAL = 0x0,_A_RDONLY = 0x1,_A_HIDDEN = 0x2,_A_SYSTEM = 0x4,_A_VOLID = 0x8,_A_SUBDIR = 0x10,_A_ARCH = 0x20,};
+00000004 enum MACRO__BINARY {_BINARY = 0x40,_IOFBF = 0x100,_IOLBF = 0x200,_IONBF = 0x400,_TMPFIL = 0x800,_DIRTY = 0x1000,_ISTTY = 0x2000,_DYNAMIC = 0x4000,};
+00000004 enum MACRO__HARDERR {_HARDERR_IGNORE = 0,_HARDERR_RETRY = 1,_HARDERR_ABORT = 2,_HARDERR_FAIL = 3,};
+00000004 enum MACRO__HEAPBADNODE {_HEAPBADNODE = 3,_HEAPEND = 4,};
+00000004 enum MACRO__HEAPBADPTR {_HEAPBADPTR = 5,};
+00000004 enum MACRO__HEAPOK {_HEAPOK = 0,_HEAPEMPTY = 1,_HEAPBADBEGIN = 2,};
+00000004 enum MACRO__MAX {_MAX_PATH = 144,_MAX_DRIVE = 3,_MAX_DIR = 130,_MAX_FNAME = 9,_MAX_EXT = 5,_MAX_NAME = 13,_MAX_PATH2 = 147,};
+00000004 enum MACRO__NFILES {_NFILES = 20,};
+00000004 enum MACRO__READ {_READ = 0x1,_WRITE = 0x2,_UNGET = 0x4,_BIGBUF = 0x8,_EOF = 0x10,_SFERR = 0x20,_APPEND = 0x80,};
+00000004 enum MACRO__USEDENTRY {_USEDENTRY = 0,_FREEENTRY = 1,};
+00000004 enum MACRO___WATCOMC {__WATCOMC__ = 1000,};
+00000028 union REGPACK {struct REGPACKB h;struct REGPACKW w;struct REGPACKX x;};
+00000010 struct REGPACKB {unsigned __int8 al;unsigned __int8 ah;unsigned __int16 _1;unsigned __int8 bl;unsigned __int8 bh;unsigned __int16 _2;unsigned __int8 cl;unsigned __int8 ch;unsigned __int16 _3;unsigned __int8 dl;unsigned __int8 dh;unsigned __int16 _4;};
+00000028 struct REGPACKW {unsigned __int16 ax;unsigned __int16 _1;unsigned __int16 bx;unsigned __int16 _2;unsigned __int16 cx;unsigned __int16 _3;unsigned __int16 dx;unsigned __int16 _4;unsigned __int16 bp;unsigned __int16 _5;unsigned __int16 si;unsigned __int16 _6;unsigned __int16 di;unsigned __int16 _7;unsigned __int16 ds;unsigned __int16 es;unsigned __int16 fs;unsigned __int16 gs;unsigned int flags;};
+00000028 struct REGPACKX {unsigned int eax;unsigned int ebx;unsigned int ecx;unsigned int edx;unsigned int ebp;unsigned int esi;unsigned int edi;unsigned __int16 ds;unsigned __int16 es;unsigned __int16 fs;unsigned __int16 gs;unsigned int flags;};
+0000001C union REGS {struct DWORDREGS x;struct WORDREGS w;struct BYTEREGS h;};
+0000000C struct SREGS {unsigned __int16 es;unsigned __int16 cs;unsigned __int16 ss;unsigned __int16 ds;unsigned __int16 fs;unsigned __int16 gs;};
+0000001C struct WORDREGS {unsigned __int16 ax;unsigned __int16 _1;unsigned __int16 bx;unsigned __int16 _2;unsigned __int16 cx;unsigned __int16 _3;unsigned __int16 dx;unsigned __int16 _4;unsigned __int16 si;unsigned __int16 _5;unsigned __int16 di;unsigned __int16 _6;unsigned int cflag;};
+00000007 struct _DOSERROR {int exterror;char errclass;char action;char locus;};
+0000000E typedef struct _heapinfo _HEAPINFO;
+0000001A struct __iobuf {unsigned __int8 *_ptr;int _cnt;unsigned __int8 *_base;unsigned int _flag;int _handle;unsigned int _bufsize;unsigned __int8 _ungotten;unsigned __int8 _tmpfchar;};
+00000004 typedef char *__va_list[1];
+00000010 struct _complex {double x;double y;};
+00000008 struct _diskfree_t {unsigned __int16 total_clusters;unsigned __int16 avail_clusters;unsigned __int16 sectors_per_cluster;unsigned __int16 bytes_per_sector;};
+0000000E struct _heapinfo {void far *_pentry;size_t _size;int _useflag;};
+00000046 struct _stat {dev_t st_dev;ino_t st_ino;unsigned __int16 st_mode;__int16 st_nlink;unsigned int st_uid;__int16 st_gid;dev_t st_rdev;off_t st_size;time_t st_atime;time_t st_mtime;time_t st_ctime;time_t st_btime;unsigned int st_attr;unsigned int st_archivedID;unsigned int st_updatedID;unsigned __int16 st_inheritedRightsMask;unsigned __int8 st_originatingNameSpace;unsigned __int8 st_name[13];};
+00000004 typedef unsigned int clock_t;
+00000010 struct complex {double x;double y;};
+00000004 typedef int dev_t;
+00000008 typedef struct $979FA3DE6ECCF956231BFC297C4278E6 div_t;
+00000005 struct dosdate_t {unsigned __int8 day;unsigned __int8 month;unsigned __int16 year;unsigned __int8 dayofweek;};
+00000004 struct dostime_t {unsigned __int8 hour;unsigned __int8 minute;unsigned __int8 second;unsigned __int8 hsecond;};
+00000020 struct exception {int type;char *name;double arg1;double arg2;double retval;};
+0000002B struct find_t {char reserved[21];char attrib;unsigned __int16 wr_time;unsigned __int16 wr_date;unsigned int size;char name[13];};
+00000004 typedef int fpos_t;
+00000004 typedef unsigned int ino_t;
+00000008 typedef struct $979FA3DE6ECCF956231BFC297C4278E6 ldiv_t;
+00000004 typedef int off_t;
+00000004 typedef void (__fastcall *onexit_t)();
+00000004 typedef int ptrdiff_t;
+00000004 typedef unsigned int size_t;
+00000046 struct stat {dev_t st_dev;ino_t st_ino;unsigned __int16 st_mode;__int16 st_nlink;unsigned int st_uid;__int16 st_gid;dev_t st_rdev;off_t st_size;time_t st_atime;time_t st_mtime;time_t st_ctime;time_t st_btime;unsigned int st_attr;unsigned int st_archivedID;unsigned int st_updatedID;unsigned __int16 st_inheritedRightsMask;unsigned __int8 st_originatingNameSpace;unsigned __int8 st_name[13];};
+00000004 typedef unsigned int time_t;
+00000024 struct tm {int tm_sec;int tm_min;int tm_hour;int tm_mday;int tm_mon;int tm_year;int tm_wday;int tm_yday;int tm_isdst;};
+00000002 typedef unsigned __int16 wchar_t;
+
+MACROS
+ACCESS_RD 0x0004
+ACCESS_WR 0x0002
+BUFSIZ 4096
+CLK_TCK 100
+CLOCKS_PER_SEC 100
+DOMAIN 1
+DOS_MODE 0
+EOF (-1)
+EXIT_FAILURE 0xff
+EXIT_SUCCESS 0
+FILENAME_MAX 80
+FOPEN_MAX _NFILES
+FP_OFF(Ä) ((unsigned)(Ä))
+F_OK 0
+HUGE_VAL _HugeValue
+L_tmpnam 13
+MB_CUR_MAX 1
+MK_FP(Ä,Å) (((unsigned short)(Ä)):>((void __near *)(Å)))
+NULL 0L
+OPEN_MAX FOPEN_MAX
+OS2_MODE 1
+OVERFLOW 3
+O_APPEND 0x0010
+O_BINARY 0x0200
+O_CREAT 0x0020
+O_EXCL 0x0400
+O_NOINHERIT 0x0080
+O_RDONLY 0x0000
+O_RDWR 0x0002
+O_TEXT 0x0100
+O_TRUNC 0x0040
+O_WRONLY 0x0001
+PATH_MAX 143
+PLOSS 6
+RAND_MAX 32767u
+R_OK 4
+SEEK_CUR 1
+SEEK_END 2
+SEEK_SET 0
+SING 2
+STDAUX_FILENO 3
+STDERR_FILENO 2
+STDIN_FILENO 0
+STDOUT_FILENO 1
+STDPRN_FILENO 4
+S_IEXEC 0000100
+S_IFCHR 0020000
+S_IFDIR 0040000
+S_IFMT 0170000
+S_IFREG 0100000
+S_IREAD 0000400
+S_IRGRP 0000040
+S_IROTH 0000004
+S_IRUSR 0000400
+S_IRWXG 0000070
+S_IRWXO 0000007
+S_IRWXU 0000700
+S_ISBLK(Ä) 0
+S_ISCHR(Ä) (((Ä)&S_IFMT)==S_IFCHR)
+S_ISDIR(Ä) (((Ä)&S_IFMT)==S_IFDIR)
+S_ISFIFO(Ä) 0
+S_ISGID 0002000
+S_ISREG(Ä) (((Ä)&S_IFMT)==S_IFREG)
+S_ISUID 0004000
+S_ISVTX 0001000
+S_IWGRP 0000020
+S_IWOTH 0000002
+S_IWRITE 0000200
+S_IWUSR 0000200
+S_IXGRP 0000010
+S_IXOTH 0000001
+S_IXUSR 0000100
+TLOSS 5
+TMP_MAX (26*26*26)
+UNDERFLOW 4
+W_OK 2
+X_OK 1
+_APPEND 0x0080
+_A_ARCH 0x20
+_A_HIDDEN 0x02
+_A_NORMAL 0x00
+_A_RDONLY 0x01
+_A_SUBDIR 0x10
+_A_SYSTEM 0x04
+_A_VOLID 0x08
+_BIGBUF 0x0008
+_BINARY 0x0040
+_CLOCK_T_DEFINED 
+_CONIO_H_INCLUDED 
+_DIRTY 0x1000
+_DISKFREE_T_DEFINED_ 
+_DOS_H_INCLUDED 
+_DYNAMIC 0x4000
+_EOF 0x0010
+_FCNTL_H_INCLUDED 
+_FP_OFF(Ä) ((unsigned)(Ä))
+_FP_SEG FP_SEG
+_FREEENTRY 1
+_HARDERR_ABORT 2
+_HARDERR_FAIL 3
+_HARDERR_IGNORE 0
+_HARDERR_RETRY 1
+_HEAPBADBEGIN 2
+_HEAPBADNODE 3
+_HEAPBADPTR 5
+_HEAPEMPTY 1
+_HEAPEND 4
+_HEAPOK 0
+_I86_H_INCLUDED 
+_IOFBF 0x0100
+_IOLBF 0x0200
+_IONBF 0x0400
+_IO_H_INCLUDED 
+_ISTTY 0x2000
+_MALLOC_H_INCLUDED 
+_MATH_H_INCLUDED 
+_MAX_DIR 130
+_MAX_DRIVE 3
+_MAX_EXT 5
+_MAX_FNAME 9
+_MAX_NAME 13
+_MAX_PATH 144
+_MAX_PATH2 (_MAX_PATH+3)
+_NFILES 20
+_PTRDIFF_T_DEFINED_ 
+_READ 0x0001
+_REGS REGS
+_SFERR 0x0020
+_SIZE_T_DEFINED_ 
+_SREGS SREGS
+_STAT_H_INCLUDED 
+_STDIO_H_INCLUDED 
+_STDLIB_H_INCLUDED 
+_STRING_H_INCLUDED 
+_TIME_H_INCLUDED 
+_TIME_T_DEFINED_ 
+_TMPFIL 0x0800
+_UNGET 0x0004
+_USEDENTRY 0
+_WCHAR_T_DEFINED_ 
+_WRITE 0x0002
+__386__ 
+__ALLOCA_ALIGN(Ä) (((Ä)+(sizeof(int)-1))&~(sizeof(int)-1))
+__DOS__ 
+__FILLER(Ä) unsigned short Ä;
+__TYPES_H_INCLUDED 
+__VALIST 
+__WATCOMC__ 1000
+__alloca(Ä) __doalloca(__ALLOCA_ALIGN(Ä))
+_dosdate_t dosdate_t
+_doserrno (*__get_doserrno_ptr())
+_dostime_t dostime_t
+_fileno(Ä) ((Ä)->_handle)
+_find_t find_t
+alloca(Ä) ((__ALLOCA_ALIGN(Ä)<stackavail())?__alloca(Ä):NULL)
+assert(Ä) ((Ä)?(void)0:__assert(0,#Ä,__FILE__,__LINE__))
+atof(Ä) strtod(Ä,(char **)NULL)
+clearerr(Ä) ((Ä)->_flag &=~(_SFERR|_EOF))
+difftime(Ä,Å) ((double)(Ä)-(double)(Å))
+diskfree_t _diskfree_t
+errno (*__get_errno_ptr())
+feof(Ä) ((Ä)->_flag &_EOF)
+ferror(Ä) ((Ä)->_flag &_SFERR)
+fileno(Ä) ((Ä)->_handle)
+getc(Ä) ((Ä)->_cnt<=0 ||(Ä)->_flag&_UNGET ||(*(Ä)->_ptr)=='\x0d' ||(*(Ä)->_ptr)=='\x1a' ?fgetc(Ä):((Ä)->_cnt--,*(Ä)->_ptr++))
+getchar() getc(stdin)
+max(Ä,Å) (((Ä)>(Å))?(Ä):(Å))
+min(Ä,Å) (((Ä)<(Å))?(Ä):(Å))
+putc(Ä,Å) ((Å)->_flag&_IONBF ||(Å)->_bufsize-(Å)->_cnt<=1 ?fputc(Ä,Å):((*(Å)->_ptr=(unsigned char)(Ä))=='\n')?fputc('\n',Å):((Å)->_flag|=_DIRTY,(Å)->_cnt++,*(Å)->_ptr++))
+putchar(Ä) putc(Ä,stdout)
+stdaux ((FILE *)&__iob[3])
+stderr ((FILE *)&__iob[2])
+stdin ((FILE *)&__iob[0])
+stdout ((FILE *)&__iob[1])
+stdprn ((FILE *)&__iob[4])
+
+Total 509 symbols, 76 types, 175 macros

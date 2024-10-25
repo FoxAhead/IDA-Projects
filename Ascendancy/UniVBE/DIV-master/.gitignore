@@ -1,0 +1,46 @@
+# binarios generados
+*.obj
+*.exe
+*.lib
+*.386
+*.586
+*.ovl
+*.dll
+
+# ficheros intermedios de Watcom
+*.err
+*.mk1
+*.tgt
+/3rdparty/**/*.map
+/pmwlite/**/*.map
+*.lst
+*.pch
+*.sym
+
+# copias de seguridad
+*.bak
+*.bac
+
+# logs de Vagrant
+/*.log
+
+# ficheros temporales de programas externos
+/3rdparty/scitech/doc/*/*.[Gg][Ii][Dd]
+
+# carpetas
+/bin
+/_trash
+/_basura
+/build.*
+/.vscode
+/.vagrant
+
+# los exe de PMODEW sí los queremos
+!/pmwlite/*.[Ee][Xx][Ee]
+
+# las librerías 3rd party también, para no tener que recompilarlas ya que
+# algunas requieren TASM
+!/3rdparty/lib/**/*.[Ll][Ii][Bb]
+
+# incluimos DOS4GW con la instalación
+!/system/dos4gw.exe

@@ -1,0 +1,435 @@
+
+
+                               SciTech Software
+                  Software Products and Ordering Information
+
+                                April 11, 1994
+
+                     Copyright (C) 1993 SciTech Software.
+                             All Rights Reserved.
+
+     This file contains important information you will need to know
+     before ordering any products from SciTech Software, and information
+     about the Software Products that SciTech Software offers. In order
+     to save time and resources, the actual product order form is
+     included separately in the file ORDER.DOC. You should print the
+     order form and fill in the required information AFTER you have
+     fully read the information contained in this document.
+
+     Please ensure that you read and understand the license agreement
+     governing the use of this software in the file LICENSE.DOC
+     before ordering any products from SciTech Software.
+
+     This file is formatted to allow you to read the document online
+     using a text editor such as the MSDOS EDIT program, or can be
+     printed on your printer using the following command:
+
+          copy products.doc prn
+
+     or by using the MSDOS print command. Don't try and print the file
+     using a word processor such as Word For Windows as the formatting
+     information will be lost.
+
+     SciTech Software products also usually come with an online version
+     of the documentation in text format. This online documentation can
+     also be printed on your printer in the same manner as mentioned
+     above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     SciTech Software Product Information                        Page: 1
+
+     Ordering Information
+     --------------------
+
+     How to order products
+
+          You can order SciTech Software products by postal mail, fax or
+          electronic mail. Fax and electronic mail orders must be paid
+          for by credit card (see below). Electronic mail orders can be
+          ordered with the following email addresses:
+
+               Internet:   100237.2213@compuserve.com
+               CompuServe: 100237,2213
+
+          Fax orders can be faxed to the following number:
+
+               +61 3 690 2137
+
+          You will need to insert the appropriate international dialing
+          prefix to dial from outside of Australia (ie: 011 in the USA
+          and Canada).
+
+     Shipping Charges
+
+          There is no additional charge for standard shipping via
+          Economy Airmail within Australia for most goods. However for
+          heavier items (see shipping codes in following table)
+          additional shipping charges will be added. There is an
+          additional shipping charge for shipping items outside of
+          Australia. Please consult the following table to find the
+          correct shipping charges for the product you are ordering
+          (incorrect orders will unfortunately have to be returned):
+
+                             Within Autralia
+
+              Shipping Code:  |    A    B    C    D    E
+              ----------------+----------------------------
+              Economy Air:    |    N/A  N/A  $3   $7   $10
+              Normal Air:     |    N/A  N/A  $8   $20  $25
+              ---------------------------------------------
+
+                             U.S.A and Europe
+
+              Shipping Code:  |    A    B    C    D    E
+              ----------------+----------------------------
+              Economy Air:    |    $2   $5   $10  $20  $25
+              Normal Air:     |    $2   $5   $12  $30  $40
+              ---------------------------------------------
+
+          The shipping code for each product is listed in the first
+          column next to the name of the product as a single uppercase
+          letter. Please contact SciTech software for discount shipping
+          charges on 3 or more items.
+
+          For other shipping charges please contact SciTech Software for
+          pricing (such as shipping via Federal Express or UPS).
+
+     Payment Terms
+
+          All credit card charges will be authorised. Your card will
+
+     SciTech Software Product Information                        Page: 2
+
+          generally be charged the day the order is shipped or possibly
+          the day before. Personal checks may be subject to a bank
+          clearance delay before shipment of your order (personal
+          cheques cannot be accepted from international customers -
+          please see the International Orders section below). All
+          payments must be made payable in Australian dollars (A$) drawn
+          on an Australian bank. Credit card orders will be charged in
+          Australian Dollars, and this will then be converted to the
+          appropriate currency by your bank.
+
+          SciTech Software can accept orders for Bankcard, Mastercard
+          and VISA. American Express is not accepted at this time.
+
+     International Orders
+
+          SciTech Software is happy to accept orders from customers not
+          resident in Australia. You will need to make the payment
+          payable in Australian Dollars (A$) as either an international
+          money order or credit card order. Personal cheques cannot be
+          accepted from international customers, and will be returned
+          the to the customer at their expense.
+
+          International orders will also be subject to higher shipping
+          fees. Please see the section above to determine the shipping
+          fees required for your order.
+
+     Upgrade Policy
+
+          When you purchase a single copy of any of the products sold by
+          SciTech Software, you can obtain maintenance releases of the
+          product on disk at nominal charge from SciTech Software. Major
+          upgrades of the product will also be available from SciTech
+          software on disk for a reasonable cost.
+
+          When you purchase a maintenance release of a product from
+          SciTech software on disk, it always comes with electronic
+          copies of the manuals on disk. New printed manuals are
+          available for extra charge if required. New printed manuals
+          will always be supplied for major upgrades.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     SciTech Software Product Information                        Page: 3
+
+     Product Information
+     -------------------
+
+     MegaToolbox (MTL)
+
+          The MegaToolbox is a set of four separate function libraries
+          for C and C++ programming environments under the MS-DOS
+          operating system. The separate libraries that make up the
+          MegaToolbox are:
+
+             Console library. This provides a number of routines for
+             interfacing to the video display in standard text mode. It
+             provides the functionality of the standard C output
+             routines, but can be configured to send the output to the
+             display in any of the available colors, and the output can
+             be mapped and clipped to any rectangular window on the
+             screen. The routines are similar in operation to the set of
+             console output routines provided with the Borland C++ and
+             Turbo C++ range of compilers, but they are faster and more
+             configurable.
+
+             Event handling library. This library provides a set of low
+             level routines to maintain a queue of keyboard and mouse
+             events. Naturally the events are not restricted to just
+             keyboard and mouse events, but can be any type of user
+             defined event. This allows the program to easily combine
+             the keyboard and mouse into a single system for interacting
+             with the user.
+
+             Mouse library. This library provides a high level language
+             interface to the mouse driver, allowing the user program to
+             fully control the mouse and to install a custom mouse event
+             handler. Full control of the mouse in both text and
+             graphics modes is provided.
+
+             Sysinfo library. This library provides a set of diagnostic
+             routines that can be called upon to identify the type of
+             computer system that a program is running on. It can
+             automatically determine things such as the processor type
+             (8086 - 80486), BIOS class, extended keyboard support,
+             video display subsystem type and so on.
+
+          The MegaToolbox supports the Borland C++, Microsoft C and
+          Symantec C++ range of compilers in 16 bit real mode (32 bit
+          protected mode support for Symantec C++ and Watcom C/C++ will
+          be available soon, and may well be available by the time you
+          read this).
+
+     MegaGraph Graphics Library (MGL)
+
+          The MegaGraph Graphics Library (MGL) is a full featured
+          graphics library for displaying high performance graphics on
+          personal computers. It provides fast, low level 2D drawing
+          primitives that can be used to implement video games, user
+          interface software and even real-time 3D animation. It will
+          work in any video mode that has 16 or more colors, including
+          the new HiColor and TrueColor modes available on PC's.
+
+          The MGL will also take advantage of certain PC based Windows
+
+     SciTech Software Product Information                        Page: 4
+
+          Accelerators for better performance in certain areas.
+
+          Currently the MGL only works in 16 bit real mode with either
+          Borland C++, Microsoft C and Symantec C++ however work is
+          progressing on the 32 bit protected mode versions of the
+          library.
+
+     MGL 2D Extensions (MGL2D)
+
+          The MGL 2D extensions library provides a fast floating
+          point/fixed point two dimensional world coordinate system on
+          top of the MGL. It provides full support for arbitrary 2D
+          transformations such as translates, rotates, scales and
+          shears. It provides 2D versions the MGL primitives such as
+          pixels, lines, ellipses, polygons and even vector font text
+          output (fully tranformed).
+
+          It relies upon the Techniques Class Library to provide the
+          transformation routines required to operate correctly, and is
+          written in C++.
+
+          Currently this product is only in the alpha testing stages and
+          is not directly supported. You can obtain pre-release copies
+          of the software with not documentation, and the MGL2D will
+          eventually become a fully supported product.
+
+     MGL 3D Extensions (MGL3D)
+
+          The MGL 3D extensions library provides a fast floating
+          point/fixed point three dimensional world coordinate system on
+          top of the MGL. The MGL3D library is fast enough for doing
+          real-time 3D polygonal animation, and the interface to the
+          library is similar to that provided by the Silicon Graphics
+          Iris GL library. It provides support for arbitrary 3D
+          transformations such as translates, rotates, scales and
+          shears. It provides 3D primitives such as pixels, lines,
+          ellipses, polygons and even vector font text output (fully
+          transformed).
+
+          Currently the MGL3D does not provide direct support for hidden
+          surface removal but support for software Z-buffering is being
+          added to the low level MGL library to support this in the
+          future. Presently a C++ BSP tree class is provided as an
+          interim solution.
+
+          It relies upon the Techniques Class Library to provide the
+          tranformation routines required to operate correctly and is
+          written in C++.
+
+          Currently this product is only in the alpha testing stages and
+          is not directly supported. You can obtain pre-release copies
+          of the software with not documentation, and the MGL2D will
+          eventually become a fully supported product.
+
+     Techniques Class Library (TECH)
+
+          The Techniques Class Library is high performance C++ class
+          library for neatly implementing various data structures in
+          C++. It uses the C++ template facility to provide type-safe
+
+     SciTech Software Product Information                        Page: 5
+
+          generic data structures. This library is used by all SciTech
+          Software's C++ products.
+
+          Currently this library is still under development and is
+          distributed as copyrighted freeware with full source code and
+          no documentation, and is not directly supported by SciTech
+          Software. In the future this class library will become a
+          supported SciTech Software product.
+
+     MegaVision Application Frameworks (MVIS)
+
+          The MegaVision Application Frameworks is a C++ based GUI
+          toolkit for for the MegaGraph Graphics Library. It is similar
+          in concept to Borland's Turbo Vision for DOS, but is still
+          only partially developed. This library was used to build the
+          MGL demo programs.
+
+          Currently this library is still under development and is
+          distributed as copyrighted freeware with full source code and
+          no documentation, and is not directly supported by SciTech
+          Software. There are no plans at this stage to make this a
+          fully supported SciTech Software product.
+
+     Universal VESA VBE
+
+          The Universal VESA VBE is a small Terminate and Stay Resident
+          program (TSR) for MSDOS that provides the VESA Video BIOS
+          Extensions (VBE) for most SuperVGA cards on the market. It
+          provides the latest VESA VBE standard so you can be sure your
+          favorite programs will work correctly. Programs like Microsoft
+          Flight Simulator 5 require that something like this be
+          installed to obtain the highest performance possible.
+
+          It also comes with a special 'paranoid' test program, for
+          fully stress testing all VESA VBE interface implementations to
+          ensure that they fully conform to the latest standards.
+
+          The MGL works best with the UniVBE installed as it can take
+          full advantage of the features on most SuperVGA video cards.
+
+     Miscellaneous freeware
+
+          The miscellaneous freeware disk contains a number of freely
+          available tools developed by the people at SciTech Software
+          over the years. They are supplied as is, without any warranty
+          and are not supported, but come supplied with full source
+          code. The tools included on the disk are:
+
+
+
+
+
+
+
+
+
+
+
+
+
+     SciTech Software Product Information                        Page: 6
+
+          SuperVGA Kit
+          ------------
+
+          A small set of test programs and libraries for programming
+          SuperVGA cards in 16,256,32k,64k and 16 million color modes
+          using the VESA VBE programming interface. Comes with a simple
+          library showing how to interface with the VESA VBE from C and
+          C++ programs. It also includes the full source code for the
+          'paranoid' VESA VBE stress test program.
+
+          C Tools
+          -------
+
+          A set of tools for working with data structures and other
+          things in ANSI C. This library was written a long time ago and
+          has since been converted in the Techniques Class Library
+          described above. Useful if you still write code in ANSI C.
+
+          Trans
+          -----
+
+          A fast text file translation program for converting text files
+          between DOS and Unix formats and expanding tabs to spaces.
+          Comes with makefiles to for both DOS and Unix environments.
+
+          Makefile Utilities
+          ------------------
+
+          A number of simple utility programs for simplifying the work
+          required to use the make program to create libraries and
+          integrate with RCS. Works with Borland C++ make.
+
+          The Zen Timer Library
+          ---------------------
+
+          This is a 'C' callable library for timing code fragments with
+          an accuracy of better than 10 microseconds under the MSDOS
+          operating system. The code was originally written by Michael
+          Abrash for his book "Zen of Assembly language - Volume I,
+          Knowledge" and was made into a 'C' callable library with a set
+          of C++ wrapper classes.
+
+          The PMODE Library
+          -----------------
+
+          This library provides a small DOS extender independant API for
+          protected mode programming and covers all of the issues that
+          usually burden the programmer converting their code to work
+          with various DOS extenders (such as issuing real mode
+          interrupts, allocating real mode memory, accessing the low 1Mb
+          of real mode memory directly and installing protected mode
+          interrupt handlers). All SciTech Software products use the
+          PMODE library for providing support for DOS extenders, and all
+          that is required to support a new DOS extender is to add
+          support for this DOS extender to the PMODE Library. It fully
+          supports real mode, 16 bit protected mode and 32 bit protected
+          mode programming.
+
+
+
+     SciTech Software Product Information                        Page: 7

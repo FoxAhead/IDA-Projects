@@ -1,0 +1,9 @@
+******************** SMEDS LOG *********************
+File Output to: smeds.log
+SMEDS32 Version: 2.0.0        
+
+(    0) 5.4.0f Multiplayer 26-March-99
+(    0) Patch 3
+(    0) Disconnecting from network:
+(    0)    XD_ResetLibrary();
+(    0) Warning: Port not locked on Sprite Extract

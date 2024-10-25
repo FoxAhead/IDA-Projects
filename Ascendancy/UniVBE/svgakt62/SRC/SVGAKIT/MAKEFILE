@@ -1,0 +1,96 @@
+#############################################################################
+#
+#                   Copyright (C) 1996 SciTech Software
+#                           All rights reserved.
+#
+# Descripton:   Generic makefile for the SuperVGA Kit. Requires the SciTech
+#               Software makefile definitions package to be installed.
+#
+# NOTE! If you wish to build apps that use the 16 bit version of the linkable
+#       libraries (rather then the DLL) you must ensure that 'segment
+#       packing' is not enabled. This option usually cannot be enabled from
+#       the command line, so you will need to manually link the application.
+#
+#       Alternatively you can simply use the pre-built 16 bit DLL that has
+#       been correctly linked.
+#
+# $Date:   29 Aug 1996 15:55:04  $ $Author:   KendallB  $
+#
+#############################################################################
+
+# DOS extender dependant flags
+
+CFLAGS          += $(DX_CFLAGS)
+ASFLAGS         += $(DX_ASFLAGS)
+
+OBJECTS         = vesavbe$O svgasdk$O vbeaf$O font8x16$O vgapal$O cpu$O \
+                  _svgasdk$O _linsdk$O _vbeaf$O
+DOSOBJS         = event$O maskcode$O _event$O
+
+LIBCLEAN        = svga*.dll svga*.lib ssvga*.lib
+
+# Version number for this release
+
+VER             = 62
+
+# Find the name of the library file to build
+
+.IF $(BUILD_DLL)
+MAKE_DLL        = 1
+.ENDIF
+.IF $(IMPORT_DLL)
+MAKE_DLL        = 1
+.ENDIF
+
+EXELIBS         = wdir$(VER)$L pmpro$(VER)$L
+
+.IF $(MAKE_DLL)
+.IF $(USE_WIN16)
+DLLFILE         = svga$(VER)$D
+LIBFILE         = svga$(VER)$L
+EXELIBS         = wdir$(VER)$L pmpro$(VER)$L
+.ELSE
+DLLFILE         = svga$(VER)f$D
+LIBFILE         = svga$(VER)f$L
+EXELIBS         = wdir$(VER)f$L pmpro$(VER)f$L
+.ENDIF
+.ELSE
+.IF $(STKCALL)
+LIBFILE         = ssvga$L
+.ELSE
+LIBFILE         = svga$L
+.ENDIF
+.IF $(USE_WIN16)
+.ELIF $(USE_WIN32)
+.ELSE
+OBJECTS         += $(DOSOBJS)
+.ENDIF
+.ENDIF
+
+.IF $(USE_WIN16)
+
+# Special target to build 16 bit DLL Borland C++ without code segment
+# packing. We need to call tlink directly, as currently there is no way to
+# pass the '-P-' linker command line option through from the BCC compiler.
+#
+# If you wish to rebuild the 16 bit DLL with another compiler other than
+# Borland C++, you will need to modify the makefile to link with the
+# appropriate linker and ensure segment packing is turned off.
+
+.IF $(BUILD_DLL)
+$(DLLFILE): $(OBJECTS)
+.IF $(DBG)
+    tlink -3 -Twd -c -P- -v -m @svgadll.rsp
+.ELSE
+    tlink -3 -Twd -c -P- @svgadll.rsp
+.ENDIF
+.ENDIF
+      
+.ENDIF
+
+# Define the list of object files to create dependency information for
+
+DEPEND_OBJ      = $(OBJECTS) $(DOSOBJS)
+
+.INCLUDE: "$(SCITECH)\makedefs\common.mk"
+

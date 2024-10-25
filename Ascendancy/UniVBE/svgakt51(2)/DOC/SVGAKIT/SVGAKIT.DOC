@@ -1,0 +1,612 @@
+
+                            The SuperVGA Kit
+                            ----------------
+
+                               Version 5.1
+                             5 February 1995
+
+                 Copyright (C) 1992-95 SciTech Software.
+                           All Rights Reserved.
+
+
+The SuperVGA Kit is a full Software Development Kit for working with SuperVGA
+video cards that have a VESA VBE compliant Video BIOS. This SDK also includes
+full support for the new VBE 2.0 32 bit protected mode routines and 32 bit
+linear framebuffer modes. It is also intended to function as a Software
+Development Kit for developers wishing to take advantage of the VBE 2.0
+features of UniVBE and eventually the new VBE/AF Accelerator Functions
+that will be provided by UniVBE.
+
+*NEW* WinDirect Technology!
+---------------------------
+
+The SuperVGA Kit also includes SciTech Software's WinDirect technology for
+writing full screen Windows applications using VBE services. WinDirect
+allows Windows 3.1 applications to shut down the GDI and obtain direct
+access to the hardware. Then you can start any VBE video mode that you
+desire for maximum performance (like UniVBE's new 320x200/240/400 8 bit
+modes or perhaps 320x240 15/16 bit modes) with full hardware double buffering
+and linear framebuffer support. Not only that, but when VBE/AF is complete
+you will be able to write full screen VBE apps that include full hardware
+acceleration!
+
+While an application is running WinDirect fullscreen, all normal Window's
+services are still active, such as Audio, Networking, CD-ROM, MultiMedia,
+Memory Management and Resource Management. In fact GDI is still available
+and you can even do your rendering using GDI into a WinG offscreen buffer
+and then simply copy that to the VBE video display!
+
+WinDirect is also fully compatible with Microsoft's forthcoming Windows '95
+operating system. WinDirect uses the standard Video for Windows function
+calls to shut down GDI and restore it back to life, so it does not rely
+on any special display drivers VxD's to be installed. In fact WinDirect
+does not even need Video for Windows to be installed - all that is required
+is that DISPDIB.DLL be shipped with the resulting application.
+
+*NEW* Hybrid 16/32 bit technology!
+----------------------------------
+
+The SuperVGA Kit also includes SciTech Software's new Hybrid 16/32 bit
+technology. This allows normal 16 bit Windows apps to directly call any
+32 bit assembler just like any normal 16 bit function. However because the
+code is marked as USE32, you can use the full 32 bit string instructions
+to directly access HUGE memory buffers in a linear fashion. You can use
+this for writing *really* fast WinG code, or you can use the examples
+in the SuperVGA Kit and write full screen linear framebuffer code that
+runs directly as a 16 bit Windows App! Calling a hybrid 32 bit function
+from a 16 bit Windows app incurs no extra overhead compared to calling
+any other 16 bit far function.
+
+The VESAVBE.C module contains all the code necessary to set up and call
+the VBE 2.0 32 bit protected mode bank switching, palette setting and
+double buffering routines directly from your 16 bit code for absolute
+maximum performance.
+
+Using the new Hybrid 16/32 bit technology will allow developers to start
+builing 32 bit enabled applications while continuing to use current 16
+bit Windows development tools. If you wish to eventually move to full
+Win32, you can do so simply by re-compiling and re-assembling your code.
+Hence you can start to include full 32 bit performance under Windows 3.1
+without the overhead of Win32s. The only drawback is that currently
+all hybrid 32 bit code must be written in assembler (it gets called
+with a 16 bit stack frame not a 32 bit stack frame).
+
+Using it in your own programs
+-----------------------------
+
+The SuperVGA test programs all call upon a single C library to access the
+SuperVGA using the VESA VBE programming interface. You can use this
+same library to provide SuperVGA support in your own applications, or
+you can take the source code for the library as a starting point and
+expanding on it from there. For tinkering with VBE 2.0 applications using
+SVGA.LIB directly is a great starting point.
+
+If you wish to develop your own graphics library or use VBE 2.0 in your own
+code, we *highly* recommend you link in and use the VESAVBE.C module as your
+main interface to VBE 2.0. None of the code in VESAVBE.C is speed critical,
+and this modules takes care of fixing minor bugs in slightly varying VBE 1.2
+implementations to make the high level interface consistent. This module
+also takes care of isolating protected mode applications from the need
+to meddle with pointers to real mode memory locations by mapping all such
+data into the default data segment automatically.
+
+Assembling the source files
+---------------------------
+
+All of the assembler source files have to be assembled with Borland's TASM,
+since they are written using TASM's IDEAL mode. If you do not have TASM,
+you can simply link with the pre-assembled object files provided.
+
+Test programs
+-------------
+
+The library now has only one single test program, that presents a set of
+menus for testing all of the available video modes that the library
+supports (and your hardware supports).
+
+Note that the test program requires a VESA VBE compliant SuperVGA in
+order to run, so if your video card does not have the VESA VBE in the BIOS,
+then you will need to install the Universal VESA VBE before running it.
+
+PM/Lite library
+---------------
+
+The SuperVGA Kit uses the PM/Lite library, which should also have come
+as pre-compiled library files in the same archive. If you wish to compile
+it up for a different extender, you will need to obtain the source code
+archive (see the file INSTALL.ME for details).
+
+Global Variables Reference
+--------------------------
+
+int     VBEVersion;         VBE Version number (in BCD)
+int     maxx,maxy;          Maximum device coordinate values (res-1)
+long    maxcolor,defcolor;  Maximum and default color values
+int     maxpage;            Maximum video page number (numpages-1)
+int     bytesperline;       Bytes in a logical scanline
+int     bitsperpixel;       Current pixel depth
+int     bytesperpixel;      Bytes in a pixel (if > 1)
+int     memory;             Video memory available in Kb
+short   modeList[];         List of available video modes (USE THIS!)
+char    OEMString[];        OEM string from VBE
+int     capabilities;       Capabilities bits from VBE
+int     curBank;            Current read/write bank
+
+The following globals define the pixel format information, and is used by the
+rgbColor() routine to build the correct pixel for the current display mode.
+You can however use it yourself to build scanline information in the desired
+format if you need to optimise these routines for speed.
+
+uchar   redMask,greenMask,blueMask;  Color channel mask values
+int     redPos,greenPos,bluePos;     Starting position of color channel bits
+int     redAdjust,greenAdjust;       Shift factors need to adjust to correct
+int     blueAdjust;                     postition in pixel image
+
+SVGA.LIB Function Reference
+---------------------------
+
+Include file: "svga.h"
+
+int SV_init(void);
+
+        Detects if a VESA VBE compliant SuperVGA is out there, and
+        initialises the library if one is. Returns the packed BCD version
+        number for the VBE interface detected, or 0 if none is present. For
+        VBE 1.2 this is 0x102, for VBE 2.0 this is 0x200.
+
+bool SV_setMode(int mode);
+
+        Set the specified video mode, given the internal VBE mode number.
+        DONT pass old style VBE mode numbers to this routine (ie: 0x101
+        for 640x480x256), although these *may* still work, the VBE 2.0
+        method is to search through the list of available video modes
+        for the one that has the desired resolution and color depth. This
+        will allow you code to work with all custom video resolutions
+        provided by different OEM VBE drivers (like UniVBE/Pro). Have a
+        look at the code in the HELLOVBE.C file that demonstrates how
+        to start any video mode given a user specified resolution.
+
+        To set a VBE 2.0 linear framebuffer mode, or the flag vbeLinearBuffer
+        with the video mode.
+
+        *DONT* attempt to set a linear framebuffer mode unless it is available.
+        You can determine this by checking that the vbeMdLinear flag is set
+        in the modeAtttibutes field of the VBE_modeInfo block for this video
+        mode.
+
+        This routine also sets up all the drawing function vectors to
+        point to the correct routines for the specified video mode.
+
+        Returns FALSE is the mode could not be set correctly.
+
+void SV_restoreMode(void);
+
+        Restores the previous video mode active befor the setSuperVGAMode
+        routine was called. Also correctly restores the VGA 50 line mode
+        if it was previously active.
+
+int SV_getModeName(char *buf,VBE_modeInfo *mi,ushort mode,bool useLinear);
+
+        Builds a ASCII string representing the video mode given a valid
+        VBE_modeInfo block. If the useLinear flags is TRUE and a linear
+        buffer mode is available, this function returns the linear
+        framebuffer version of the video mode number.
+
+bool SV_set8BitDAC(void);
+
+        This function enables the 8 bit wide palette if available and
+        returns TRUE. If an 8 bit wide palette is not available, this
+        routine returns FALSE and the palette width is unchanged.
+
+bool SV_set6BitDAC(void);
+
+        This function restores the default VGA style 6 bit palette.
+
+ulong SV_rgbColor(uchar r,uchar g,uchar b);
+
+        Packs a set of RGB values into a color value for passing to the
+        primitive drawing routines that is appropriate for the current
+        video mode. This routine is intended to work with RGB video modes
+        such as the 15, 16, 24 and 32 bits per pixel modes (in 8 bit modes
+        it will packed it into a simple 2:3:2 style pixel, so you can set
+        up your own pseudo RGB palette if you so desire).
+
+        You should use this routine to convert all color values to ensure
+        that they work correctly on the different types of direct color
+        video modes available.
+
+bool SV_setBytesPerLine(int bytes);
+
+        Sets the scanline length to a specified bytes per line value.
+        If this succeeds, this function updates the internal variables in
+        the library for drawing with the new logical scanline width. If
+        this function fails it returns false.
+
+        This function is available only under VBE 2.0 and above.
+
+bool SV_setPixelsPerLine(int xMax)
+
+        Sets the scanline length to a specified number of pixels. If this
+        succeeds, this function updates the internal variables in the
+        library for drawing with the new logical scanline width. If this
+        function fails it returns false.
+
+        This function is available only under VBE 1.2 and above.
+
+void SV_setPalette(int start,int num,VBE_palette *pal,int maxProg);
+
+        This function set the specified palette entries, by either
+        directly programming the VGA hardware (for VBE 1.2 and below) or
+        by calling the VBE 2.0 palette interface routines. This routine
+        avoids 'snow' effects on older systems by only programming
+        'maxProg' values per vertical retrace interval. If you set maxProg
+        to 256, all values will be programmed at once and the palette
+        set will be synced to a vertical retrace. If you set maxProg to
+        -1, all values will be set at once and the routine will *not*
+        wait for a vertical retrace before setting the values. For systems
+        that cause snow, a good value of maxProg is about 100-120.
+
+        This routine is *fast* and will provide the fastest method of
+        programming the palette that will work in all systems. Because
+        of the way that palette values are programmed, color values will
+        not be dropped on systems that have slower IO response, so you
+        should *always* use this routine rather than programming the
+        palette yourself. If the controller is and you program the
+        palette yourself (as opposed to having the VBE 2.0 do it) your
+        code will most likely product no result and may well hang the
+        machine waiting for a VGA retrace that never occurs.
+
+        The buffer is expected to be in the correct format, which will
+        be an array of 'palette' structures. If the palette is currently
+        in the default 6 bit VGA mode, this routine expects the values to
+        be 6 bits wide. If it is in an 8 bit palette mode, then the values
+        should be 8 bits wide (and hence you will need to do the
+        conversion yourself).
+
+        Note that the VBE_palette structure is the same as the Windows
+        RGBQUAD palette structure, which is *not* the same as the normal
+        BIOS structure.
+
+void SV_setActivePage(int page);
+
+        Sets the currently active video page for output. Used to implement
+        double buffering for smooth animation.
+
+void SV_setVisualPage(int page);
+
+        Sets the currently visible display page. Used to implement
+        double buffering for smooth animation.
+
+void SV_setBank(int bank);
+
+        'C' callable bank switch routine to set the current read/write bank
+        to the specified value. Assembler functions dont call this routine
+        bit call the register level version in _svgasdk.asm.
+
+void SV_putPixel(int x,int y,ulong color);
+
+        Plots a pixel at the specified (x,y) location in the specified
+        color. The color value MUST be in the correct format for the
+        current video mode (use rgbColor() to pack HiColor and TrueColor
+        RGB values). The pixel is plotted on the currently active
+        display page (which may possibly be hidden from view).
+
+void SV_clear(ulong color);
+
+        Clears the currently active display page to the specified color.
+        The color value MUST be in the correct format for the current video
+        mode (use rgbColor() to pack HiColor and TrueColor RGB values).
+
+void SV_line(int x1,int y1,int x2,int y2,ulong color);
+
+        Draws a line from the point (x1,y1) to (x2,y2) in the specified
+        color. The color value MUST be in the correct format for the
+        current video mode (use rgbColor() to pack HiColor and TrueColor
+        RGB values). The line is drawn on the currently active
+        display page (which may possibly be hidden from view).
+
+void SV_writeText(int x,int y,char *str,ulong color);
+
+        Writes the text sting at the location x,y in the standard VGA
+        8x16 VGA font, and the specified color. The background between
+        the text is not erased.
+
+VESAVBE.C module reference
+--------------------------
+
+int VBE_detect(VBE_vgaInfo *vgaInfo);
+
+        Detects if a VESA VBE is out there and functioning correctly. If we
+        detect a VBE interface we return the VBE_vgaInfo block returned by
+        the VBE and the VBE version number. This functon also internally
+        translates all strings and the videoModeTable from real mode
+        memory into the local data segment so you can directly access it
+        from normal C code.
+
+bool VBE_getModeInfo(int mode,VBE_modeInfo *modeInfo);
+
+        Returns the video mode information for the specified VBE internal
+        video mode number. The mode number must be valid, or this routine
+        will return FALSE. Check the modeList[] array which contains the
+        list of available video modes that you can use.
+
+        You should carefully examine this mode information block to find
+        out whether the video mode supports a linear framebuffer mode and
+        if so where the buffer is located in physical memory. Note that
+        not *all* video modes are compatible with the linear framebuffer
+        access, so you should *always* check this block to see if the
+        particular mode you are using supports a linear framebuffer.
+
+        For double buffering you *must* use the NumberOfImagePages value
+        to determine how many hardware buffers you have available. For
+        VBE 2.0 these values will always be correct, but for VBE 1.2
+        VESAVBE fudges it which may be incorrect in some cases.
+
+long VBE_getPageSize(VBE_modeInfo *modeInfo);
+
+        Computes the page size in bytes for the specified mode information
+        block, rounded up to the appropriate boundary (8k, 16k, 32k or 64k).
+        Pages >= 64k in size are always rounded to the nearest 64k boundary
+        (so the start of a page is always bank aligned). This page size
+        values should be used for computing the starting locations of all
+        the hardware video pages for performing double or multiple buffering
+        using the VBE.
+
+bool VBE_setVideoMode(int mode);
+
+        Set the specified video mode, given the internal VBE mode number.
+        DONT pass old style VBE mode numbers to this routine (ie: 0x101
+        for 640x480x256), although these *may* still work, the VBE 2.0
+        method is to search through the list of available video modes
+        for the one that has the desired resolution and color depth. This
+        will allow you code to work with all custom video resolutions
+        provided by different OEM VBE drivers (like UniVBE/Pro). Have a
+        look at the code in the HELLOVBE.C file that demonstrates how
+        to start any video mode given a user specified resolution.
+
+        To set a VBE 2.0 linear framebuffer mode, or the flag vbeLinearBuffer
+        with the video mode.
+
+        *DONT* attempt to set a linear framebuffer mode unless it is available.
+        You can determine this by checking that the vbeMdLinear flag is set
+        in the modeAtttibutes field of the VBE_modeInfo block for this video
+        mode.
+
+        Returns FALSE is the mode could not be set correctly.
+
+int VBE_getVideoMode(void);
+
+        Returns the currently active VBE or VGA video mode number.
+
+int VBE_getStateSize(int flags);
+
+        Returns the size of the SuperVGA State block required to save
+        the current state of the video hardware. Similar to the standard
+        VGA routine, but extended to include the SuperVGA hardware state.
+
+bool VBE_saveState(int flags,void *buffer);
+
+        Saves the SuperVGA state into the pre-allocated buffer.
+
+bool VBE_restoreState(int flags,void *buffer);
+
+        Restores the SuperVGA state from the buffer.
+
+bool VBE_setBank(int window,int bank);
+
+        Call the VBE to set the current bank value for the specified window.
+        This routine performs this using an Int 10h, so you should *not* use
+        it from high performance code!!
+
+int VBE_getBank(int window);
+
+        Calls the VBE to return the current bank for the specified window.
+
+bool VBE_setPixelsPerLine(int pixelsPerLine,int *newBytes,int *newPixels,
+		int *maxScanlines);
+
+        Attempts to set the logical scanline length to a specified number
+        of pixels. If this routine succeeds, the new logical scanline
+        information is returned in 'newBytes', 'newPixels' and 'maxScanlines'.
+        Note that the actual value programmed may *not* be exactly what
+        was requested, by may be slighly larger due to hardware limitations.
+
+        *NOTE* VBE 1.2+ only!
+
+bool VBE_setBytesPerLine(int bytesPerLine,int *newBytes,int *newPixels,
+		int *maxScanlines);
+
+        Attempts to set the logical scanline length to a specified bytes
+        per scanline value. If this routine succeeds, the new logical scanline
+        information is returned in 'newBytes', 'newPixels' and 'maxScanlines'.
+        Note that the actual value programmed may *not* be exactly what
+        was requested, by may be slightly larger due to hardware limitations.
+
+        *NOTE* VBE 2.0+ only!
+
+bool VBE_getScanlineLength(int *bytesPerLine,int *pixelsPerLine,
+		int *maxScanlines);
+
+        Obtains the current scaline length in bytes per line and pixels
+        per line. This routine also returns the maximum number of scanlines
+        for the current video mode, and defines the maximum accessible
+        memory location in video memory.
+
+        *NOTE* In some video modes, even though the controller have may
+               2Mb or more video memory, only 1Mb or 512Kb is accessible
+               to the application. In this case this function *must* be
+               used to determine just how far into the framebuffer the
+               virtual screen extends.
+
+               For double buffering you *must* use the NumberOfImagePages
+               value to determine how many buffers you have available.
+
+        *NOTE* VBE 1.2+ only!
+
+bool VBE_getMaxScanlineLength(int *maxBytes,int *maxPixels);
+
+        Obtains the maximum possible bytes per scanline and pixels per
+        scanline supported by the hardware in a particular video mode.
+        You should call this routine to determine just how wide you can
+        make the virtual buffer for virtual scrolling applications.
+
+        *NOTE* VBE 2.0+ only!
+
+bool VBE_setDisplayStart(int x,int y,bool waitVRT);
+
+        Sets the CRTC display starting address to the specified value. You
+        can use this routine to implement hardware scrolling. You can
+        also use this function to perform double buffering - see the
+        SV_setVisualPage() routine in _SVGASDK.ASM for sample code.
+
+        If the waitVRT flag is false, the routine will not wait for
+        a vertical retrace before programming the CRTC starting address,
+        otherwise the routine will sync to a vertical retrace. Under
+        VBE 1.2 it is not guaranteed what the behaviour will be (some
+        wait and some dont).
+
+        Returns FALSE if the value could not be set.
+
+        *NOTE* This routine always used Int 10h, so for maximum performance
+               under protected mode you should use the VBE 2.0 32 bit
+               version.
+
+bool VBE_getDisplayStart(int *x,int *y);
+
+        Returns the current display starting address in pixels.
+
+bool VBE_setDACWidth(int width);
+
+        Attempts to set the DAC width to the specified number of bits.
+        Generally only 6 or 8 bits are acceptable values. If this
+        function fails, it returns false.
+
+int VBE_getDACWidth(void);
+
+        Returns the current DAC width.
+
+bool VBE_setPalette(int start,int num,VBE_palette *pal,bool waitVRT);
+
+        Sets the specified block of palette entires as fast a possible.
+        If the waitVRT flag is true, the routine will sync to a vertical
+        retrace before programming the values. However this routine
+        will *always* program all palette entries one after another, so
+        if you need to check for snow you will need to interleave calls
+        to this code with smaller blocks of registers to program per
+        retrace. See the SV_setPalette() for examples of this.
+
+        The buffer is expected to be in the correct format, which will
+        be an array of 'palette' structures. If the palette is currently
+        in the default 6 bit VGA mode, this routine expects the values to
+        be 6 bits wide. If it is in an 8 bit palette mode, then the values
+        should be 8 bits wide (and hence you will need to do the
+        conversion yourself).
+
+        Note that the VBE_palette structure is the same as the Windows
+        RGBQUAD palette structure, which is *not* the same as the normal
+        BIOS structure.
+
+        *NOTE* This routine always uses Int 10h, so for maximum performance
+               under protected mode you should use the VBE 2.0 32 bit
+               routine. In fact for protected mode code this routine
+               will be *slow* as it needs to copy the buffer into a real
+               mode address for every function call.
+
+ushort VBE_getLinearSelector(VBE_modeInfo *modeInfo);
+
+        Utility function to create a selector to the linear framebuffer
+        for the specified video mode. The selector is created only
+        once (the linear framebuffer location *never* moves after bootup)
+        and is cached for all other functions calls. The selector
+        is always created with a limit of 8Mb, regardless of how much
+        physical memory is really present.
+
+void *VBE_getSetBank(void);
+
+        Returns a pointer to the relocated 32 bit protected mode bank
+        switching routine.
+
+        Under 32 bit protected mode this routine is a 32 bit near function.
+
+        Under 16 bit Windows this routine returns a 16:16 far pointer with
+        the selector set to a USE32 code segment so that this function
+        can be called directly from 16 bit code. Internally the VESAVBE
+        module creates a small thunk to call the 32 bit near function
+        and return to the 16 bit far calling function.
+
+        This function can only be called from assembler and takes the
+        following arguments in registers:
+
+                BX := window number
+                DX := bank number (in granularity units)
+
+void *VBE_getSetDisplayStart(void);
+
+        Returns a pointer to the relocated 32 bit protected mode CRTC
+        start address routine.
+
+        Under 32 bit protected mode this routine is a 32 bit near function.
+
+        Under 16 bit Windows this routine returns a 16:16 far pointer with
+        the selector set to a USE32 code segment so that this function
+        can be called directly from 16 bit code. Internally the VESAVBE
+        module creates a small thunk to call the 32 bit near function
+        and return to the 16 bit far calling function.
+
+        This function can only be called from assembler. The arguments
+        to this routine are completely different to VBE function 4F07h,
+        and takes the value to be programmed into the CRTC start address
+        registers as a linear starting address, not as an (X,Y) pixel
+        coordinate. In 4 bit video modes this value is equal to the byte
+        address in video memory for the starting address. In 8+ bit modes
+        this value is equal to the linear byte address in video memory
+        divided by 4 (historically this is related to the fact that the
+        CRTC register are programmed on a plane boundary in chain-4 video
+        modes). The actual value programmed may be rounded down by the
+        hardware if required (lots of systems align to an 8 byte or even
+        16 byte boundary).
+
+        This function takes the following arguments in registers:
+
+                DX := High byte of Linear CRTC starting address (see above)
+                CX := Low byte of Linear CRTC starting address
+                BX := 00h - Set display start
+                      80h - Set display start and wait for retrace
+
+        *NOTE* There is no provision for setting the starting address to
+               an *exact* X coordinate pixel offset. Lots of hardware cannot
+               handle this, and the PEL panning register is not available
+               in many video chips.
+
+void *VBE_getSetPalette(void);
+
+        Returns a pointer to the relocated 32 bit protected mode palette
+        programming routine.
+
+        Under 32 bit protected mode this routine is a 32 bit near function.
+
+        Under 16 bit Windows this routine returns a 16:16 far pointer with
+        the selector set to a USE32 code segment so that this function
+        can be called directly from 16 bit code. Internally the VESAVBE
+        module creates a small thunk to call the 32 bit near function
+        and return to the 16 bit far calling function.
+
+        This function can only be called from assembler and takes the
+        following arguments in registers:
+
+                BL  := 00h - Set palette data
+                       80h - Set palette data and wait for retrace
+                CX  := Number of palette entries to program
+                DX  := Starting palette entry
+             ES:EDI := Pointer to block of palette date in correct format
+
+void VBE_freePMCode(void);
+
+        Function to free the 32 bit PM code block used to relocate the
+        32 bit code into the applications own code space. This function
+        *must* be called after the video mode is returned to text mode
+        to ensure that the appropriate routines will be relocated the
+        next time a video mode is started.
+
+<*** END OF DOCUMENT ***>
+

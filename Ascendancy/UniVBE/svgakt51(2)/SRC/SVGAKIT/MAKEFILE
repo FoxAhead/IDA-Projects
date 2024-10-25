@@ -1,0 +1,61 @@
+#############################################################################
+#
+#                   Copyright (C) 1994 SciTech Software
+#                           All rights reserved.
+#
+# Descripton:   Generic makefile for the SuperVGA Kit. Requires the SciTech
+#               Software makefile definitions package to be installed.
+#
+# $Id: makefile 1.1 1995/02/06 16:34:12 kjb Exp $
+#
+#############################################################################
+
+# DOS extender dependant flags
+
+CFLAGS          += $(DX_CFLAGS)
+ASFLAGS         += $(DX_ASFLAGS)
+
+# Name of library and object files required to build it
+
+LIBFILE         = svga$L
+OBJECTS         = vesavbe$O svgasdk$O _svgasdk$O _linsdk$O font8x16$O cpu$O
+
+# Names of all executable files built
+
+EXEFILES        = svtest$E profile$E
+EXELIBS         = ztimer$L
+
+# Link with UVBELib(tm) device support library if desired
+
+.IF $(USE_UVBELIB)
+CFLAGS          += -DUSE_UVBELIB
+EXELIBS         += uvbelib$L
+.ENDIF
+
+all: $(EXEFILES)
+
+svtest$E: svtest$O tests$O getopt$O $(LIBFILE)
+profile$E: profile$O _profile$O getopt$O $(LIBFILE)
+hellovbe$E: hellovbe$O
+
+# The following is 4Dos specific!!
+
+smallclean:
+    @del *.sym *.bak *.tdk *.map *.dsk *.log
+    @except (cpu.* font8x16.* svga.*) del *.obj *.o
+
+# Source files to check in with RCS (RCSFILES_H are in SCITECH\INCLUDE)
+
+RCSFILES        = getopt.c hellovbe.c profile.c svgasdk.c svtest.c tests.c  \
+                  version.c vesavbe.c windirec.c svtestw.cpp cpu.asm        \
+                  font8x16.asm _linsdk.asm _profile.asm _svgasdk.asm        \
+                  svtestw.h windirec.h getopt.h
+RCSFILES_H      = svga.h vesavbe.h
+
+# Define the list of object files to create dependency information for
+
+DEPEND_OBJ      = $(OBJECTS) svtest$O getopt$O cpu$O profile$O 		\
+				  _profile$O hellovbe$O
+
+.INCLUDE: "$(SCITECH)\makedefs\common.mk"
+

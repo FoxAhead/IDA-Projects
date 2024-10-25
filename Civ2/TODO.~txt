@@ -1,0 +1,83 @@
+- Highlight city on the map which window is opened
+- Music from folder as MP3 or FLAC
+- Video scaling(x2, x3...)
+- Play movies encoded in H264/H265 (for AI upscaled versions)
++ CityViewWindow: Center image on the screen wider than 1280
+- CityViewWindow: Scale image on the screen wider than 1280 (?)
+- Zero coordinate passing: going around the world
+- Pathfinding
++ Icon for Alt-TAB
++ Limit patches
++ AI-attitude patch 
+- ?Lost Wonders retrieval
+- ?Hide city specialists 16+
++ Mouse panning
++ Idle CPU
++ NoCD
++ Smart NoCD
+? Bug: after selling, game turn disapears (fixed?)
++ the amount of built libraries/marketplaces/etc. even when Adam Smith's is built? (Simply display the upkeep costs as: 0g.)
+
++ Sort supported units list
++ Reset Engineer's order after passing its work to coworker
++ Don't break unit movement on ZOC
++ Set focus to city window opened from F1 or F4
++ Radios hotkeys
++ Reset units Wait flag after activating
+- Search next nearest unit from where previous unit started move
++ Tooltips. City quickinfo.
++ Advisor caption area increased
++ Resizable windows: Advisors, Units List Popup, City Change Production dialog
++ Better scrolling in Units List Popup: no flickering, adjusting scrollbar PageSize, keys navigation
+- fix for faulty cheat mode toggle - CIV2.DAT
++ Enhanced City Status advisor: Sorting, Total Cities number, ability to change production
++ ScienceAdvisor: More info (beakers, production, turns to complete)
+- Save windows layout
+- Fix listbox width with large strings
++ Display some simple popups as messages in map overlay
++ Include fix for mk.dll (229.gif, 250.gif) and pv.dll (105.gif)
+- Option for removing borders and titles for main three windows (map, minimap, statusbar)
+- Defense Minister Advisor: more info, number of units
+- Would a profit calculation display be feasible in the f5 Supply and Demand screen, for say, the currently active Freight? (Buster's Uncle)
+- Map panning with mouse dragging over minimap
++ TaxWindow: more info, show turns to complete research
++ CityWindow: Mass change specialists (with Shift OR Ctrl)
++ CityWindow: Indicate We Love The King Day in the city window
++ CityWindow: ChangeProductionDialog: Add Cancel button - Esc is Cancel
++ CityWindow: ChangeProductionDialog: Draw corresponding sprites next to build cost and mantainance cost
++ CityWindow: ChangeProductionDialog: Correct Barracks maintenance costs after the discovery of Gunpowder and Mobile Warfare
++ CityWindow: Draw city size
++ CityWindow: ResourceMap: show total resources gathered from the tiles
++ CityWindow: ResourceMap: show resources from the tile under the mouse cursor
++ CityWindow: ResourceMap: right click on center removes all workers
++ CityWindow: Show trade route level (qualified multiplier)
++ CityWindow: Building: turns left to complete production
++ CityWindow: while in Turn phase allow to press key 'C' without warning about closing window
++ CityWindow: while in Turn phase bring back focus to CityWindow after warning about closing window
++ Veteran indicator on unit
+- Don't wake units in city on ship enter
+- Countdown on autoclosing popups
+- Organize some stack to track chain of opened windows and set focus to previous when closing current one
+- MapWindow: With nothing selected holding B shows city diamond area
+- Advisors: allow to press Shift+T to call TaxWindow, and F1-F5 to call other Advisors
+- Civilopedia: Correct Barracks maintenance costs after the discovery of Gunpowder and Mobile Warfare
+- BUG: CityWindow: after Change or Buy dialog and exiting CityWindow Advisors not updated. Because focus is on the map. (no sound when exiting city)
+
+- Mods support with options:
+- extend COSMIC limits caps
+- Stack destroying percentage
+- Alternative City Happines calculation
++ SCENARIOS: Restore the x3 major objective for cities as in Fantastic Worlds (see TOTPP Patch 54 : Major objective)
+
+https://forums.civfanatics.com/threads/civilization-ii-mge-user-interface-additions-civ2uia.623515/page-4#post-15354643
+<<
+Feature Requests:
+1. Lock each window in the game interface.
+One of the most annoying things is when you accidentally move (with the mouse) the main Game Window, or the Status Window, or the World Map window from their default positions. You then have to end up spending time unnecessarily placing them back in their original position. Would it be possible to have them "locked" to their original default positions?
+2. Combine all music tracks from all Civ 2 games (Civ2 Classic, Civ2 Conflicts in Civilization, Civ2 Fantastic Worlds, Civ2 MGE, Civ2 Test of Time)
+According to this site, there is no Civ2 game disc that contains all the tracks from all Civ2 games. You would have to insert the Fantastic Worlds disc, for example, if you want to hear soundtracks that are not listed in MGE.
+I guess my question is, would it be possible to copy all tracks from all Civ2 games to a custom 'Music' folder (in something like MP3/FLAC/WAV format), and have the game play from this folder instead of from the disc?
+As another feature request, since multiple users are having this same problem according to the threads, would it be possible to have this codec-enabling feature integrated directly in your Civ2UIA tweak? It would also prevent unnecessarily downloading other external third party programs (which may contain adware or such) just to enable this codec. Thank you sincerely.
+[edit] Sorry, just wanted to add one more request. I notice the music track pauses when you access certain features like when consulting High Council or talking to other leaders. This is good. But once you return back to the game, instead of continuing where it left off, it moves to the next track. Would it be possible to have it continue from that point where it left off?
+>>
+

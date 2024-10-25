@@ -1,0 +1,1876 @@
+
+  bytes   pages size description
+--------- ----- ---- --------------------------------------------
+  8781824  1072 8192 allocating memory for b-tree...
+  9379840  1145 8192 allocating memory for virtual array...
+   262144    32 8192 allocating memory for name pointers...
+-----------------------------------------------------------------
+ 18423808            total memory allocated
+
+Loading processor module C:\Program Files\IDA 7.0\procs\pc.dll for metapc...OK
+Loading type libraries...
+Autoanalysis subsystem has been initialized.
+[DEBUG] Demangled names have been initialized
+[Info] Collecting information about imports
+[Info] Done...
+Database for file 'civ2.exe' has been loaded.
+Hex-Rays Decompiler plugin has been loaded (v7.0.0.170914)
+  License: 57-BF5F-7D44-11 Jiang Ying, Personal license (1 user)
+  The hotkeys are F5: decompile, Ctrl-F5: decompile all.
+  Please check the Edit/Plugins menu for more informaton.
+IDAPython Hex-Rays bindings initialized.
+---------------------------------------------------------------------------------------
+Python 2.7.16 (v2.7.16:413a49145e, Mar  4 2019, 01:37:19) [MSC v.1500 64 bit (AMD64)] 
+IDAPython v1.7.0 final (serial 0) (c) The IDAPython Team <idapython@googlegroups.com>
+---------------------------------------------------------------------------------------
+Caching 'Functions window'... ok
+Caching 'Functions window'... ok
+Command "JumpOpXref" failed
+Caching 'Functions window'... ok
+Caching 'Names window'... ok
+function: 005F2490, scopetable: 0061D790 (1 entries)
+function: 005F2540, scopetable: 0061D7A0 (1 entries)
+function: 005F2620, scopetable: 0061D7B0 (1 entries)
+function: 005F6E90, scopetable: 0061E2F0 (1 entries)
+function: 005F8050, scopetable: 0061E438 (1 entries)
+function: 005F8290, scopetable: 0061E448 (2 entries)
+function: 005F8460, scopetable: 0061E460 (1 entries)
+function: 005F8740, scopetable: 0061E470 (1 entries)
+function: 005F8880, scopetable: 0061E480 (2 entries)
+function: 005F8950, scopetable: 0061E498 (2 entries)
+Fixing function at 0x00408D33
+Detected function start at 00408D33
+Handlers block: 0040A54E-0040A55A
+Function end: 0040A55A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040CD64
+Detected function start at 0040CD64
+Handlers block: 0040DD90-0040DDAC
+Function end: 0040DDAC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040DDC6
+Detected function start at 0040DDC6
+Handlers block: 0040DEA8-0040DEB4
+Function end: 0040DEB4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040E017
+Detected function start at 0040E017
+Handlers block: 0040E38D-0040E399
+Function end: 0040E399
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F060
+Detected function start at 0040F060
+Handlers block: 0040F115-0040F172
+Function end: 0040F18B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F1E0
+Detected function start at 0040F1E0
+Handlers block: 0040F25F-0040F2BC
+Function end: 0040F2BC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F3E0
+Detected function start at 0040F3E0
+Handlers block: 0040F435-0040F43E
+Function end: 0040F457
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F570
+Detected function start at 0040F570
+Handlers block: 0040F5C3-0040F5CC
+Function end: 0040F5CC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F8B0
+Detected function start at 0040F8B0
+Handlers block: 0040F8F4-0040F8FD
+Function end: 0040F916
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040F930
+Detected function start at 0040F930
+Handlers block: 0040F98A-0040F993
+Function end: 0040F993
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040FB00
+Detected function start at 0040FB00
+Handlers block: 0040FB62-0040FB6B
+Function end: 0040FB84
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0040FBB0
+Detected function start at 0040FBB0
+Handlers block: 0040FC0A-0040FC13
+Function end: 0040FC13
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004100CF
+Detected function start at 004100CF
+Handlers block: 004102D5-004102EA
+Function end: 004102EA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00416C9E
+Detected function start at 00416C9E
+Handlers block: 00417532-0041754E
+Function end: 0041754E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00417566
+Detected function start at 00417566
+Handlers block: 004175BF-004175CB
+Function end: 004175CB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00417FA0
+Detected function start at 00417FA0
+Handlers block: 00418183-004182D9
+Function end: 004182F2
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004183D0
+Detected function start at 004183D0
+Handlers block: 0041851F-00418675
+Function end: 00418675
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004187A0
+Detected function start at 004187A0
+Handlers block: 0041881A-00418823
+Function end: 0041883C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00418870
+Detected function start at 00418870
+Handlers block: 004188CA-004188D3
+Function end: 004188D3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00418AB0
+Detected function start at 00418AB0
+Handlers block: 00418B08-00418B11
+Function end: 00418B2A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00418B50
+Detected function start at 00418B50
+Handlers block: 00418BAA-00418BB3
+Function end: 00418BB3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00418E00
+Detected function start at 00418E00
+Handlers block: 00418E58-00418E61
+Function end: 00418E7A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00418EA0
+Detected function start at 00418EA0
+Handlers block: 00418EFA-00418F03
+Function end: 00418F03
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00419170
+Detected function start at 00419170
+Handlers block: 00419940-00419958
+Function end: 00419958
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041B177
+Detected function start at 0041B177
+Handlers block: 0041B46A-0041B476
+Function end: 0041B46A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041BA52
+Detected function start at 0041BA52
+Handlers block: 0041D3F2-0041D3FE
+Function end: 0041D3FE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041D417
+Detected function start at 0041D417
+Handlers block: 0041D7C5-0041D7D1
+Function end: 0041D7D1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041D7EA
+Detected function start at 0041D7EA
+Handlers block: 0041DC9E-0041DCAA
+Function end: 0041DCAA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041DFE1
+Detected function start at 0041DFE1
+Handlers block: 0041E7B2-0041E7CA
+Function end: 0041E7CA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041E8FB
+Detected function start at 0041E8FB
+Handlers block: 0041EEC6-0041EED2
+Function end: 0041EED2
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041EEEB
+Detected function start at 0041EEEB
+Handlers block: 0041F66E-0041F686
+Function end: 0041F686
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0041F8D9
+Detected function start at 0041F8D9
+Handlers block: 004201EF-00420213
+Function end: 00420213
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00421FCD
+Detected function start at 00421FCD
+Handlers block: 00424101-00424141
+Function end: 00424141
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00429671
+Detected function start at 00429671
+Handlers block: 00429E43-00429E5F
+Function end: 00429E5F
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00429E77
+Detected function start at 00429E77
+Handlers block: 00429ED0-00429EDC
+Function end: 00429EDC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0042A7BC
+Detected function start at 0042A7BC
+Handlers block: 0042AB9B-0042ABA7
+Function end: 0042ABA7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0042B824
+Detected function start at 0042B824
+Handlers block: 0042BC22-0042BC2E
+Function end: 0042BC2E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0042BC47
+Detected function start at 0042BC47
+Handlers block: 0042BD6B-0042BD77
+Function end: 0042BD77
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0043039D
+Detected function start at 0043039D
+Handlers block: 004305E7-004305F3
+Function end: 004305F3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004308AE
+Detected function start at 004308AE
+Handlers block: 0043154F-0043155B
+Function end: 0043155B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00431D22
+Detected function start at 00431D22
+Handlers block: 004325A9-004325F9
+Function end: 004325F9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00432611
+Detected function start at 00432611
+Handlers block: 00432BF8-00432C04
+Function end: 00432C04
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0043742F
+Detected function start at 0043742F
+Handlers block: 004379DE-004379F8
+Function end: 00437A10
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0043C110
+Detected function start at 0043C110
+Handlers block: 0043C19C-0043C1FF
+Function end: 0043C1FF
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0043C260
+Detected function start at 0043C260
+Handlers block: 0043C319-0043C37C
+Function end: 0043C395
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00441B11
+Detected function start at 00441B11
+Handlers block: 0044251D-00442529
+Function end: 00442529
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00444310
+Detected function start at 00444310
+Handlers block: 0044523D-00445275
+Function end: 00445275
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044528E
+Detected function start at 0044528E
+Handlers block: 00445407-00445413
+Function end: 00445413
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044542C
+Detected function start at 0044542C
+Handlers block: 0044556D-00445579
+Function end: 00445579
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00445592
+Detected function start at 00445592
+Handlers block: 004456ED-004456F9
+Function end: 004456F9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00445712
+Detected function start at 00445712
+Handlers block: 00445E15-00445E2D
+Function end: 00445E2D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00445E46
+Detected function start at 00445E46
+Handlers block: 004467FA-00446806
+Function end: 00446806
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00449030
+Detected function start at 00449030
+Handlers block: 0044996F-00449984
+Function end: 00449984
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00449A0E
+Detected function start at 00449A0E
+Handlers block: 0044AB4E-0044AB5A
+Function end: 0044AB5A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044B49E
+Detected function start at 0044B49E
+Handlers block: 0044B4F6-0044B502
+Function end: 0044B502
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044C5A0
+Detected function start at 0044C5A0
+Handlers block: 0044C616-0044C62B
+Function end: 0044C644
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044C670
+Detected function start at 0044C670
+Handlers block: 0044C6E5-0044C6EE
+Function end: 0044C707
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044C730
+Detected function start at 0044C730
+Handlers block: 0044C833-0044C848
+Function end: 0044C861
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CA60
+Detected function start at 0044CA60
+Handlers block: 0044CAAB-0044CADC
+Function end: 0044CADC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CB20
+Detected function start at 0044CB20
+Handlers block: 0044CB5E-0044CB67
+Function end: 0044CB67
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CBA0
+Detected function start at 0044CBA0
+Handlers block: 0044CC01-0044CC32
+Function end: 0044CC32
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CC80
+Detected function start at 0044CC80
+Handlers block: 0044CD77-0044CD83
+Function end: 0044CD83
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CD9B
+Detected function start at 0044CD9B
+Handlers block: 0044CDF2-0044CDFE
+Function end: 0044CDFE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044CE16
+Detected function start at 0044CE16
+Handlers block: 0044CF9A-0044D00C
+Function end: 0044D027
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044D027
+Detected function start at 0044D027
+Handlers block: 0044D0D8-0044D14A
+Function end: 0044D14A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044D296
+Detected function start at 0044D296
+Handlers block: 0044D99D-0044D9A9
+Function end: 0044D9A9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044DB92
+Detected function start at 0044DB92
+Handlers block: 0044E762-0044E777
+Function end: 0044E777
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0044E790
+Detected function start at 0044E790
+Handlers block: 0044F498-0044F4B0
+Function end: 0044F4B0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00450480
+Detected function start at 00450480
+Handlers block: 00450AB2-00450ACC
+Function end: 00450AE6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00451930
+Detected function start at 00451930
+Handlers block: 00451974-0045197D
+Function end: 00451996
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00451BF0
+Detected function start at 00451BF0
+Handlers block: 00452156-00452170
+Function end: 00452188
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00452A67
+Detected function start at 00452A67
+Handlers block: 00452AC1-00452ACA
+Function end: 00452ACA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00452C14
+Detected function start at 00452C14
+Handlers block: 00453191-0045319E
+Function end: 004531B8
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00453B10
+Detected function start at 00453B10
+Handlers block: 00453B57-00453B63
+Function end: 00453B7C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00453BA0
+Detected function start at 00453BA0
+Handlers block: 00453BFA-00453C03
+Function end: 00453C03
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00453CC0
+Detected function start at 00453CC0
+Handlers block: 00453D04-00453D0D
+Function end: 00453D26
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00454260
+Detected function start at 00454260
+Handlers block: 0045431F-0045432C
+Function end: 00454344
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00454354
+Detected function start at 00454354
+Handlers block: 00454587-00454680
+Function end: 00454699
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00454699
+Detected function start at 00454699
+Handlers block: 00454798-00454891
+Function end: 00454891
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004548A9
+Detected function start at 004548A9
+Handlers block: 00454E8B-00454E97
+Function end: 00454E97
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00458AB1
+Detected function start at 00458AB1
+Handlers block: 00458DD5-00458DE1
+Function end: 00458DE1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00458DF9
+Detected function start at 00458DF9
+Handlers block: 00459169-00459175
+Function end: 00459175
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0045950B
+Detected function start at 0045950B
+Handlers block: 0045A510-0045A51C
+Function end: 0045A51C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0045DD7F
+Detected function start at 0045DD7F
+Handlers block: 0045F08D-0045F099
+Function end: 0045F099
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0045F0B1
+Detected function start at 0045F0B1
+Handlers block: 0045FD43-0045FD4F
+Function end: 0045FD4F
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0045FE19
+Detected function start at 0045FE19
+Handlers block: 00460104-00460110
+Function end: 00460110
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004683F0
+Detected function start at 004683F0
+Handlers block: 00468763-0046877D
+Function end: 00468797
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0046DA40
+Detected function start at 0046DA40
+Handlers block: 0046DD98-0046DDC8
+Function end: 0046DDC8
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004702E0
+Detected function start at 004702E0
+Handlers block: 004703AF-004703BC
+Function end: 004703D4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004703D4
+Detected function start at 004703D4
+Handlers block: 0047047F-004704D3
+Function end: 004704EC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004704EC
+Detected function start at 004704EC
+Handlers block: 0047056B-004705BF
+Function end: 004705BF
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004710D0
+Detected function start at 004710D0
+Handlers block: 0047132E-0047134A
+Function end: 0047134A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00471362
+Detected function start at 00471362
+Handlers block: 0047140D-00471461
+Function end: 0047147A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0047147A
+Detected function start at 0047147A
+Handlers block: 004714F9-0047154D
+Function end: 0047154D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00471DD8
+Detected function start at 00471DD8
+Handlers block: 00472393-004723DB
+Function end: 004723DB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00477D8C
+Detected function start at 00477D8C
+Handlers block: 004786F8-00478704
+Function end: 00478704
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0047DCE0
+Detected function start at 0047DCE0
+Handlers block: 0047DD75-0047DDBA
+Function end: 0047DDD3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0047DE10
+Detected function start at 0047DE10
+Handlers block: 0047DE82-0047DEC7
+Function end: 0047DEC7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0047E94E
+Detected function start at 0047E94E
+Handlers block: 00482305-0048231D
+Function end: 0048231D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0048B340
+Detected function start at 0048B340
+Handlers block: 0048BF2D-0048BF39
+Function end: 0048BF39
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0048BFEC
+Detected function start at 0048BFEC
+Handlers block: 0048C9CE-0048C9DA
+Function end: 0048C9DA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0048C9F3
+Detected function start at 0048C9F3
+Handlers block: 0048D989-0048D995
+Function end: 0048D995
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0049275A
+Detected function start at 0049275A
+Handlers block: 00492868-00492874
+Function end: 00492874
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00493E83
+Detected function start at 00493E83
+Handlers block: 00493EEB-00493EF7
+Function end: 00493EF7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00493F0F
+Detected function start at 00493F0F
+Handlers block: 00494123-00494130
+Function end: 00494148
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004942A3
+Detected function start at 004942A3
+Handlers block: 0049435C-004943B0
+Function end: 004943C9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004943C9
+Detected function start at 004943C9
+Handlers block: 0049444F-004944A3
+Function end: 004944A3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00494949
+Detected function start at 00494949
+Handlers block: 00494B3A-00494B46
+Function end: 00494B46
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00494B5F
+Detected function start at 00494B5F
+Handlers block: 00494D71-00494D95
+Function end: 00494D95
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00494E2A
+Detected function start at 00494E2A
+Handlers block: 00495BE2-00495C1C
+Function end: 00495C1C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00495C35
+Detected function start at 00495C35
+Handlers block: 00495DCF-00495DF3
+Function end: 00495DF3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00495E0C
+Detected function start at 00495E0C
+Handlers block: 00496100-0049610C
+Function end: 0049610C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0049621D
+Detected function start at 0049621D
+Handlers block: 004962CC-00496311
+Function end: 0049632A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0049632A
+Detected function start at 0049632A
+Handlers block: 004963A5-004963EA
+Function end: 004963EA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0049836A
+Detected function start at 0049836A
+Handlers block: 004985D0-004985DC
+Function end: 004985DC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004985F4
+Detected function start at 004985F4
+Handlers block: 0049875F-0049876B
+Function end: 0049876B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A4304
+Detected function start at 004A4304
+Handlers block: 004A44A2-004A44AE
+Function end: 004A44AE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A44C6
+Detected function start at 004A44C6
+Handlers block: 004A4667-004A4673
+Function end: 004A4673
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A468B
+Detected function start at 004A468B
+Handlers block: 004A4948-004A4954
+Function end: 004A4954
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A54D9
+Detected function start at 004A54D9
+Handlers block: 004A5D5E-004A5D7A
+Function end: 004A5D7A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A5D92
+Detected function start at 004A5D92
+Handlers block: 004A5DEB-004A5DF7
+Function end: 004A5DF7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A6CC5
+Detected function start at 004A6CC5
+Handlers block: 004A6DC9-004A6DDE
+Function end: 004A6DDE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004A6E39
+Detected function start at 004A6E39
+Handlers block: 004A6F3D-004A6F52
+Function end: 004A6F52
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004AF3E0
+Detected function start at 004AF3E0
+Handlers block: 004AF833-004AF84D
+Function end: 004AF867
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004B4108
+Detected function start at 004B4108
+Handlers block: 004B456F-004B4578
+Function end: 004B4593
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004B4593
+Detected function start at 004B4593
+Handlers block: 004B4705-004B471D
+Function end: 004B471D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004B4735
+Detected function start at 004B4735
+Handlers block: 004B4BE3-004B4BEF
+Function end: 004B4BEF
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004B5C93
+Detected function start at 004B5C93
+Handlers block: 004B73D4-004B74AC
+Function end: 004B74C4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BB740
+Detected function start at 004BB740
+Handlers block: 004BB7B0-004BB7B9
+Function end: 004BB7B9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BB8E0
+Detected function start at 004BB8E0
+Handlers block: 004BB97B-004BB987
+Function end: 004BB987
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BB99F
+Detected function start at 004BB99F
+Handlers block: 004BBA2A-004BBA60
+Function end: 004BBA79
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BBA79
+Detected function start at 004BBA79
+Handlers block: 004BBAF1-004BBB27
+Function end: 004BBB27
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BBB3F
+Detected function start at 004BBB3F
+Handlers block: 004BBDBD-004BBDE1
+Function end: 004BBDE1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004BF05B
+Detected function start at 004BF05B
+Handlers block: 004BFD9A-004BFDA6
+Function end: 004BFDA6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004C0CF7
+Detected function start at 004C0CF7
+Handlers block: 004C193A-004C1946
+Function end: 004C1946
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004C195E
+Detected function start at 004C195E
+Handlers block: 004C217C-004C2194
+Function end: 004C2194
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004C21D5
+Detected function start at 004C21D5
+Handlers block: 004C2763-004C276F
+Function end: 004C276F
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004C6BF5
+Detected function start at 004C6BF5
+Handlers block: 004C9504-004C9510
+Function end: 004C9510
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004CDD3D
+Detected function start at 004CDD3D
+Handlers block: 004CDF26-004CDF32
+Function end: 004CDF32
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004CE38A
+Detected function start at 004CE38A
+Handlers block: 004CE6ED-004CE702
+Function end: 004CE702
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004CEF35
+Detected function start at 004CEF35
+Handlers block: 004CEFC5-004CEFD1
+Function end: 004CEFD1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D0208
+Detected function start at 004D0208
+Handlers block: 004D0314-004D0320
+Function end: 004D0320
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D0339
+Detected function start at 004D0339
+Handlers block: 004D041A-004D0426
+Function end: 004D0426
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D0517
+Detected function start at 004D0517
+Handlers block: 004D07AB-004D0895
+Function end: 004D08B0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D08B0
+Detected function start at 004D08B0
+Handlers block: 004D0A56-004D0B40
+Function end: 004D0B40
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D0EA6
+Detected function start at 004D0EA6
+Handlers block: 004D138B-004D13A0
+Function end: 004D13A0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D17BF
+Detected function start at 004D17BF
+Handlers block: 004D49D5-004D4A62
+Function end: 004D4A62
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D53AB
+Detected function start at 004D53AB
+Handlers block: 004D56EA-004D56F3
+Function end: 004D56F3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004D5B21
+Detected function start at 004D5B21
+Handlers block: 004D5E19-004D5E29
+Function end: 004D5E41
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004DA107
+Detected function start at 004DA107
+Handlers block: 004DA9AE-004DA9CA
+Function end: 004DA9CA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004DA9E2
+Detected function start at 004DA9E2
+Handlers block: 004DAA3B-004DAA47
+Function end: 004DAA47
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004E01B0
+Detected function start at 004E01B0
+Handlers block: 004E02CB-004E02D7
+Function end: 004E02C6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004E25EF
+Detected function start at 004E25EF
+Handlers block: 004E27DF-004E27EB
+Function end: 004E27EB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004EB571
+Detected function start at 004EB571
+Handlers block: 004EB7E5-004EB7F1
+Function end: 004EB7F1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004EB80A
+Detected function start at 004EB80A
+Handlers block: 004EBB9D-004EBBC5
+Function end: 004EBBC5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004EC3FE
+Detected function start at 004EC3FE
+Handlers block: 004EEEE7-004EEF0B
+Function end: 004EEF0B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004F3D60
+Detected function start at 004F3D60
+Handlers block: 004F3DC4-004F3DDC
+Function end: 004F3DF5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004F3E70
+Detected function start at 004F3E70
+Handlers block: 004F3EBB-004F3EEE
+Function end: 004F3EEE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004F3FEB
+Detected function start at 004F3FEB
+Handlers block: 004F4386-004F448E
+Function end: 004F44A7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004F44A7
+Detected function start at 004F44A7
+Handlers block: 004F4673-004F477B
+Function end: 004F477B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004F4B9F
+Detected function start at 004F4B9F
+Handlers block: 004F5AFF-004F5B0C
+Function end: 004F5B24
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004FA140
+Detected function start at 004FA140
+Handlers block: 004FA17E-004FA18A
+Function end: 004FA18A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004FA4BE
+Detected function start at 004FA4BE
+Handlers block: 004FA545-004FA54E
+Function end: 004FA569
+Making separate handlers block
+0 try blocks
+Fixing function at 0x004FA569
+Detected function start at 004FA569
+Handlers block: 004FA5B8-004FA5C1
+Function end: 004FA5C1
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050101F
+Detected function start at 0050101F
+Handlers block: 0050117B-0050119C
+Function end: 0050119C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00501551
+Detected function start at 00501551
+Handlers block: 005015CA-005015F1
+Function end: 0050160A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050160A
+Detected function start at 0050160A
+Handlers block: 00501673-0050169A
+Function end: 0050169A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00506637
+Detected function start at 00506637
+Handlers block: 00506A15-00506A2A
+Function end: 00506A10
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00506A42
+Detected function start at 00506A42
+Handlers block: 005070B8-005070CD
+Function end: 005070B3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00509B48
+Detected function start at 00509B48
+Handlers block: 0050A1B2-0050A1BE
+Function end: 0050A1BE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050A473
+Detected function start at 0050A473
+Handlers block: 0050B638-0050B65C
+Function end: 0050B65C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050CA8D
+Detected function start at 0050CA8D
+Handlers block: 0050CC8C-0050CC99
+Function end: 0050CCB3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050CCB3
+Detected function start at 0050CCB3
+Handlers block: 0050CEDF-0050CEEC
+Function end: 0050CF06
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0050CF06
+Detected function start at 0050CF06
+Handlers block: 0050DA40-0050DAC2
+Function end: 0050DADA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005115B0
+Detected function start at 005115B0
+Handlers block: 00511624-00511645
+Function end: 00511645
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00511720
+Detected function start at 00511720
+Handlers block: 0051178C-005117AD
+Function end: 005117C6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00511BA2
+Detected function start at 00511BA2
+Handlers block: 0051399D-005139A9
+Function end: 005139A9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00514E7B
+Detected function start at 00514E7B
+Handlers block: 00514EF2-00514EFE
+Function end: 00514EFE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00514F16
+Detected function start at 00514F16
+Handlers block: 0051502E-005150A0
+Function end: 005150B9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005150B9
+Detected function start at 005150B9
+Handlers block: 0051516A-005151DC
+Function end: 005151DC
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00515516
+Detected function start at 00515516
+Handlers block: 00515978-00515981
+Function end: 00515981
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00515C15
+Detected function start at 00515C15
+Handlers block: 00515D96-00515DAE
+Function end: 00515DAE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00516570
+Detected function start at 00516570
+Handlers block: 005165F6-00516602
+Function end: 00516602
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051661A
+Detected function start at 0051661A
+Handlers block: 00516730-005167C0
+Function end: 005167D9
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005167D9
+Detected function start at 005167D9
+Handlers block: 0051689F-0051692F
+Function end: 0051692F
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00517DD3
+Detected function start at 00517DD3
+Handlers block: 00517FE4-00517FED
+Function end: 00517FED
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00518007
+Detected function start at 00518007
+Handlers block: 005181AB-005181C0
+Function end: 005181C0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051BBA1
+Detected function start at 0051BBA1
+Handlers block: 0051C601-0051C61D
+Function end: 0051C61D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051C635
+Detected function start at 0051C635
+Handlers block: 0051C68E-0051C69A
+Function end: 0051C69A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051D3E0
+Detected function start at 0051D3E0
+Handlers block: 0051D53F-0051D54B
+Function end: 0051D54B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051D564
+Detected function start at 0051D564
+Handlers block: 0051D616-0051D622
+Function end: 0051D622
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051D63B
+Detected function start at 0051D63B
+Handlers block: 0051D738-0051D744
+Function end: 0051D744
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051D9A0
+Detected function start at 0051D9A0
+Handlers block: 0051DD72-0051DD7E
+Function end: 0051DD7E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051DD97
+Detected function start at 0051DD97
+Handlers block: 0051E9E7-0051E9F3
+Function end: 0051E9F3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051EA8E
+Detected function start at 0051EA8E
+Handlers block: 0051F0F5-0051F101
+Function end: 0051F101
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0051F19C
+Detected function start at 0051F19C
+Handlers block: 00521807-00521813
+Function end: 00521813
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005218CB
+Detected function start at 005218CB
+Handlers block: 00521FAF-00521FC7
+Function end: 00521FC7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00521FE0
+Detected function start at 00521FE0
+Handlers block: 00522617-00522623
+Function end: 00522623
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005227E3
+Detected function start at 005227E3
+Handlers block: 00522B06-00522B12
+Function end: 00522B12
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00522B2B
+Detected function start at 00522B2B
+Handlers block: 00522DD6-00522DE2
+Function end: 00522DE2
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00522F8F
+Detected function start at 00522F8F
+Handlers block: 005233D8-005233E4
+Function end: 005233E4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00523F02
+Detected function start at 00523F02
+Handlers block: 005246BF-005246CB
+Function end: 005246CB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00526CA0
+Detected function start at 00526CA0
+Handlers block: 0052D358-0052D4B8
+Function end: 0052D4D2
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00531010
+Detected function start at 00531010
+Handlers block: 0053105E-00531067
+Function end: 00531080
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0054A912
+Detected function start at 0054A912
+Handlers block: 0054ADA1-0054ADAD
+Function end: 0054ADAD
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0054D7EF
+Detected function start at 0054D7EF
+Handlers block: 0054EE8F-0054EE9B
+Function end: 0054EE9B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0054F3B9
+Detected function start at 0054F3B9
+Handlers block: 0054FF94-0054FFB0
+Function end: 0054FFB0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0054FFC8
+Detected function start at 0054FFC8
+Handlers block: 00550017-00550023
+Function end: 00550023
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00552ED2
+Detected function start at 00552ED2
+Handlers block: 00553167-00553174
+Function end: 0055318C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055339F
+Detected function start at 0055339F
+Handlers block: 00553422-0055342B
+Function end: 00553444
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00553444
+Detected function start at 00553444
+Handlers block: 0055349B-005534A4
+Function end: 005534A4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00554145
+Detected function start at 00554145
+Handlers block: 00554272-0055427E
+Function end: 0055427E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005545D3
+Detected function start at 005545D3
+Handlers block: 0055493E-0055494A
+Function end: 00554939
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055499F
+Detected function start at 0055499F
+Handlers block: 0055518F-0055519B
+Function end: 0055519B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005551B3
+Detected function start at 005551B3
+Handlers block: 005555EB-005555F7
+Function end: 005555F7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055560F
+Detected function start at 0055560F
+Handlers block: 0055581B-00555827
+Function end: 00555827
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055583F
+Detected function start at 0055583F
+Handlers block: 005559DE-005559EA
+Function end: 005559EA
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00555A8B
+Detected function start at 00555A8B
+Handlers block: 00555C8D-00555C99
+Function end: 00555C99
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055625B
+Detected function start at 0055625B
+Handlers block: 005569BF-005569CB
+Function end: 005569CB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005569E3
+Detected function start at 005569E3
+Handlers block: 00556F30-00556F3C
+Function end: 00556F3C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00556F54
+Detected function start at 00556F54
+Handlers block: 00557E08-00557E14
+Function end: 00557E14
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00557E2C
+Detected function start at 00557E2C
+Handlers block: 00558177-00558183
+Function end: 00558183
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00559CF6
+Detected function start at 00559CF6
+Handlers block: 00559DBD-00559DD5
+Function end: 00559DD5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00559E3C
+Detected function start at 00559E3C
+Handlers block: 00559EA3-00559EBB
+Function end: 00559ED4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00559ED4
+Detected function start at 00559ED4
+Handlers block: 00559F30-00559F48
+Function end: 00559F48
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0055C3D3
+Detected function start at 0055C3D3
+Handlers block: 0055C679-0055C685
+Function end: 0055C685
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005681C9
+Detected function start at 005681C9
+Handlers block: 00568348-00568369
+Function end: 00568369
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0056C705
+Detected function start at 0056C705
+Handlers block: 0056D25B-0056D271
+Function end: 0056D271
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0056E2E9
+Detected function start at 0056E2E9
+Handlers block: 0056EC6A-0056EC77
+Function end: 0056EC92
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0056FCE4
+Detected function start at 0056FCE4
+Handlers block: 0056FFB6-0056FFC2
+Function end: 0056FFC2
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0056FFDA
+Detected function start at 0056FFDA
+Handlers block: 0057075C-00570768
+Function end: 0057075C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00570780
+Detected function start at 00570780
+Handlers block: 00570FA2-00570FAE
+Function end: 00570FAE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00570FC6
+Detected function start at 00570FC6
+Handlers block: 005718EC-005718F8
+Function end: 005718F8
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00571910
+Detected function start at 00571910
+Handlers block: 00571BAA-00571BB6
+Function end: 00571BB6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00571BCE
+Detected function start at 00571BCE
+Handlers block: 00572065-00572071
+Function end: 00572071
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00572FFF
+Detected function start at 00572FFF
+Handlers block: 00573ADC-00573AE5
+Function end: 00573AE5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00573E59
+Detected function start at 00573E59
+Handlers block: 0057420C-00574221
+Function end: 00574221
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00576267
+Detected function start at 00576267
+Handlers block: 005767A7-005767BF
+Function end: 005767BF
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00578390
+Detected function start at 00578390
+Handlers block: 00578402-00578447
+Function end: 00578447
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005784A0
+Detected function start at 005784A0
+Handlers block: 00578535-0057857A
+Function end: 00578593
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005786F1
+Detected function start at 005786F1
+Handlers block: 0057874C-00578755
+Function end: 00578770
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00578770
+Detected function start at 00578770
+Handlers block: 005787BD-005787C6
+Function end: 005787C6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0057A27A
+Detected function start at 0057A27A
+Handlers block: 0057A661-0057A66D
+Function end: 0057A66D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0057B5DF
+Detected function start at 0057B5DF
+Handlers block: 0057E29F-0057E2AB
+Function end: 0057E2AB
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0057ED3F
+Detected function start at 0057ED3F
+Handlers block: 0057F628-0057F63E
+Function end: 0057F63E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0057F657
+Detected function start at 0057F657
+Handlers block: 0057F9BE-0057F9CB
+Function end: 0057F9E3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00586F16
+Detected function start at 00586F16
+Handlers block: 005875D9-005875F5
+Function end: 005875F5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058760D
+Detected function start at 0058760D
+Handlers block: 00587666-00587672
+Function end: 00587672
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00587A90
+Detected function start at 00587A90
+Handlers block: 00587DD1-00587DEB
+Function end: 00587E05
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00589A5B
+Detected function start at 00589A5B
+Handlers block: 00589C54-00589C60
+Function end: 00589C60
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058A905
+Detected function start at 0058A905
+Handlers block: 0058ABCA-0058ABD6
+Function end: 0058ABD6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058B47E
+Detected function start at 0058B47E
+Handlers block: 0058B859-0058B884
+Function end: 0058B884
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058CFCD
+Detected function start at 0058CFCD
+Handlers block: 0058D41E-0058D42A
+Function end: 0058D42A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058D6AF
+Detected function start at 0058D6AF
+Handlers block: 0058DDAA-0058DDB6
+Function end: 0058DDB6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058DF7B
+Detected function start at 0058DF7B
+Handlers block: 0058E5C4-0058E5D0
+Function end: 0058E5D0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0058FEDB
+Detected function start at 0058FEDB
+Handlers block: 00590607-00590613
+Function end: 00590613
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0059772C
+Detected function start at 0059772C
+Handlers block: 00597D4B-00597D57
+Function end: 00597D57
+Making separate handlers block
+0 try blocks
+Fixing function at 0x00598B4E
+Detected function start at 00598B4E
+Handlers block: 00598CC7-00598CD3
+Function end: 00598CD3
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0059A8BB
+Detected function start at 0059A8BB
+Handlers block: 0059A970-0059A97F
+Function end: 0059A998
+Making separate handlers block
+0 try blocks
+Fixing function at 0x0059AD40
+Detected function start at 0059AD40
+Handlers block: 0059ADC8-0059ADD7
+Function end: 0059ADD7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005A1E28
+Detected function start at 005A1E28
+Handlers block: 005A20CE-005A20DB
+Function end: 005A20F4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005A211C
+Detected function start at 005A211C
+Handlers block: 005A3AE6-005A3B96
+Function end: 005A3BAE
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005AA0E5
+Detected function start at 005AA0E5
+Handlers block: 005AB07F-005AB08B
+Function end: 005AB08B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005AB2D5
+Detected function start at 005AB2D5
+Handlers block: 005ABFDB-005ABFE7
+Function end: 005ABFE7
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005AE580
+Detected function start at 005AE580
+Handlers block: 005AEBEF-005AEBFB
+Function end: 005AEBEF
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005AEC14
+Detected function start at 005AEC14
+Handlers block: 005AED0D-005AED19
+Function end: 005AED0D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005B1037
+Detected function start at 005B1037
+Handlers block: 005B19F5-005B1A11
+Function end: 005B1A11
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005B1A29
+Detected function start at 005B1A29
+Handlers block: 005B1A82-005B1A8E
+Function end: 005B1A8E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005B6AEA
+Detected function start at 005B6AEA
+Handlers block: 005B6D9F-005B6DB4
+Function end: 005B6DB4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005BE595
+Detected function start at 005BE595
+Handlers block: 005BE940-005BE94C
+Function end: 005BE940
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005BEC8C
+Detected function start at 005BEC8C
+Handlers block: 005BF04A-005BF056
+Function end: 005BF04A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005BF071
+Detected function start at 005BF071
+Handlers block: 005BF5BA-005BF5C6
+Function end: 005BF5C6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005BFCFF
+Detected function start at 005BFCFF
+Handlers block: 005C000D-005C0019
+Function end: 005C000D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C2360
+Detected function start at 005C2360
+Handlers block: 005C2786-005C2792
+Function end: 005C2786
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C2A77
+Detected function start at 005C2A77
+Handlers block: 005C2E37-005C2E43
+Function end: 005C2E37
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C3313
+Detected function start at 005C3313
+Handlers block: 005C384D-005C3859
+Function end: 005C384D
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C3B7A
+Detected function start at 005C3B7A
+Handlers block: 005C3ED5-005C3EE1
+Function end: 005C3ED5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C40B6
+Detected function start at 005C40B6
+Handlers block: 005C434E-005C435A
+Function end: 005C434E
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C463F
+Detected function start at 005C463F
+Handlers block: 005C4A00-005C4A0C
+Function end: 005C4A00
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C67A6
+Detected function start at 005C67A6
+Handlers block: 005C68CA-005C68D6
+Function end: 005C68D6
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C68F0
+Detected function start at 005C68F0
+Handlers block: 005C6A1C-005C6A28
+Function end: 005C6A28
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C7579
+Detected function start at 005C7579
+Handlers block: 005C76E4-005C76F0
+Function end: 005C76E4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C770A
+Detected function start at 005C770A
+Handlers block: 005C7873-005C787F
+Function end: 005C7873
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005C7899
+Detected function start at 005C7899
+Handlers block: 005C7998-005C79A4
+Function end: 005C7998
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005CDEA1
+Detected function start at 005CDEA1
+Handlers block: 005CDF2D-005CDF36
+Function end: 005CDF36
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005CE3CC
+Detected function start at 005CE3CC
+Handlers block: 005CE595-005CE5A1
+Function end: 005CE595
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005CE5BB
+Detected function start at 005CE5BB
+Handlers block: 005CE6FD-005CE709
+Function end: 005CE6FD
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005CE74F
+Detected function start at 005CE74F
+Handlers block: 005CE9C9-005CE9D5
+Function end: 005CE9D5
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005CE9EF
+Detected function start at 005CE9EF
+Handlers block: 005CEB8E-005CEB9A
+Function end: 005CEB9A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005D1F50
+Detected function start at 005D1F50
+Handlers block: 005D1FDE-005D1FEB
+Function end: 005D2004
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005DD010
+Detected function start at 005DD010
+Handlers block: 005DD151-005DD187
+Function end: 005DD1A0
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005DD1A0
+Detected function start at 005DD1A0
+Handlers block: 005DD230-005DD266
+Function end: 005DD266
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005DEE28
+Detected function start at 005DEE28
+Handlers block: 005DF134-005DF14E
+Function end: 005DF166
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005DF2B5
+Detected function start at 005DF2B5
+Handlers block: 005DF67B-005DF693
+Function end: 005DF67B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005E026A
+Detected function start at 005E026A
+Handlers block: 005E0802-005E084A
+Function end: 005E084A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005E0863
+Detected function start at 005E0863
+Handlers block: 005E0A31-005E0A76
+Function end: 005E0A31
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005EFDC0
+Detected function start at 005EFDC0
+Handlers block: 005EFE73-005EFE97
+Function end: 005EFE73
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005EFEB0
+Detected function start at 005EFEB0
+Handlers block: 005EFF2B-005EFF6B
+Function end: 005EFF2B
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F04C0
+Detected function start at 005F04C0
+Handlers block: 005F04FE-005F0507
+Function end: 005F0507
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F0520
+Detected function start at 005F0520
+Handlers block: 005F0564-005F056D
+Function end: 005F0586
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F08FB
+Detected function start at 005F08FB
+Handlers block: 005F09DD-005F09EA
+Function end: 005F0A04
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F0A04
+Detected function start at 005F0A04
+Handlers block: 005F0B9A-005F0BB4
+Function end: 005F0B9A
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F0F1D
+Detected function start at 005F0F1D
+Handlers block: 005F0FC4-005F0FD0
+Function end: 005F0FC4
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F0FE9
+Detected function start at 005F0FE9
+Handlers block: 005F108F-005F109B
+Function end: 005F108F
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F10B6
+Detected function start at 005F10B6
+Handlers block: 005F115C-005F1168
+Function end: 005F115C
+Making separate handlers block
+0 try blocks
+Fixing function at 0x005F1183
+Detected function start at 005F1183
+Handlers block: 005F11D2-005F11DE
+Function end: 005F11D2
+Making separate handlers block
+0 try blocks

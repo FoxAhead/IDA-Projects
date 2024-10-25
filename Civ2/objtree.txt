@@ -1,0 +1,76 @@
+0061C054h: possible vtable (1 methods)
+  referencing functions: 
+  .text:0040F010
+
+0061C058h: possible vtable (1 methods)
+  referencing functions: 
+  .text:00417F70
+
+0061C05Ch: possible vtable (1 methods)
+  referencing functions: 
+  .text:0043C1FF (
+0061C060h: possible vtable (2 methods)
+  referencing functions: 
+  .text:0044B502 (  .text:0044CB67 (
+0061D1E4h: possible vtable (1 methods)
+  referencing functions: 
+  .text:0047CF9E
+
+0061D6C0h: possible vtable (1 methods)
+  referencing functions: 
+  .text:00496125
+  .text:0049621D
+
+0061D6C4h: possible vtable (1 methods)
+  referencing functions: 
+  .text:004B40EE
+  .text:004B4108
+
+0061D6C8h: possible vtable (1 methods)
+  referencing functions: 
+  .text:004BB987 (  .text:004BB99F
+
+0061D6CCh: possible vtable (1 methods)
+  referencing functions: 
+  .text:004F3D30
+
+0061D6D0h: possible vtable (1 methods)
+  referencing functions: 
+  .text:004F3FD1
+  .text:004F3FEB
+
+0061D6D4h: possible vtable (1 methods)
+  referencing functions: 
+  .text:0050152B
+  .text:00501551
+
+0061D6D8h: possible vtable (1 methods)
+  referencing functions: 
+  .text:00516602 (  .text:0051661A
+
+0061D6DCh: possible vtable (1 methods)
+  referencing functions: 
+  .text:00553379
+  .text:0055339F
+
+0061D6E0h: possible vtable (2 methods)
+  referencing functions: 
+  .text:00559DED
+  .text:00559E3C
+
+0061D6FCh: possible vtable (1 methods)
+  referencing functions: 
+  .text:00578447 (
+0061D70Ch: possible vtable (1 methods)
+  referencing functions: 
+  .text:005BD610
+  .text:005BD813
+
+0061D718h: possible vtable (2 methods)
+  referencing functions: 
+  .text:005DCFCA
+  .text:005DD010
+
+0061D720h: possible vtable (11 methods)
+  referencing functions: 
+

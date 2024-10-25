@@ -1,0 +1,108 @@
+; Special module definition file to generate the proper import libraries
+; for Microsoft Visual C++ 32 bit compilers.
+
+LIBRARY         SVGA62F
+DESCRIPTION     '32 bit SuperVGA Kit DLL'
+CODE            LOADONCALL EXECUTEONLY
+DATA			PRELOAD MOVEABLE MULTIPLE
+
+; Export all functions with explicit ordinals
+
+EXPORTS
+    SV_init                    @2
+    SV_getModeInfo             @3
+    SV_getModeName             @4
+    SV_setMode                 @5
+    SV_setVirtualMode          @6
+    SV_restoreMode             @7
+    SV_rgbColor                @8
+    SV_writeText               @9
+    SV_setPalette              @10
+    SV_setDisplayStart         @11
+    SV_setBank                 @12
+    SV_putPixel                @13
+    SV_beginPixel              @14
+    SV_putPixelFast            @15
+    SV_endPixel                @16
+    SV_clear                   @17
+    SV_line                    @18
+    SV_beginLine               @19
+    SV_lineFast                @20
+    SV_endLine                 @21
+    SV_setActivePage           @22
+    SV_setVisualPage           @23
+    SV_beginDirectAccess       @24
+    SV_endDirectAccess         @25
+    SV_getDefPalette           @26
+    SV_setBankASM              @27
+    SV_queryCpu                @28
+    SV_initRMBuf               @29
+    SV_setACCELDriver          @30
+    VBE_init                   @100
+    VBE_detect                 @101
+    VBE_getModeInfo            @102
+    VBE_getPageSize            @103
+    VBE_setVideoMode           @104
+    VBE_getVideoMode           @105
+    VBE_setBank                @106
+    VBE_getBank                @107
+    VBE_setPixelsPerLine       @108
+    VBE_setBytesPerLine        @109
+    VBE_getScanlineLength      @110
+    VBE_getMaxScanlineLength   @111
+    VBE_setDisplayStart        @112
+    VBE_getDisplayStart        @113
+    VBE_setDACWidth            @114
+    VBE_getDACWidth            @115
+    VBE_setPalette             @116
+    VBE_getBankedPointer       @117
+;   VBE_getLinearSelector      @118
+    VBE_getLinearPointer       @119
+    VBE_getSetBank             @120
+    VBE_getSetDisplayStart     @121
+    VBE_getSetPalette          @122
+    VBE_freePMCode             @123
+    VBE_getBankFunc32          @124
+    AF_loadDriver              @200
+    AF_unloadDriver            @201
+    AF_status                  @202
+    AF_errorMsg                @203
+    AF_getVideoModeInfo        @204
+    AF_setVideoMode            @205
+    AF_setVirtualVideoMode     @206
+    AF_restoreTextMode         @207
+    AF_setDisplayStart         @208
+    AF_setActiveBuffer         @209
+    AF_setVisibleBuffer        @210
+    AF_setPaletteData          @211
+    AF_setGammaCorrectData     @212
+    AF_setBank                 @213
+    AF_waitTillIdle            @214
+    AF_enableDirectAccess      @215
+    AF_disableDirectAccess     @216
+    AF_setCursor               @217
+    AF_setCursorPos            @218
+    AF_setCursorColor          @219
+    AF_showCursor              @220
+    AF_setMix                  @221
+    AF_set8x8MonoPattern       @222
+    AF_setLineStipple          @223
+    AF_setClipRect             @224
+    AF_drawScan                @225
+    AF_drawPattScan            @226
+    AF_drawScanList            @227
+    AF_drawRect                @228
+    AF_drawPattRect            @229
+    AF_drawLine                @230
+    AF_drawStippleLine         @231
+    AF_drawTrap                @232
+    AF_drawTri                 @233
+    AF_drawQuad                @234
+    AF_putMonoImage            @235
+    AF_bitBlt                  @236
+    AF_bitBltLin               @237
+    AF_srcTransBlt             @240
+    AF_srcTransBltLin          @241
+    AF_dstTransBlt             @242
+    AF_dstTransBltLin          @243
+

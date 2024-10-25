@@ -1,0 +1,55 @@
+#############################################################################
+#
+#                   Copyright (C) 1994 SciTech Software
+#                           All rights reserved.
+#
+# Descripton:   Generic makefile for the SuperVGA kit. Requires the SciTech
+#               Software makefile definitions package to be installed.
+#
+# $Id: makefile 1.1 1994/08/22 12:27:51 kjb release $
+#
+#############################################################################
+
+# DOS extender dependant flags
+
+CFLAGS          += $(DX_CFLAGS)
+
+# Name of library and object files required to build it
+
+LIBFILE         = svga$L
+OBJECTS         = svgac$O svga$O font8x16$O
+
+# Names of all executable files built
+
+EXEFILES        = svgatest$E profile$E
+EXELIBS         = pmode$L ztimer$L
+
+all: $(EXEFILES)
+
+svgatest$E: svgatest$O cpu$O test$O $(LIBFILE)
+profile$E: profile$O test$O $(LIBFILE)
+hellovbe$E: hellovbe$O
+vbetest$E: vbetest$O cpu$O getopt$O $(LIBFILE)
+
+# The following is 4Dos specific!!
+
+smallclean:
+    @del *.sym *.bak *.tdk *.map *.dsk *.log
+    @except (cpu.* font8x16.* svga.*) del *.obj *.o
+
+# Source files to check in with RCS (RCSFILES_H are in SCITECH\INCLUDE)
+
+RCSFILES        = hellovbe.c profile.c svgac.c svgatest.c vbetest.c \
+                  version.c vesavbe.h cpu.asm font8x16.asm svga.asm \
+                  test.asm
+RCSFILES_H      = svga.h
+
+.INCLUDE: "$(SCITECH)\makedefs\common.mk"
+
+# Include file dependencies
+
+svgac$O: $(INC)\svga.h vesavbe.h
+svgatest$O: $(INC)\svga.h vesavbe.h
+profile$O: $(INC)\svga.h vesavbe.h
+vbetest$O: $(INC)\svga.h vesavbe.h
+

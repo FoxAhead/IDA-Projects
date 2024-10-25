@@ -1,0 +1,113 @@
+/*
+ *    SOMTYPES.H
+ *    System Object Model typedefs
+ *
+ *    Copyright (c) International Business Machines Corporation
+ *                  1991, 1992
+ *
+ *    @(#)somtypes.xh 1.1 5/13/92 12:55:21 [5/14/92] (c)IBM Corp. 1992
+ */
+
+/* SOM types for C++ */
+
+#ifndef somtypes_xh
+#define somtypes_xh
+/*#include <sombtypes.h> shorten to 8 characters */
+#include <sombtype.h>
+
+/* Primitive Classes */
+class SOMObject;
+class SOMClass;
+class SOMClassMgr;
+
+
+/* somMethodProc */
+#ifdef __IBMC__
+  #pragma linkage( somMethodProc, system )
+#endif
+typedef integer4 SOMLINK somMethodProc(void);
+
+
+/*   Method Descriptor  */
+typedef struct somMethodDataStruct {
+    somId id;
+    uinteger4 type;                    /* 0=static, 1=dynamic */
+    somId descriptor;
+    somMToken offset;                  /* not valid for dynamic methods */
+    somMethodProc *method;
+    somMethodProc *redispatchStub;
+    somMethodProc *applyStub;
+} somMethodData;
+
+
+/* Method Table  */
+typedef struct somMethodTabStruct {
+    SOMClass *classObject;
+    somMethodProc *entries[1];
+} somMethodTab;
+
+
+/*  SOM Object Instance */
+typedef struct SOMAny_struct {
+    struct somMethodTabStruct *mtab;
+    integer1 body[1];
+} SOMAny;
+
+
+/*
+ *    Old style name support
+ */
+
+typedef somMethodProc *somMethodPtr;
+
+/* The following synonyms provide OS/2-style typedefs */
+
+#ifndef FLOAT4
+#define FLOAT4                  float4
+#endif
+
+#ifndef FLOAT8
+#define FLOAT8                  double
+#endif
+
+#ifndef SOMID
+#define SOMID                   somId
+#endif
+
+#ifndef SOMTOKEN
+#define SOMTOKEN                somToken
+#endif
+
+#ifndef SOMANY
+#define SOMANY                  SOMAny
+#endif
+
+#ifndef SOMCLASS
+#define SOMCLASS                SOMClass
+#endif
+
+#ifndef SOMOBJECT
+#define SOMOBJECT               SOMObject
+#endif
+
+#ifndef SOMMETHODTAB
+#define SOMMETHODTAB            somMethodTab
+#endif
+
+#ifndef SOMMETHODDATA
+#define SOMMETHODDATA           somMethodData
+#endif
+
+#ifndef SOMMETHODPTR
+#define SOMMETHODPTR            somMethodPtr
+#endif
+
+#ifndef SOMTRAITANY
+#define SOMTRAITANY             SOMTraitAny
+#endif
+
+#ifndef SOMCLASSDATASTRUCT
+#define SOMCLASSDATASTRUCT      somClassDataStructure
+#endif
+
+#endif  /* somtypes_h */

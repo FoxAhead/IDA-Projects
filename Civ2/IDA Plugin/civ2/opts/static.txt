@@ -1,0 +1,524 @@
+// static strings!
+//================
+ 
+
+// batcon.cpp
+//-----------
+
+// 0
+"(depleted)"
+
+// 1
+"(insufficient power)"
+
+
+// batmode.cpp
+//------------
+
+// 2
+"Unknown"
+
+// 3
+"Sun %s"
+
+// 4
+"Planet %s"
+
+// 5
+"\nOwned by %s"
+
+// 6
+"\nMoving to Star Lane"
+
+// 7
+"\nMoving to Planet"
+
+// 8
+"Star Lane"
+
+// 9
+"Red Link"
+
+// 10
+" to "
+
+
+//coswnd.cpp
+//----------
+
+// 11
+"%d of %d Species Known"
+
+// 12
+"Extinct"
+
+
+//eventwnd.cpp
+//------------
+
+// 13
+""
+
+// 14
+"s"
+
+// 15
+"Your score is %d%%.\nThis gives you the title of %s"
+
+
+//loadwin.cpp
+//-----------
+
+// 16
+"<EMPTY>"
+
+// 17
+"Day %d"
+
+// 18
+"am"
+
+// 19
+"pm"
+
+// 20
+"Fleet"
+
+// 21
+"Colonies"
+
+// 22
+"Discoveries"
+
+// 23
+"Load Game"
+
+// 24
+"Save Game"
+
+// 25
+"Play Tutorial"
+
+
+//negwnd.cpp
+//----------
+
+// 26
+"Selected System"
+
+// 27
+"%s Intelligence"
+
+// 28
+""
+
+// 29
+"s"
+
+// 30
+"OK"
+
+
+//planwin.cpp
+//-----------
+
+// 31
+"Name Your Colony"
+
+// 32
+"y"
+
+// 33
+"ies"
+
+// 34
+"Name Your Ship"
+
+// 35
+"Rename Your Ship?"
+
+// 36
+"No Project"
+
+// 37
+"Pick a Location"
+
+// 38
+"%d day%s until completion"
+
+// 39
+"No Progress"
+
+// 40
+"(No Free Population)"
+
+
+//psqwin.cpp
+//----------
+
+// 41 - 45
+"Tiny"
+"Small"
+"Medium"
+"Large"
+"Enormous"
+
+// 46 - 56
+"Husk"
+"Primordial"
+"Congenial"
+"Eden"
+"Mineral"
+"Supermineral"
+"Chapel"
+"Cathedral"
+"Special"
+"Tycoon"
+"Cornucopia"
+
+// 57 - 64
+"Cancel"
+"Create Colony"
+"Abandon"
+"Build"
+"Leave Orbit"
+"Refit"
+"Invade"
+"Automate"
+
+// 65
+"Research"
+
+// 66
+"be discovered"
+
+// 67
+"No progress is being made on %s."
+
+// 68
+"Industry"
+
+// 69
+"be completed"
+
+// 70
+"Prosperity"
+
+// 71
+"Population"
+
+// 72
+"grow"
+
+// 73
+"%s is not growing."
+
+// 74
+"%s has no more room to grow."
+
+// 75
+"White"
+
+// 76
+"Black"
+
+// 77
+"Red"
+
+// 78
+"industry"
+
+// 79
+"Green"
+
+// 80
+"prosperity"
+
+// 81
+"Blue"
+
+// 82
+"research"
+
+// 83
+"Orbital"
+
+// 84
+"Automated "
+
+// 85
+" on %s Square"
+
+// 86
+"No progress"
+
+// 87
+"%d day%s until completion"
+
+// 88
+"Xenoarcheological Ruins"
+
+// 89
+"%s Square"
+
+// 90
+"Orbital squares are used for building orbital structures such as 
+Shipyards and Ships."
+
+// 91
+"White squares are ordinary habitable surface squares."
+
+// 92
+"Black squares are uninhabitable.  Most structures cannot be built on them."
+
+// 93
+"%s squares increase the effectiveness of %s-producing structures."
+
+// 94
+"%s %s Planet"
+
+// 95
+"No One"
+
+// 96
+"Owned by |%d|%s"
+
+// 97
+"Maximum Population  %d"
+
+// 98
+"Self Managed"
+
+// 99
+"%s %s: %d per day"
+
+// 100
+"%s will %s in %d day%s."
+
+
+//race.cpp
+//--------
+
+// 101-121
+"Minions"
+"Snovemdomas"
+"Orfa"
+"Kambuchka"
+"Hanshaks"
+"Fludentri"
+"Baliflids"
+"Swaparamans"
+"Frutmaka"
+"Shevar"
+"Govorom"
+"Ungooma"
+"Dubtaks"
+"Capelons"
+"Mebes"
+"Oculons"
+"Arbryls"
+"Marmosians"
+"Chronomyst"
+"Chamachies"
+"Nimbuloids"
+
+
+//reswin.cpp
+//----------
+
+// 122
+"Current Project:"
+
+// 123
+"(No Progress)"
+
+// 124
+"(%d day%s)"
+
+// 125
+"Allows"
+
+// 126
+"Ships: Small and Medium Hulls"
+
+// 127
+"Large Ship Hull"
+
+// 128
+"Gigantic Ship Hull"
+
+// 129
+"(Self Managed)"
+
+// 130
+"%s Knowledge %s"
+
+
+//ship.cpp
+//--------
+
+// 131 - 134
+"Small"
+"Medium"
+"Large"
+"Enormous"
+
+
+//shipwin.cpp
+//-----------
+
+// 135
+" (%d Day%s)"
+
+
+//status.cpp
+//----------
+
+// 136
+"(%s %s Planet)"
+
+// 137
+"Self-Managed"
+
+// 138
+" - No Progress"
+
+// 139
+" - %d day%s until completion"
+
+// 140
+"Building %s%s"
+
+// 141
+"No Project"
+
+// 142
+"   (No Free Population)"
+
+// 143
+"Orbiting %s"
+
+// 144
+"in %s System"
+
+// 145
+"Unknown"
+
+// 146
+"In Starlane to %s System\nETA - %d Day%s"
+
+// 147
+"Under Construction at %s"
+
+// 148
+"Being Refitted at %s"
+
+// 149
+"\nMoving to Planet"
+
+// 150
+"\nMoving to Starlane"
+
+// 151
+"%s  (%d Planet%s Occupied, %d System%s Controlled)"
+
+// 152
+"%s  (%d Ship%s, %d more allowed)"
+
+// 153
+"Player Species"
+
+//154 
+"The %s %s"
+
+// 155 - 159
+"Vacuous"
+"Sparse"
+"Average"
+"Dense"
+"Very Dense"
+
+// 160 - 162
+"Peaceful"
+"Neutral"
+"Hostile"
+
+// 163 - 167
+"Three"
+"Four"
+"Five"
+"Six"
+"Seven"
+
+// 168
+"%s Star Cluster\n%s Species\n%s Atmosphere"
+
+// 169
+"Begin New Game"
+
+
+//winmgr.cpp
+//----------
+
+// 170
+"Unable to open file."
+
+//corn.cpp
+//--------
+
+// 171
+"Thank you for playing Ascendancy."
+
+// 172
+"\n\nAscendancy version %s\n\n"
+
+// 173
+"\n\nFree memory: %ld\n\n"
+
+// 174
+"Your computer does not have enough free extended memory to run\n
+Ascendancy.  You will need an additional %ldK bytes of free extended memory."
+
+// 175
+"Please place the Ascendancy CD in your CDROM drive."
+
+// 176
+"\n\nAscendancy was unable to find VESA support for your\n
+video card.  To configure the VESA driver that comes with\n
+Ascendancy, run the UVCONFIG program in this directory, and\n
+then try running Ascendancy again.  If this solution does\n
+not work, you may have to install the VESA driver supplied\n
+with your video card.  Consult your video card documentation\n
+for further information."
+
+// 177
+"Ascendancy could not find a mouse driver.  Please make sure your\n
+mouse driver is loaded, and then run Ascendancy again."
+
+
+//cosmos.cpp
+//----------
+
+// 178 - 190
+"Blue Giant"
+"Pink-Red Giant"
+"Red Giant"
+"Orange Giant"
+"Blue Medium"
+"White Medium"
+"Yellow Medium"
+"Light Yellow Medium"
+"Orange Medium"
+"Pink-Red Medium"
+"Blue Dwarf"
+"White Dwarf"
+"Red Dwarf"
+
+
+
+//dbgtool.cpp
+//-----------
+
+
+end
+

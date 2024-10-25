@@ -1,0 +1,100 @@
+/*
+ *    @(#)somcls.API 1.1 5/13/92 12:55:19 [5/14/92] (c)IBM Corp. 1992
+ */
+
+
+#ifndef SOMClass_API
+#define SOMClass_API
+/*
+ * The Class API
+ */
+
+/* A procedure to create the SOMClass Class */
+SOMEXTERN SOMClass * SOMLINK SOMClassNewClass(
+                integer4 majorVersion,
+                integer4 minorVersion);
+
+/* The static interface to SOMClass and its instances */
+SOMEXTERN struct SOMClassClassDataStructure {
+        SOMClass *classObject;
+        somMToken somNew;
+        somMToken somRenew;
+        somMToken somInitClass;
+        somMToken somClassReady;
+        somMToken somGetName;
+        somMToken somGetParent;
+        somMToken somDescendedFrom;
+        somMToken somCheckVersion;
+        somMToken somFindMethod;
+        somMToken somFindMethodOk;
+        somMToken somSupportsMethod;
+        somMToken somGetNumMethods;
+        somMToken somGetInstanceSize;
+        somMToken somGetInstanceOffset;
+        somMToken somGetInstancePartSize;
+        somMToken somGetMethodIndex;
+        somMToken somGetNumStaticMethods;
+        somMToken somGetPClsMtab;
+        somMToken somGetClassMtab;
+        somMToken somAddStaticMethod;
+        somMToken somOverrideSMethod;
+        somMToken somAddDynamicMethod;
+        somMToken somGetMethodOffset;
+        somMToken somGetApplyStub;
+        somMToken somFindSMethod;
+        somMToken somFindSMethodOk;
+        somMToken somGetMethodDescriptor;
+        somMToken somGetNthMethodInfo;
+        somMToken somSetClassData;
+        somMToken somGetClassData;
+        somMToken somNewNoInit;
+        somMToken somRenewNoInit;
+        somMToken somGetInstanceToken;
+        somMToken somGetMemberToken;
+        somMToken somSetMethodDescriptor;
+        somMToken somGetMethodData;
+} SOMClassClassData;
+
+/*
+ * -- Typedefs for Procedures that support SOMClass Methods
+ */
+
+extern "C" {
+typedef void    (SOMLINK *somTD_SOMClass_somAddDynamicMethod)(SOMClass *somSelf,INOUT somId methodId,INOUT somId methodDescriptor,IN somMethodProc *method,IN somMethodProc *applyStub);
+typedef somMToken    (SOMLINK *somTD_SOMClass_somAddStaticMethod)(SOMClass *somSelf,INOUT somId methodId,INOUT somId methodDescriptor,IN somMethodProc *method,IN somMethodProc *redispatchStub,IN somMethodProc *applyStub);
+typedef void    (SOMLINK *somTD_SOMClass_somClassReady)(SOMClass *somSelf);
+typedef void    (SOMLINK *somTD_SOMClass_somInitClass)(SOMClass *somSelf,IN zString className,IN SOMObject *parentClass,IN integer4 instanceSize,IN int maxStaticMethods,IN integer4 majorVersion,IN integer4 minorVersion);
+typedef void    (SOMLINK *somTD_SOMClass_somOverrideSMethod)(SOMClass *somSelf,INOUT somId methodId,IN somMethodProc *method);
+typedef SOMAny *   (SOMLINK *somTD_SOMClass_somNew)(SOMClass *somSelf);
+typedef SOMAny *   (SOMLINK *somTD_SOMClass_somNewNoInit)(SOMClass *somSelf);
+typedef SOMAny *   (SOMLINK *somTD_SOMClass_somRenew)(SOMClass *somSelf,IN void *obj);
+typedef SOMAny *   (SOMLINK *somTD_SOMClass_somRenewNoInit)(SOMClass *somSelf,IN void *obj);
+typedef somMethodProc *   (SOMLINK *somTD_SOMClass_somGetApplyStub)(SOMClass *somSelf,INOUT somId methodId);
+typedef somClassDataStructure *   (SOMLINK *somTD_SOMClass_somGetClassData)(SOMClass *somSelf);
+typedef somMethodTab *   (SOMLINK *somTD_SOMClass_somGetClassMtab)(SOMClass *somSelf);
+typedef somDToken    (SOMLINK *somTD_SOMClass_somGetInstanceToken)(SOMClass *somSelf);
+typedef somDToken    (SOMLINK *somTD_SOMClass_somGetMemberToken)(SOMClass *somSelf,integer4 memberOffset,somDToken instanceToken);
+typedef integer4    (SOMLINK *somTD_SOMClass_somGetInstanceOffset)(SOMClass *somSelf);
+typedef integer4    (SOMLINK *somTD_SOMClass_somGetInstancePartSize)(SOMClass *somSelf);
+typedef integer4    (SOMLINK *somTD_SOMClass_somGetInstanceSize)(SOMClass *somSelf);
+typedef int    (SOMLINK *somTD_SOMClass_somGetMethodData)(SOMClass *somSelf,INOUT somId method,OUT somMethodData *md);
+typedef somId    (SOMLINK *somTD_SOMClass_somGetMethodDescriptor)(SOMClass *somSelf,IN somId methodId);
+typedef int    (SOMLINK *somTD_SOMClass_somGetMethodIndex)(SOMClass *somSelf,somId id);
+typedef integer4    (SOMLINK *somTD_SOMClass_somGetMethodOffset)(SOMClass *somSelf,INOUT somId methodId);
+typedef zString    (SOMLINK *somTD_SOMClass_somGetName)(SOMClass *somSelf);
+typedef somId    (SOMLINK *somTD_SOMClass_somGetNthMethodInfo)(SOMClass *somSelf,IN int n,OUT somId *descriptor);
+typedef int    (SOMLINK *somTD_SOMClass_somGetNumMethods)(SOMClass *somSelf);
+typedef int    (SOMLINK *somTD_SOMClass_somGetNumStaticMethods)(SOMClass *somSelf);
+typedef SOMClass *   (SOMLINK *somTD_SOMClass_somGetParent)(SOMClass *somSelf);
+typedef somMethodTab *   (SOMLINK *somTD_SOMClass_somGetPClsMtab)(SOMClass *somSelf);
+typedef void    (SOMLINK *somTD_SOMClass_somSetClassData)(SOMClass *somSelf,IN somClassDataStructure *cds);
+typedef int    (SOMLINK *somTD_SOMClass_somSetMethodDescriptor)(SOMClass *somSelf,IN somId methodId,IN somId descriptor);
+typedef int    (SOMLINK *somTD_SOMClass_somCheckVersion)(SOMClass *somSelf,IN integer4 majorVersion,IN integer4 minorVersion);
+typedef int    (SOMLINK *somTD_SOMClass_somDescendedFrom)(SOMClass *somSelf,IN SOMClass *aClassObj);
+typedef int    (SOMLINK *somTD_SOMClass_somSupportsMethod)(SOMClass *somSelf,INOUT somId mId);
+typedef int    (SOMLINK *somTD_SOMClass_somFindMethod)(SOMClass *somSelf,INOUT somId methodId,OUT somMethodProc **m);
+typedef int    (SOMLINK *somTD_SOMClass_somFindMethodOk)(SOMClass *somSelf,INOUT somId methodId,OUT somMethodProc **m);
+typedef somMethodProc *   (SOMLINK *somTD_SOMClass_somFindSMethod)(SOMClass *somSelf,INOUT somId methodId);
+typedef somMethodProc *   (SOMLINK *somTD_SOMClass_somFindSMethodOk)(SOMClass *somSelf,INOUT somId methodId);
+}
+#endif /* SOMClass_API */

@@ -1,0 +1,195 @@
+
+        SciTech Software Distribution - Standard Directory Structure
+        ------------------------------------------------------------
+
+This file describes the general directory structure of the SciTech Software
+programming libraries that you have installed. This directory structure
+is common to all SciTech Software products.
+
+Find a nice home for it all
+---------------------------
+
+Before you install any of SciTech Software Products, you should decide upon
+a standard root directory for installing all of the products into. The
+default that we use is under the \SCITECH directory of one of our hard drives
+(in my case C:). Then you should install all the files for all the
+distributions that you have under the same directory tree. Many of the
+products use common libraries to get things done (like the PMODE library)
+and common header files. When you install them into the same directory
+you will only have one copy of each of these common files.
+
+IMPORTANT: Once you decided on a root directory for installing your SciTech
+           Software Products, you should install them all into the same
+           directory. The command to do this with PKZIP would be (assuming
+           that all products are installed under C:\SCITECH):
+
+                pkunzip -d <zipfile>.zip C:\SCITECH
+
+           This will correctly unzip all the archived files and create the
+           correct directory structure under the root directory C:\SCITECH
+
+           Note that the '-d' command line option is essential to ensure
+           that the correct directory structure is built.
+
+Installing for use
+------------------
+
+Once you have created the directory structure for the distribution, and
+all files have been installed, you will need to perform two final steps
+before you can use the libraries:
+
+    1. Change your compilers default include path to include the
+       d:\SCITECH\INCLUDE directory so your compiler can find the required
+       include files, where d: is the drive that you have installed the
+       software onto.
+
+    2. Change your compilers default library path to include the
+       d:\SCITECH\LIB\??? directory (substitute the correct sub-directory
+       name for your compiler - d:\SCITECH\LIB\BC3 is for Borland C++ 3.1).
+
+Once you have done this, you can simply start using the library files as
+provided. If you intend to re-compile any of the libraries from the
+provided source code, you will need to follow the steps in the next
+section.
+
+SciTech Software Common Makefile Utilities
+------------------------------------------
+
+In order to be able to re-compile any of the SciTech Software Distributions
+that come with source code, you will also need to install the SciTech
+Software Common Makefile Utilities package. This can be found in the
+archive called MKUTIL??.ZIP from the same location that you obtained this
+package from. This archive contains all of the relevant executable files
+(including a copy of DMAKE 3.8), batch files and DMAKE startup files
+required to re-compiled the source code for any of the supported compilers.
+
+Once you have installed the files onto your hard drive, you will need to
+perform the following steps:
+
+    1. Change the default executable file path in your AUTOEXEC.BAT file
+       to include the d:\SCITECH\BIN directory. This should be placed
+       at the START of your path, so that the MAKE.EXE file in the BIN
+       directory will be found first, rather than your compilers usual
+       make utility.
+
+    2. Set the environment variables SCITECH and MGL_ROOT (if you are using
+       the MegaGraph Graphics Library). The batch file MGL_ENV.BAT in
+       the root \SCITECH directory is a sample of this. The SCITECH
+       environment variable is used by the batch files in the BIN
+       directory for setting up for compiling with a particular compiler,
+       and by the DMAKE program so that it can find all of the relevant
+       files during compilation.
+
+    3. Set up the enivornment variables needed by the bacth files in the
+       next step, so that they can located your compilers executable files,
+       include files and library files. The file BIN\SET-VARS.BAT is an
+       example that we use, so you can start with this to build you own
+       batch file.
+
+    4. Run the relevant batch file to set the environment up for your
+       compiler. The will file begin with a two letter prefix, and
+       end in either 16-VAR.BAT or 32-VAR.BAT (depending on whether you will
+       be compiling for 16 or 32 modes). These files require the SCITECH
+       environment variable to setup correctly, and the relevant variables
+       from the previous step to be set up correctly.
+
+The following compilers are usually supported by SciTech Software, along with
+the code used by the batch files from step 4 above (some libraries may not
+support a particular compiled depending on lanuage requirements):
+
+    bc3     - Borland C++ 3.1 16 bit
+    bc16    - Borland C++ 4.0 16 bit
+    bc32    - Borland C++ 4.0 32 bit
+    vc16    - Microsoft Visual C++ 1.
+    vc32    - Microsoft Visual C++ 1.
+    sc16    - Symantec C++ 6.1 16 bit
+    sc32    - Symantec C++ 6.1 32 bit
+    wc16    - Watcom C++ 10.0 16 bit
+    wc32    - Watcom C++ 10.0 32 bit
+    hc32    - Metaware High C/C++ 3.2
+    dj32    - DJGPP GNU C/C++ 32 bit
+
+Once you have everything set up correctly, you should simply be able to
+type MAKE in any of the source directories and be in business.
+
+Compiling with Optimisations or for Debugging
+---------------------------------------------
+
+By default when you build the libraries, not optmisations and no debugging
+information is generated. You can turn either (or both) of these features
+on by setting the OPT or DBG variables for DMAKE. You can do this either
+by passing them on the command line, or setting them as environment
+variables:
+
+    make OPT=1 DBG=1
+
+or
+
+set OPT=1
+set DBG=1
+make
+
+Changing the default DOS Extender
+---------------------------------
+
+All of the SciTech Software libraries are DOS Extender independant. All
+DOS extender dependant information is encapsulated in the PMODE.LIB library.
+The default library provided for each of the compilers is compiled for
+the default DOS extender normally used by that compiler. All you need to
+do in order to use a different DOS extender is re-compile the PMODE
+library with the appropriate command line options, and then link with
+this new library. Refer to the documentation on the PMODE library for
+more details.
+
+All SciTech Software distributions that require the PMODE library, come
+with a pre-compiled version of the library for the default DOS extender
+used by that compiler. If you wish to change the DOS extender, or you
+wish to have a look at the source code, you will need to obtain the
+PMODE library source archive. You should be able to get this from the
+same site that you downloaded this archive from as the file PMLITE??.ZIP.
+
+Directory tree
+--------------
+
+The following is a brief outline of the directory tree, and the contents of
+all the sub-directories (note that not all of these will be present in
+every SciTech Software Distribution archive):
+
+SCITECH             ROOT directory (SCITECH is default official name)
+³
+ÃÄÄÄBIN             Useful tools and batch files for library building
+³
+ÃÄÄÄDOC             Documentation files. Each individual product has its own
+³                   separate directory which contains all files specific to
+³                   that product.
+³
+ÃÄÄÄFONTS           All MGL font files installed here.
+³
+ÃÄÄÄBITMAPS         All MGL bitmap files installed here.
+³
+ÃÄÄÄCURSORS         All MGL mouse cursor files installed here.
+³
+ÃÄÄÄICONS           All MGL icon files installed here.
+³
+ÃÄÄÄEXAMPLES        Any example source code. Separate sub-directories are
+³                   provided for each of the different products.
+³
+ÃÄÄÄMANIFEST        List of all files installed for each Distribution
+³
+ÃÄÄÄINCLUDE         All installed header files.
+³
+ÃÄÄÄLIB             All installed library files. Separate sub-directories are
+³   ÃÄÄÄBC16        provided for each of the different supported compilers.
+³   ÃÄÄÄ...         These directories contain the pre-compiled versions of
+³   ÀÄÄÄWC32        the library files ready for use.
+³
+ÃÄÄÄLIBSW           All installed shareware library files. In the shareware
+³   ÃÄÄÄBC16        distributions these directories contain pre-compiled
+³   ÃÄÄÄ...         shareware versions of the library files ready for use.
+³   ÀÄÄÄWC32
+³
+ÀÄÄÄSRC             All source code for building the libraries (if provided).
+    ÃÄÄÄPMODE       Each package has a separate directory that contains all
+    ÃÄÄÄ...         of the source code and makefiles for building the library
+    ÀÄÄÄSVGAKIT     and installing it under \SCITECH\LIB.
+

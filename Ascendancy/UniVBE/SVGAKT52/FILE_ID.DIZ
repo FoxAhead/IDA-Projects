@@ -1,0 +1,7 @@
+SUPERVGA KIT v5.2: The SuperVGA Kit is a full
+ Software Development Kit for writing VESA
+ VBE 2.0 applications for DOS (for Windows
+ support see SciTech's WinDirect package).
+ Provides full support for banked and
+ linear framebuffer modes, including
+ virtual linear framebuffer support.

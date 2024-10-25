@@ -1,0 +1,393 @@
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+386FX Video Effects (VFX) Library for 32-Bit Extended DOS
+Slipstream 1.15 release of 5 January 1998, released as part of WinVFX package
+
+      * Updated MOUSE for AIL 3.0 compatibility and optional foreground mode
+        support
+
+      * Updated GETFONT to work with larger input files, and append palette
+        to end of file
+
+      * Updated SHOWPIC to work in 1024x768 mode
+
+      * Example programs and tools no longer auto-detect VGA chipsets
+        (see note below)
+
+      * Chipset-specific drivers removed from DRV directory.  Use VESA 
+        drivers for all future development; many newer VGA chipsets are 
+        not compatible with VFXSCAN.DLL or the original chipset-specific 
+        VFX drivers from the DRV\OBSOLETE directory.
+
+      * MetaWare/Phar Lap support dropped.  Only the Watcom compiler and 
+        DOS4GW/100%-compatible DOS extenders are supported by this 
+        release.
+
+All files and documentation copyright (C) 1992-1998 Miles Design, Incorporated
+For technical support, contact John Miles at jmiles@pop.net
+
+(Original VFX 1.15 READ.ME file from 15-Mar-94 release follows)
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+386FX Video Effects (VFX) Library for 32-Bit Extended DOS
+Release 1.15 of 15-Mar-94
+                                    * * * 
+
+After copying the .ZIP file to the desired target directory, unzip it with 
+the following command:
+
+pkunzip -o -d rel115.zip
+
+If the files are not ZIPped on disk, you may copy them to the desired target
+directory with the command
+
+xcopy <source drive letter>:\*.* <target directory path> /s
+
+                               ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                               ³ List of files ³
+                               ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+Directory of RELEASE.1??
+
+VFX3D    ASM .......... VFX primitives for real-time 3D rendering (optional)
+VFXA     ASM .......... Device-independent API module
+VFX      C   .......... Device-independent API module (support functions)
+DLLLOAD  C   .......... OS/2 2.X DLL loader for DOS extenders
+FLIC     C   .......... .FLI/.FLC decoding functions
+GETFONT  C   .......... Font grabber source 
+GETSHAPE C   .......... Shape grabber source
+MOUSE    C   .......... Example 32-bit mouse interface
+SHOWPIC  C   .......... Example program source
+CTEST    C   .......... Example program source
+VTEST    C   .......... Example program source
+DEMO     SHP .......... Data file used by examples; created from DEMO.LBM
+DEMO     FNT .......... Font file used by examples; created from FONTDEMO.PCX
+DOS4GW   EXE .......... Rational Systems DOS/4GW 32-bit DOS extender
+GETFONT  EXE .......... Font grabber
+GETSHAPE EXE .......... Shape grabber
+MOUSE    EXE .......... Mouse exerciser
+SHOWPIC  EXE .......... Example program: displays .PCX,.LBM,.GIF,.SHP files
+CTEST    EXE .......... Exerciser for various VFX functions/driver autoscan
+VTEST    EXE .......... Exerciser for various VFX functions/driver autoscan
+DLL      H   .......... Header file used with DLLLOAD.C
+FLIC     H   .......... Header file used with FLIC.C
+MOUSE    H   .......... Header file for example mouse interface routines
+VFX      H   .......... Header file containing VFX equates & prototypes
+VFX      INC .......... Equates and macros for use with VFX .ASM files
+DEMO     LBM .......... Shape source for DEMO.SHP
+LOGO     LBM .......... Sample .LBM file (640x480x256)
+LOGO400  LBM .......... Sample .LBM file (640x400x256)
+MOUSE    LBM .......... Shape source for MOUSE.SHP
+NLAVGA   GIF .......... Sample .GIF file (320x200x256)
+NLAVGA   PCX .......... Sample .PCX file (320x200x256)
+NLAVGA   LBM .......... Sample .LBM file (320x200x256)
+MOUSE    OBJ .......... Linkable mouse interface module
+DLLLOAD  OBJ .......... Linkable DLL loader module
+VFX      OBJ .......... Device-independent API module (support functions)
+VFXA     OBJ .......... Device-independent API module object file
+VFX3D    OBJ .......... VFX primitives for real-time 3D rendering (optional)
+FONTDEMO PCX .......... Font source file used to build FONTDEMO.PCX
+DEMO     RSP .......... GETSHAPE response file used to build DEMO.SHP
+MOUSE    RSP .......... GETSHAPE response file used to build MOUSE.SHP
+MOUSE    SHP .......... Mouse pointer shape
+BUILDWR  BAT .......... Builds Watcom/Rational API/tools/examples
+BUILDMP  BAT .......... Builds MetaWare/Phar Lap API/tools/examples
+READ     ME  .......... This file
+
+Directory of RELEASE.1??\DOSDOC
+
+VFX_WW20 DOC .......... Current documentation (MS Word for Windows 2.0 format)
+
+Directory of RELEASE.1??\DRV
+
+(Watcom/Rational drivers; see comments in .BAT files and all .ASM files)
+
+Directory of RELEASE.1??\DRV\PHARLAP
+
+(Phar Lap-compatible driver DLLs)
+
+                         ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                         ³ Addenda to documentation ³
+                         ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                             *** Release 1.01 ***
+
+VFX versions marked "For Evaluation Only" do not contain source files for the
+API, drivers, or optional polygon primitives.  Instead, linkable object files
+for these modules are provided.
+
+By default, the VFX3D primitives for Gouraud shading and texture mapping are 
+assembled to render scanlines up to 320 pixels long.  Change the MAX_WIDTH
+equate in VFX3D.ASM to 640 if you wish to use the polygon primitives in 
+640-column super-VGA modes.  (This will cause the resulting .OBJ files to 
+grow in size by a substantial amount.)
+
+                             *** Release 1.02 ***
+
+A few pane-clipping inconsistencies in VFXA.ASM have been resolved.
+
+                             *** Release 1.03 ***
+
+This is a maintenance release which also includes several new functions and
+modifications to existing functions.  Some of the more important changes:
+
+* The optional VFX3D polygon primitives were previously implemented with
+  fully-unrolled scanline output loops.  Besides being extremely large (> 30K
+  for the texture mapper alone), these fully-unrolled loops were not always 
+  optimal for use on 80486-based systems, due to cachability issues. 
+  The polygon primitives now make use of partially-unrolled loops, yielding 
+  much smaller object code with little or no sacrifice in performance.
+
+* VFX_precision_Gouraud_polygon() has been renamed to VFX_Gouraud_polygon().
+  The original VFX_Gouraud_polygon() function should be replaced by calls to
+  VFX_dithered_Gouraud_polygon() with a dither_amount of 0.
+
+* VFX_dithered_Gouraud_polygon() now accepts any 16.16 fixed-point dither 
+  factor.  (Formerly, only whole integer dither factors were accepted.)  
+  Optimal Gouraud dithering can usually be obtained with dither fractions less
+  than 0.5 (0x8000 in 16.16 notation).
+
+* VFX_illluminate_polygon() implements dithered Gouraud lighting by pixel
+  value addition.
+
+* VFX_translate_polygon() implements color translation for all pixels within
+  the specified polygon.  This is useful for translucency effects and other
+  overlay applications.
+
+* VFX_map_polygon() now works with a companion function, VFX_map_lookaside(),
+  to implement more efficient color lookaside effects.
+
+* VFX_shape_translate_draw() and VFX_shape_lookaside() allow on-the-fly color
+  remapping during 2D bitmap rendering.
+
+* A number of minor problems were corrected in the VFX toolset and API.
+
+* The VFX Graphics System manual has been extensively revised for this
+  release.  Be sure to replace all older copies of the manual with this
+  version.
+
+                             *** Release 1.04 ***
+
+Release 1.04 includes a number of updates and bug fixes to the API and driver
+set.  Several major new features have also been added in this release.
+
+* VFX_shape_transform() implements full rotation, scaling, and mirroring of
+VFX shapes.  See the updated VFX_WW20.DOC file for details.
+
+* VFX_window_fade() now accepts an "intervals" parameter, which specifies the
+number of video refresh periods over which to perform the fade.
+
+* The functions VFX_window_read(), VFX_window_refresh(), and VFX_shape_draw()
+are now re-entrant, and may be called from within an asynchronous interrupt
+handler, provided that the entry depth does not exceed 2 calls.  Additionally,
+an off-by-one error which caused the bottom window line to be skipped in both
+functions has been corrected.
+
+* MOUSE.C implements full interrupt-based support for Microsoft-compatible
+mouse peripherals.  This module offers a complete high-performance mouse
+interface library, and also provides extensive, heavily commented examples 
+of the PANE and WINDOW data structure manipulation necessary to implement 
+mouse support under 386FX.  See the function header comments in MOUSE.C for
+more details.
+
+                             *** Release 1.05 ***
+
+The drivers in release 1.05 contain a new call, VFX_bank_reset(), which
+invalidates the internal EVGA bank shadow registers.  This call should be made
+at the end of any application functions that bypass the other driver routines
+and access the EVGA adapter or VESA API directly.  Applications which do not
+directly manipulate EVGA bank registers may ignore this function.
+
+The u,v,and vc members of the SCRNVERTEX (formerly VERTEX2D) structure are
+now 16:16 fixed-point values.  To convert a conventional integer to 16:16
+fixed-point notation, shift the value left 16 places (n << 16).  See VFX.H
+for a collection of useful fixed-point macros.
+
+The EBX register is now saved by all API and driver routines, in compliance 
+with the latest Watcom C++ 9.5 documentation.
+
+                             *** Release 1.06 ***
+
+A number of new functions have been added.  These include:
+
+VFX_pane_refresh(): 
+                    Allows the application to copy a partial window
+                    to the MCGA or EVGA screen.
+VFX_pixel_fade():   
+                    Performs a dot-by-dot pseudorandom copy between
+                    an offscreen and an onscreen pane (MCGA only).
+VFX_rectangle_hash():         
+                    Fills alternate dots and columns in a rectangular area
+                    with a solid color.
+VFX_shape_bounds():
+                    Returns the width and height of a VFX shape as originally
+                    "grabbed" (including transparent areas).
+VFX_shape_origin():
+                    Returns the origin, or "hotspot", of a VFX shape relative
+                    to its upper-left boundary.
+
+For further information on these functions, see the new VFX_WW20.DOC file.
+
+All of the VFX tools, example programs, and drivers can now be linked into
+the MetaWare High C/C++ and Phar Lap 386|DOS Extender development environment.
+As shipped, the library is configured for the Watcom/Rational environment.
+Before using the library in a MetaWare/Phar Lap application, you must delete 
+all of the executable tools and example programs you wish to run under Phar
+Lap and MSMAKE the VFXMP.MAK file.  Then, you must build a set of Phar Lap-
+compatible drivers.  To do this, simply change to the DRV directory and copy
+the .DLL drivers from its PHARLAP subdirectory over the existing 
+Watcom/Rational driver set.  The VFX tools and example programs will load 
+their driver DLLs from the DRV subdirectory, so it is important to "match" 
+the correct driver set with the DOS extender environment under which the
+programs were last built.
+
+Note: It is not necessary to rebuild VFX3D.OBJ and VFXA.OBJ in order to 
+switch to Phar Lap; these object modules are DOS extender-independent. 
+However, do not attempt to run any programs such as VTEST, MOUSE, or 
+SHOWPIC without the correct driver set in the DRV subdirectory.
+
+IMPORTANT NOTICE!
+
+To support some of the newer functions, the VFX shape format has changed
+slightly.  VFX shapes acquired with versions of GETSHAPE prior to 1.03 will
+not work with this version of the library.  To upgrade to this release, you
+MUST rebuild your existing shape files with the new GETSHAPE utility.
+
+                             *** Release 1.07 ***
+
+The following function has been added:
+
+void VFX_line_address(LONG x, LONG y, UBYTE **addr, ULONG *nbytes)
+
+                    Calculates the address of the point (x,y) on the physical
+                    display screen, and stores this address to the pointer
+                    variable *addr.  In addition, the number of bytes
+                    until the end of the screen line (or the end of the EVGA
+                    bank, whichever comes first) is written to *nbytes.  For
+                    EVGA drivers, including VESA, this function performs a
+                    bank-set call to prepare for direct pixel-write access to
+                    the specified line.  Either the addr or nbytes parameter
+                    may be NULL, to suppress storage of their respective
+                    values.
+
+                             *** Release 1.10 ***
+
+This release implements a number of suggestions from users, as well as some
+fixes for clipping problems previously encountered in certain primitives such
+as VFX_ellipse_draw() and VFX_shape_transform().
+
+The WINDOW structure's x0 and y0 members, which were previously reserved,
+have been eliminated, simplifying the WINDOW coordinate system considerably.
+For ease of reference, the old x1 and y1 members have been renamed max_x 
+and max_y.  As before, max_x and max_y specify the largest valid X and Y 
+coordinates in the window, respectively.
+
+DLLLOAD.C now paragraph-aligns all objects in a DLL after the first.  If the
+first object in a DLL must be paragraph-aligned (e.g., for optimization
+purposes), the application is responsible for allocating a paragraph-aligned
+memory block and passing it to DLL_load() with the DLLMEM_USER option.
+DLL_size() will return a sufficient memory size value to permit paragraph 
+alignment of all objects.
+
+MOUSE.C now offers the mouse_pane_refresh() function, a companion to
+VFX_window_refresh() which allows the user to conveniently copy a portion of
+a window to the screen with automatic mouse cursor display management.  See
+MOUSE.C for details on this and other mouse functions.
+
+The VFX tools, example programs, and drivers may now be built without
+using a make utility, by running BUILDWR.BAT (Watcom/Rational version) or
+BUILDMP.BAT (MetaWare/Phar Lap version).  On a fast PC, the entire library
+can be built by these batch files in less than a minute, reducing the 
+likelihood of version conflicts and mismatched DOS extender-dependent files.
+As before, the VFX files are built for Watcom/Rational support by default.
+
+                             *** Release 1.11 ***
+
+The VFX_shape_transform() function now clips properly to both panes and
+windows.
+
+
+                             *** Release 1.12 ***
+
+MOUSE_pane_refresh() now works correctly with panes of all sizes and 
+aspect ratios.
+
+For consistency with other NLA library calls, the standard prefix appearing 
+before all mouse library functions has been changed from mouse_ to MOUSE_.
+
+
+                             *** Release 1.15 ***
+
+This release includes a number of updates and corrections to the API and
+driver set.  Several major new features have also been added in this release.
+
+SHOWPIC is now capable of displaying .FLI and .FLC animations.  A single
+frame may be displayed by specifying the frame number on the command line
+after the file name; e.g., SHOWPIC ANIMATE.FLI 5.  This feature is intended to
+serve as a diagnostic tool and development aid, and is not optimized for
+performance; complex animations may not play back at full speed on slower 
+systems.
+
+GETSHAPE can now capture frames from .FLI and .FLC animations.  The 'FN'
+response file directive is used to specify the first and last frames to
+be captured.  An example: sf=ANIMATE.FLI; fn=5,7; ....
+
+VFX_shape_origin() now consistently returns the coordinates of a shape's 
+origin (hot spot) relative to the upper-left corner of the shape's area as 
+specified in the GETSHAPE response file.  Previously, the function would
+sometimes return erroneous values.
+
+Two new functions, VFX_shape_list() and VFX_shape_palette_list(), were added
+to VFXA.ASM.  Beginning with this release, duplicate shapes may be stored 
+economically in VFX shape files.  GETSHAPE.EXE now stores a given shape image
+once, duplicating pointers to that image where necessary.  VFX_shape_list()
+will return a list of indices (shape numbers) representing each unique shape
+in a shape file.  Similarly, VFX_shape_palette_list() will return a list of 
+indices for each unique palette stored in a VFX shape file.  These functions
+were added to support rotoscoping in the NLA PSpace(TM) 3D engine, and should
+not be needed by most application programs.
+
+The function VFX_shape_set_colors() has been added to remap the color 
+information associated with a shape in a VFX shape file.
+
+Some re-entrancy problems have been fixed in certain functions, including 
+VFX_shape_draw(), to avoid video glitches which occasionally appeared during
+mouse movement.
+
+                              IMPORTANT NOTICE!
+
+Two powerful new options, stencils and shadow buffering, have been added to
+the VFX window management system.  For information, see the new documentation
+in VFX_WW20.DOC.  To implement these features in the library, two new members
+have been added to the WINDOW structure, STENCIL *stencil and UBYTE *shadow.
+When upgrading an existing application to use this release, you MUST 
+initialize both of these variables to NULL when you allocate a new WINDOW
+structure, or undefined behavior will result.  Applications which take 
+advantage of the convenient VFX_window_construct() and VFX_pane_construct()
+functions (also introduced in this release) do not need to initialize the 
+*stencil or *shadow members when creating windows.
+
+Stencils and shadow buffering are specialized features which can improve
+graphics performance in some cases, and degrade it in others.  Before using
+either of these features, you should carefully study their descriptions
+in the manual to determine whether they are appropriate for your application.
+
+Several new functions have been added to support "dirty rectangle" animation.
+These functions use the new PANE_LIST data structure to keep track of portions
+of one or more windows which have been altered by the application.  For 
+details, refer to the descriptions of the VFX_pane_list_...() functions in
+the manual.
+
+Documentation for the VFX mouse functions has been added to VFX_WW20.DOC.
+
+A known problem prevents SHOWPIC from displaying certain .FLI/.FLC files
+properly.  If this bug appears, please contact Miles Design at (512) 
+345-2642 for an updated version of SHOWPIC.EXE. 
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Copyright (C) 1992-1994 Miles Design, Inc.                All rights reserved
+8301 Elander Drive   
+Austin, TX 78750
+
+Voice: (512) 345-2642                                          jmiles@pop.net                                
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+

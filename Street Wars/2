@@ -1,0 +1,718 @@
+
+TYPE INFORMATION LIBRARY CONTENTS
+Description: WATCOM11.H
+Flags      : 0003 compressed macro_table_present
+Base tils  : 
+Compiler   : Watcom C++
+sizeof(near*) = 4 sizeof(far*) = 6 near code, near data, fastcall
+default_align = 0 sizeof(bool) = 1 sizeof(long)  = 4 sizeof(llong) = 8
+sizeof(enum) = 4 sizeof(int) = 4 sizeof(short) = 2
+sizeof(long double) = 0
+
+SYMBOLS
+00000000 00000000 extern   FILE __iob[];
+FFFFFFFF 00000000 extern   int _bprintf(char *buf, size_t bufsize, const char *fmt, ...);
+FFFFFFFF 00000000 extern   int _bwprintf(wchar_t *, size_t, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int _snprintf(char *buf, size_t bufsize, const char *fmt, ...);
+FFFFFFFF 00000000 extern   int _snwprintf(wchar_t *, size_t, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int _usprintf(wchar_t *, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   FILE *__fastcall fdopen(int handle, const char *mode);
+FFFFFFFF 00000000 extern   int fgetchar(void);
+FFFFFFFF 00000000 extern   wint_t fgetwchar(void);
+FFFFFFFF 00000000 extern   int fprintf(FILE *fp, const char *format, ...);
+FFFFFFFF 00000000 extern   int __fastcall fputchar(int c);
+FFFFFFFF 00000000 extern   wint_t __fastcall fputwchar(wint_t);
+FFFFFFFF 00000000 extern   int fscanf(FILE *fp, const char *format, ...);
+FFFFFFFF 00000000 extern   FILE *__fastcall fsopen(const char *filename, const char *mode, int shflag);
+FFFFFFFF 00000000 extern   int fwprintf(FILE *, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int fwscanf(FILE *, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int __fastcall getw(FILE *fp);
+FFFFFFFF 00000000 extern   wchar_t *__fastcall getws(wchar_t *);
+FFFFFFFF 00000000 extern   int __fastcall grow_handles(int new_count);
+FFFFFFFF 00000000 extern   int __fastcall pclose(FILE *fp);
+FFFFFFFF 00000000 extern   FILE *__fastcall popen(const char *command, const char *mode);
+FFFFFFFF 00000000 extern   int printf(const char *format, ...);
+FFFFFFFF 00000000 extern   int __fastcall putw(int binint, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall putws(const wchar_t *);
+FFFFFFFF 00000000 extern   int scanf(const char *format, ...);
+FFFFFFFF 00000000 extern   int sprintf(char *s, const char *format, ...);
+FFFFFFFF 00000000 extern   int sscanf(const char *s, const char *format, ...);
+FFFFFFFF 00000000 extern   int swprintf(wchar_t *, size_t, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int swscanf(const wchar_t *, const wchar_t *, ...);
+FFFFFFFF 00000000 extern   char *__fastcall tempnam(char *dir, char *prefix);
+FFFFFFFF 00000000 extern   int __fastcall uvsprintf(wchar_t *, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vbprintf(char *s, size_t bufsize, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vbwprintf(wchar_t *, size_t, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vsnprintf(char *s, size_t bufsize, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vsnwprintf(wchar_t *, size_t, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   FILE *__fastcall wfdopen(int, const wchar_t *);
+FFFFFFFF 00000000 extern   FILE *__fastcall wfopen(const wchar_t *, const wchar_t *);
+FFFFFFFF 00000000 extern   FILE *__fastcall wfreopen(const wchar_t *, const wchar_t *, FILE *);
+FFFFFFFF 00000000 extern   FILE *__fastcall wfsopen(const wchar_t *filename, const wchar_t *mode, int shflag);
+FFFFFFFF 00000000 extern   void __fastcall wperror(const wchar_t *);
+FFFFFFFF 00000000 extern   FILE *__fastcall wpopen(const wchar_t *command, const wchar_t *mode);
+FFFFFFFF 00000000 extern   int wprintf(const wchar_t *, ...);
+FFFFFFFF 00000000 extern   int __fastcall wremove(const wchar_t *);
+FFFFFFFF 00000000 extern   int __fastcall wrename(const wchar_t *, const wchar_t *);
+FFFFFFFF 00000000 extern   int wscanf(const wchar_t *, ...);
+FFFFFFFF 00000000 extern   wchar_t *__fastcall wtempnam(wchar_t *dir, wchar_t *prefix);
+FFFFFFFF 00000000 extern   wchar_t *__fastcall wtmpnam(wchar_t *);
+FFFFFFFF 00000000 extern   void __fastcall clearerr(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fclose(FILE *fp);
+FFFFFFFF 00000000 extern   int fcloseall(void);
+FFFFFFFF 00000000 extern   FILE *__fastcall fdopen(int handle, const char *mode);
+FFFFFFFF 00000000 extern   int __fastcall feof(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall ferror(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fflush(FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fgetc(FILE *fp);
+FFFFFFFF 00000000 extern   int fgetchar(void);
+FFFFFFFF 00000000 extern   int __fastcall fgetpos(FILE *fp, fpos_t *pos);
+FFFFFFFF 00000000 extern   char *__fastcall fgets(char *s, int n, FILE *fp);
+FFFFFFFF 00000000 extern   wint_t __fastcall fgetwc(FILE *);
+FFFFFFFF 00000000 extern   wint_t fgetwchar(void);
+FFFFFFFF 00000000 extern   wchar_t *__fastcall fgetws(wchar_t *, int, FILE *);
+FFFFFFFF 00000000 extern   int flushall(void);
+FFFFFFFF 00000000 extern   FILE *__fastcall fopen(const char *filename, const char *mode);
+FFFFFFFF 00000000 extern   int __fastcall fputc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fputchar(int c);
+FFFFFFFF 00000000 extern   int __fastcall fputs(const char *s, FILE *fp);
+FFFFFFFF 00000000 extern   wint_t __fastcall fputwc(wint_t, FILE *);
+FFFFFFFF 00000000 extern   wint_t __fastcall fputwchar(wint_t);
+FFFFFFFF 00000000 extern   int __fastcall fputws(const wchar_t *, FILE *);
+FFFFFFFF 00000000 extern   size_t __fastcall fread(void *ptr, size_t size, size_t n, FILE *fp);
+FFFFFFFF 00000000 extern   FILE *__fastcall freopen(const char *filename, const char *mode, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall fseek(FILE *fp, int offset, int whence);
+FFFFFFFF 00000000 extern   int __fastcall fsetpos(FILE *fp, const fpos_t *pos);
+FFFFFFFF 00000000 extern   int __fastcall ftell(FILE *fp);
+FFFFFFFF 00000000 extern   size_t __fastcall fwrite(const void *ptr, size_t size, size_t n, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall getc(FILE *fp);
+FFFFFFFF 00000000 extern   int getchar(void);
+FFFFFFFF 00000000 extern   char *__fastcall gets(char *s);
+FFFFFFFF 00000000 extern   wint_t __fastcall getwc(FILE *);
+FFFFFFFF 00000000 extern   wint_t getwchar(void);
+FFFFFFFF 00000000 extern   wchar_t *__fastcall getws(wchar_t *);
+FFFFFFFF 00000000 extern   void __fastcall perror(const char *s);
+FFFFFFFF 00000000 extern   int __fastcall putc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   int __fastcall putchar(int c);
+FFFFFFFF 00000000 extern   int __fastcall puts(const char *s);
+FFFFFFFF 00000000 extern   wint_t __fastcall putwc(wint_t, FILE *);
+FFFFFFFF 00000000 extern   wint_t __fastcall putwchar(wint_t);
+FFFFFFFF 00000000 extern   int __fastcall putws(const wchar_t *);
+FFFFFFFF 00000000 extern   int __fastcall remove(const char *filename);
+FFFFFFFF 00000000 extern   int __fastcall rename(const char *old, const char *new);
+FFFFFFFF 00000000 extern   void __fastcall rewind(FILE *fp);
+FFFFFFFF 00000000 extern   void __fastcall setbuf(FILE *fp, char *buf);
+FFFFFFFF 00000000 extern   int __fastcall setvbuf(FILE *fp, char *buf, int mode, size_t size);
+FFFFFFFF 00000000 extern   FILE *tmpfile(void);
+FFFFFFFF 00000000 extern   char *__fastcall tmpnam(char *s);
+FFFFFFFF 00000000 extern   int __fastcall ungetc(int c, FILE *fp);
+FFFFFFFF 00000000 extern   wint_t __fastcall ungetwc(wint_t, FILE *);
+FFFFFFFF 00000000 extern   int __fastcall vfprintf(FILE *fp, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vfscanf(FILE *fp, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vfwprintf(FILE *, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vfwscanf(FILE *, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vprintf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vscanf(const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vsprintf(char *s, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vsscanf(const char *s, const char *format, __va_list arg);
+FFFFFFFF 00000000 extern   int __fastcall vswprintf(wchar_t *, size_t, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vswscanf(const wchar_t *, const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vwprintf(const wchar_t *, __va_list);
+FFFFFFFF 00000000 extern   int __fastcall vwscanf(const wchar_t *, __va_list);
+
+TYPES
+0000001C typedef struct __iobuf FILE;
+0000001C struct __iobuf {unsigned __int8 *_ptr;int _cnt;struct __stream_link *_link;unsigned int _flag;int _handle;unsigned int _bufsize;unsigned __int16 _ungotten;};
+FFFFFFFF struct __stream_link;
+00000004 typedef char *__va_list[1];
+00000004 typedef int fpos_t;
+00000004 typedef unsigned int size_t;
+00000002 typedef unsigned __int16 wchar_t;
+00000002 typedef wchar_t wctype_t;
+00000002 typedef wchar_t wint_t;
+
+MACROS
+BUFSIZ 512
+Button_Enable(Ä,Å) EnableWindow((Ä),(Å))
+Button_GetCheck(Ä) ((int)(DWORD)SendMessage((Ä),BM_GETCHECK,0L,0L))
+Button_GetState(Ä) ((int)(DWORD)SendMessage((Ä),BM_GETSTATE,0L,0L))
+Button_GetText(Ä,Å,Ç) GetWindowText((Ä),(Å),(Ç))
+Button_GetTextLength(Ä) GetWindowTextLength(Ä)
+Button_SetCheck(Ä,Å) ((void)SendMessage((Ä),BM_SETCHECK,(WPARAM)(int)(Å),0L))
+Button_SetState(Ä,Å) ((UINT)(DWORD)SendMessage((Ä),BM_SETSTATE,(WPARAM)(int)(Å),0L))
+Button_SetStyle(Ä,Å,Ç) ((void)SendMessage((Ä),BM_SETSTYLE,(WPARAM)LOWORD(Å),MAKELPARAM(((Ç)?TRUE :FALSE),0)))
+Button_SetText(Ä,Å) SetWindowText((Ä),(Å))
+CheckDefDlgRecursion(Ä) if (*(Ä)){*(Ä)=FALSE;return FALSE;}
+ComboBox_AddItemData(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_ADDSTRING,0L,(LPARAM)(Å)))
+ComboBox_AddString(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_ADDSTRING,0L,(LPARAM)(LPCTSTR)(Å)))
+ComboBox_DeleteString(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_DELETESTRING,(WPARAM)(int)(Å),0L))
+ComboBox_Dir(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_DIR,(WPARAM)(UINT)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ComboBox_Enable(Ä,Å) EnableWindow((Ä),(Å))
+ComboBox_FindItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_FINDSTRING,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+ComboBox_FindString(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_FINDSTRING,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ComboBox_GetCount(Ä) ((int)(DWORD)SendMessage((Ä),CB_GETCOUNT,0L,0L))
+ComboBox_GetCurSel(Ä) ((int)(DWORD)SendMessage((Ä),CB_GETCURSEL,0L,0L))
+ComboBox_GetEditSel(Ä) ((DWORD)SendMessage((Ä),CB_GETEDITSEL,0L,0L))
+ComboBox_GetItemData(Ä,Å) ((LRESULT)(DWORD)SendMessage((Ä),CB_GETITEMDATA,(WPARAM)(int)(Å),0L))
+ComboBox_GetLBText(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_GETLBTEXT,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ComboBox_GetLBTextLen(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_GETLBTEXTLEN,(WPARAM)(int)(Å),0L))
+ComboBox_GetText(Ä,Å,Ç) GetWindowText((Ä),(Å),(Ç))
+ComboBox_GetTextLength(Ä) GetWindowTextLength(Ä)
+ComboBox_InsertItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_INSERTSTRING,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+ComboBox_InsertString(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_INSERTSTRING,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ComboBox_LimitText(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_LIMITTEXT,(WPARAM)(int)(Å),0L))
+ComboBox_ResetContent(Ä) ((int)(DWORD)SendMessage((Ä),CB_RESETCONTENT,0L,0L))
+ComboBox_SelectItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_SELECTSTRING,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+ComboBox_SelectString(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_SELECTSTRING,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ComboBox_SetCurSel(Ä,Å) ((int)(DWORD)SendMessage((Ä),CB_SETCURSEL,(WPARAM)(int)(Å),0L))
+ComboBox_SetEditSel(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_SETEDITSEL,0L,MAKELPARAM((Å),(Ç))))
+ComboBox_SetItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),CB_SETITEMDATA,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+ComboBox_SetText(Ä,Å) SetWindowText((Ä),(Å))
+ComboBox_ShowDropdown(Ä,Å) ((BOOL)(DWORD)SendMessage((Ä),CB_SHOWDROPDOWN,(WPARAM)(BOOL)(Å),0L))
+CopyRgn(Ä,Å) CombineRgn(Ä,Å,0,RGN_COPY)
+DECLARE_HANDLE32 DECLARE_HANDLE
+DefDlgProcEx(Ä,Å,Ç,É,Ñ) (*(Ñ)=TRUE,DefDlgProc(Ä,Å,Ç,É))
+DeleteBitmap(Ä) DeleteObject((HGDIOBJ)(HBITMAP)(Ä))
+DeleteBrush(Ä) DeleteObject((HGDIOBJ)(HBRUSH)(Ä))
+DeleteFont(Ä) DeleteObject((HGDIOBJ)(HFONT)(Ä))
+DeletePalette(Ä) DeleteObject((HGDIOBJ)(HPALETTE)(Ä))
+DeletePen(Ä) DeleteObject((HGDIOBJ)(HPEN)(Ä))
+DeleteRgn(Ä) DeleteObject((HGDIOBJ)(HRGN)(Ä))
+EOF (-1)
+Edit_CanUndo(Ä) ((BOOL)(DWORD)SendMessage((Ä),EM_CANUNDO,0L,0L))
+Edit_EmptyUndoBuffer(Ä) ((void)SendMessage((Ä),EM_EMPTYUNDOBUFFER,0L,0L))
+Edit_Enable(Ä,Å) EnableWindow((Ä),(Å))
+Edit_FmtLines(Ä,Å) ((BOOL)(DWORD)SendMessage((Ä),EM_FMTLINES,(WPARAM)(BOOL)(Å),0L))
+Edit_GetHandle(Ä) ((HLOCAL)(UINT)(DWORD)SendMessage((Ä),EM_GETHANDLE,0L,0L))
+Edit_GetLine(Ä,Å,Ç,É) ((*((int *)(Ç))=(É)),((int)(DWORD)SendMessage((Ä),EM_GETLINE,(WPARAM)(int)(Å),(LPARAM)(LPTSTR)(Ç))))
+Edit_GetLineCount(Ä) ((int)(DWORD)SendMessage((Ä),EM_GETLINECOUNT,0L,0L))
+Edit_GetModify(Ä) ((BOOL)(DWORD)SendMessage((Ä),EM_GETMODIFY,0L,0L))
+Edit_GetRect(Ä,Å) ((void)SendMessage((Ä),EM_GETRECT,0L,(LPARAM)(RECT *)(Å)))
+Edit_GetSel(Ä) ((DWORD)SendMessage((Ä),EM_GETSEL,0L,0L))
+Edit_GetText(Ä,Å,Ç) GetWindowText((Ä),(Å),(Ç))
+Edit_GetTextLength(Ä) GetWindowTextLength(Ä)
+Edit_LimitText(Ä,Å) ((void)SendMessage((Ä),EM_LIMITTEXT,(WPARAM)(Å),0L))
+Edit_LineFromChar(Ä,Å) ((int)(DWORD)SendMessage((Ä),EM_LINEFROMCHAR,(WPARAM)(int)(Å),0L))
+Edit_LineIndex(Ä,Å) ((int)(DWORD)SendMessage((Ä),EM_LINEINDEX,(WPARAM)(int)(Å),0L))
+Edit_LineLength(Ä,Å) ((int)(DWORD)SendMessage((Ä),EM_LINELENGTH,(WPARAM)(int)(Å),0L))
+Edit_ReplaceSel(Ä,Å) ((void)SendMessage((Ä),EM_REPLACESEL,0L,(LPARAM)(LPCTSTR)(Å)))
+Edit_Scroll(Ä,Å,Ç) ((void)SendMessage((Ä),EM_LINESCROLL,(WPARAM)(Ç),(LPARAM)(Å)))
+Edit_ScrollCaret(Ä) ((BOOL)(DWORD)SendMessage((Ä),EM_SCROLLCARET,0,0L))
+Edit_SetHandle(Ä,Å) ((void)SendMessage((Ä),EM_SETHANDLE,(WPARAM)(UINT)(HLOCAL)(Å),0L))
+Edit_SetModify(Ä,Å) ((void)SendMessage((Ä),EM_SETMODIFY,(WPARAM)(UINT)(Å),0L))
+Edit_SetPasswordChar(Ä,Å) ((void)SendMessage((Ä),EM_SETPASSWORDCHAR,(WPARAM)(UINT)(Å),0L))
+Edit_SetRect(Ä,Å) ((void)SendMessage((Ä),EM_SETRECT,0L,(LPARAM)(const RECT *)(Å)))
+Edit_SetRectNoPaint(Ä,Å) ((void)SendMessage((Ä),EM_SETRECTNP,0L,(LPARAM)(const RECT *)(Å)))
+Edit_SetSel(Ä,Å,Ç) ((void)SendMessage((Ä),EM_SETSEL,(Å),(Ç)))
+Edit_SetTabStops(Ä,Å,Ç) ((void)SendMessage((Ä),EM_SETTABSTOPS,(WPARAM)(int)(Å),(LPARAM)(const int *)(Ç)))
+Edit_SetText(Ä,Å) SetWindowText((Ä),(Å))
+Edit_Undo(Ä) ((BOOL)(DWORD)SendMessage((Ä),EM_UNDO,0L,0L))
+FILENAME_MAX 80
+FOPEN_MAX _NFILES
+FORWARD_WM_ACTIVATE(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_ACTIVATE,MAKEWPARAM((Å),(É)),(LPARAM)(HWND)(Ç))
+FORWARD_WM_ACTIVATEAPP(Ä,Å,Ç,É) (void)(É)((Ä),WM_ACTIVATEAPP,(WPARAM)(BOOL)(Å),(LPARAM)(Ç))
+FORWARD_WM_ASKCBFORMATNAME(Ä,Å,Ç,É) (void)(É)((Ä),WM_ASKCBFORMATNAME,(WPARAM)(int)(Å),(LPARAM)(Ç))
+FORWARD_WM_CANCELMODE(Ä,Å) (void)(Å)((Ä),WM_CANCELMODE,0L,0L)
+FORWARD_WM_CHANGECBCHAIN(Ä,Å,Ç,É) (void)(É)((Ä),WM_CHANGECBCHAIN,(WPARAM)(HWND)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CHAR(Ä,Å,Ç,É) (void)(É)((Ä),WM_CHAR,(WPARAM)(TCHAR)(Å),MAKELPARAM((Ç),0))
+FORWARD_WM_CHARTOITEM(Ä,Å,Ç,É,Ñ) (int)(DWORD)(Ñ)((Ä),WM_CHARTOITEM,MAKEWPARAM((UINT)(Å),(UINT)(É)),(LPARAM)(Ç))
+FORWARD_WM_CHILDACTIVATE(Ä,Å) (void)(Å)((Ä),WM_CHILDACTIVATE,0L,0L)
+FORWARD_WM_CLEAR(Ä,Å) (void)(Å)((Ä),WM_CLEAR,0L,0L)
+FORWARD_WM_CLOSE(Ä,Å) (void)(Å)((Ä),WM_CLOSE,0L,0L)
+FORWARD_WM_COMMAND(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_COMMAND,MAKEWPARAM((UINT)(Å),(UINT)(É)),(LPARAM)(HWND)(Ç))
+FORWARD_WM_COMPACTING(Ä,Å,Ç) (void)(Ç)((Ä),WM_COMPACTING,(WPARAM)(UINT)(Å),0L)
+FORWARD_WM_COMPAREITEM(Ä,Å,Ç) (int)(DWORD)(Ç)((Ä),WM_COMPAREITEM,(WPARAM)(((const COMPAREITEMSTRUCT *)(Å))->CtlID),(LPARAM)(const COMPAREITEMSTRUCT *)(Å))
+FORWARD_WM_CONTEXTMENU(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_CONTEXTMENU,(WPARAM)(HWND)(Å),MAKELPARAM((UINT)(Ç),(UINT)(É)))
+FORWARD_WM_COPY(Ä,Å) (void)(Å)((Ä),WM_COPY,0L,0L)
+FORWARD_WM_CREATE(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_CREATE,0L,(LPARAM)(LPCREATESTRUCT)(Å))
+FORWARD_WM_CTLCOLORBTN(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORBTN,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLORDLG(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORDLG,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLOREDIT(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLOREDIT,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLORLISTBOX(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORLISTBOX,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLORMSGBOX(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORMSGBOX,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLORSCROLLBAR(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORSCROLLBAR,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CTLCOLORSTATIC(Ä,Å,Ç,É) (HBRUSH)(UINT)(DWORD)(É)((Ä),WM_CTLCOLORSTATIC,(WPARAM)(HDC)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_CUT(Ä,Å) (void)(Å)((Ä),WM_CUT,0L,0L)
+FORWARD_WM_DEADCHAR(Ä,Å,Ç,É) (void)(É)((Ä),WM_DEADCHAR,(WPARAM)(TCHAR)(Å),MAKELPARAM((Ç),0))
+FORWARD_WM_DELETEITEM(Ä,Å,Ç) (void)(Ç)((Ä),WM_DELETEITEM,(WPARAM)(((const DELETEITEMSTRUCT *)(Å))->CtlID),(LPARAM)(const DELETEITEMSTRUCT *)(Å))
+FORWARD_WM_DESTROY(Ä,Å) (void)(Å)((Ä),WM_DESTROY,0L,0L)
+FORWARD_WM_DESTROYCLIPBOARD(Ä,Å) (void)(Å)((Ä),WM_DESTROYCLIPBOARD,0L,0L)
+FORWARD_WM_DEVICECHANGE(Ä,Å,Ç,É) (BOOL)(DWORD)(É)((Ä),WM_DEVICECHANGE,(WPARAM)(UINT)(Å),(LPARAM)(DWORD)(Ç))
+FORWARD_WM_DEVMODECHANGE(Ä,Å,Ç) (void)(Ç)((Ä),WM_DEVMODECHANGE,0L,(LPARAM)(LPCTSTR)(Å))
+FORWARD_WM_DISPLAYCHANGE(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_DISPLAYCHANGE,(WPARAM)(UINT)(Å),(LPARAM)MAKELPARAM((UINT)(Ç),(UINT)(É)))
+FORWARD_WM_DRAWCLIPBOARD(Ä,Å) (void)(Å)((Ä),WM_DRAWCLIPBOARD,0L,0L)
+FORWARD_WM_DRAWITEM(Ä,Å,Ç) (void)(Ç)((Ä),WM_DRAWITEM,(WPARAM)(((const DRAWITEMSTRUCT *)Å)->CtlID),(LPARAM)(const DRAWITEMSTRUCT *)(Å))
+FORWARD_WM_ENABLE(Ä,Å,Ç) (void)(Ç)((Ä),WM_ENABLE,(WPARAM)(BOOL)(Å),0L)
+FORWARD_WM_ENDSESSION(Ä,Å,Ç) (void)(Ç)((Ä),WM_ENDSESSION,(WPARAM)(BOOL)(Å),0L)
+FORWARD_WM_ENTERIDLE(Ä,Å,Ç,É) (void)(É)((Ä),WM_ENTERIDLE,(WPARAM)(UINT)(Å),(LPARAM)(HWND)(Ç))
+FORWARD_WM_ERASEBKGND(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_ERASEBKGND,(WPARAM)(HDC)(Å),0L)
+FORWARD_WM_FONTCHANGE(Ä,Å) (void)(Å)((Ä),WM_FONTCHANGE,0L,0L)
+FORWARD_WM_GETDLGCODE(Ä,Å,Ç) (UINT)(DWORD)(Ç)((Ä),WM_GETDLGCODE,(Å ?Å->wParam :0),(LPARAM)(LPMSG)(Å))
+FORWARD_WM_GETFONT(Ä,Å) (HFONT)(UINT)(DWORD)(Å)((Ä),WM_GETFONT,0L,0L)
+FORWARD_WM_GETMINMAXINFO(Ä,Å,Ç) (void)(Ç)((Ä),WM_GETMINMAXINFO,0L,(LPARAM)(LPMINMAXINFO)(Å))
+FORWARD_WM_GETTEXT(Ä,Å,Ç,É) (int)(DWORD)(É)((Ä),WM_GETTEXT,(WPARAM)(int)(Å),(LPARAM)(LPTSTR)(Ç))
+FORWARD_WM_GETTEXTLENGTH(Ä,Å) (int)(DWORD)(Å)((Ä),WM_GETTEXTLENGTH,0L,0L)
+FORWARD_WM_HSCROLL(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_HSCROLL,MAKEWPARAM((UINT)(int)(Ç),(UINT)(int)(É)),(LPARAM)(UINT)(Å))
+FORWARD_WM_HSCROLLCLIPBOARD(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_HSCROLLCLIPBOARD,(WPARAM)(HWND)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_ICONERASEBKGND(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_ICONERASEBKGND,(WPARAM)(HDC)(Å),0L)
+FORWARD_WM_INITDIALOG(Ä,Å,Ç,É) (BOOL)(DWORD)(É)((Ä),WM_INITDIALOG,(WPARAM)(HWND)(Å),(Ç))
+FORWARD_WM_INITMENU(Ä,Å,Ç) (void)(Ç)((Ä),WM_INITMENU,(WPARAM)(HMENU)(Å),0L)
+FORWARD_WM_INITMENUPOPUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_INITMENUPOPUP,(WPARAM)(HMENU)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_KEYDOWN(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_KEYDOWN,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_KEYUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_KEYUP,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_KILLFOCUS(Ä,Å,Ç) (void)(Ç)((Ä),WM_KILLFOCUS,(WPARAM)(HWND)(Å),0L)
+FORWARD_WM_LBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_LBUTTONDBLCLK :WM_LBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_LBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_LBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_MBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_MBUTTONDBLCLK :WM_MBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_MBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_MBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_MDIACTIVATE(Ä,Å,Ç,É,Ñ) (void)(Ñ)(Ä,WM_MDIACTIVATE,(WPARAM)(É),(LPARAM)(Ç))
+FORWARD_WM_MDICASCADE(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_MDICASCADE,(WPARAM)(Å),0L)
+FORWARD_WM_MDICREATE(Ä,Å,Ç) (HWND)(UINT)(DWORD)(Ç)((Ä),WM_MDICREATE,0L,(LPARAM)(LPMDICREATESTRUCT)(Å))
+FORWARD_WM_MDIDESTROY(Ä,Å,Ç) (void)(Ç)((Ä),WM_MDIDESTROY,(WPARAM)(Å),0L)
+FORWARD_WM_MDIGETACTIVE(Ä,Å) (HWND)(UINT)(DWORD)(Å)((Ä),WM_MDIGETACTIVE,0L,0L)
+FORWARD_WM_MDIICONARRANGE(Ä,Å) (void)(Å)((Ä),WM_MDIICONARRANGE,0L,0L)
+FORWARD_WM_MDIMAXIMIZE(Ä,Å,Ç) (void)(Ç)((Ä),WM_MDIMAXIMIZE,(WPARAM)(Å),0L)
+FORWARD_WM_MDINEXT(Ä,Å,Ç,É) (HWND)(UINT)(DWORD)(É)((Ä),WM_MDINEXT,(WPARAM)(Å),(LPARAM)(Ç))
+FORWARD_WM_MDIRESTORE(Ä,Å,Ç) (void)(Ç)((Ä),WM_MDIRESTORE,(WPARAM)(Å),0L)
+FORWARD_WM_MDISETMENU(Ä,Å,Ç,É,Ñ) (HMENU)(UINT)(DWORD)(Ñ)((Ä),WM_MDISETMENU,(WPARAM)((Å)?(Ç):0),(LPARAM)(É))
+FORWARD_WM_MDITILE(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_MDITILE,(WPARAM)(Å),0L)
+FORWARD_WM_MEASUREITEM(Ä,Å,Ç) (void)(Ç)((Ä),WM_MEASUREITEM,(WPARAM)(((MEASUREITEMSTRUCT *)Å)->CtlID),(LPARAM)(MEASUREITEMSTRUCT *)(Å))
+FORWARD_WM_MENUCHAR(Ä,Å,Ç,É,Ñ) (DWORD)(Ñ)((Ä),WM_MENUCHAR,MAKEWPARAM(Ç,(WORD)(Å)),(LPARAM)(HMENU)(É))
+FORWARD_WM_MENUSELECT(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),WM_MENUSELECT,MAKEWPARAM((Ç),(Ñ)),(LPARAM)(HMENU)((Å)?(Å):(É)))
+FORWARD_WM_MOUSEACTIVATE(Ä,Å,Ç,É,Ñ) (int)(DWORD)(Ñ)((Ä),WM_MOUSEACTIVATE,(WPARAM)(HWND)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_MOUSEMOVE(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_MOUSEMOVE,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_MOVE(Ä,Å,Ç,É) (void)(É)((Ä),WM_MOVE,0L,MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NCACTIVATE(Ä,Å,Ç,É,Ñ) (BOOL)(DWORD)(Ñ)((Ä),WM_NCACTIVATE,(WPARAM)(BOOL)(Å),0L)
+FORWARD_WM_NCCALCSIZE(Ä,Å,Ç,É) (UINT)(DWORD)(É)((Ä),WM_NCCALCSIZE,0L,(LPARAM)(NCCALCSIZE_PARAMS *)(Ç))
+FORWARD_WM_NCCREATE(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_NCCREATE,0L,(LPARAM)(LPCREATESTRUCT)(Å))
+FORWARD_WM_NCDESTROY(Ä,Å) (void)(Å)((Ä),WM_NCDESTROY,0L,0L)
+FORWARD_WM_NCHITTEST(Ä,Å,Ç,É) (UINT)(DWORD)(É)((Ä),WM_NCHITTEST,0L,MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NCLBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_NCLBUTTONDBLCLK :WM_NCLBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_NCLBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_NCLBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NCMBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_NCMBUTTONDBLCLK :WM_NCMBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_NCMBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_NCMBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NCMOUSEMOVE(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_NCMOUSEMOVE,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NCPAINT(Ä,Å,Ç) (void)(Ç)((Ä),WM_NCPAINT,(WPARAM)(HRGN)(Å),0L)
+FORWARD_WM_NCRBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_NCRBUTTONDBLCLK :WM_NCRBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_NCRBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_NCRBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_NEXTDLGCTL(Ä,Å,Ç,É) (HWND)(UINT)(DWORD)(É)((Ä),WM_NEXTDLGCTL,(WPARAM)(HWND)(Å),(LPARAM)(Ç))
+FORWARD_WM_PAINT(Ä,Å) (void)(Å)((Ä),WM_PAINT,0L,0L)
+FORWARD_WM_PAINTCLIPBOARD(Ä,Å,Ç,É) (void)(É)((Ä),WM_PAINTCLIPBOARD,(WPARAM)(HWND)(Å),(LPARAM)(LPPAINTSTRUCT)(Ç))
+FORWARD_WM_PALETTECHANGED(Ä,Å,Ç) (void)(Ç)((Ä),WM_PALETTECHANGED,(WPARAM)(HWND)(Å),0L)
+FORWARD_WM_PALETTEISCHANGING(Ä,Å,Ç) (void)(Ç)((Ä),WM_PALETTEISCHANGING,(WPARAM)(HWND)(Å),0L)
+FORWARD_WM_PARENTNOTIFY(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_PARENTNOTIFY,MAKEWPARAM(Å,É),(LPARAM)(Ç))
+FORWARD_WM_PASTE(Ä,Å) (void)(Å)((Ä),WM_PASTE,0L,0L)
+FORWARD_WM_POWER(Ä,Å,Ç) (void)(Ç)((Ä),WM_POWER,(WPARAM)(int)(Å),0L)
+FORWARD_WM_QUERYDRAGICON(Ä,Å) (HICON)(UINT)(DWORD)(Å)((Ä),WM_QUERYDRAGICON,0L,0L)
+FORWARD_WM_QUERYENDSESSION(Ä,Å) (BOOL)(DWORD)(Å)((Ä),WM_QUERYENDSESSION,0L,0L)
+FORWARD_WM_QUERYNEWPALETTE(Ä,Å) (BOOL)(DWORD)(Å)((Ä),WM_QUERYNEWPALETTE,0L,0L)
+FORWARD_WM_QUERYOPEN(Ä,Å) (BOOL)(DWORD)(Å)((Ä),WM_QUERYOPEN,0L,0L)
+FORWARD_WM_QUEUESYNC(Ä,Å) (void)(Å)((Ä),WM_QUEUESYNC,0L,0L)
+FORWARD_WM_QUIT(Ä,Å,Ç) (void)(Ç)((Ä),WM_QUIT,(WPARAM)(Å),0L)
+FORWARD_WM_RBUTTONDOWN(Ä,Å,Ç,É,Ñ,Ö) (void)(Ö)((Ä),(Å)?WM_RBUTTONDBLCLK :WM_RBUTTONDOWN,(WPARAM)(UINT)(Ñ),MAKELPARAM((Ç),(É)))
+FORWARD_WM_RBUTTONUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_RBUTTONUP,(WPARAM)(UINT)(É),MAKELPARAM((Å),(Ç)))
+FORWARD_WM_RENDERALLFORMATS(Ä,Å) (void)(Å)((Ä),WM_RENDERALLFORMATS,0L,0L)
+FORWARD_WM_RENDERFORMAT(Ä,Å,Ç) (HANDLE)(UINT)(DWORD)(Ç)((Ä),WM_RENDERFORMAT,(WPARAM)(UINT)(Å),0L)
+FORWARD_WM_SETCURSOR(Ä,Å,Ç,É,Ñ) (BOOL)(DWORD)(Ñ)((Ä),WM_SETCURSOR,(WPARAM)(HWND)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_SETFOCUS(Ä,Å,Ç) (void)(Ç)((Ä),WM_SETFOCUS,(WPARAM)(HWND)(Å),0L)
+FORWARD_WM_SETFONT(Ä,Å,Ç,É) (void)(É)((Ä),WM_SETFONT,(WPARAM)(HFONT)(Å),(LPARAM)(BOOL)(Ç))
+FORWARD_WM_SETREDRAW(Ä,Å,Ç) (void)(Ç)((Ä),WM_SETREDRAW,(WPARAM)(BOOL)(Å),0L)
+FORWARD_WM_SETTEXT(Ä,Å,Ç) (void)(Ç)((Ä),WM_SETTEXT,0L,(LPARAM)(LPCTSTR)(Å))
+FORWARD_WM_SHOWWINDOW(Ä,Å,Ç,É) (void)(É)((Ä),WM_SHOWWINDOW,(WPARAM)(BOOL)(Å),(LPARAM)(UINT)(Ç))
+FORWARD_WM_SIZE(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_SIZE,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_SIZECLIPBOARD(Ä,Å,Ç,É) (void)(É)((Ä),WM_SIZECLIPBOARD,(WPARAM)(HWND)(Å),(LPARAM)(LPRECT)(Ç))
+FORWARD_WM_SPOOLERSTATUS(Ä,Å,Ç,É) (void)(É)((Ä),WM_SPOOLERSTATUS,(WPARAM)(Å),MAKELPARAM((Ç),0))
+FORWARD_WM_SYSCHAR(Ä,Å,Ç,É) (void)(É)((Ä),WM_SYSCHAR,(WPARAM)(TCHAR)(Å),MAKELPARAM((Ç),0))
+FORWARD_WM_SYSCOLORCHANGE(Ä,Å) (void)(Å)((Ä),WM_SYSCOLORCHANGE,0L,0L)
+FORWARD_WM_SYSCOMMAND(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_SYSCOMMAND,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_SYSDEADCHAR(Ä,Å,Ç,É) (void)(É)((Ä),WM_SYSDEADCHAR,(WPARAM)(TCHAR)(Å),MAKELPARAM((Ç),0))
+FORWARD_WM_SYSKEYDOWN(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_SYSKEYDOWN,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_SYSKEYUP(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_SYSKEYUP,(WPARAM)(UINT)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_SYSTEMERROR(Ä,Å,Ç) 0L
+FORWARD_WM_TIMECHANGE(Ä,Å) (void)(Å)((Ä),WM_TIMECHANGE,0L,0L)
+FORWARD_WM_TIMER(Ä,Å,Ç) (void)(Ç)((Ä),WM_TIMER,(WPARAM)(UINT)(Å),0L)
+FORWARD_WM_UNDO(Ä,Å) (void)(Å)((Ä),WM_UNDO,0L,0L)
+FORWARD_WM_VKEYTOITEM(Ä,Å,Ç,É,Ñ) (int)(DWORD)(Ñ)((Ä),WM_VKEYTOITEM,MAKEWPARAM((Å),(É)),(LPARAM)(Ç))
+FORWARD_WM_VSCROLL(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_VSCROLL,MAKEWPARAM((UINT)(int)(Ç),(UINT)(int)(É)),(LPARAM)(HWND)(Å))
+FORWARD_WM_VSCROLLCLIPBOARD(Ä,Å,Ç,É,Ñ) (void)(Ñ)((Ä),WM_VSCROLLCLIPBOARD,(WPARAM)(HWND)(Å),MAKELPARAM((Ç),(É)))
+FORWARD_WM_WINDOWPOSCHANGED(Ä,Å,Ç) (void)(Ç)((Ä),WM_WINDOWPOSCHANGED,0L,(LPARAM)(const LPWINDOWPOS)(Å))
+FORWARD_WM_WINDOWPOSCHANGING(Ä,Å,Ç) (BOOL)(DWORD)(Ç)((Ä),WM_WINDOWPOSCHANGING,0L,(LPARAM)(LPWINDOWPOS)(Å))
+FORWARD_WM_WININICHANGE(Ä,Å,Ç) (void)(Ç)((Ä),WM_WININICHANGE,0L,(LPARAM)(LPCTSTR)(Å))
+GET_EM_LINESCROLL_MPS(Ä,Å) (WPARAM)Å,(LONG)Ä
+GET_EM_SETSEL_END(Ä,Å) (Å)
+GET_EM_SETSEL_MPS(Ä,Å) (WPARAM)(Ä),(LONG)(Å)
+GET_EM_SETSEL_START(Ä,Å) (INT)(Ä)
+GET_LPARAM(Ä,Å) (Å)
+GET_WM_ACTIVATE_FMINIMIZED(Ä,Å) (BOOL)HIWORD(Ä)
+GET_WM_ACTIVATE_HWND(Ä,Å) (HWND)(Å)
+GET_WM_ACTIVATE_MPS(Ä,Å,Ç) (WPARAM)MAKELONG((Ä),(Å)),(LONG)(Ç)
+GET_WM_ACTIVATE_STATE(Ä,Å) LOWORD(Ä)
+GET_WM_CHANGECBCHAIN_HWNDNEXT(Ä,Å) (HWND)(Å)
+GET_WM_CHARTOITEM_CHAR(Ä,Å) (TCHAR)LOWORD(Ä)
+GET_WM_CHARTOITEM_HWND(Ä,Å) (HWND)(Å)
+GET_WM_CHARTOITEM_MPS(Ä,Å,Ç) (WPARAM)MAKELONG((Å),(Ä)),(LONG)(Ç)
+GET_WM_CHARTOITEM_POS(Ä,Å) HIWORD(Ä)
+GET_WM_COMMAND_CMD(Ä,Å) HIWORD(Ä)
+GET_WM_COMMAND_HWND(Ä,Å) (HWND)(Å)
+GET_WM_COMMAND_ID(Ä,Å) LOWORD(Ä)
+GET_WM_COMMAND_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Ä,Ç),(LONG)(Å)
+GET_WM_CTLCOLOR_HDC(Ä,Å,Ç) (HDC)(Ä)
+GET_WM_CTLCOLOR_HWND(Ä,Å,Ç) (HWND)(Å)
+GET_WM_CTLCOLOR_MPS(Ä,Å,Ç) (WPARAM)(Ä),(LONG)(Å)
+GET_WM_CTLCOLOR_MSG(Ä) (WORD)(WM_CTLCOLORMSGBOX+(Ä))
+GET_WM_CTLCOLOR_TYPE(Ä,Å,Ç) (WORD)(Ç -WM_CTLCOLORMSGBOX)
+GET_WM_HSCROLL_CODE(Ä,Å) LOWORD(Ä)
+GET_WM_HSCROLL_HWND(Ä,Å) (HWND)(Å)
+GET_WM_HSCROLL_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Ä,Å),(LONG)(Ç)
+GET_WM_HSCROLL_POS(Ä,Å) HIWORD(Ä)
+GET_WM_MDIACTIVATE_FACTIVATE(Ä,Å,Ç) (Ç ==(LONG)Ä)
+GET_WM_MDIACTIVATE_HWNDACTIVATE(Ä,Å) (HWND)(Å)
+GET_WM_MDIACTIVATE_HWNDDEACT(Ä,Å) (HWND)(Ä)
+GET_WM_MDIACTIVATE_MPS(Ä,Å,Ç) (WPARAM)(Ç),0
+GET_WM_MDISETMENU_MPS(Ä,Å) (WPARAM)Ä,(LONG)Å
+GET_WM_MENUCHAR_CHAR(Ä,Å) (TCHAR)LOWORD(Ä)
+GET_WM_MENUCHAR_FMENU(Ä,Å) (BOOL)HIWORD(Ä)
+GET_WM_MENUCHAR_HMENU(Ä,Å) (HMENU)(Å)
+GET_WM_MENUCHAR_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Ä,Ç),(LONG)(Å)
+GET_WM_MENUSELECT_CMD(Ä,Å) LOWORD(Ä)
+GET_WM_MENUSELECT_FLAGS(Ä,Å) (UINT)(int)(short)HIWORD(Ä)
+GET_WM_MENUSELECT_HMENU(Ä,Å) (HMENU)(Å)
+GET_WM_MENUSELECT_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Ä,Å),(LONG)(Ç)
+GET_WM_PARENTNOTIFY2_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(0,Ä),MAKELONG(Å,Ç)
+GET_WM_PARENTNOTIFY_HWNDCHILD(Ä,Å) (HWND)(Å)
+GET_WM_PARENTNOTIFY_ID(Ä,Å) HIWORD(Ä)
+GET_WM_PARENTNOTIFY_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Å,Ä),(LONG)(Ç)
+GET_WM_PARENTNOTIFY_MSG(Ä,Å) LOWORD(Ä)
+GET_WM_PARENTNOTIFY_X(Ä,Å) (int)(short)LOWORD(Å)
+GET_WM_PARENTNOTIFY_Y(Ä,Å) (int)(short)HIWORD(Å)
+GET_WM_VKEYTOITEM_CODE(Ä,Å) (int)(short)LOWORD(Ä)
+GET_WM_VKEYTOITEM_HWND(Ä,Å) (HWND)(Å)
+GET_WM_VKEYTOITEM_ITEM(Ä,Å) HIWORD(Ä)
+GET_WM_VKEYTOITEM_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Å,Ä),(LONG)(Ç)
+GET_WM_VSCROLL_CODE(Ä,Å) LOWORD(Ä)
+GET_WM_VSCROLL_HWND(Ä,Å) (HWND)(Å)
+GET_WM_VSCROLL_MPS(Ä,Å,Ç) (WPARAM)MAKELONG(Ä,Å),(LONG)(Ç)
+GET_WM_VSCROLL_POS(Ä,Å) HIWORD(Ä)
+GET_WPARAM(Ä,Å) (Ä)
+GET_X_LPARAM(Ä) ((int)(short)LOWORD(Ä))
+GET_Y_LPARAM(Ä) ((int)(short)HIWORD(Ä))
+GetFirstChild(Ä) GetTopWindow(Ä)
+GetFirstSibling(Ä) GetWindow(Ä,GW_HWNDFIRST)
+GetInstanceModule(Ä) (HMODULE)(Ä)
+GetLastSibling(Ä) GetWindow(Ä,GW_HWNDLAST)
+GetNextSibling(Ä) GetWindow(Ä,GW_HWNDNEXT)
+GetPrevSibling(Ä) GetWindow(Ä,GW_HWNDPREV)
+GetStockBrush(Ä) ((HBRUSH)GetStockObject(Ä))
+GetStockFont(Ä) ((HFONT)GetStockObject(Ä))
+GetStockPen(Ä) ((HPEN)GetStockObject(Ä))
+GetWindowExStyle(Ä) ((DWORD)GetWindowLong(Ä,GWL_EXSTYLE))
+GetWindowFont(Ä) FORWARD_WM_GETFONT((Ä),SendMessage)
+GetWindowID(Ä) GetDlgCtrlID(Ä)
+GetWindowInstance(Ä) ((HMODULE)GetWindowLong(Ä,GWL_HINSTANCE))
+GetWindowOwner(Ä) GetWindow(Ä,GW_OWNER)
+GetWindowStyle(Ä) ((DWORD)GetWindowLong(Ä,GWL_STYLE))
+GlobalAllocPtr(Ä,Å) (GlobalLock(GlobalAlloc((Ä),(Å))))
+GlobalFreePtr(Ä) (GlobalUnlockPtr(Ä),(BOOL)GlobalFree(GlobalPtrHandle(Ä)))
+GlobalLockPtr(Ä) ((BOOL)GlobalLock(GlobalPtrHandle(Ä)))
+GlobalPtrHandle(Ä) ((HGLOBAL)GlobalHandle(Ä))
+GlobalReAllocPtr(Ä,Å,Ç) (GlobalUnlockPtr(Ä),GlobalLock(GlobalReAlloc(GlobalPtrHandle(Ä),(Å),(Ç))))
+GlobalUnlockPtr(Ä) GlobalUnlock(GlobalPtrHandle(Ä))
+HANDLE_MSG(Ä,Å,Ç) case (Å):return HANDLE_##Å((Ä),(wParam),(lParam),(Ç))
+HANDLE_WM_ACTIVATE(Ä,Å,Ç,É) ((É)((Ä),(UINT)LOWORD(Å),(HWND)(Ç),(BOOL)HIWORD(Å)),0L)
+HANDLE_WM_ACTIVATEAPP(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Å),(DWORD)(Ç)),0L)
+HANDLE_WM_ASKCBFORMATNAME(Ä,Å,Ç,É) ((É)((Ä),(int)(Å),(LPTSTR)(Ç)),0L)
+HANDLE_WM_CANCELMODE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_CHANGECBCHAIN(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(HWND)(Ç)),0L)
+HANDLE_WM_CHAR(Ä,Å,Ç,É) ((É)((Ä),(TCHAR)(Å),(int)(short)LOWORD(Ç)),0L)
+HANDLE_WM_CHARTOITEM(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)((Ä),(UINT)LOWORD(Å),(HWND)(Ç),(int)(short)HIWORD(Å))
+HANDLE_WM_CHILDACTIVATE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_CLEAR(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_CLOSE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_COMMAND(Ä,Å,Ç,É) ((É)((Ä),(int)(LOWORD(Å)),(HWND)(Ç),(UINT)HIWORD(Å)),0L)
+HANDLE_WM_COMPACTING(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å)),0L)
+HANDLE_WM_COMPAREITEM(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)((Ä),(const COMPAREITEMSTRUCT *)(Ç))
+HANDLE_WM_CONTEXTMENU(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(UINT)LOWORD(Ç),(UINT)HIWORD(Ç)),0L)
+HANDLE_WM_COPY(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_CREATE(Ä,Å,Ç,É) ((É)((Ä),(LPCREATESTRUCT)(Ç))?0L :(LRESULT)-1L)
+HANDLE_WM_CTLCOLORBTN(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_BTN)
+HANDLE_WM_CTLCOLORDLG(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_DLG)
+HANDLE_WM_CTLCOLOREDIT(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_EDIT)
+HANDLE_WM_CTLCOLORLISTBOX(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_LISTBOX)
+HANDLE_WM_CTLCOLORMSGBOX(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_MSGBOX)
+HANDLE_WM_CTLCOLORSCROLLBAR(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_SCROLLBAR)
+HANDLE_WM_CTLCOLORSTATIC(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HBRUSH)(É)((Ä),(HDC)(Å),(HWND)(Ç),CTLCOLOR_STATIC)
+HANDLE_WM_CUT(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_DEADCHAR(Ä,Å,Ç,É) ((É)((Ä),(TCHAR)(Å),(int)(short)LOWORD(Ç)),0L)
+HANDLE_WM_DELETEITEM(Ä,Å,Ç,É) ((É)((Ä),(const DELETEITEMSTRUCT *)(Ç)),0L)
+HANDLE_WM_DESTROY(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_DESTROYCLIPBOARD(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_DEVICECHANGE(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(UINT)(Å),(DWORD)(Å))
+HANDLE_WM_DEVMODECHANGE(Ä,Å,Ç,É) ((É)((Ä),(LPCTSTR)(Ç)),0L)
+HANDLE_WM_DISPLAYCHANGE(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),(UINT)LOWORD(Ç),(UINT)HIWORD(Å)),0L)
+HANDLE_WM_DRAWCLIPBOARD(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_DRAWITEM(Ä,Å,Ç,É) ((É)((Ä),(const DRAWITEMSTRUCT *)(Ç)),0L)
+HANDLE_WM_ENABLE(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Å)),0L)
+HANDLE_WM_ENDSESSION(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Å)),0L)
+HANDLE_WM_ENTERIDLE(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),(HWND)(Ç)),0L)
+HANDLE_WM_ERASEBKGND(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(HDC)(Å))
+HANDLE_WM_FONTCHANGE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_GETDLGCODE(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)(Ä,(LPMSG)(Ç))
+HANDLE_WM_GETFONT(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HFONT)(É)(Ä)
+HANDLE_WM_GETMINMAXINFO(Ä,Å,Ç,É) ((É)((Ä),(LPMINMAXINFO)(Ç)),0L)
+HANDLE_WM_GETTEXT(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)((Ä),(int)(Å),(LPTSTR)(Ç))
+HANDLE_WM_GETTEXTLENGTH(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)(Ä)
+HANDLE_WM_HSCROLL(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Ç),(UINT)(LOWORD(Å)),(int)(short)HIWORD(Å)),0L)
+HANDLE_WM_HSCROLLCLIPBOARD(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(UINT)LOWORD(Ç),(int)(short)HIWORD(Ç)),0L)
+HANDLE_WM_ICONERASEBKGND(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(HDC)(Å))
+HANDLE_WM_INITDIALOG(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(BOOL)(É)((Ä),(HWND)(Å),Ç)
+HANDLE_WM_INITMENU(Ä,Å,Ç,É) ((É)((Ä),(HMENU)(Å)),0L)
+HANDLE_WM_INITMENUPOPUP(Ä,Å,Ç,É) ((É)((Ä),(HMENU)(Å),(UINT)LOWORD(Ç),(BOOL)HIWORD(Ç)),0L)
+HANDLE_WM_KEYDOWN(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),TRUE,(int)(short)LOWORD(Ç),(UINT)HIWORD(Ç)),0L)
+HANDLE_WM_KEYUP(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),FALSE,(int)(short)LOWORD(Ç),(UINT)HIWORD(Ç)),0L)
+HANDLE_WM_KILLFOCUS(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_LBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_LBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_LBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_MBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_MBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_MBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_MDIACTIVATE(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Ç ==(LPARAM)Ä),(HWND)(Ç),(HWND)(Å)),0L)
+HANDLE_WM_MDICASCADE(Ä,Å,Ç,É) (LRESULT)(DWORD)(É)((Ä),(UINT)(Å))
+HANDLE_WM_MDICREATE(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)((Ä),(LPMDICREATESTRUCT)(Ç))
+HANDLE_WM_MDIDESTROY(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_MDIGETACTIVE(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)(Ä)
+HANDLE_WM_MDIICONARRANGE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_MDIMAXIMIZE(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_MDINEXT(Ä,Å,Ç,É) (LRESULT)(HWND)(É)((Ä),(HWND)(Å),(BOOL)Ç)
+HANDLE_WM_MDIRESTORE(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_MDISETMENU(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)((Ä),(BOOL)(Å),(HMENU)(Å),(HMENU)(Ç))
+HANDLE_WM_MDITILE(Ä,Å,Ç,É) (LRESULT)(DWORD)(É)((Ä),(UINT)(Å))
+HANDLE_WM_MEASUREITEM(Ä,Å,Ç,É) ((É)((Ä),(MEASUREITEMSTRUCT *)(Ç)),0L)
+HANDLE_WM_MENUCHAR(Ä,Å,Ç,É) (LRESULT)(DWORD)(É)((Ä),(UINT)(LOWORD(Å)),(UINT)HIWORD(Å),(HMENU)(Ç))
+HANDLE_WM_MENUSELECT(Ä,Å,Ç,É) ((É)((Ä),(HMENU)(Ç),(int)(LOWORD(Å)),(HIWORD(Å)&MF_POPUP)?GetSubMenu((HMENU)Ç,LOWORD(Å)):0L,(UINT)(((short)HIWORD(Å)==-1)?0xFFFFFFFF :HIWORD(Å))),0L)
+HANDLE_WM_MOUSEACTIVATE(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)((Ä),(HWND)(Å),(UINT)LOWORD(Ç),(UINT)HIWORD(Ç))
+HANDLE_WM_MOUSEMOVE(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_MOVE(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç)),0L)
+HANDLE_WM_NCACTIVATE(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(BOOL)(Å),0L,0L)
+HANDLE_WM_NCCALCSIZE(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)((Ä),(BOOL)(0),(NCCALCSIZE_PARAMS *)(Ç))
+HANDLE_WM_NCCREATE(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(LPCREATESTRUCT)(Ç))
+HANDLE_WM_NCDESTROY(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_NCHITTEST(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç))
+HANDLE_WM_NCLBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCLBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCLBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCMBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCMBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCMBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCMOUSEMOVE(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCPAINT(Ä,Å,Ç,É) ((É)((Ä),(HRGN)(Å)),0L)
+HANDLE_WM_NCRBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCRBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NCRBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_NEXTDLGCTL(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HWND)(É)((Ä),(HWND)(Å),(BOOL)(Ç))
+HANDLE_WM_PAINT(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_PAINTCLIPBOARD(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(const LPPAINTSTRUCT)GlobalLock((HGLOBAL)(Ç))),GlobalUnlock((HGLOBAL)(Ç)),0L)
+HANDLE_WM_PALETTECHANGED(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_PALETTEISCHANGING(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_PARENTNOTIFY(Ä,Å,Ç,É) ((É)((Ä),(UINT)LOWORD(Å),(HWND)(Ç),(UINT)HIWORD(Å)),0L)
+HANDLE_WM_PASTE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_POWER(Ä,Å,Ç,É) ((É)((Ä),(int)(Å)),0L)
+HANDLE_WM_QUERYDRAGICON(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(É)(Ä)
+HANDLE_WM_QUERYENDSESSION(Ä,Å,Ç,É) MAKELRESULT((BOOL)(É)(Ä),0L)
+HANDLE_WM_QUERYNEWPALETTE(Ä,Å,Ç,É) MAKELRESULT((BOOL)(É)(Ä),0L)
+HANDLE_WM_QUERYOPEN(Ä,Å,Ç,É) MAKELRESULT((BOOL)(É)(Ä),0L)
+HANDLE_WM_QUEUESYNC(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_QUIT(Ä,Å,Ç,É) ((É)((Ä),(int)(Å)),0L)
+HANDLE_WM_RBUTTONDBLCLK(Ä,Å,Ç,É) ((É)((Ä),TRUE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_RBUTTONDOWN(Ä,Å,Ç,É) ((É)((Ä),FALSE,(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_RBUTTONUP(Ä,Å,Ç,É) ((É)((Ä),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç),(UINT)(Å)),0L)
+HANDLE_WM_RENDERALLFORMATS(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_RENDERFORMAT(Ä,Å,Ç,É) (LRESULT)(DWORD)(UINT)(HANDLE)(É)((Ä),(UINT)(Å))
+HANDLE_WM_SETCURSOR(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(HWND)(Å),(UINT)LOWORD(Ç),(UINT)HIWORD(Ç))
+HANDLE_WM_SETFOCUS(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å)),0L)
+HANDLE_WM_SETFONT(Ä,Å,Ç,É) ((É)((Ä),(HFONT)(Å),(BOOL)(Ç)),0L)
+HANDLE_WM_SETREDRAW(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Å)),0L)
+HANDLE_WM_SETTEXT(Ä,Å,Ç,É) ((É)((Ä),(LPCTSTR)(Ç)),0L)
+HANDLE_WM_SHOWWINDOW(Ä,Å,Ç,É) ((É)((Ä),(BOOL)(Å),(UINT)(Ç)),0L)
+HANDLE_WM_SIZE(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç)),0L)
+HANDLE_WM_SIZECLIPBOARD(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(const LPRECT)GlobalLock((HGLOBAL)(Ç))),GlobalUnlock((HGLOBAL)(Ç)),0L)
+HANDLE_WM_SPOOLERSTATUS(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),(int)(short)LOWORD(Ç)),0L)
+HANDLE_WM_SYSCHAR(Ä,Å,Ç,É) ((É)((Ä),(TCHAR)(Å),(int)(short)LOWORD(Ç)),0L)
+HANDLE_WM_SYSCOLORCHANGE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_SYSCOMMAND(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),(int)(short)LOWORD(Ç),(int)(short)HIWORD(Ç)),0L)
+HANDLE_WM_SYSDEADCHAR(Ä,Å,Ç,É) ((É)((Ä),(TCHAR)(Å),(int)(short)LOWORD(Ç)),0L)
+HANDLE_WM_SYSKEYDOWN(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),TRUE,(int)(short)LOWORD(Ç),(UINT)HIWORD(Ç)),0L)
+HANDLE_WM_SYSKEYUP(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å),FALSE,(int)(short)LOWORD(Ç),(UINT)HIWORD(Ç)),0L)
+HANDLE_WM_SYSTEMERROR(Ä,Å,Ç,É) 0L
+HANDLE_WM_TIMECHANGE(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_TIMER(Ä,Å,Ç,É) ((É)((Ä),(UINT)(Å)),0L)
+HANDLE_WM_UNDO(Ä,Å,Ç,É) ((É)(Ä),0L)
+HANDLE_WM_VKEYTOITEM(Ä,Å,Ç,É) (LRESULT)(DWORD)(int)(É)((Ä),(UINT)LOWORD(Å),(HWND)(Ç),(int)(short)HIWORD(Å))
+HANDLE_WM_VSCROLL(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Ç),(UINT)(LOWORD(Å)),(int)(short)HIWORD(Å)),0L)
+HANDLE_WM_VSCROLLCLIPBOARD(Ä,Å,Ç,É) ((É)((Ä),(HWND)(Å),(UINT)LOWORD(Ç),(int)(short)HIWORD(Ç)),0L)
+HANDLE_WM_WINDOWPOSCHANGED(Ä,Å,Ç,É) ((É)((Ä),(const LPWINDOWPOS)(Ç)),0L)
+HANDLE_WM_WINDOWPOSCHANGING(Ä,Å,Ç,É) (LRESULT)(DWORD)(BOOL)(É)((Ä),(LPWINDOWPOS)(Ç))
+HANDLE_WM_WININICHANGE(Ä,Å,Ç,É) ((É)((Ä),(LPCTSTR)(Ç)),0L)
+InsetRect(Ä,Å,Ç) InflateRect((Ä),-(Å),-(Ç))
+IntersectRgn(Ä,Å,Ç) CombineRgn(Ä,Å,Ç,RGN_AND)
+IsLButtonDown() (GetKeyState(VK_LBUTTON)<0)
+IsMButtonDown() (GetKeyState(VK_MBUTTON)<0)
+IsMaximized(Ä) IsZoomed(Ä)
+IsMinimized(Ä) IsIconic(Ä)
+IsRButtonDown() (GetKeyState(VK_RBUTTON)<0)
+IsRestored(Ä) ((GetWindowStyle(Ä)&(WS_MINIMIZE |WS_MAXIMIZE))==0L)
+L_tmpnam 13
+ListBox_AddItemData(Ä,Å) ((int)(DWORD)SendMessage((Ä),LB_ADDSTRING,0L,(LPARAM)(Å)))
+ListBox_AddString(Ä,Å) ((int)(DWORD)SendMessage((Ä),LB_ADDSTRING,0L,(LPARAM)(LPCTSTR)(Å)))
+ListBox_DeleteString(Ä,Å) ((int)(DWORD)SendMessage((Ä),LB_DELETESTRING,(WPARAM)(int)(Å),0L))
+ListBox_Dir(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),LB_DIR,(WPARAM)(UINT)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ListBox_Enable(Ä,Å) EnableWindow((Ä),(Å))
+ListBox_GetCount(Ä) ((int)(DWORD)SendMessage((Ä),LB_GETCOUNT,0L,0L))
+ListBox_GetItemData(Ä,Å) ((LRESULT)(DWORD)SendMessage((Ä),LB_GETITEMDATA,(WPARAM)(int)(Å),0L))
+ListBox_GetText(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),LB_GETTEXT,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ListBox_GetTextLen(Ä,Å) ((int)(DWORD)SendMessage((Ä),LB_GETTEXTLEN,(WPARAM)(int)(Å),0L))
+ListBox_InsertItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),LB_INSERTSTRING,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+ListBox_InsertString(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),LB_INSERTSTRING,(WPARAM)(int)(Å),(LPARAM)(LPCTSTR)(Ç)))
+ListBox_ResetContent(Ä) ((BOOL)(DWORD)SendMessage((Ä),LB_RESETCONTENT,0L,0L))
+ListBox_SetItemData(Ä,Å,Ç) ((int)(DWORD)SendMessage((Ä),LB_SETITEMDATA,(WPARAM)(int)(Å),(LPARAM)(Ç)))
+NULL 0L
+OPEN_MAX FOPEN_MAX
+PATH_MAX 143
+SEEK_CUR 1
+SEEK_END 2
+SEEK_SET 0
+ScrollBar_Enable(Ä,Å) EnableScrollBar((Ä),SB_CTL,(Å))
+ScrollBar_GetPos(Ä) GetScrollPos((Ä),SB_CTL)
+ScrollBar_GetRange(Ä,Å,Ç) GetScrollRange((Ä),SB_CTL,(Å),(Ç))
+ScrollBar_SetPos(Ä,Å,Ç) SetScrollPos((Ä),SB_CTL,(Å),(Ç))
+ScrollBar_SetRange(Ä,Å,Ç,É) SetScrollRange((Ä),SB_CTL,(Å),(Ç),(É))
+ScrollBar_Show(Ä,Å) ShowWindow((Ä),(Å)?SW_SHOWNORMAL :SW_HIDE)
+SelectBitmap(Ä,Å) ((HBITMAP)SelectObject((Ä),(HGDIOBJ)(HBITMAP)(Å)))
+SelectBrush(Ä,Å) ((HBRUSH)SelectObject((Ä),(HGDIOBJ)(HBRUSH)(Å)))
+SelectFont(Ä,Å) ((HFONT)SelectObject((Ä),(HGDIOBJ)(HFONT)(Å)))
+SelectPen(Ä,Å) ((HPEN)SelectObject((Ä),(HGDIOBJ)(HPEN)(Å)))
+SetDlgMsgResult(Ä,Å,Ç) (((Å)==WM_CTLCOLORMSGBOX ||(Å)==WM_CTLCOLOREDIT ||(Å)==WM_CTLCOLORLISTBOX ||(Å)==WM_CTLCOLORBTN ||(Å)==WM_CTLCOLORDLG ||(Å)==WM_CTLCOLORSCROLLBAR ||(Å)==WM_CTLCOLORSTATIC ||(Å)==WM_COMPAREITEM ||(Å)==WM_VKEYTOITEM ||(Å)==WM_CHARTOITEM ||(Å)==WM_QUERYDRAGICON ||(Å)==WM_INITDIALOG )?(BOOL)(Ç):(SetWindowLong((Ä),DWL_MSGRESULT,(LPARAM)(LRESULT)(Ç)),TRUE))
+SetWindowFont(Ä,Å,Ç) FORWARD_WM_SETFONT((Ä),(Å),(Ç),SendMessage)
+SetWindowRedraw(Ä,Å) ((void)SendMessage(Ä,WM_SETREDRAW,(WPARAM)(BOOL)(Å),0L))
+Static_Enable(Ä,Å) EnableWindow((Ä),(Å))
+Static_GetIcon(Ä,Å) ((HICON)(UINT)(DWORD)SendMessage((Ä),STM_GETICON,0L,0L))
+Static_GetText(Ä,Å,Ç) GetWindowText((Ä),(Å),(Ç))
+Static_GetTextLength(Ä) GetWindowTextLength(Ä)
+Static_SetIcon(Ä,Å) ((HICON)(UINT)(DWORD)SendMessage((Ä),STM_SETICON,(WPARAM)(HICON)(Å),0L))
+Static_SetText(Ä,Å) SetWindowText((Ä),(Å))
+SubclassDialog(Ä,Å) ((DLGPROC)SetWindowLong(Ä,DWL_DLGPROC,(LPARAM)(DLGPROC)(Å)))
+SubclassWindow(Ä,Å) ((WNDPROC)SetWindowLong((Ä),GWL_WNDPROC,(LPARAM)(WNDPROC)(Å)))
+SubtractRgn(Ä,Å,Ç) CombineRgn(Ä,Å,Ç,RGN_DIFF)
+TMP_MAX (26*26*26)
+UnionRgn(Ä,Å,Ç) CombineRgn(Ä,Å,Ç,RGN_OR)
+WEOF ((wint_t)(-1))
+WM_CTLCOLOR 0x0019
+XorRgn(Ä,Å,Ç) CombineRgn(Ä,Å,Ç,RGN_XOR)
+_APPEND 0x0080
+_BIGBUF 0x0008
+_BINARY 0x0040
+_BYTE_ORIENTED 1
+_COMDEF_H_INCLUDED 
+_COMMIT 0x0001
+_CRTAPI1 
+_CRTAPI2 
+_CRTIMP _WCRTLINK
+_DIRTY 0x1000
+_DYNAMIC 0x4000
+_EOF 0x0010
+_FILEEXT 0x8000
+_INC_WINDOWSX 
+_IOFBF 0x0100
+_IOLBF 0x0200
+_IONBF 0x0400
+_ISTTY 0x2000
+_NFILES 20
+_NOT_ORIENTED 0
+_P_tmpdir "\\"
+_READ 0x0001
+_SFERR 0x0020
+_SIZE_T_DEFINED 
+_SIZE_T_DEFINED_ 
+_STDIO_H_INCLUDED 
+_TMPFIL 0x0800
+_UNGET 0x0004
+_VA_LIST_DEFINED 
+_WCDATA _WCNEAR
+_WCFAR 
+_WCHAR_T_DEFINED 
+_WCHAR_T_DEFINED_ 
+_WCHUGE 
+_WCI86FAR 
+_WCI86HUGE 
+_WCI86NEAR 
+_WCINTERRUPT 
+_WCIRTLINK _WCRTLINK
+_WCNEAR 
+_WCRTLINK 
+_WCTYPE_T_DEFINED 
+_WCTYPE_T_DEFINED_ 
+_WCUNALIGNED 
+_WIDE_ORIENTED 2
+_WMIRTLINK 
+_WMRTLINK 
+_WPIRTLINK _WPRTLINK
+_WPRTLINK 
+_WRITE 0x0002
+_ffree free
+_fileno(Ä) ((Ä)->_handle)
+_fmalloc malloc
+_fmemccpy _memccpy
+_fmemchr memchr
+_fmemcmp memcmp
+_fmemcpy memcpy
+_fmemicmp _memicmp
+_fmemmove memmove
+_fmemset memset
+_fmsize _msize
+_frealloc realloc
+_fstrcat strcat
+_fstrchr strchr
+_fstrcmp strcmp
+_fstrcpy strcpy
+_fstrcspn strcspn
+_fstrdup _strdup
+_fstricmp _stricmp
+_fstrlen strlen
+_fstrlwr _strlwr
+_fstrncat strncat
+_fstrncmp strncmp
+_fstrncpy strncpy
+_fstrnicmp _strnicmp
+_fstrnset _strnset
+_fstrpbrk strpbrk
+_fstrrchr strrchr
+_fstrrev _strrev
+_fstrset _strset
+_fstrspn strspn
+_fstrstr strstr
+_fstrtok strtok
+_fstrupr _strupr
+_ncalloc calloc
+_nexpand _expand
+_nfree free
+_nmalloc malloc
+_nmsize _msize
+_nrealloc realloc
+_nstrdup _strdup
+_wP_tmpdir L"\\"
+clearerr(Ä) ((Ä)->_flag &=~(_SFERR|_EOF))
+feof(Ä) ((Ä)->_flag &_EOF)
+ferror(Ä) ((Ä)->_flag &_SFERR)
+fileno(Ä) ((Ä)->_handle)
+getc(Ä) ((Ä)->_cnt<=0 ||(unsigned)((*(Ä)->_ptr)-'\x0d')<=('\0x1a'-'\0x0d')?fgetc(Ä):((Ä)->_cnt--,*(Ä)->_ptr++))
+getchar() getc(stdin)
+hmemcpy MoveMemory
+putc(Ä,Å) ((Å)->_flag&_IONBF ||(Å)->_bufsize-(Å)->_cnt<=1 ?fputc(Ä,Å):((*(Å)->_ptr=(unsigned char)(Ä))=='\n')?fputc('\n',Å):((Å)->_flag|=_DIRTY,(Å)->_cnt++,*(Å)->_ptr++))
+putchar(Ä) putc(Ä,stdout)
+stdaux ((FILE *)&__iob[3])
+stderr ((FILE *)&__iob[2])
+stdin ((FILE *)&__iob[0])
+stdout ((FILE *)&__iob[1])
+stdprn ((FILE *)&__iob[4])
+
+Total 109 symbols, 9 types, 582 macros

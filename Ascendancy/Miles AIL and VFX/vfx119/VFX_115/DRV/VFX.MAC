@@ -1,0 +1,40 @@
+ADDRESS_CRTC    MACRO                   ;Get DX=CRTC address at 3B0h (mono)
+                push ax                 ;or 3D0h (color) -- preserves all regs
+                mov dx,03cch            
+                in al,dx
+                and al,1
+                shl al,5
+                mov dx,03b0h
+                add dl,al
+                pop ax
+                ENDM
+
+REP_MOVSB       MACRO
+                push ecx
+                and ecx,3
+                rep movsb
+                pop ecx
+                shr ecx,2
+                rep movsd
+                ENDM
+
+REP_STOSB       MACRO
+                push ecx
+                and ecx,3
+                rep stosb
+                pop ecx
+                shr ecx,2
+                rep stosd
+                ENDM
+
+POP_F           MACRO                   ;protected-mode POPF
+                LOCAL intel_bytes
+                push ebp
+                mov ebp,esp
+                test BYTE PTR [ebp+5],00000010b
+                cli
+                jz intel_bytes
+                sti
+intel_bytes:    pop ebp
+                popfd
+                ENDM

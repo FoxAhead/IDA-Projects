@@ -1,0 +1,1704 @@
+                                     
+
+
+
+
+
+
+
+                                  VSA256
+                             Graphics Library
+                                     
+                             For C Programmers
+                                     
+                                Version 3.2
+                              August 3, 1995
+                                     
+                                     
+                    Copyright Spyro Gumas, 1992 - 1995.
+                            All Rights Reserved
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                     Look what You get for Registering!!
+
+          -    Royalty Free Use of VSA256 in Your Programs!
+          -    3D Graphics Library!
+          -    Graphics Mouse Library!
+          -    Joystick Library & Source Code!
+          -    Image Processing Library & Source Code!
+          -    32 Bit WATCOM C Compiler compatible library!
+          -    On line support through CompuServe!
+          -    Printed Users Manual and Software Disk!
+          -    Half Price upgrade to next version!
+
+
+
+
+                         (See Page 6 for Details)
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+
+
+
+
+                                Page: 1
+                                   
+1.0 Introduction                                       4
+  1.1 Revision History                                 4
+  1.2 Benefits of Registering                          6
+  1.3 Distribution Files                               7
+2.0 The Programming Environment                        8
+  2.1 Setting Up The VESA Environment                  8
+  2.2 Global Graphics Parameters                       8
+  2.3 Compiler Compatibility                           9
+3.0 Function Descriptions                              10
+  3.1 VESA Configuration Functions                     10
+     3.1.1 vsa_set_svga_mode                           10
+     3.1.2 vsa_get_svga_mode                           11
+     3.1.3 vsa_init                                    11
+  3.2 Miscellaneous Functions                          12
+     3.2.1 vsa_set_display_start                       12
+     3.2.2 vsa_get_display_start                       13
+     3.2.3 vsa_wait_vsync                              13
+  3.3 Attribute Functions                              13
+     3.3.1 vsa_set_color                               13
+     3.3.2 vsa_set_text_color                          14
+     3.3.3 vsa_set_clip_mode                           14
+     3.3.4 vsa_set_viewport                            14
+  3.4 Color Look Up Table Functions                    15
+     3.4.1 vsa_read_color_register                     15
+     3.4.2 vsa_write_color_register                    15
+     3.4.3 vsa_read_color_block                        15
+     3.4.4 vsa_write_color_block                       16
+  3.5 Text Functions (New-Vector Stroked!)             16
+     3.5.1 vsa_set_text_cursor                         17
+     3.5.2 vsa_get_text_cursor                         17
+     3.5.3 vsa_set_text_scale                          17
+     3.5.4 vsa_set_text_cursor_mode                    18
+     3.5.5 vsa_write_string                            18
+     3.5.6 vsa_write_string_alt                        19
+  3.6 Basic Drawing Functions                          19
+     3.6.1 vsa_move_to                                 19
+     3.6.2 vsa_set_pixel                               19
+     3.6.3 vsa_get_pixel                               20
+     3.6.4 vsa_line_to                                 20
+     3.6.5 vsa_gouraud_line                            20
+     3.6.6 vsa_rect_fill                               21
+     3.6.7 vsa_rect                                    21
+     3.6.8 vsa_triangle_fill                           21
+     3.6.9 vsa_shaded_triangle                         21
+
+
+
+
+
+
+
+
+
+                                Page: 2
+                                   
+     3.6.10 vsa_h_line                                 22
+     3.6.11 vsa_v_line                                 22
+  3.7 Specialized Drawing Functions                    22
+     3.7.1 vsa_raster_line                             22
+     3.7.2 vsa_get_raster_line                         23
+     3.7.3 vsa_image_size                              23
+     3.7.4 vsa_get_image                               24
+     3.7.5 vsa_put_image                               24
+4.0 Nitty Gritties                                     25
+  4.1 Registration Information                         25
+  4.2 Software License                                 26
+  4.3 Disclaimer                                       27
+  4.4 Technical Support                                27
+5.0 Graphics Library Extensions                        28
+6.0 Appendix                                           29
+  6.1 VSA.H Include File                               29
+  6.2 VSA_FONT.H Include File                          31
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                Page: 3
+                                   
+----- 1.0 Introduction
+
+     The VSA256 Graphics Library provides a C programmer with the tools
+necessary to generate graphics output on a video adapter running with the
+Video Electronics Standards Association (VESA) version 1.2 BIOS extensions.
+The VESA BIOS extensions standardize the Super VGA (SVGA) graphics
+environment.  The name "VSA256" reflects the fact that this library is
+aimed at supporting the 256 color video modes 100h, 101h, 103h, 105h, and
+107h defined within the VESA standard (See table in section 3.1.1).
+
+
+----- 1.1 Revision History
+
+Version 1.0 is the original SHAREWARE version of the VSA256 Graphics
+Library.
+
+Version 1.1 is the SHAREWARE version of the VSA256 Graphics Library which
+corrected some compiler compatibility problems and added the
+vsa_get_raster_line function which was necessary for the TIFF256 Graphics
+Library Extensions.  Some drawing errors were also corrected.
+
+Version 2.0b is the REGISTERED version of the VSA256 Graphics Library.
+Whereas the VSA256 Graphics Library Version 1.x is shareware, Version 2.0b
+IS NOT shareware and may only be used in accordance with the terms of the
+purchase agreement.  The major changes between version 1.1 and 2.0b are
+listed below:
+
+     -    3 to 1 speed up of vsa_line_to
+     -    2 to 1 speed up of vsa_raster_line
+     -    3 to 1 speed up of vsa_h_line
+     -    New routine, vsa_get_raster_line
+     -    New routine, vsa_gouraud_line
+     -    New routine, vsa_triangle_fill
+     -    New routine, vsa_shaded_triangle (Gouraud)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                Page: 4
+                                   
+Version 3.2 is presented to the general public in the true spirit of
+shareware.  This revision is the full-up version of the  VSA256 Graphics
+Library.  I  no longer maintain a separate registered version of this
+library.  Version 3.2 of the VSA256 Graphics Library is presented as
+Shareware with high hopes that the programmers who use this library will
+feel good about sending in the registration fee of $29.  The major changes
+between version 2.0b and 3.2 are listed below:
+
+- Added Viewport Clipping to all drawing functions.
+- Added BitBLT drawing functions.
+- Added Vector Text: Infinitely scaleable and set to
+  nearest pixel, fonts are fully user definable!
+- Now text routines work with ALL video adapters.
+- Now works with Small, Medium, Compact Large memory
+  models with Borland (Already did so with Microsoft).
+- Fixed "unresolved external _fstrlen" linker error
+  with Turbo C.
+- Made all functions in VSA.H external, no more
+  "Multiple Declaration" warnings.
+- Added Global parameter VSA_ATI_COLORS for some ATI cards.
+  (defaults to 0, set it to 1 if ATI locks up. See README.TXT)
+- New routine, vsa_set_clip_mode.
+- New routine, vsa_set_viewport.
+- New routine, vsa_set_text_scale.
+- New routine, vsa_image_size.
+- New routine, vsa_get_image.
+- New routine, vsa_put_image.
+- New routine, vsa_get_pixel.
+- New routine, vsa_get_text_cursor.
+- New routine, vsa_wait_vsync.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                Page: 5
+                                   
+----- 1.2 Benefits of Registering
+
+     If you use this program beyond an initial evaluation period, you must
+register your use with a $29 remittance to the author .. me.  In addition
+to the good feeling that you get for sustaining a late night hacking
+obsession, you get the following benefits for registering:
+
+1)        Royalty Free Use of VSA256 in Your Programs! Feel free to
+          distribute your programs for profit with no royalty fees.  See
+          section 4.2.
+
+2)        3D Graphics Library!   Don't live in a flat world.  Add the
+          missing 3rd dimension to your creations.  This library lets you
+          create 3d objects, set your view point, and perform 3d
+          transformations including scale, offset, and rotation.  Supports
+          wireframe, solid, and Gouraud shaded objects.
+
+3)        Graphics Mouse Library!   Use this library to integrate Mouse
+          input with your graphics applications.  Get precise updates of
+          mouse position, update screen cursor, read mouse buttons, and
+          more.  Invent your own graphical user interface, give your apps
+          that professional feel, have tons of fun!
+
+4)        Joystick Library with Source Code!   Integrate Joystick input
+          with your graphics applications.  Write a flight simulator, boat
+          driver, or your own unique use of this agile input device.
+
+5)        IMP256 Image Processing Library and Source Code!  With this
+          library you can learn all about image sharpening, embossing,
+          blurring, color balancing, and enhancement.
+
+6)        32 Bit WATCOM C Compiler compatible VSA256 and TIFF256 libraries!
+          Get the edge on performance.
+
+7)        On line support through CompuServe.
+
+8)        Printed Users Manual and Current Version Software on Disk.
+
+9)        One Half Price Upgrade to the next version, as it becomes
+          available.
+
+
+
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 6
+                                   
+                                    AND
+As if that's not enough, for a measly $15 more,  you will get:
+
+10)       TIFF256 Graphics Library Extensions.  This extension to the
+          VSA256 library lets you read TIFF formatted graphic image files,
+          display them, modify them, and write them back to disk.
+          Furthermore, anything that you create and display on the screen
+          can be saved as a TIFF image file.
+
+                                    AND
+
+11)       The following public domain full color TIFF image files to get
+          you started:
+
+                         VENUS.TIF
+                         EARTH.TIF
+                         MOON.TIF
+                         MARS.TIF
+                         SATURN.TIF
+                         NEPTUNE.TIF
+                         SHUTTLE.TIF
+                         ASTRONTS.TIF
+                         WEATHER.TIF
+                         MANDRILL.TIF
+
+               (What, no Ginsu Knife Set?)
+
+----- 1.3 Distribution Files
+
+     The distribution of the VSA256 Graphics Library Version 3.2 consists
+of the 9 files listed below plus the drivers listed in Section 2.1.  These
+files are archived in the file VSA256.ZIP.  To extract, just type 'PKUNZIP
+VSA256' in the directory that you want the files extracted to.
+
+VSA_DEMO.C     VSA256 Demonstration program (Source Code).
+VSA_DEMO.EXE   VSA256 Demonstration program (Executable).
+VSA256MS.LIB   VSA256 Graphics Library (Microsoft C compatible).
+VSA256BC.LIB   VSA256 Graphics Library (Borland C Compatible).
+VSA.H          VSA256 Include file required in your program.
+VSA_FONT.H     VSA256 Include file required in your program.
+VSA256.TXT     This text document.
+ORDER.TXT      A text file order form, registration and upgrades.
+README.TXT     A text file with important info.
+
+
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 7
+                                   
+----- 2.0 The Programming Environment
+
+----- 2.1 Setting Up The VESA Environment
+
+     The VSA256 Graphics Library works with any (any?) IBM PC, XT, AT or
+compatible computer equipped with a VESA compatible SVGA video adapter card
+capable of 256 colors.  Most  of the video cards sold today are VESA
+compatible with the VESA BIOS built in to the card.  A math coprocessor
+chip is not required.
+     For older SVGA video cards which are not VESA compatible, the VESA
+BIOS Extensions must be loaded as a Terminate and Stay Resident (TSR)
+program before using the VSA256 Graphics Library.  This is accomplished by
+executing the appropriate driver or adding it to your AUTOEXEC.BAT file.
+If your video adapter card came with a VESA driver, use it.  Otherwise use
+one of the drivers provided depending on the video adapter card installed
+in the PC as follows:
+
+APPIAN         \APPIAN\APVESA.EXE
+ATI            \ATI\VESA.COM
+C&T            \C&T\VESA451.COM (or VESA452.COM)
+CIRRUS         \CIRRUS\CRUSVESA.COM
+EVEREX         \EVEREX\EVRXVESA.COM
+GENOA          \GENOA\VESA.COM
+OAK            \OAK\37VESA.COM (or67VESA.COM)
+ORCHID         \ORCHID\ORCHDVSA.COM
+PARADISE       \PARADISE\VESA.EXE
+SIGMA          \SIGMA\SIGVESA.COM
+STB            \STB\STB-VESA.COM
+TECMAR         \TECMAR\VGAVESA.COM
+TRIDENT        \TRIDENT\VESA.EXE
+VIDEO7         \VIDEO7\V7VESA.COM
+
+----- 2.2 Global Graphics Parameters
+
+     The VSA.H and VSA_FONT.H  files are used as include files during 
+program development.  These files includes all of the function prototypes 
+and define the global graphics parameters that describe the specific video 
+adapter installed in the PC (See Section 6).  The global graphics parameters 
+are initialized by the vsa_init function and are described below:
+
+XResolution:        Unsigned, the number of screen pixels across (x
+                    dimension).
+YResolution:        Unsigned, the number of screen pixels high (y
+                    dimension).
+XCharResolution:    Unsigned, the number of screen characters cross (x
+                    dimension).
+YCharResolution:    Unsigned, the number of screen characters high (y
+                    dimension).
+
+
+                                
+                                
+                                
+                                Page: 8
+                                   
+XCharSize:          Unsigned char, the character drawn cell width.
+YCharSize:          Unsigned char, the character drawn cell  height.
+BitsPerPixel:       Unsigned char, the number of bits per pixel.
+XLeft:              Int, the left edge of the screen clipping Viewport.
+YTop:               Int, the top edge of the screen clipping Viewport.
+XRight:             Int, the right edge of the screen clipping viewport.
+YBottom:            Int, the bottom edge of the screen clipping Viewport.
+Text_X_Scale:       Float, multiplies XCharBase to get text width in pixels.
+Text_Y_Scale:       Float, multiplies YCharBase to get text height in pixels.
+XCharBase:          Unsigned, the fundamental text character width.
+YCharBase:          Unsigned, the fundamental text character height.
+ASC[96][72]:        Unsigned Char, the 2D array of character vertices.
+
+     Note that there is a fundamental difference between how you use VSA.H 
+and how you use VSA_FONT.H.  The function prototypes and the global 
+parameter declarations are all "extern" in VSA.H.  This means that you can 
+plop VSA.H into the top of each and every code module (file) which is part
+of your project.  VSA_FONT.H, on the other hand, declares and initializes 
+the 'ASC[][]' array.  Since I want you, the programmer, to have access to 
+the font definitions, I couldn't make these parameter declarations "extern".  
+What this means for you is that if you have multiple code modules (files), 
+only include VSA_FONT.H in one of the files.  Then put the following two 
+lines of code at the top of each and every other code module (file) in your 
+project:
+
+             extern unsigned far XCharBase, far YCharBase;
+             extern unsigned char far ASC[][];
+
+----- 2.3 Compiler Compatibility
+
+     The VSA256MS.LIB was compiled using Microsoft's Quick C 2.5 and it
+seems to also work well with Microsoft C 6.0 and 7.0.  I have received
+reports of compatibility problems with Microsoft C 5.0.
+     The VSA256BC.LIB was compiled using Borland's C/C++ 3.1 and it seems
+to also work well with Borland C/C++ 3.0 and 4.0.  I have received
+conflicting reports of compatibility problems with Borland's Turbo C 2.0
+and 3.0.
+     I appreciate any feedback that programmers send me along these lines
+so that I can continue to improve this product.
+
+                     Important Note for Borland Users:
+
+     You MUST set the -Fs compiler option.  This tells the compiler to
+assume that the Stack Segment equals the Data Segment.  In the Programmers
+IDE, you go to Options / Compiler / Code Generation and select "Always"
+under the option "Assume SS Equals DS".
+     Why?  The VSA256 library can be used in Tiny, Small, Medium, Compact,
+and Large memory models in both the Microsoft and Borland environments.
+Microsoft always puts the Stack Segment in the first Data Segment, but
+Borland sets up a separate Stack Segment (for Compact and Large memory
+models) unless you specify the -Fs option.  Failing to set -Fs will result
+in a "Stack Overflow!" error when running code compiled in Compact or Large
+memory models.
+                                Page: 9
+                                   
+----- 3.0 Function Descriptions
+
+     This section describes the functions supported in the VSA256 Graphics
+Library.  To use these functions, link your program with the appropriate
+library listed below depending on the compiler being used.
+
+          Borland C, C++ or Turbo C     -    VSA256BC.LIB
+          Microsoft C or Quick C        -    VSA256MS.LIB
+
+     In the following sections each function is listed along with a
+definition of its inputs and return values.  A description is provided
+followed by the version in which the function became available.  Finally,
+if applicable, comments are provided.
+
+----- 3.1 VESA Configuration Functions
+
+----- 3.1.1 vsa_set_svga_mode(video_mode)
+
+Inputs:   unsigned video_mode;
+
+Returns:  unsigned fail_flag;
+
+Description:   This routine sets the video mode.  The mode number may be
+          any of the standard VESA SVGA mode numbers as defined in the
+          tables below.  The mode is passed to this routine through the
+          'video_mode' parameter.  This routine returns a 'fail_flag' = 0
+          if the call was a success (a 1 for failure).  It should be noted
+          that this routine will also work with standard MDA, CGA, EGA, and
+          VGA mode numbers, however the rest of the VSA256 functions will
+          not necessarily work.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+WARNING: Use vsa_init Instead (Section 3.1.3)!  If you don't use vsa_init,
+then the rest of the routines won't work because they depend on the global
+parameters initialized by vsa_init;
+
+                           VESA SVGA VIDEO MODES
+
+GRAPHICS       Mode      Resolution          Colors
+               100h      640x400             256
+               101h      640x480             256
+               102h      800x600             16
+               103h      800x600             256
+               104h      1024x768            16
+
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 10
+                                   
+               105h      1024x768            256
+               106h      1280x1024           16
+               107h      1280x1024           256
+
+TEXT           Mode      Columns             Rows
+               108h      80                  60
+               109h      132                 25
+               10Ah      132                 43
+               10Bh      132                 50
+               10Ch      132                 60
+
+----- 3.1.2 vsa_get_svga_mode(video_mode)
+
+Inputs:   unsigned far *video_mode;
+
+Returns:  unsigned fail_flag;
+
+Description:   This routine gets the current video mode.  The mode is
+          returned to the calling routine via the 'video_mode' pointer.
+          The mode number may be any of the standard VESA SVGA mode numbers
+          as defined in Section 3.1.1.  This routine returns a 'fail_flag'
+          = 0 if the call was a success (a 1 for failure).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments: Works in all VESA video modes.
+          Also works in MDA, CGA, EGA and VGA Modes.
+
+----- 3.1.3 vsa_init(video_mode)
+
+Inputs:   unsigned video_mode;
+
+Returns:  unsigned fail_flag;
+
+Description:   This routine sets the video mode and initializes the VESA
+          graphics environment.  This routine must be called prior to the
+          use of any of the routines in Sections 3.4 through 3.7.  The mode
+          number may be any of the standard VESA SVGA mode numbers as
+          defined in Section 3.1.1.  If the mode number is not a VESA SVGA
+          mode number, this routine will still set the desired video mode,
+          however, the VESA graphics environment will not be initialized
+
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 11
+                                   
+          and subsequent calls to drawing routines will produce
+          unpredictable results.  The mode is passed to this routine
+          through the 'video_mode' parameter.  This routine returns a
+          'fail_flag' = 0 if the call was a success.  For failures, the
+          'fail_flag' has the following meaning:
+
+          1  - Can not get Super VGA Environment information.
+               Make sure VESA BIOS TSR is loaded.
+          2  - VESA BIOS TSR not loaded.  Need to load one.
+          3  - Specified Video Mode not supported by this video
+               card.  Try another mode.
+          4  - Specified Video Mode was set but it is not one
+               of the VESA standard modes.  VSA256 may not  function
+               properly.
+          5  - Can not get Super VGA Video Mode Data.  Make
+               sure correct VESA BIOS TSR is loaded.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments:     Starting with Version 3.0, VSA256 no longer prints out error
+          messages automatically to the screen.  The programmer gets full
+          status feed back via the 'fail_flag' and can do as he/she sees
+          fit.
+              Also note that VSA256 no longer cares if the specific VESA
+          BIOS Extensions TSR being used supports text functions.  This is
+          due to the new implementation of text using vector strokes (see
+          vsa_write_string).
+
+----- 3.2 Miscellaneous Functions
+
+----- 3.2.1 vsa_set_display_start(x_strt,y_strt)
+
+Inputs:   unsigned x_strt,y_strt;
+
+Returns:  unsigned fail_flag;
+
+Description:   This routine sets the current start pixel address which is
+          mapped to the upper left corner of the display.  This routine
+          returns a 'fail_flag' = 0 if the call was a success (a 1 for
+          failure).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 12
+                                   
+---- 3.2.2 vsa_get_display_start(x_strt,y_strt)
+
+Inputs:   unsigned far *x_strt, far *y_strt;
+
+Returns:  unsigned fail_flag;
+
+Description:   This routine gets the current start pixel address which is
+          mapped to the upper left corner of the display.  This routine
+          returns a 'fail_flag' = 0 if the call was a success (a 1 for
+          failure).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.2.3 vsa_wait_vsync()
+
+Inputs:   Nothing;
+
+Returns:  Nothing
+
+Description:   This routine waits until the beginning of the CRTs' vertical
+          retrace period before returning control to the calling program.
+          If vsa_wait_vsync is called while the CRT is in vertical retrace,
+          this routine waits until the completion of the current retrace
+          period and the completion of the following active scan and then
+          returns at the beginning of the next vertical retrace period.
+          The programmer can use this function to precede drawing functions
+          which must be executed during CRT Vertical Retrace.  The
+          programmer is assured the full retrace time for his use.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+
+----- 3.3 Attribute Functions
+
+----- 3.3.1 vsa_set_color(color)
+
+Inputs:   unsigned color;
+
+Returns:  Nothing
+
+Description:   This routine sets the current drawing color which is used in
+          drawing pixels, lines, and rectangles.  The "color" is an 8 bit
+          value from 0 to 255 which is used to index in to the Color Look
+          Up Table (see Section 3.4).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+
+
+                                
+                                
+                                
+                                
+                                Page: 13
+                                   
+----- 3.3.2 vsa_set_text_color(color)
+
+Inputs:   unsigned color;
+
+Returns:  Nothing
+
+Description:   This routine sets the current text color which is used in
+          drawing text.  The "color" is an 8 bit value from 0 to 255 which
+          is used to index in to the Color Look Up Table (see Section 3.4).
+          Since the text is drawn using vector strokes, the background is
+          unaffected by newly drawn text.  Note: this also means that
+          drawing a text 'space' character does nothing but index the text
+          pointer.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.3.3 vsa_set_clip_mode(mode)
+
+Inputs:   unsigned mode;
+
+Returns:  Nothing
+
+Description:   This routine sets the Viewport clipping mode ON if 'mode' =
+          1, OFF otherwise.  After vsa_init, the default is ON.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+
+----- 3.3.4 vsa_set_viewport(left, top, right, bottom)
+
+Inputs:   int left, top, right, bottom;
+
+Returns:  Nothing
+
+Description:   This routine sets the global Viewport clipping parameters
+          XLeft, YTop, XRight, and YBottom.  Note that vsa_init initializes
+          these values to the full screen dimensions for the selected video
+          mode.  Viewport clipping is turned on and off through the
+          vsa_set_clip_mode function.  By default, clip mode is ON after
+          vsa_init.
+               When clip mode is ON, all items drawn on the screen through
+          VSA256 functions are clipped to the screen Viewport rectangle
+          defined by XLeft, YTop, XRight, and YBottom.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+
+
+                                
+                                
+                                
+                                
+                                
+                                Page: 14
+                                   
+----- 3.4 Color Look Up Table Functions
+
+     The Color Look Up Table consists of 256 registers and each register
+stores an 18 bit value defining 6 bit levels for each of red, green, and
+blue.  The drawing functions index into the Color Look Up Table with an 8
+bit value (usually set with vsa_set_color) to determine the drawing color.
+With the following functions, the Color Look Up Table can be read or
+modified one register at a time or all at once in a block operation.
+
+----- 3.4.1 vsa_read_color_register(index,redptr,grnptr,bluptr)
+
+Inputs:   unsigned index;
+          unsigned char far *redptr, far *grnptr, far *bluptr;
+
+Returns:  Nothing
+
+Description:   This routine reads the value of one of the 256 color
+          registers as defined by 'index'.  Pointers to the red, green, and
+          blue components of the color are returned (6 bits each for red,
+          green, and blue).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.4.2 vsa_write_color_register(index,red,green,blue)
+
+Inputs:   unsigned index;
+          unsigned char red,green,blue;
+
+Returns:  Nothing
+
+Description:   This routine writes the value of one of the 256 color
+          registers as defined by 'index'.  The calling routine provides
+          'red', 'green', and 'blue' components of the color (6 bits each
+          for red, green, and blue).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.4.3 vsa_read_color_block(start,count,array)
+
+Inputs:   unsigned start,count;
+          unsigned char far array[];
+
+Returns:  Nothing
+
+Description:   This routine reads 'count' (Range: 1 to 256) consecutive
+          color registers starting at 'start' (Range: 0 to 255) within the
+          Color Look Up Table.  The 'count' must be less than or equal to
+          256 - 'start'.  The values read from the color registers are
+          returned from this routine in 'array[]'.  Each element of
+
+
+                                
+                                
+                                Page: 15
+                                   
+          'array[]' is a byte, and the size of 'array[]' is equal to three
+          times 'count'.  Every three bytes in 'array[]' represents the
+          red, green, and blue color values respectively for one color
+          register.  Each color component (red, green, or blue) is a byte
+          value but only ranges from 0 to 63.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.4.4 vsa_write_color_block(start,count,array)
+
+Inputs:   unsigned start,count;
+          unsigned char far array[];
+
+Returns:  Nothing
+
+Description:   This routine writes 'count' (Range: 1 to 256) consecutive
+          color registers starting at 'start' (Range: 0 to 255) within the
+          Color Look Up Table.  The 'count' must be less than or equal to
+          256 - 'start'.  The values loaded into the color registers are
+          passed to this routine in 'array[]'.  Each element of 'array[]'
+          is a byte, and the size of 'array[]' is equal to three times
+          'count'.  Every three bytes in 'array[]' represents the red,
+          green, and blue color values respectively for one color register.
+          Each color component (red, green, or blue) is a byte value but
+          only ranges from 0 to 63.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.5 Text Functions (New-Vector Stroked!)
+
+     Text support in the VSA256 Graphics Library has been completely
+REVAMPED!  The library no longer relies on the video card manufacturers
+BIOS to get text support.  Instead each character is drawn using 2D vector
+strokes.  The advantages are as follows:
+
+     - Text now works with ALL video cards!
+     - Now text is Infinitely scaleable.
+     - Text positioning resolution is down to 1 pixel.
+     - Background color is preserved.
+     - The programmer can define his own fonts in VSA_FONT.H.
+
+     Some minor incompatibilities with VSA256 version 2.0 were introduced
+due to the changes and they are as follows:
+
+     - vsa_write_string now takes x,y (in pixel coordinates)
+       instead of row,col (in character coordinates) as the first
+       two parameters.
+     - The vsa_write_char function was deleted.
+     - The supported ASCII characters are the printable
+       characters from ASCII code 32 to ASCII code 127.
+
+
+                                
+                                Page: 16
+                                   
+     Your existing code should take very little editing to make these
+changes, especially if you write a macro to edit all occurrences of
+vsa_write_string as follows:
+
+     OLD - vsa_write_string(row,col,color,text);
+
+     NEW - vsa_write_string(col*XCharSize,row*YCharSize,color,text);
+
+----- 3.5.1 vsa_set_text_cursor(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+Description:   This routine sets the current text cursor position to 'x,y'
+          in pixel coordinates.  The current text cursor position is only
+          used by vsa_write_string_alt.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments: Note that this function has changed to pixel coordinates to
+          support vector stroked fonts.
+
+----- 3.5.2 vsa_get_text_cursor(px,py)
+
+Inputs:   int far *px, far *py;
+
+Returns:  Nothing
+
+Description:   This routine gets the current text cursor position and
+          returns the x and y positions via the pointers '*px' and '*py'
+          respectively.  The returned positions are in pixel coordinates.
+          The current text cursor position is only used by
+          vsa_write_string_alt.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+----- 3.5.3 vsa_set_text_scale(x_scale,y_scale)
+
+Inputs:   float x_scale, y_scale;
+
+Returns:  Nothing
+
+Description:   This routine sets the x and y scale factors for text drawn
+          with the vsa_write_string and vsa_write_string_alt routines.  The
+          'x_scale' and 'y_scale' scale factors are applied to the global
+          parameters XCharBase and YCharBase respectively to determine the
+          drawn text character width and height in pixels.  Since these
+          scale factors are floating point, continuously and infinitely
+          scaleable text characters are possible.
+
+
+                                
+                                Page: 17
+                                   
+               This routine automatically adjusts the global parameters
+          XCharSize, YCharSize, XCharResolution and YCharResolution to
+          their appropriate values.  After vsa_init, the x_scale and
+          y_scale factors both default to 1.0.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+----- 3.5.4 vsa_set_text_cursor_mode(mode)
+
+Inputs:   unsigned mode;
+
+Returns:  Nothing
+
+Description:   This routine determines the mode of the text cursor
+          operation.  If 'mode' is '0' (the default after calling
+          vsa_init), the text cursor is not updated after a new text string
+          is written with vsa_write_string or vsa_write_string_alt.  If
+          'mode' is '1', then the text cursor is moved to the end of the
+          text string after executing vsa_write_string or
+          vsa_write_string_alt.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments: If the text cursor mode is set to '1', the programmer may
+          override the cursor operation as follows.  If a '\r' is placed at
+          the end of the text string, the text cursor X value will reset to
+          the beginning of the text string (equivalent to a carriage
+          return).  If a '\n' is placed at the end of the text string, the
+          cursor Y value advances by YCharSize pixels (equivalent to a line
+          feed).  Putting '\r\n' at the end of a text string results in a
+          line feed and carriage return.
+
+----- 3.5.5 vsa_write_string(x,y,color,string)
+
+Inputs:   int x,y;
+          unsigned color;
+          char far string[];
+
+Returns:  Nothing
+
+Description:   This routine writes a null terminated text string 'string'
+          at position (x,y).  The text is written with the 'color' passed
+          to this routine. After execution, if the text cursor mode is '0',
+          the text cursor remains at 'x,y', otherwise it is set to the end
+          of the text string just written (see comments in section 3.5.4).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments: This routine was redefined in version 3.0 to support the new
+          vector stroked fonts.  The text is drawn with vector strokes at
+
+
+                                
+                                Page: 18
+                                   
+          the scale factor determined by the vsa_set_text_scale routine.
+          Full 2D clipping is performed according to the values set with
+          the vsa_set_clip_mode and vsa_set_viewport routines.
+
+----- 3.5.6 vsa_write_string_alt(string)
+
+Inputs:   char far string[];
+
+Returns:  Nothing
+
+Description:   This routine writes a null terminated text string 'string'
+          at the current text cursor position as determined by
+          vsa_set_text_cursor.  The text is written with the current text
+          color.  After execution, if the text cursor mode is '0', the
+          current text cursor remains unchanged, otherwise it is set to the
+          end of the text string just written (see comments in section
+          3.5.4).
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+Comments: This routine was redefined in version 3.0 to support the new
+          vector stroked fonts.  The text is drawn with vector strokes at
+          the scale factor determined by the vsa_set_text_scale routine.
+          Full 2D clipping is performed according to the values set with
+          the vsa_set_clip_mode and vsa_set_viewport routines.
+
+
+----- 3.6 Basic Drawing Functions
+
+----- 3.6.1 vsa_move_to(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+Description:   This routine sets the current cursor position to 'x,y'.  The
+          current cursor position is used by the vsa_line_to,
+          vsa_rect_fill, and vsa_rect functions.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.6.2 vsa_set_pixel(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+Description:   This routine draws a single pixel at 'x,y' with the current
+          drawing color.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+
+                                Page: 19
+                                   
+----- 3.6.3 vsa_get_pixel(x,y)
+
+Inputs:   int x,y;
+
+Returns:  unsigned color;
+
+Description:   This routine returns the current pixel value at screen
+          coordinates 'x,y'.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+Comments: Unpredictable things may happen if you try to get a pixel that is
+          outside of the XResolution-1,YResolution-1 screen dimensions.
+
+----- 3.6.4 vsa_line_to(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+Description:   This routine draws a line from the current cursor position
+          to 'x,y' with the current drawing color.  Then the current cursor
+          position is moved to 'x,y'.
+               The drawing speed of this routine is up to 3 times faster
+          than that of the vsa_line_to function in VSA256 Graphics Library
+          Version 1.1.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.6.5 vsa_gouraud_line(x0,c0,x1,c1,y)
+
+Inputs:   int x0,c0,x1,c1,y
+
+Returns:  Nothing
+
+Description:   This routine draws a color interpolated line from the 'x0,y'
+          to 'x1,y1'.  The pixel color value is linearly varied from a
+          starting value of 'c0' at 'x0,y' to an ending value of 'c1' at
+          'x1,y'.  This technique of color interpolation is named Gouraud
+          shading after the famous Joe-Bob* Gouraud ... a French guy.
+          Valid values for 'c0' and 'c1' are 0 through 255 and serve as
+          indexes into the Color Look Up Table.  Gouraud shaded lines serve
+          as a fundamental drawing element for realistic 3-D graphics.  The
+          current cursor position remains unaffected by this routine.
+
+Availability:  In VSA256 Graphics Library Version 2.0 and up.
+
+
+
+                                
+                                
+_______________________________
+* Not Really!
+                                Page: 20
+                                   
+----- 3.6.6 vsa_rect_fill(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+          Description:   This routine draws a filled rectangle from the current
+          cursor position to the rectangles diagonal position 'x,y' with
+          the current color.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.6.7 vsa_rect(x,y)
+
+Inputs:   int x,y;
+
+Returns:  Nothing
+
+Description:   This routine draws a rectangle from the current cursor
+          position to the rectangles diagonal position 'x,y' with the
+          current color.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.6.8 vsa_triangle_fill(x0,y0,x1,y1,x2,y2)
+
+Inputs:   int x0,y0,x1,y1,x2,y2
+
+Returns:  Nothing
+
+Description:   This routine draws a filled triangle defined by the 3
+          vertices 'x0,y0', 'x1,y1', and 'x2,y2'.  The triangle is drawn
+          with the current drawing color.  The current cursor position
+          remains unaffected by this routine.
+
+Availability:  In VSA256 Graphics Library Version 2.0 and up.
+
+----- 3.6.9 vsa_shaded_triangle(x0,y0,c0,x1,y1,c1,x2,y2,c2)
+
+Inputs:   int x0,y0,c0,x1,y1,c1,x2,c2,y2
+
+Returns:  Nothing
+
+Description:   This routine draws a color interpolated triangle defined by
+          the 3 vertices 'x0,y0', 'x1,y1', and 'x2,y2'.  The pixel color
+          value is linearly varied in 2 dimensions across the surface of
+          the triangle using the values 'c0', 'c1', and 'c2' as the
+          starting colors at the respective vertices.  This technique of
+          color interpolation is named Gouraud shading after the famous Joe-
+          Bob* Gouraud ... a French guy.  Valid values for 'c0', 'c1', and
+
+_______________________________
+* Not Really!
+                                Page: 21
+                                   
+          'c2' are 0 through 255 and serve as indexes into the Color Look
+          Up Table.  Gouraud shaded triangles serve as a fundamental
+          drawing element for realistic 3-D graphics.  (Basically, most 3-D
+          surfaces can be constructed out of shaded triangles).  The
+          current cursor position remains unaffected by this routine.
+
+Availability:  In VSA256 Graphics Library Version 2.0 and up.
+
+----- 3.6.10 vsa_h_line(y,x0,x1)
+
+Inputs:   int y,x0,x1;
+
+Returns:  Nothing
+
+Description:   This routine draws a horizontal line from 'x0,y' to 'x1,y'.
+          The line is drawn with the current drawing color.  For horizontal
+          lines this function is quicker than the vsa_line_to function.
+               The drawing speed of this routine is up to 3 times faster
+          than that of the vsa_h_line function in VSA256 Graphics Library
+          Version 1.1.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.6.11 vsa_v_line(x,y0,y1)
+
+Inputs:   int x,y0,y1;
+
+Returns:  Nothing
+
+Description:   This routine draws a vertical line from 'x,y0' to 'x,y1'.
+          The line is drawn with the current drawing color.  For vertical
+          lines this function is quicker than the vsa_line_to function.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.7 Specialized Drawing Functions
+
+----- 3.7.1 vsa_raster_line(x0,x1,y,array)
+
+Inputs:   int x0,x1,y;
+                    unsigned char far array[];
+
+Returns:  Nothing
+
+Description:   This routine draws a horizontal raster line from 'x0,y' to
+          'x1,y'.  The 'array[]' values specify each pixel's color value.
+          If x0 <= x1, then 'array[0]' defines the color of the first pixel
+          in the line at 'x0,y'.  If x1 < x0, then 'array[0]' defines the
+          color of the first pixel in the line at 'x1,y'.  The
+          vsa_raster_line routine is typically used to draw images on the
+                                
+                                
+                                
+                                Page: 22
+                                   
+          display one raster line at a time.
+               The drawing speed of this routine is up to 2 times faster
+          than that of the vsa_raster_line function in VSA256 Graphics
+          Library Version 1.1.
+
+Availability:  In VSA256 Graphics Library Version 1.0 and up.
+
+----- 3.7.2 vsa_get_raster_line(x0,x1,y,array)
+
+Inputs:   int x0,x1,y;
+          unsigned char far array[];
+
+Returns:  Nothing
+
+Description:   This routine gets a horizontal raster line from 'x0,y' to
+          'x1,y'.  The 'array[]' is loaded with each pixel's color value.
+          If x0 <= x1, then 'array[0]' defines the color of the first pixel
+          in the line at 'x0,y'.  If x1 < x0, then 'array[0]' defines the
+          color of the first pixel in the line at 'x1,y'.  The
+          vsa_get_raster_line routine is typically used to read back images
+          already drawn on the display one raster line at a time.
+
+Availability:  In VSA256 Graphics Library Version 2.0 and up.
+
+Comments: This routine limits x0 and x1 within the range of 0 and
+          XResolution-1. If x0 goes negative, the first element of 'array'
+          holds the pixel at x=0 and less than x1-x0+1 pixels will be
+          loaded  into 'array'.  Likewise, if x1 is greater than
+          XResolution-1, less than x1-x0+1 pixels will be loaded  into
+          'array'.
+
+----- 3.7.3 vsa_image_size(x0,y0,x1,y1)
+
+Inputs:   int x0,y0,x1,y1;
+
+Returns:  unsigned long image_size;
+
+Description:   This routine calculates the size of the image defined within
+          a rectangle bound by 'x0,y0' and 'x1,y1'.  The size of the image
+          plus 4 is returned.
+               The vsa_image_size routine is typically used to determine
+          the size of the image array to be allocated and used in the
+          vsa_get_image and vsa_put_image routines.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 23
+                                   
+----- 3.7.4 vsa_get_image(x0,y0,x1,y1,image_array)
+
+Inputs:   int x0,y0,x1,y1;
+          unsigned char huge *image_array;
+
+Returns:  Nothing
+
+Description:   This routine gets the image defined in the rectangle 'x0,y0'
+          to 'x1,y1' and stores it in the memory buffer pointed to by
+          'image_array'.  The memory for 'image_array' must be allocated
+          prior to this call.  Upon returning from this routine, the first
+          2 bytes of the 'image_array' buffer contain the image width, and
+          the second 2 bytes contain the image height.  The remaining bytes
+          in the 'image_array' buffer hold the image pixel data.
+               The vsa_get_image routine is typically used in conjunction
+          with the vsa_put_image routine for BitBLT operations.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+
+Comments: This routine clamps x0, y0, x1, and y1 to zero.  If any of these
+          parameters are less than zero, vsa_get_image overrides them with
+          zero and less than (x1-x0+1)*(y1-y0+1) pixels will be  loaded
+          into 'image_array'.  No clamping of x0, y0, x1, and y1 is
+          performed at XResolution-1 and YResolution-1 so that off screen
+          memory can be used as scratch pad area.
+
+----- 3.7.5 vsa_put_image(x0,y0,image_array,raster_op)
+
+Inputs:   int x0,y0;
+          unsigned raster_op;
+          unsigned char huge *image_array;
+
+Returns:  Nothing
+
+Description:   This routine gets the image defined in the 'image_array'
+          buffer and displays it starting at screen coordinates 'x0,y0'.
+          The image width and height are determined by the first two 16 bit
+          words of the 'image_array' buffer.  The 'raster_op' parameter
+          determines how the data in the 'image_array' buffer are merged
+          with the existing screen data.
+
+          raster_op      Function
+          0              Replace existing data.
+          1              AND with existing data.
+          2              OR with existing data.
+          3              XOR with existing data.
+          4              Reserved .... Do Not Use !!
+          5              Reserved .... Do Not Use !!
+          6              Replace existing data only with non-zero 
+                         pixels (Sprites!).
+
+               The vsa_put_image routine is typically used in conjunction
+          with the vsa_get_image routine for BitBLT operations.
+
+Availability:  In VSA256 Graphics Library Version 3.0 and up.
+                                Page: 24
+                                   
+
+----- 4.0 Nitty Gritties
+
+----- 4.1 Registration Information
+
+     If you find the VSA256 Graphics Library useful, a registration of $29
+would be appreciated.  Registration brings with it MAJOR BENEFITS, as
+spelled out in section 1.2, so look at the ORDER.TXT file and fill it out!
+
+          Please fill out the Information About You and the Wish List
+sections, and indicate the version number of the software you are presently
+using.  Send check or money order to:
+
+                                Spyro Gumas
+                         7910 W. Brookridge Drive
+                           Middletown, MD 21769
+
+
+               ******  COMPUSERVE   -   SWREG  ID: 5417  ******
+
+If you are on CompuServe, you can register through SWREG.  Just "GO SWREG", 
+then give them the registration ID: 5417.  They will bill you $44.00 and I'll 
+send you both VSA256 and TIFF256 graphics Libraries (plus the goodies!).  
+Please do fill out and send me the information form so you can tell me what 
+you want in the next revision.
+
+                                     
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 25
+                                   
+----- 4.2 Software License
+
+                 VSA256 Graphics Library, Version 3.2
+     Copyright Spyro Gumas, 1992 - 1995.  All Rights Reserved.
+
+      The  VSA256 Graphics Library is a "shareware program" and is provided
+at  no  charge to the user for evaluation.  The essence of "user-supported"
+software  is  to  provide  personal computer users  with  quality  software
+without  high  prices,  and  yet to provide incentive  for  programmers  to
+continue to develop new products.  If you find this program useful and find
+that  you  are using The VSA256 Graphics Library and continue  to  use  The
+VSA256  Graphics Library after a reasonable trial period, you must  make  a
+registration payment of $29 to Spyro Gumas.  The $29 registration fee  will
+license  one  copy for use on any one computer at any one time.   You  must
+treat this software just like a book.  An example is that this software may
+be  used  by any number of people and may be freely moved from one computer
+location to another, so long as there is no possibility of it being used at
+one  location  while it's being used at another. Just as a book  cannot  be
+read by two different persons at the same time.
+
+You are free (and encouraged) to copy and distribute the VSA256 Graphics
+Library if:
+
+1)   It is not used as a component of another software library.
+2)   No fee is charged for use, copying or distribution.
+3)   It is distributed as is (preferably as VSA256.ZIP) and not
+     modified in any way.
+
+Furthermore, you are granted royalty free use of The VSA256 Graphics
+Library executable code in any of your programs given that:
+
+1)   You have registered your use of The VSA256 Graphics Library
+     and paid the $29 registration fee.
+2)   It is not used as a component of another software library.
+3)   You visibly acknowledge the use of The VSA256 Graphics
+     Library in your product in both the printed materials and
+     the executable software with the   following statement:
+
+     "This software uses the VSA256 Graphics Library,
+      Copyright Spyro Gumas, 1992 - 1995.  All Rights Reserved"
+
+
+     Clubs and user groups may charge a nominal fee (not to exceed $10) for
+expenses  and  handling  while distributing the  VSA256  Graphics  Library.
+Anyone   distributing  The  VSA256  Graphics  Library  for  any   kind   of
+remuneration  must  first  contact Spyro Gumas at  the  address  below  for
+authorization.  This  authorization  will  be  automatically   granted   to
+distributors  recognized by the (ASP) as adhering  to  its  guidelines  for
+                                
+                                
+                                
+                                
+                                
+                                Page: 26
+                                   
+shareware distributors, and such distributors may begin offering The VSA256
+Graphics Library immediately (However Spyro Gumas must still be advised  so
+that the distributor can be kept up-to-date with the latest version of  The
+VSA256 Graphics Library.).
+
+      Commercial users of The VSA256 Graphics Library must register and pay
+for their copies of The VSA256 Graphics Library within 30 days of first use
+or  their  license  is  withdrawn.  Consult the  file  ORDER.TXT  for  more
+information or contact Spyro Gumas.
+
+----- 4.3 Disclaimer
+
+     Users of The VSA256 Graphics Library must accept this  disclaimer of
+warranty:  The VSA256 Graphics Library is supplied as is.  The author
+disclaims all warranties, expressed or implied, including, without
+limitation, the warranties of merchantability and of fitness for any
+purpose. The author assumes no liability for damages, direct or
+consequential, which may result from the use of The VSA256 Graphics
+Library.  In no event shall the author's liability for any damages ever
+exceed the price paid for the license to use The VSA256 Graphics Library,
+regardless of the form of the claim.  The person using The VSA256 Graphics
+Library bears all risk as to the quality and performance of this software.
+
+----- 4.4 Technical Support
+
+     If you have any questions or comments about the VSA256 Graphics
+Library, please write me at:
+
+                                Spyro Gumas
+                         7910 W. Brookridge Drive
+                           Middletown, MD 21769
+
+Or, contact me on EMAIL!
+
+            CompuServe:    71064,1571
+            Internet:      71064.1571@compuserve.com
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 27
+                                   
+----- 5.0 Graphics Library Extensions
+
+     The VSA256 Graphics Library is a base library which is supported by
+library extensions for more specialized tasks.  New extensions will be
+developed periodically.  The current extensions are:
+
+*** TIFF256 Graphics Library Extension 3.0 *** This library extension
+provides functions which operate with Tagged Image File Format (TIFF)
+images.  With these functions, you can traverse the image file, extract
+image information, and display the images as part of your own program.  You
+can also modify the TIFF images and write them back to TIFF files.
+Furthermore, any image that you generate with VSA256 can be saved as a TIFF
+file.  The image types supported include Bilevel, Grayscale, Palette Color
+and RGB True Color.  Version 3.0 adds Adaptive Color Palette generation
+when reading in 24 bit images.  This makes most True Color images show up
+undistorted by the 256 color limitation.  Now the fully capable version of
+the TIFF256 Graphics Library Extensions is shareware, available from the
+same place that you got the VSA256 Graphics Library.
+
+*** CBTMouse API Library 1.0 *** New from CyberBase Technologies, Inc.,
+this library adds complete mouse interaction to your graphics applications.
+These guys go all out to make mouse driven graphics programming a breeze.
+Functions provided include initialization, displaying and hiding mouse,
+reading position, setting position, reading button status, working within
+bounding boxes, changing cursor color and size, and waiting for various
+mouse inputs.  You get a very functional version of this library when you
+register for the VSA256 Graphics Library.  The full up library (version
+1.0) is shipped by CyberBase Technologies, Inc. upon a nominal registration
+fee.
+
+*** CBT3D Library 1.0 *** Also from CyberBase Technologies, Inc. (yeah,
+these guys are busy), this library lets you write 3D applications.  What
+ever your interests, Mechanical Design, Architecture, Interior Design,
+Space Widgets, you name it, you can do it.  Functions provided let you add
+and delete objects from a display list, set the view point, and perform 3D
+transformations including scale, offset, and rotation.  Select the drawing
+mode for the 3D objects from Wireframe, Solid, or Gouraud (smooth) Shaded.
+You get a very functional version of this library when you register for the
+VSA256 Graphics Library.  The full up library (version 1.0) is shipped by
+CyberBase Technologies, Inc. upon a nominal registration fee.
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 28
+                                   
+----- 6.0 Appendix
+
+----- 6.1 VSA.H Include File
+
+/*.................................. VSA.H ................. 8-3-95 ........*/
+/* This file declares the VSA256 Graphics Library functions and global      */
+/* parameters used throughout the graphics routines.                        */
+/*                                                                          */
+/*                               VERSION 3.2                                */
+/*                                                                          */
+/*         Copyright Spyro Gumas, 1992 - 1995.  All Rights Reserved.        */
+/*..........................................................................*/
+
+/*..........................................................................*/
+/*                    External Function Prototypes                          */
+/*..........................................................................*/
+
+extern unsigned  far cdecl vsa_set_svga_mode( unsigned );
+extern unsigned  far cdecl vsa_get_svga_mode( unsigned far * );
+extern unsigned  far cdecl vsa_set_display_start( unsigned, unsigned );
+extern unsigned  far cdecl vsa_get_display_start( unsigned far *,
+                            unsigned far * );
+extern unsigned  far cdecl vsa_init( unsigned );
+extern void far cdecl vsa_set_color( unsigned );
+extern void far cdecl vsa_set_text_color( unsigned );
+extern void far cdecl vsa_set_text_cursor_mode( unsigned );
+extern void far cdecl vsa_set_text_cursor( int, int);
+extern void far cdecl vsa_get_text_cursor( int far *, int far *);
+extern void far cdecl vsa_set_text_scale(float,float);
+extern void far cdecl vsa_set_viewport( int, int, int, int);
+extern void far cdecl vsa_set_clip_mode(  unsigned );
+extern void far cdecl vsa_write_string( int, int, int, char far * );
+extern void far cdecl vsa_write_string_alt( char far * );
+extern void far cdecl vsa_read_color_register( unsigned, unsigned char far *,
+                 unsigned char far *, unsigned char far *);
+extern void far cdecl vsa_write_color_register( unsigned, unsigned char,
+                 unsigned char, unsigned char );
+extern void far cdecl vsa_read_color_block( unsigned, unsigned,
+                 unsigned char far * );
+extern void far cdecl vsa_write_color_block( unsigned, unsigned,
+                 unsigned char far * );
+extern void far cdecl vsa_move_to( int, int);
+extern void far cdecl vsa_set_pixel( int, int);
+extern unsigned far cdecl vsa_get_pixel( int, int);
+extern void far cdecl vsa_line_to( int, int);
+extern void far cdecl vsa_triangle_fill( int, int, int, int, int, int);
+extern void far cdecl vsa_rect_fill( int, int);
+extern void far cdecl vsa_rect( int, int);
+extern unsigned long far cdecl vsa_image_size( int, int, int, int);
+                                
+                                
+                                
+                                
+                                Page: 29
+                                   
+extern void far cdecl vsa_get_image( int, int, int, int,
+                 unsigned char huge * );
+extern void far cdecl vsa_put_image( int, int,unsigned char huge *, unsigned);
+extern void far cdecl vsa_h_line( int, int, int);
+extern void far cdecl vsa_v_line( int, int, int);
+extern void far cdecl vsa_raster_line( int, int, int, unsigned char far *);
+extern void far cdecl vsa_get_raster_line( int, int, int,unsigned char far *);
+extern void far cdecl vsa_gouraud_line( int, int, int, int, int);
+extern void far cdecl vsa_shaded_triangle( int, int, int, int, int, int,
+                                           int, int, int);
+extern void far cdecl vsa_wait_hsync( void );
+extern void far cdecl vsa_wait_vsync( void );
+extern void far cdecl vsa_about( void );
+
+/*..........................................................................*/
+/*                    External Parameter Declarations                       */
+/*..........................................................................*/
+extern unsigned far XResolution, far YResolution;
+extern unsigned far XCharResolution, far YCharResolution;
+extern unsigned char far XCharSize, far YCharSize;
+extern unsigned char far BitsPerPixel;
+extern int far XLeft, far XRight, far YTop, far YBottom;
+extern float far Text_X_Scale, far Text_Y_Scale;
+extern int VSA_ATI_COLORS;
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 30
+                                   
+----- 6.2 VSA_FONT.H Include File
+
+/*............................... VSA_FONT.H .............. 12-15-94 .......*/
+/*    This is the font file for the VSA256 Graphics Library.  The basic     */
+/*  font size is set by the XCharBase and YCharBase values defined at the   */
+/*  top of this file.  This include file gives you the ability to fully     */
+/*  customize your fonts! Feel free to edit the font vertex lists to be as  */
+/*  personalized as possible.  Read on to see how it works.                 */
+/*                                                                          */
+/*   ASC[M][N] is a 2 dimensional array.  The M index selects one of 96     */
+/* possible characters and corresponds to the printable ASCII character     */
+/* codes from 32 to 127. (M = 0 selects ASCII character code 32 ... a space,*/
+/* M = 95 selects ASCII character code 127 ... DEL)                         */
+/*   For any given value of M, the N index steps through the vertex list    */
+/* for that character.  Each vertex takes up 3 locations.  The first of     */
+/* the 3 values is the blank code. A blank code of 0 means start a new line */
+/* segment (equivalent to "move_to").  A blank code of 1 means continue     */
+/* drawing (equivalent to "line_to").  A blank code of 255 means END of     */
+/* vertex list. You MUST end each vertex list this way!                     */
+/*   The next two values are x and y coordinates relative to the top left   */
+/* corner of the character cell.  The x and y values should never be more   */
+/* than XCharBase-1 and YCharBase-1 respectively.  When the blank code is   */
+/* 255, the x and y values are ignored.  A maximum of 23 verticies plus an  */
+/* END vertex are allowed per character.  Overrunning this limit will       */
+/* probably cause your PC to go woopie.                                     */
+/*..........................................................................*/
+
+unsigned far XCharBase = 8, far YCharBase = 16;
+unsigned char far ASC[96][72]=  ... Array initialization not printed here  ...
+                                ... for brevity.  See VSA_FONT.H file for  ...
+                                ... details                                ...
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                               
+                                
+                                
+                                
+                                
+                                
+                                
+                                Page: 31

@@ -1,0 +1,392 @@
+
+        SciTech Software Distribution - Standard Directory Structure
+        ------------------------------------------------------------
+
+This file describes the general directory structure of the SciTech Software
+programming libraries that you have installed. This directory structure
+is common to all SciTech Software products.
+
+Where to get the latest releases
+--------------------------------
+
+The latest releases of all SciTech Software products are always uploaded to
+the Simtel-20 MSDOS internet archives (oak.oakland.edu) and to various
+areas on CompuServe and America Online. However to obtain the obsolute
+latest release of all SciTech Software products, you can ftp them from
+our home site:
+
+    ftp.scitechsoft.com (152.160.1.26)
+
+If you wish to contact SciTech Software for feedback or bug reports on
+our products, you can do so as follows:
+
+SciTech Software
+5 Governors Lane, Suite D
+Chico, CA 95926 USA
+
+Phone:          916-894-8400
+Fax:            510-208-8026
+Internet:       support@scitechsoft.com
+
+Find a nice home for it all
+---------------------------
+
+Before you install any of SciTech Software Products, you should decide upon
+a standard root directory for installing all of the products into. The
+default that we use is under the \SCITECH directory of one of our hard drives
+(in my case C:). Then you should install all the files for all the
+distributions that you have under the same directory tree. Many of the
+products use common libraries to get things done (like the PMODE library)
+and common header files. When you install them into the same directory
+you will only have one copy of each of these common files.
+
+IMPORTANT: Once you decided on a root directory for installing your SciTech
+           Software Products, you should install them all into the same
+           directory. The command to do this with PKUNZIP would be (assuming
+           that all products are installed under C:\SCITECH):
+
+                pkunzip -d <zipfile>.zip C:\SCITECH
+
+           This will correctly unzip all the archived files and create the
+           correct directory structure under the root directory C:\SCITECH
+
+           Note that the '-d' command line option is essential to ensure
+           that the correct directory structure is built.
+
+Installing for use
+------------------
+
+Once you have created the directory structure for the distribution, and
+all files have been installed, you will need to perform two final steps
+before you can use the libraries:
+
+    1. Change your compilers default include path to include the
+       d:\SCITECH\INCLUDE directory so your compiler can find the required
+       include files, where d: is the drive that you have installed the
+       software onto.
+
+    2. Change your compilers default library path to include the
+       d:\SCITECH\LIB\??? directory (substitute the correct sub-directory
+       name for your compiler - d:\SCITECH\LIB\DOS16\BC is for Borland C++
+       4.x 16 bit DOS).
+
+Once you have done this, you can simply start using the library files as
+provided. If you intend to re-compile any of the libraries from the
+provided source code, you will need to follow the steps in the next
+section.
+
+SciTech Software Common Makefile Utilities
+------------------------------------------
+
+In order to be able to re-compile any of the SciTech Software Distributions
+that come with source code, you will also need to install the SciTech
+Software Common Makefile Utilities package. This can be found in the
+archive called MKUTIL??.ZIP from the same location that you obtained this
+package from. This archive contains all of the relevant executable files
+(including a copy of DMAKE 3.8), batch files and DMAKE startup files
+required to re-compiled the source code for any of the supported compilers.
+
+Once you have installed the files onto your hard drive, you will need to
+perform the following steps:
+
+    1. Ensure that you have enough environment space to include all the
+       environment variables that you need. In practice we find you need
+       around 2048 bytes of environment space, but you may get by with
+       less. To change this with a normal DOS configuration, add the
+       /E:2048 command line switch to the end of your SHELL= command
+       line. If you are using the latest 4DOS from JP Software (highly
+       recommended) then you can do this in the 4DOS startup files.
+
+    2. Change the default executable file path in your AUTOEXEC.BAT file
+       to include the d:\SCITECH\BIN directory. This can be placed
+       anywhere in your path, so long as the DMAKE.EXE file in the BIN
+       directory will be found first (if there is another program with
+       the same name).
+
+    3. Set the environment variables SCITECH and MGL_ROOT (if you are using
+       the MegaGraph Graphics Library). The batch file MGL_ENV.BAT in
+       the root \SCITECH directory is a sample of this. The SCITECH
+       environment variable is used by the batch files in the BIN
+       directory for setting up for compiling with a particular compiler,
+       and by the DMAKE program so that it can find all of the relevant
+       files during compilation.
+
+    4. Set up the enivornment variables needed by the batch files in the
+       next step, so that they can located your compilers executable files,
+       include files and library files. The file BIN\DOS-VARS.BAT is an
+       example that we use for DOS, so you can start with this to build your
+       own batch file.
+
+    5. Run the relevant batch file to set the environment up for your
+       compiler (see list below). These files require the SCITECH
+       environment variable to setup correctly, and the relevant variables
+       from the previous step to be set up correctly. You should not need
+       to edit the batch files themselves, but you *will* need to edit
+       the DOS-VARS.BAT file to set things up correctly for these batch
+       files.
+
+       NOTE FOR Borland C++: When using Borland C++ 3.1/4.x with these
+       batch files, you will need to edit the supplied TURBOC.*, TLINK.*,
+       BCC32.* and TLINK32.* to contain the proper information for your
+       installation. These files are then copied by the batch files into
+       the proper Borland C++ installation directories to correctly set
+       up the compiler for compiling and linking code for the specified
+       target environment.
+
+The following compilers are usually supported by SciTech Software, along with
+the code used by the batch files from step 4 above (some libraries may not
+support a particular compiled depending on lanuage requirements):
+
+    16 bit DOS real mode support:
+
+    bc3-dos.bat     - Borland C++ 3.1 16 bit
+    bc16-dos.bat    - Borland C++ 4.x 16 bit
+    vc16-dos.bat    - Microsoft Visual C++ 1.x 16 bit
+    sc16-dos.bat    - Symantec C++ 6.x/7.x 16 bit
+    wc16-dos.bat    - Watcom C++ 10.x 16 bit
+
+    32 bit DOS protected mode support:
+
+    bc32-dos.bat    - Borland C++ 4.x 32 bit DPMI32
+    bc32-tnt.bat    - Borland C++ 4.x 32 bit PharLap TNT
+    wc32-dos.bat    - Watcom C++ 10.x 32 bit DOS4GW/PMODEW
+    wc32-tnt.bat    - Watcom C++ 10.x 32 bit PharLap TNT
+    wc32-x32.bat    - Watcom C++ 10.x 32 bit FlashTek X32/X32-VM
+
+    16 bit Windows support:
+
+    bc16-win.bat    - Borland C++ 4.x 16 bit
+    vc16-win.bat    - Microsoft Visual C++ 1.x 16 bit
+    sc16-win.bat    - Symantec C++ 6.x/7.x 16 bit
+    wc16-win.bat    - Watcom C++ 10.x 16 bit
+
+    32 bit Windows support:
+
+    bc32-win.bat    - Borland C++ 4.x 32 bit
+    vc32-win.bat    - Microsoft Visual C++ 1.x/2.x 32 bit
+    sc32-win.bat    - Symantec C++ 6.x/7.x 32 bit
+    wc32-win.bat    - Watcom C++ 10.x 32 bit
+
+Once you have everything set up correctly, you should simply be able to
+type DMAKE in any of the source directories and be in business.
+
+Assembling 32 bit code
+----------------------
+
+All of SciTech Software's assembler code is written in Borland TASM IDEAL
+mode, so you will need a copy of Borland TASM in order to re-assemble the
+assembler code. If you are assembling for 32 bit protected mode, you _MUST_
+use TASM 4.0 or later, since TASM 3.1 and earlier do not generate correct 32
+bit code in some instances (pushing flags is one).
+
+Compiling with Optimisations or for Debugging
+---------------------------------------------
+
+By default when you build the libraries, no optmisations and no debugging
+information is generated. You can turn either (or both) of these features
+on by setting the OPT or DBG variables for DMAKE. You can do this either
+by passing them on the command line, or setting them as environment
+variables:
+
+dmake OPT=1 DBG=1
+
+or
+
+set OPT=1
+set DBG=1
+dmake
+
+Note that you can select either speed based or size based compiler
+optimisations, using either OPT for normal speed optimisations or
+OPT_SIZE for size based optimisations.
+
+Changing the default structure packing alignment
+------------------------------------------------
+
+All SciTech Software libraries are compiled with the default structure
+packing alignment used by the compiler. If you wish to change the default
+structure packing alignment used by your compiler, you will need to
+recompile _all_ libraries that you use with the new compiler options.
+If you dont do this, our library code will be expecting the structures in
+a different format to that used by your code, causing some rather subtle
+and hard to find bugs!
+
+Please note that it has been our experience that changing the default
+compiler packing alignment values is not a good idea for some compilers
+(because they dont bother to bracket their include files with #pragma pack!).
+Unless you know exactly what you are doing, we recommend you use the compiler
+defaults to ensure you dont get bitten by subtle alignment bugs.
+
+Compiling with direct 80387+ floating point suppport
+----------------------------------------------------
+
+Many SciTech Software libraries can be compiled to use direct floating
+point support routines for 387+ co-processors in both 16 and 32 bit
+protected mode. Compiling with this option will turn on the compilers
+inline floating point instruction support, and will also enable any 387
+specific assembler modules that may be included. You can turn this on
+by setting the FPU variable for DMAKE, by either passing it on the command
+line or setting the evironment variable
+
+dmake FPU=1
+
+or
+
+set FPU=1
+dmake
+
+Programs compiled with this option will require a 387 or higher
+co-processor to be installed in the system (the 486DX and Pentium processors
+have an co-processor built in, while the 486SX does not). If you are
+compiling for real mode, and your system has a floating point emulator
+installed (such as Franke.387 or something similar) then the program will
+run as per normal. If you are compiling a 32 bit DOS extended application
+that is running under a DPMI environment that provides floating point
+emulation then your program will also run correctly (the Borland C++ DPMI32
+DOS extender provides this, as does the OS/2 2.x DOS box DPMI implementation).
+
+Changing the default DOS Extender
+---------------------------------
+
+All of the SciTech Software libraries are DOS Extender independant. All
+DOS extender dependant information is encapsulated in the PMODE.LIB library.
+The default library provided for each of the compilers is compiled for
+the default DOS extender normally used by that compiler. All you need to
+do in order to use a different DOS extender is re-compile the PMODE
+library with the appropriate command line options, and then link with
+this new library. Refer to the documentation on the PMODE library for
+more details.
+
+All SciTech Software distributions that require the PMODE library, come
+with a pre-compiled version of the library for the default DOS extender
+used by that compiler. If you wish to change the DOS extender, or you
+wish to have a look at the source code, you will need to obtain the
+PMODE library source archive. You should be able to get this from the
+same site that you downloaded this archive from as the file PMPRO??.ZIP.
+
+Once you have re-compiled the PMODE library routines, you can change the
+DOS extender by either setting an environment variable (the easiest)
+or with command line parameters to DMAKE. The batch files provided in
+the SCITECH\BIN directory show how to set up for compiling and linking
+with any of the supported DOS extenders.
+
+Setting up to use FlashTek X-32
+-------------------------------
+
+Symantec C++ 6.1
+
+Setting up to use FlashTek X-32 or X-32VM with Symantec C++ is simple. If
+you only want to use the X-32 extender, you can follow the instructions in
+the file README.SC that comes on the X-32 distribution disks. However if
+you simply run the supplied SC32-X32.BAT batch file, it will place the
+appropriate X-32 library and include files before the normal Symantec
+ones, and you can selectively compile for either DOSX, X-32 or X-32VM.
+
+Watcom C++ 10.x
+
+Setting up to use FlashTek X-32 or X-32VM with Watcom C++ is simple. First
+you must ensure that you have the latest version (some new versions of X-32
+for Watcom 10.0 had interrupt handling problems - if you experience this
+obtain the latest version from FlashTek). Then you simply install the
+files as specified in the README.WTC that comes on the X-32 distribution
+disks. Watcom C++ 10.0 comes out of the box ready to compile with X-32 and
+X-32VM, so you can then start using the batch file WC32-X32.BAT and the
+WC32.MK DMAKE startup file to compile and link with X-32.
+
+Setting up to use PMODE/W
+-------------------------
+
+PMODE/W is an excellent DOS extender replacement for the normal DOS4GW
+DOS extender used by Watcom C++ 10.x. You can re-link all your normal
+Watcom C++ code using the new extender, which you can do using the
+USE_PMW argument to DMAKE. Hence you can compile and link with PMODE/W
+as follows:
+
+dmake USE_PMW=1
+
+or
+
+set USE_PMW=1
+dmake
+
+All SciTech Software utilities have been tested with PMODE/W and no
+compatability problems have been found so far.
+
+Setting up to use DJGPP
+-----------------------
+
+In order to support the DJGPP port of the GNU C++ compiler in a fashion
+that is compatible with other dos based tools, we use a number of small
+utility programs to convert assembler .OBJ file output to .O format
+(EMXAOUT) and also to combine all the commands to produce a single .EXE
+file as output (DJ_LD). These utility programs rely on the LIBRARY_PATH
+environment variable to be set correctly. Older DJGPP releases of the
+compiler also used this variable, but newer releases use the DJGPP.ENV
+file. Setting your custom library directories with LIBRARY_PATH is the
+method supports by the SciTech makefile definitions and must be used
+(DJGPP.ENV imports this variable anyway).
+
+Directory tree
+--------------
+
+The following is a brief outline of the directory tree, and the contents of
+all the sub-directories (note that not all of these will be present in
+every SciTech Software Distribution archive):
+
+SCITECH             ROOT directory (SCITECH is default official name)
+³
+ÃÄÄÄBIN             Useful tools and batch files for library building
+³
+ÃÄÄÄDOC             Documentation files. Each individual product has its own
+³   ÃÄÄÄMGL         separate directory which contains all files specific to
+³   ÃÄÄÄ...         that product.
+³   ÀÄÄÄSVGAKIT
+³
+ÃÄÄÄFONTS           All MGL font files installed here.
+³
+ÃÄÄÄBITMAPS         All MGL bitmap files installed here.
+³
+ÃÄÄÄCURSORS         All MGL mouse cursor files installed here.
+³
+ÃÄÄÄICONS           All MGL icon files installed here.
+³
+ÃÄÄÄEXAMPLES        Any example source code. Separate sub-directories are
+³   ÃÄÄÄMGL         provided for each of the different products.
+³   ÃÄÄÄ...
+³   ÀÄÄÄSVGAKIT
+³
+ÃÄÄÄMANIFEST        List of all files installed for each Distribution
+³
+ÃÄÄÄINCLUDE         All installed header files.
+³
+ÃÄÄÄLIB             All installed library files. 
+³   ÃÄÄÄDOS16       All 16 bit DOS libraries.
+³   ³   ÃÄÄBC3          Borland C++ 3.1
+³   ³   ÃÄÄBC           Borland C++ 4.x
+³   ³   ÃÄÄSC           Symantec C++ 6.x/7.x
+³   ³   ÃÄÄVC           Visual C++ 1.5x
+³   ³   ÀÄÄWC           Watcom C++ 10.x
+³   ÃÄÄÄDOS32       All 32 bit DOS libraries
+³   ³   ÃÄÄBC           Borland C++ 4.x
+³   ³   ÀÄÄWC           Watcom C++ 10.x
+³   ÃÄÄÄWIN16       All 16 bit Windows libraries
+³   ³   ÃÄÄBC           Borland C++ 4.x
+³   ³   ÃÄÄSC           Symantec C++ 6.x/7.x
+³   ³   ÃÄÄVC           Visual C++ 1.5x
+³   ³   ÀÄÄWC           Watcom C++ 10.x
+³   ÃÄÄÄWIN32       All 32 bit Windows libraries
+³   ³   ÃÄÄBC           Borland C++ 4.x
+³   ³   ÃÄÄSC           Symantec C++ 6.x/7.x
+³   ³   ÃÄÄVC           Visual C++ 1.5x
+³   ³   ÀÄÄWC           Watcom C++ 10.x
+³   ÀÄÄÄOS2         All 32 bit OS/2 libraries
+³       ÃÄÄBC           Borland C++ 2.x
+³       ÃÄÄCSET         IBM CSet/2
+³       ÃÄÄHC           Metaware High C++
+³       ÀÄÄWC           Watcom C++ 10.x
+³
+ÀÄÄÄSRC             All source code for building the libraries (if provided).
+    ÃÄÄÄMGL         Each package has a separate directory that contains all
+    ÃÄÄÄ...         of the source code and makefiles for building the library
+    ÀÄÄÄSVGAKIT     and installing it under \SCITECH\LIB.
+
