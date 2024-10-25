@@ -6,4 +6,8 @@ for segea in Segments():
     for funcea in Functions(segea, SegEnd(segea)):
         functionName = GetFunctionName(funcea)
         functionFlags = GetFunctionFlags(funcea)
-        print "{0:0>16b}".format(functionFlags), "%X"%funcea, functionName
+        if functionName.startswith("sub_") and not (functionFlags & FUNC_THUNK):
+            functionName = "Z_" + functionName
+            MakeName(funcea, functionName)
+
+            

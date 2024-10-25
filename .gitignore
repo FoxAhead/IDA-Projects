@@ -1,5 +1,9 @@
 Far Cry 2/
+
 .idea/
+__pycache__/
+*.pyc
+
 *.zip
 *.rar
 *.7z
