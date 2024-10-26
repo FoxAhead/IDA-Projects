@@ -1,3 +1,5 @@
+import idautils
+from idaapi import cvar
 from idc import *
 import dataclasses
 
@@ -21,6 +23,7 @@ class FuncInfo:
     ret: FuncArgument = dataclasses.field(default_factory=FuncArgument)
     arguments: list = dataclasses.field(default_factory=list)
     jaddress: int = 0
+    full_name: str = ''
 
 
 def get_function_info(funcea):
@@ -39,10 +42,12 @@ def get_function_info(funcea):
 
     get_rettype = tinfo.get_rettype()
     ret = FuncArgument(-1, str(get_rettype), '', get_rettype.is_ptr(), get_rettype.get_pointed_object().dstr())
-    name = get_clean_name(get_func_name(funcea))
+    full_name = get_func_name(funcea)
+    name = get_clean_name(full_name)
     if func_is_crt(funcea):
         name = 'Crt_' + name
     func = FuncInfo(funcea, name, function_details.cc & ida_typeinf.CM_CC_MASK, str(tinfo), ret)
+    func.full_name = full_name
 
     for i in range(function_details.size()):
         argument_type = ida_typeinf.print_tinfo('', 0, 0, PRTYPE_1LINE, function_details[i].type, '', '')
@@ -96,3 +101,43 @@ def recreate_tinfo(funcea):
     if ida_typeinf.guess_tinfo(tinfo, funcea):
         ida_typeinf.apply_tinfo(funcea, tinfo, 0)
         print('Recreated 0x%X' % funcea)
+
+
+def get_tinfo_by_ordinal(ordinal):
+    local_typestring = get_local_tinfo(ordinal)
+    if local_typestring:
+        p_type, fields = local_typestring
+        local_tinfo = ida_typeinf.tinfo_t()
+        local_tinfo.deserialize(cvar.idati, p_type, fields)
+        return local_tinfo
+    return None
+
+
+def analyze_crefs(funcs, recreate=False):
+    for func in funcs:
+        # if func.address != 0x004E989A:
+        #    continue
+        # print('0x%X %s'%(func.address, func.name))
+        nj = 0
+        n = 0
+        for ref in idautils.CodeRefsTo(func.address, 1):
+            function_flags = get_func_flags(ref)
+            if function_flags != -1:
+                if function_flags & FUNC_THUNK:
+                    nj = nj + 1
+                    func.jaddress = ref
+                else:
+                    n = n + 1
+            # print("  called from %s(0x%x)0x%x" % (get_func_name(ref), ref, function_flags))
+        if nj == 1 and n > 0 or nj > 1:
+            print("!!!!!")
+        # print(n, nj)
+        if nj == 1:
+            jfunc = get_function_info(func.jaddress)
+            if func.tinfo_str != jfunc.tinfo_str:
+                print('0x%X %s' % (func.address, func.tinfo_str))
+                print('0x%X %s' % (jfunc.address, jfunc.tinfo_str))
+                if recreate:
+                    recreate_tinfo(jfunc.address)
+                print()
+

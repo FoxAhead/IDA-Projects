@@ -2,13 +2,7 @@
 from idautils import *
 from idaapi import *
 from idc import *
-import ida_typeinf
-import ida_nalt
-import ida_kernwin
-import ida_idp
-import re
 import dataclasses
-from typing import List
 import copy
 import lib
 
@@ -175,35 +169,6 @@ def analyze_duplicates(funcs):
         prevfunc = func
 
 
-def analyze_crefs(funcs, recreate=False):
-    for func in funcs:
-        # if func.address != 0x004E989A:
-        #    continue
-        # print('0x%X %s'%(func.address, func.name))
-        nj = 0
-        n = 0
-        for ref in CodeRefsTo(func.address, 1):
-            function_flags = get_func_flags(ref)
-            if function_flags != -1:
-                if function_flags & FUNC_THUNK:
-                    nj = nj + 1
-                    func.jaddress = ref
-                else:
-                    n = n + 1
-            # print("  called from %s(0x%x)0x%x" % (get_func_name(ref), ref, function_flags))
-        if nj == 1 and n > 0 or nj > 1:
-            print("!!!!!")
-        # print(n, nj)
-        if nj == 1:
-            jfunc = lib.get_function_info(func.jaddress)
-            if func.tinfo_str != jfunc.tinfo_str:
-                print('0x%X %s' % (func.address, func.tinfo_str))
-                print('0x%X %s' % (jfunc.address, jfunc.tinfo_str))
-                if recreate:
-                    lib.recreate_tinfo(jfunc.address)
-                print()
-
-
 def get_max_name_length(funcs):
     m = 0
     for func in funcs:
@@ -269,7 +234,7 @@ def main():
 
     # analyze_duplicates(funcs)
 
-    analyze_crefs(funcs, True)
+    lib.analyze_crefs(funcs, True)
 
     i = generate_pascal_declarations(funcs)
 
