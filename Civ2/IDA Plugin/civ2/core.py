@@ -16,8 +16,13 @@ class Civ2Core(object):
         self._hxe_hooks = HxeHooks()
         fname = idc.get_root_filename().upper()
         if "CIV2.540.EXE" in fname:
-            print("Civ2 plugin enabled")
+            print("Civ2 MGE plugin enabled")
             self._hxe_hooks.hook()
+            self._hxe_hooks.mode = 0
+        elif "CIV2TOTX64.EXE" in fname:
+            print("Civ2 ToT plugin enabled")
+            self._hxe_hooks.hook()
+            self._hxe_hooks.mode = 1
         self._register_action("Civ2Plugin:Enable", "Enable")
         self._register_action("Civ2Plugin:Disable", "Disable")
         #self._register_action("Civ2Plugin:Test1", "Test1", "Ctrl+F11")

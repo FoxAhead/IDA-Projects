@@ -7,6 +7,7 @@ from civ2.util import *
 class HxeHooks(Hexrays_Hooks):
     cnt = 0
     ea = 0
+    mode = 0
 
     def flowchart(self, fc):
         # BEGIN OF OPTIMIZATIONS
@@ -83,5 +84,5 @@ class HxeHooks(Hexrays_Hooks):
         return 0
 
     def func_printed(self, cfunc):
-        opt5.run(cfunc)
+        opt5.run(cfunc, self.mode)
         return 0

@@ -18,16 +18,18 @@ import os
 from civ2.opts.statictxt import *
 from civ2.util import *
 
+ADDRESSES = [[0x00401BF4, 0x00403995, 0x00403387], [0x00409520, 0x0048F30B, 0x0042095E]]
 
-def run(cfunc):
+
+def run(cfunc, mode=0):
     if is_func_lib(cfunc.entry_ea):
         return 0
     # cfunc.del_orphan_cmts()
     # cfunc.save_user_cmts()
-    vstr = Visitor5(cfunc)
+    vstr = Visitor5(cfunc, mode)
     vstr.apply_to(cfunc.body, None)
     if vstr.ea_lst:
-        print_to_log("Optimization 5 static comments: %s" % list(map(hex, vstr.ea_lst)))
+        print_to_log("Optimization 5 (%d) static comments: %s" % (mode, list(map(hex, vstr.ea_lst))))
     # cfunc.del_orphan_cmts()
     # cfunc.save_user_cmts()
     # vstr.apply_to_exprs(cfunc.body, None)
@@ -36,8 +38,9 @@ def run(cfunc):
 class Visitor5(cfunc_parentee_t):
     ea_lst = []
 
-    def __init__(self, cfunc):
+    def __init__(self, cfunc, mode):
         self.ea_lst.clear()
+        self.mode = mode
         cfunc_parentee_t.__init__(self, cfunc)
 
     # def visit_expr(self, expr):
@@ -46,24 +49,24 @@ class Visitor5(cfunc_parentee_t):
 
     def visit_expr(self, expr):
         if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.a:
-            if expr.x.obj_ea == 0x00401BF4:
+            if expr.x.obj_ea == ADDRESSES[self.mode][0]:
                 if expr.a[0].op == cot_num:
                     # print("%.8X: %s" % (expr.ea, self._get_expr_name(expr)))
                     val = expr.a[0].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
                     # print("%.8X: %s" % (tl.ea, cmt))
                 # else:
                 #    self._find_and_comment_arg_var(expr)
-            elif expr.x.obj_ea == 0x00403995:
+            elif expr.x.obj_ea == ADDRESSES[self.mode][1]:
                 if expr.a[1].op == cot_num:
                     val = expr.a[1].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[val])
-            elif expr.x.obj_ea == 0x00403387:
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
+            elif expr.x.obj_ea == ADDRESSES[self.mode][2]:
                 if expr.a[0].y and expr.a[0].y.op == idaapi.cot_num:
                     val = expr.a[0].y.get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
 
-            #elif expr.x.obj_ea == 0x00402C48:  # j_Q_CityHasImprovement_sub_43D20A
+            # elif expr.x.obj_ea == 0x00402C48:  # j_Q_CityHasImprovement_sub_43D20A
             #    if expr.a[1].op == cot_num:
             #        val = expr.a[1].get_const_value()
             #        self.create_cmt(self._get_parent_expr_ea(expr), val, st.improve[val], ITP_BLOCK1)
@@ -92,11 +95,11 @@ class Visitor5(cfunc_parentee_t):
         tl.itp = itp1
         self.func.set_user_cmt(tl, cmt)
         self.func.save_user_cmts()
-        #return
+        # return
         commentSet = False
-        #since the public documentation on IDAs APIs is crap and I don't know any other way, we have to brute force the item preciser
-        #we do this by setting the comments with different idaapi.ITP_* types until our comment does not create an orphaned comment
-        #for itp in range(idaapi.ITP_SEMI, idaapi.ITP_COLON):
+        # since the public documentation on IDAs APIs is crap and I don't know any other way, we have to brute force the item preciser
+        # we do this by setting the comments with different idaapi.ITP_* types until our comment does not create an orphaned comment
+        # for itp in range(idaapi.ITP_SEMI, idaapi.ITP_COLON):
         #    tl.itp = itp
         #    self.func.set_user_cmt(tl, cmt)
         #    self.func.save_user_cmts()
