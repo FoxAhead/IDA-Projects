@@ -22,6 +22,16 @@ class FuncParam:
     type: str = ''
 
 
+@dataclasses.dataclass
+class PascalDeclaration:
+    name: str = ''
+    params: str = ''
+    result: str = ''
+    cc: int = 0
+    address: int = 0
+    jaddress: int = 0
+
+
 def convert_custom_type(type_name):
     if lib.is_custom_type(type_name):
         return type_name[:1] + type_name[2:]
@@ -80,6 +90,7 @@ def convert_argument(argument):
             argument.name = argument.name[1:]
         argument.name = argument.name[0].upper() + argument.name[1:]
     argument.custom_type = lib.is_custom_type(argument.type)
+    argument.ptr_by_asterisk = argument.type.endswith('*')
     new_type = convert_type(argument.type)
     type_changed = (argument.type != new_type)
     argument.type = convert_custom_type(new_type)
@@ -90,6 +101,8 @@ def convert_argument(argument):
                 argument.type = 'PChar'
             elif argument.pointed_type == 'Byte':
                 argument.type = 'PByte'
+            elif argument.pointed_type == 'Word':
+                argument.type = 'PWord'
             elif argument.pointed_type == 'TRect':
                 argument.type = 'PRect'
             elif argument.pointed_type == 'TSmallRect':
@@ -116,10 +129,10 @@ def convert_func(funcc):
 
 
 def argument_is_var(argument):
-    return argument.is_ptr and argument.pointed_type in ['Cardinal', 'Integer', 'Byte']
+    return argument.is_ptr and argument.ptr_by_asterisk and argument.pointed_type in ['Cardinal', 'Integer', 'Byte']
 
 
-def pascal_declaration_intf(funcp):
+def get_pascal_declaration(funcp):
     cc = 'stdcall' if funcp.cc in [CM_CC_THISCALL, CM_CC_STDCALL] else 'cdecl'
     params = []
     param = None
@@ -141,17 +154,37 @@ def pascal_declaration_intf(funcp):
 
     if params_str := '; '.join(param_strs):
         params_str = '(' + params_str + ')'
-    if funcp.ret.type == 'void':
-        s = '%s: procedure%s; %s;' % (funcp.name, params_str, cc)
+
+    pd = PascalDeclaration()
+    pd.name = funcp.name
+    pd.params = params_str
+    pd.result = '' if funcp.ret.type == 'void' else funcp.ret.type
+    pd.cc = funcp.cc
+    pd.address = funcp.address
+    pd.jaddress = funcp.jaddress
+    return pd
+
+
+def pascal_declaration_intf(pd, mode=0):
+    cc = 'stdcall' if pd.cc in [CM_CC_THISCALL, CM_CC_STDCALL] else 'cdecl'
+    if mode == 0:
+        if pd.result:
+            s = '%s: function%s: %s; %s;' % (pd.name, pd.params, pd.result, cc)
+        else:
+            s = '%s: procedure%s; %s;' % (pd.name, pd.params, cc)
+        return s
     else:
-        s = '%s: function%s: %s; %s;' % (funcp.name, params_str, funcp.ret.type, cc)
-    return s
+        if pd.result:
+            s = 'function %s%s: %s; %s;' % (pd.name, pd.params, pd.result, cc)
+        else:
+            s = 'procedure %s%s; %s;' % (pd.name, pd.params, cc)
+        return s
 
 
-def pascal_declaration_impl(funcp, m=0):
-    cast = 'PThisCall' if funcp.cc == CM_CC_THISCALL else 'Pointer'
-    address = funcp.jaddress if funcp.jaddress else funcp.address
-    s = '@%s := %s($%08X);' % (funcp.name.ljust(m), cast, address)
+def pascal_declaration_impl(pd, m=0):
+    cast = 'PThisCall' if pd.cc == CM_CC_THISCALL else 'Pointer'
+    address = pd.jaddress if pd.jaddress else pd.address
+    s = '@%s := %s($%08X);' % (pd.name.ljust(m), cast, address)
     return s
 
 
@@ -169,14 +202,6 @@ def analyze_duplicates(funcs):
         prevfunc = func
 
 
-def get_max_name_length(funcs):
-    m = 0
-    for func in funcs:
-        if len(func.name) > m:
-            m = len(func.name)
-    return m
-
-
 def get_whitelist_eas(file_name):
     eas = []
     with open(file_name, 'r') as file:
@@ -186,35 +211,30 @@ def get_whitelist_eas(file_name):
     return eas
 
 
-def generate_pascal_declarations(funcs):
+def generate_pascal_declarations(funcs, internal=False):
     eas = get_whitelist_eas('%s' % FILE_NAME_WHITE_LIST)
-    i = 0
-    m = get_max_name_length(funcs)
+    pds = []
+    for func in funcs:
+        if func.address in eas or func.jaddress in eas:
+            funcp = convert_func(func)
+            pd = get_pascal_declaration(funcp)
+            pds.append(pd)
+            if internal and pd.jaddress:
+                _pd = copy.deepcopy(pd)
+                _pd.name = '_' + _pd.name
+                _pd.jaddress = 0
+                pds.append(_pd)
+
+    m = max(len(func.name) for func in funcs)
     with open('%s' % FILE_NAME_DECLARATION, 'w') as file1, open('%s' % FILE_NAME_IMPLEMENTATION, 'w') as file2:
         s = '// This file is generated automatically. Do not change it.\n'
         file1.write(s)
         file2.write(s)
-        for func in funcs:
-            # if func.address not in [0x46AD85]:
-            #    continue
-            if func.address in eas or func.jaddress in eas:
-                i = i + 1
-                funcp = convert_func(func)
-                file1.write(pascal_declaration_intf(funcp) + '\n')
-                file2.write(pascal_declaration_impl(funcp, m) + '\n')
+        for pd in pds:
+            file1.write(pascal_declaration_intf(pd) + '\n')
+            file2.write(pascal_declaration_impl(pd, m) + '\n')
 
-                # print('@%s := Pointer(0x%X);'%(func.name, func.address))
-                # print('0x%X'%funcp.address)
-                # print(funcp.name)
-                # print(func.tinfo_str)
-                # print(func.ret)
-                # print(func.arguments)
-                # print(funcp.ret)
-                # print(funcp.arguments)
-                # print('0x%X'%funcp.cc)
-                # print(pascal_declaration(funcp))
-                # print()
-    return i
+    return len(pds)
 
 
 def need_that_func(ea):

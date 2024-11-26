@@ -24,7 +24,7 @@ class Civ2Plugin(ida_idaapi.plugin_t):
 
     def init(self):
         self.core = civ2.core.Civ2Core()
-        return ida_idaapi.PLUGIN_KEEP
+        return ida_idaapi.PLUGIN_KEEP if self.core.installed else ida_idaapi.PLUGIN_SKIP
 
     def term(self):
         self.core.unload()

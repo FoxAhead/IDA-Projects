@@ -12,6 +12,7 @@ class FuncArgument:
     is_ptr: bool = False
     pointed_type: str = ''
     custom_type: bool = False
+    ptr_by_asterisk: bool = False
 
 
 @dataclasses.dataclass

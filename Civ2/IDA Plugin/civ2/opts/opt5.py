@@ -55,6 +55,10 @@ class Visitor5(cfunc_parentee_t):
                     val = expr.a[0].get_const_value()
                     self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
                     # print("%.8X: %s" % (tl.ea, cmt))
+                elif expr.a[0].op == cot_add:
+                    if expr.a[0].y and expr.a[0].y.op == cot_num:
+                        val = expr.a[0].y.get_const_value()
+                        self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
                 # else:
                 #    self._find_and_comment_arg_var(expr)
             elif expr.x.obj_ea == ADDRESSES[self.mode][1]:
