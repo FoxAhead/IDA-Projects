@@ -15,13 +15,14 @@ test:
 import idaapi
 from ida_hexrays import *
 import os
-from civ2.opts.statictxt import *
+import civ2.opts.statictxt
 from civ2.util import *
 
-ADDRESSES = [[0x00401BF4, 0x00403995, 0x00403387], [0x00409520, 0x0048F30B, 0x0042095E]]
+ADDRESSES = [[0x00401BF4, 0x00403995, 0x00403387, 0x004023A1], [0x00409520, 0x0048F30B, 0x0042095E, 0x00000000]]
 
 
 def run(cfunc, mode=0):
+    civ2.opts.statictxt.load_static_texts()
     if is_func_lib(cfunc.entry_ea):
         return 0
     # cfunc.del_orphan_cmts()
@@ -53,22 +54,26 @@ class Visitor5(cfunc_parentee_t):
                 if expr.a[0].op == cot_num:
                     # print("%.8X: %s" % (expr.ea, self._get_expr_name(expr)))
                     val = expr.a[0].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
                     # print("%.8X: %s" % (tl.ea, cmt))
                 elif expr.a[0].op == cot_add:
                     if expr.a[0].y and expr.a[0].y.op == cot_num:
                         val = expr.a[0].y.get_const_value()
-                        self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
+                        self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
                 # else:
                 #    self._find_and_comment_arg_var(expr)
             elif expr.x.obj_ea == ADDRESSES[self.mode][1]:
                 if expr.a[1].op == cot_num:
                     val = expr.a[1].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
             elif expr.x.obj_ea == ADDRESSES[self.mode][2]:
                 if expr.a[0].y and expr.a[0].y.op == idaapi.cot_num:
                     val = expr.a[0].y.get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, st.labels[self.mode][val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
+            elif expr.x.obj_ea == ADDRESSES[self.mode][3]:
+                if expr.a[1].op == cot_num:
+                    val = expr.a[1].get_const_value()
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
 
             # elif expr.x.obj_ea == 0x00402C48:  # j_Q_CityHasImprovement_sub_43D20A
             #    if expr.a[1].op == cot_num:
@@ -89,7 +94,7 @@ class Visitor5(cfunc_parentee_t):
         if vstr.found_expr_var:
             (vstr := Visitor5b(self.func, vstr.found_expr_var)).apply_to(self.func.body, None)
             for ea, val in vstr.found_places:
-                self.create_cmt(ea, val, st.labels[val])
+                self.create_cmt(ea, val, civ2.opts.statictxt.st.labels[val])
 
     def create_cmt(self, ea, val, text, itp1=ITP_SEMI):
         self.ea_lst.append(ea)

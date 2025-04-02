@@ -24,7 +24,7 @@ class AscendancyPlugin(ida_idaapi.plugin_t):
 
     def init(self):
         self.core = ascendancy.core.AscendancyCore()
-        return ida_idaapi.PLUGIN_KEEP
+        return ida_idaapi.PLUGIN_KEEP if self.core.installed else ida_idaapi.PLUGIN_SKIP
 
     def term(self):
         self.core.unload()

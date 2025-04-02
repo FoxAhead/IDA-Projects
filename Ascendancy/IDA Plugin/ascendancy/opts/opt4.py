@@ -22,8 +22,8 @@ from ascendancy.util import *
 @dataclass
 class ForContext:
     mba: mba_t
-    blk: mblock_t = None
-    insn: minsn_t = None
+    blk: mblock_t = None  # Block cursor
+    insn: minsn_t = None  # Instruction cursor
     blk0: mblock_t = None
     blk1: mblock_t = None
     blk2: mblock_t = None
@@ -48,17 +48,19 @@ class ForContext:
 
 def run(mba):
     if is_func_lib(mba.entry_ea):
-        return 0
+        return True
     r12 = 0
     fix = Fix4()
     fix.run(mba)
     r12 = fix.err_code
 
-    return r12
+    return r12 == MERR_OK
 
 
 class Fix4(object):
-    err_code = MERR_OK
+
+    def __init__(self):
+        self.err_code = MERR_OK
 
     def run(self, mba):
         ctx = ForContext(mba)

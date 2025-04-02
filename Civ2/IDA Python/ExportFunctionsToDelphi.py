@@ -226,6 +226,7 @@ def generate_pascal_declarations(funcs, internal=False):
                 pds.append(_pd)
 
     m = max(len(func.name) for func in funcs)
+    thiscalls = 0
     with open('%s' % FILE_NAME_DECLARATION, 'w') as file1, open('%s' % FILE_NAME_IMPLEMENTATION, 'w') as file2:
         s = '// This file is generated automatically. Do not change it.\n'
         file1.write(s)
@@ -233,8 +234,10 @@ def generate_pascal_declarations(funcs, internal=False):
         for pd in pds:
             file1.write(pascal_declaration_intf(pd) + '\n')
             file2.write(pascal_declaration_impl(pd, m) + '\n')
+            if pd.cc == CM_CC_THISCALL:
+                thiscalls = thiscalls + 1
 
-    return len(pds)
+    return len(pds), thiscalls
 
 
 def need_that_func(ea):
@@ -256,9 +259,9 @@ def main():
 
     lib.analyze_crefs(funcs, True)
 
-    i = generate_pascal_declarations(funcs)
+    i, j = generate_pascal_declarations(funcs)
 
-    print('Done. Exported %d functions out of %d.' % (i, len(funcs)))
+    print('Done. Exported %d functions out of %d. (%d ThisCalls)' % (i, len(funcs), j))
 
 
 if __name__ == '__main__':

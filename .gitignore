@@ -9,3 +9,4 @@ __pycache__/
 *.7z
 *.idb
 *.idb.6.8
+*.dmp

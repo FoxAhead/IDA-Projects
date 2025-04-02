@@ -1,9 +1,8 @@
 from venv import logger
-from idautils import *
-from idaapi import *
-import lib
-
-require("lib")
+import ida_typeinf
+import idc
+import idaapi
+from fxtools import lib
 
 
 def get_ordinal(tinfo):
@@ -29,11 +28,11 @@ def get_ordinal(tinfo):
 def get_members_ordinals(tinfo):
     ordinals = []
     if tinfo.is_udt():
-        udt_data = udt_type_data_t()
+        udt_data = ida_typeinf.udt_type_data_t()
         tinfo.get_udt_details(udt_data)
         for udt_member in udt_data:
             if udt_member.type.is_array():
-                array_data = array_type_data_t()
+                array_data = ida_typeinf.array_type_data_t()
                 udt_member.type.get_array_details(array_data)
                 print('%04X' % (udt_member.offset // 8), udt_member.name, udt_member.type, array_data.elem_type,
                       array_data.nelems, sep=', ')
@@ -45,15 +44,11 @@ def get_members_ordinals(tinfo):
     return ordinals
 
 
-def main():
-    for ordinal in range(1, idc.get_ordinal_qty()):
-        name = idc.get_numbered_type_name(ordinal)
-        if name and name.startswith('T_'):
-            print(name)
-            local_tinfo = lib.get_tinfo_by_ordinal(ordinal)
-            members_ordinals = get_members_ordinals(local_tinfo)
-            # print(members_ordinals)
-
-
-if __name__ == "__main__":
-    main()
+def get_tinfo_by_ordinal(ordinal):
+    local_typestring = idc.get_local_tinfo(ordinal)
+    if local_typestring:
+        p_type, fields = local_typestring
+        local_tinfo = ida_typeinf.tinfo_t()
+        local_tinfo.deserialize(idaapi.cvar.idati, p_type, fields)
+        return local_tinfo
+    return None

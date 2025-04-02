@@ -74,3 +74,32 @@ https://habr.com/ru/articles/509148/
 ...
 Если не добавить флаг, то функции в til-е по умолчанию будут с таким именованием: _funcName,
 а после применения сигнатур у нас же нет подчёркиваний, поэтому будет просто — funcName.
+
+
+##################################################
+
+DEBUG
+
+Добавить в файл .VMX:
+
+#start the VMWare gdb listener on localhost
+debugStub.listen.guest32 = "TRUE"
+
+Загрузить виртальную машину
+
+Предварительно подготовить копию файла .IDB для отладки. В нём переместить сегменты
+00010000-00083000 -> 00474000-004E7000
+00090000-00138220 -> 004E7000-0058F220
+Segments. Move segment (fix up).
+
+Debugger: Remote GDB debugger
+localhost:8832
+
+
+##################################################
+
+Термины
+
+Haze
+256-byte table registered with the VFX_map_lookaside() function
+Color translate ("haze") table used by mapping primitives

@@ -49,4 +49,13 @@ class StaticTexts(object):
                     i += 1
 
 
-st = StaticTexts(False)
+st = None
+
+
+def load_static_texts():
+    global st
+    if st is None:
+        st = StaticTexts(False)
+
+# if __name__ == '__main__':
+#    st = StaticTexts(False)

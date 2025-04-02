@@ -1,10 +1,28 @@
 import ida_kernwin
-from ida_hexrays import Hexrays_Hooks
+import ida_hexrays
 from ascendancy.opts import *
 from ascendancy.util import *
 
 
-class HxeHooks(Hexrays_Hooks):
+class HxePermHooks(ida_hexrays.Hexrays_Hooks):
+
+    def __init__(self, actions):
+        self.actions = actions
+        ida_hexrays.Hexrays_Hooks.__init__(self)
+
+    def populating_popup(self, widget, popup_handle, vu):
+        for name, data in self.actions.items():
+            label, shortcut = data
+            ida_kernwin.attach_action_to_popup(
+                vu.ct,
+                popup_handle,
+                name,
+                "AscendancyPlugin/"
+            )
+        return 0
+
+
+class HxeHooks(ida_hexrays.Hexrays_Hooks):
     cnt = 0
     ea = 0
 
@@ -28,6 +46,7 @@ class HxeHooks(Hexrays_Hooks):
 
     def microcode(self, mba):
         self.ea = mba.entry_ea
+        opt14.run(mba)
         opt3.run(mba)
         return 0
 
@@ -55,26 +74,24 @@ class HxeHooks(Hexrays_Hooks):
         return 0
 
     def glbopt(self, mba):
-        r1 = 0
-        # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        r1 = opt4.run(mba)
-        # print("GLBOPT END")
-        return r1
-
-    def populating_popup(self, widget, popup, vu):
-        ida_kernwin.attach_action_to_popup(
-            vu.ct,
-            None,
-            "AscendancyPlugin:Enable",
-            "AscendancyPlugin/"
-        )
-        ida_kernwin.attach_action_to_popup(
-            vu.ct,
-            None,
-            "AscendancyPlugin:Disable",
-            "AscendancyPlugin/"
-        )
-        return 0
+        #print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        r = [True]  # -> MERR_OK
+        print_glbopt_block(mba, [41, 42], 0, False)
+        r.append(opt4.run(mba))
+        print_glbopt_block(mba, [41, 42], 4, r[-1])
+        r.append(opt10.run(mba))
+        print_glbopt_block(mba, [41, 42], 10, r[-1])
+        r.append(opt11.run(mba))
+        print_glbopt_block(mba, [41, 42], 11, r[-1])
+        r.append(opt12.run(mba))
+        print_glbopt_block(mba, [41, 42], 12, r[-1])
+        r.append(opt13.run(mba))
+        print_glbopt_block(mba, [41, 42], 13, r[-1])
+        if all(r):
+            r.append(opt15.run(mba))
+        #print("GLBOPT END")
+        r = all(r)
+        return MERR_OK if r else MERR_LOOP
 
     def print_func(self, cfunc, printer):
         # Note: we can't print/str()-ify 'cfunc' here,
@@ -83,5 +100,16 @@ class HxeHooks(Hexrays_Hooks):
         return 0
 
     def func_printed(self, cfunc):
+        #opt15.run(cfunc)
         opt5.run(cfunc)
         return 0
+
+
+def print_glbopt_block(mba, serials, opt, r):
+    return
+    if r:
+        return
+    print("After %d: %s" % (opt, r))
+    for serial in serials:
+        blk = mba.get_mblock(serial)
+        print_blk(blk)

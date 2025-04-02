@@ -13,8 +13,8 @@ test:
 
 """
 
-from ida_hexrays import *
 from ascendancy.util import *
+
 
 def run(mba):
     if is_func_lib(mba.entry_ea):
@@ -27,11 +27,15 @@ def run(mba):
 
 
 class Visitor6(minsn_visitor_t):
-    cnt = 0
+
+    def __init__(self):
+        minsn_visitor_t.__init__(self)
+        self.cnt = 0
+
     def visit_minsn(self):
         insn = self.curins
         if insn.opcode == m_call and insn.l.t == mop_v and insn.l.g == 0x76E98:
-            print_to_log("Optimization 6 - Removed %.8X: %s" % (insn.ea, insn.dstr()))
+            print_to_log("Optimization 6 - Removed %s" % text_insn(insn))
             self.blk.make_nop(insn)
             self.cnt = self.cnt + 1
         return 0

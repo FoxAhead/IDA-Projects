@@ -1,5 +1,5 @@
 - Highlight city on the map which window is opened
-- Music from folder as MP3 or FLAC
++ Music from folder as MP3 or FLAC
 - Video scaling(x2, x3...)
 - Play movies encoded in H264/H265 (for AI upscaled versions)
 + CityViewWindow: Center image on the screen wider than 1280
@@ -20,6 +20,7 @@
 
 + Sort supported units list
 + Reset Engineer's order after passing its work to coworker
++ Put Engineer on top of the stack after accumulating work counter from coworker
 + Don't break unit movement on ZOC
 + Set focus to city window opened from F1 or F4
 + Radios hotkeys
@@ -38,7 +39,7 @@
 + Include fix for mk.dll (229.gif, 250.gif) and pv.dll (105.gif)
 - Option for removing borders and titles for main three windows (map, minimap, statusbar)
 - Defense Minister Advisor: more info, number of units
-- Would a profit calculation display be feasible in the f5 Supply and Demand screen, for say, the currently active Freight? (Buster's Uncle)
++ Would a profit calculation display be feasible in the f5 Supply and Demand screen, for say, the currently active Freight? (Buster's Uncle)
 - Map panning with mouse dragging over minimap
 + TaxWindow: more info, show turns to complete research
 + CityWindow: Mass change specialists (with Shift OR Ctrl)
@@ -59,9 +60,11 @@
 - Countdown on autoclosing popups
 - Organize some stack to track chain of opened windows and set focus to previous when closing current one
 - MapWindow: With nothing selected holding B shows city diamond area
-- Advisors: allow to press Shift+T to call TaxWindow, and F1-F5 to call other Advisors
++ Advisors: allow to press Shift+T to call TaxWindow, and F1-F5 to call other Advisors
 - Civilopedia: Correct Barracks maintenance costs after the discovery of Gunpowder and Mobile Warfare
-- BUG: CityWindow: after Change or Buy dialog and exiting CityWindow Advisors not updated. Because focus is on the map. (no sound when exiting city)
++ BUG: CityWindow: after Change or Buy dialog and exiting CityWindow Advisors not updated. Because focus is on the map. (no sound when exiting city)
+- ScienceAdvisor: move research cost to the right
+- Remember each window position. Advisors, Tax.
 
 - Mods support with options:
 - extend COSMIC limits caps
