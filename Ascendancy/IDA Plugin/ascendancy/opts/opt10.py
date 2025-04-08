@@ -28,31 +28,22 @@ description:
         1AE54
         2106C - Nested loops
         5A294 - Try to fix end condition
-        1E150 - TODO Why doesn't work?
+        1E150 -
+        3EBDC - Was problem with stack variable
 
 """
 import time
 
+from ascendancy.opts import GlbOpt
 from ascendancy.util import *
 
 
-def run(mba):
-    if is_func_lib(mba.entry_ea):
-        return True
-    # t1 = time.time()
-    LoopManager.init(mba)
-    # print("LoopManager.init = %.3f" % (time.time() - t1))
-    # print(*LoopManager.loops, sep="\n")
-    # for _, group in LoopManager.groups.items():
-    #    print(group.all_serials(), group.begin(), group.end())
-    return Fix10a(mba).run()
+class Opt(GlbOpt):
 
+    def __init__(self):
+        super().__init__(10, "Optimize do while loops")
 
-class Fix10a(object):
-
-    def __init__(self, mba):
-        self.mba = mba
-        self.err_code = MERR_OK
+    def _init(self):
         self.add_insn = None
         self.add_op = None
         self.add_blk = None
@@ -60,12 +51,11 @@ class Fix10a(object):
         self.mult = 0
         self.loops = {}
 
-    def run(self):
+    def _run(self):
         self.iterate_groups()
         if self.err_code == MERR_OK:
             self.optimize_jumps()
         # print_mba(self.mba)
-        return self.err_code == MERR_OK
 
     def optimize_jumps(self):
         self.mba.for_all_topinsns(vstr := Visitor10b())
@@ -80,7 +70,7 @@ class Fix10a(object):
 
     def group_needs_optimization(self, group):
         # t1 = time.time()
-        if group.begin() is not None and group.end() is not None:
+        if group.begin is not None and group.end is not None:
             #if d := find_single_add_reg_insn_in_blocks(group.all_loops_blocks(self.mba)):
             if d := find_single_add_var_insn_in_blocks(group.all_loops_blocks(self.mba)):
                 insn = d["insn"]
@@ -105,7 +95,7 @@ class Fix10a(object):
 
     def optimize_group(self, group):
         # t1 = time.time()
-        print_to_log("Optimization 10 - optimize_group (%s)" % group.entry)
+        self.print_to_log("  Group: %s %s" % (group, group.all_serials))
         # print("    Optimize_loop %s" % loop)
         # return
         size = self.add_insn.l.size
@@ -121,15 +111,23 @@ class Fix10a(object):
         # Insert kregc = 0
         insnn = InsnBuilder(ea, m_mov).n(0).r(kregc).insn()
         prev_blk.insert_into_block(insnn, prev_insn)
-        print_to_log("  Insert: %s" % text_insn(insnn, prev_blk))
+        #print("  Insert: %s" % text_insn(insnn, prev_blk))
+        self.print_to_log("    Insert: %s" % text_insn(insnn, prev_blk))
         # Insert kreg0 = add_reg into new block
         if self.add_op.t == mop_r:
             insnn = InsnBuilder(ea, m_mov, size).r(self.add_op.r).r(kreg0).insn()
         else:
             insnn = InsnBuilder(ea, m_mov, size).S(self.mba, self.add_op.s.off).r(kreg0).insn()
         prev_blk.insert_into_block(insnn, prev_insn)
-        print_to_log("  Insert: %s" % text_insn(insnn, prev_blk))
-        prev_blk.mark_lists_dirty()
+        #print("  Insert: %s" % text_insn(insnn, prev_blk))
+        self.print_to_log("    Insert: %s" % text_insn(insnn, prev_blk))
+        self.mark_dirty(prev_blk)
+        try:
+            self.mba.verify(True)
+        except RuntimeError as e:
+            print("Error in optimize_group1: {0}".format(e))
+            print_mba(self.mba)
+            raise e
         # Iterate over instructions in loop
         # end_ea = loop.blocks[-1].tail.ea
         for blk in group.all_loops_blocks(self.mba):
@@ -154,11 +152,16 @@ class Fix10a(object):
                             insnn2 = InsnBuilder(insn.ea, m_add).i(insnn1).n(self.mult).insn()
                         # kreg0 + insnn2
                         insnn3 = InsnBuilder(insn.ea, m_add).r(kreg0).i(insnn2).insn()
+                        #if self.add_op.t == mop_S and blk.serial in {55}:
+                        #    pass
+                        #else:
+                        #print("  Changing: %s" % text_insn(insn, blk))
                         op["op"].create_from_insn(insnn3)
+                        #print("  Changed: %s" % text_insn(insn, blk))
                         changed = True
                 if changed:
-                    print_to_log("  Change: %s" % text_insn(insn, blk))
-                    blk.mark_lists_dirty()
+                    self.print_to_log("    Change: %s" % text_insn(insn, blk))
+                    self.mark_dirty(blk)
                 insn = insn.next
         # Now add kregc = kregc + 1
         # blk = loop.blocks[-1]
@@ -167,19 +170,18 @@ class Fix10a(object):
         # after_insn = self.add_insn
         insnn = InsnBuilder(after_insn.ea, m_add).r(kregc).n(1).r(kregc).insn()
         blk.insert_into_block(insnn, after_insn)
-        print_to_log("  Insert: %s" % text_insn(insnn, blk))
+        #print_to_log("  Insert: %s" % text_insn(insnn, blk))
+        self.print_to_log("    Move  : %s to %s" % (hex_addr(self.add_insn.ea), text_insn(insnn, blk)))
         # And erase add_insn
-        print_to_log("  NOP:    %s" % text_insn(self.add_insn, blk))
+        #print_to_log("  NOP:    %s" % text_insn(self.add_insn, blk))
         blk.make_nop(self.add_insn)
         # self.add_insn.r.nnn.update_value(0)
-
-        blk.mark_lists_dirty()
+        self.mark_dirty(blk)
         # print_mba(self.mba)
-        self.err_code = MERR_LOOP
         # print("optimize_group = %.3f" % (time.time() - t1))
 
     def try_optimize_end_condition(self, group):
-        serial = group.end()
+        serial = group.end
         blk = self.mba.get_mblock(serial)
         j_insn = blk.tail
         if is_insn_j(j_insn) and j_insn.r.t in {mop_r, mop_S}:
@@ -198,8 +200,8 @@ class Fix10a(object):
                 insnn = minsn_t(insn)
                 insnn.l.make_reg(self.kreg0, size)
                 j_insn.r.create_from_insn(insnn)
-                print_to_log("  Optimize end conditions: %s" % text_insn(j_insn))
-                blk.mark_lists_dirty()
+                self.print_to_log("  Optimize end conditions: %s" % text_insn(j_insn))
+                self.mark_dirty(blk)
 
 
 class Visitor10a(mlist_mop_visitor_t):
@@ -210,7 +212,7 @@ class Visitor10a(mlist_mop_visitor_t):
         self.ops = []
 
     def visit_mop(self, op):
-        if op.t == mop_r and op.size == self.size:
+        if op.t in {mop_r, mop_S} and op.size == self.size:
             self.ops.append({"op": op, "topins": self.topins})
         return 0
 
@@ -275,38 +277,12 @@ class Visitor10b(minsn_visitor_t):
             self.err_code = MERR_LOOP
 
 
-def insn_is_add_reg(insn):
-    """
-    add    eax.4, #0xD.4, eax.4
-    """
-    return insn.opcode == m_add and insn.l.is_reg() and insn.r.t == mop_n and insn.d.is_reg() and insn.l.r == insn.d.r and not insn.l.is_kreg()
-
-
-def find_single_add_reg_insn_in_blocks(blocks):
-    d = {}
-    for blk in blocks:
-        insn = blk.head
-        while insn:
-            if insn_is_add_reg(insn) and insn.r.unsigned_value() > 1:
-                reg = insn.l.r
-                if reg not in d:
-                    d[reg] = []
-                d[reg].append({"insn": insn, "blk": blk})
-            insn = insn.next
-    for reg, insns in d.items():
-        if len(insns) == 1:
-            return insns[0]
-
-
 def insn_is_add_var(insn):
     """
     add    var, #0xD.4, var
     """
     if insn.opcode == m_add and insn.r.t == mop_n and not insn.l.is_kreg():
-        if insn.l.t == mop_r and insn.d.t == mop_r:
-            return insn.l.r == insn.d.r
-        elif insn.l.t == mop_S and insn.d.t == mop_S:
-            return insn.l.s.off == insn.d.s.off
+        return insn.l.t in {mop_r, mop_S} and insn.l == insn.d
     return False
 
 

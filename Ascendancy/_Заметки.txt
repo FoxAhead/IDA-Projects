@@ -103,3 +103,30 @@ localhost:8832
 Haze
 256-byte table registered with the VFX_map_lookaside() function
 Color translate ("haze") table used by mapping primitives
+
+
+##################################################
+
+Чтобы декомпилятор даже при все оптимизациях не генерировал бред типа:
+      if ( ((1 << V_RaceIndex) & *((char *)&V_ResTree.currentProject[0xFFFFF17E] + 0x4B * j)) != 0 )
+вместо нормального:
+      if ( ((1 << V_RaceIndex) & V_ResTree.techs[j].knownToRace) != 0 )
+
+помогло отделение currentProject в подструктуру:
+
+struct __attribute__((packed)) T_ResCurrent
+{
+  UWORD project[7];
+  UWORD progress[7];
+};
+
+struct __attribute__((packed)) T_ResTree
+{
+  UWORD num;
+  T_Tech techs[100];
+  T_ResCurrent current;
+  int b;
+  int allTechForShipReported;
+};
+
+

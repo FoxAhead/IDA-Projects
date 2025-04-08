@@ -48,6 +48,7 @@ tests:
     143C9 (sar 24)
     1E19F (long distance between SAR and eoff at 1E172)
     34ED1
+    47DD5
 
 """
 
@@ -62,34 +63,12 @@ def run(mba):
 
 
 class Visitor3b(minsn_visitor_t):
-    insns1 = []
-    insns2 = []
-    mode = 0
 
-    def _check_insn1(self, insn):
-        # Now check uppper instructions in the block
-        while insn:
-            # print("_check_insn1: %s" % text_insn(insn))
-            if self.analize_upper_insns(insn, self.insns1):
-                return True
-            elif self.is_op_modified_here(self.op, self.insns1):
-                return False
-            elif len(self.insns1) > 0:
-                insn = self.insns1[-1].prev
-            else:
-                return False
-
-    def _check_insn2(self, insn):
-        # Find the instructions group with SAR
-        if insn and insn.opcode == m_sar:
-            if collect_insns_up(insn, self.insns2) == 3:
-                insn0, insn1, insn2 = self.insns2
-                if insn1.opcode == m_cfshr and insn1.l == insn0.l and insn1.r == insn0.r:
-                    if insn2.opcode == m_mov and insn2.l.is_constant() and insn2.d == insn0.r:
-                        self.val2 = insn2.l.unsigned_value()
-                        if self.val2 in (16, 24):
-                            self.op = insn0.l
-                            return True
+    def __init__(self):
+        super().__init__()
+        self.insns1 = []  # Group with pattern 1
+        self.insns2 = []  # Group with pattern 2
+        self.mode = 0
 
     def visit_minsn(self):
         if self._check_insn2(self.curins):
@@ -119,6 +98,31 @@ class Visitor3b(minsn_visitor_t):
                 self.blk.mark_lists_dirty()
                 print_to_log("Optimization 3 changed: [%s] to: [%s]" % (before, after))
         return 0
+
+    def _check_insn2(self, insn):
+        # Find the instructions group with SAR
+        if insn and insn.opcode == m_sar:
+            if collect_insns_up(insn, self.insns2) == 3:
+                insn0, insn1, insn2 = self.insns2
+                if insn1.opcode == m_cfshr and insn1.l == insn0.l and insn1.r == insn0.r:
+                    if insn2.opcode == m_mov and insn2.l.is_constant() and insn2.d == insn0.r:
+                        self.val2 = insn2.l.unsigned_value()
+                        if self.val2 in (16, 24):
+                            self.op = insn0.l
+                            return True
+
+    def _check_insn1(self, insn):
+        # Now check uppper instructions in the block
+        while insn:
+            # print("_check_insn1: %s" % text_insn(insn))
+            if self.analize_upper_insns(insn, self.insns1):
+                return True
+            elif self.is_op_modified_here(self.op, self.insns1):
+                return False
+            elif len(self.insns1) > 0:
+                insn = self.insns1[-1].prev
+            else:
+                return False
 
     def analize_upper_insns(self, insn, lst):
         len = collect_insns_up(insn, lst)
@@ -162,52 +166,3 @@ class Visitor3b(minsn_visitor_t):
             if insn.d == op:
                 return True
         return False
-
-# class Visitor3(minsn_visitor_t):
-#     def _insn_match(self, insn2):
-#         r = False
-#         if insn2.opcode == m_sar and insn2.r.is_equal_to(16):
-#             insn1 = insn2.prev
-#             if insn1 and insn1.opcode == m_ldx and insn1.r.t == mop_d and insn1.d == insn2.l:
-#                 if insn1.r.d.r.is_constant():
-#                     r = True
-#         return r
-#
-#     def _insn_match2(self, insn2):
-#         r = False
-#         if insn2.opcode == m_sar and insn2.r.is_equal_to(24):
-#             insn1 = insn2.prev
-#             if insn1 and insn1.opcode == m_mov and insn1.l.t == mop_S:
-#                 r = True
-#         return r
-#
-#     def visit_minsn(self):
-#         if self._insn_match(self.topins):
-#             insn2 = self.topins
-#             insn1 = insn2.prev
-#             print("\nAscendancy Plugin - Optimization 3 (WORD) changed:")
-#             print("%.8X: %s" % (insn1.ea, insn1.dstr()))
-#             print("%.8X: %s" % (insn2.ea, insn2.dstr()))
-#             insn1.d.change_size(2)
-#             insn1.r.d.r.update_numop_value(insn1.r.d.r.unsigned_value() + 2)
-#             insn2.opcode = m_xds
-#             insn2.l.create_from_insn(insn1)
-#             insn2.r.zero()
-#             print("to:")
-#             print("%.8X: %s" % (insn2.ea, insn2.dstr()))
-#             self.blk.make_nop(insn1)  # this also marks lists dirty
-#         elif self._insn_match2(self.topins):
-#             insn2 = self.topins
-#             insn1 = insn2.prev
-#             print("\nAscendancy Plugin - Optimization 3 (BYTE) changed:")
-#             print("%.8X: %s" % (insn1.ea, insn1.dstr()))
-#             print("%.8X: %s" % (insn2.ea, insn2.dstr()))
-#             insn1.l.change_size(1)
-#             insn1.l.s.off = insn1.l.s.off + 3
-#             insn2.opcode = m_xds
-#             insn2.l.create_from_insn(insn1)
-#             insn2.r.zero()
-#             print("to:")
-#             print("%.8X: %s" % (insn2.ea, insn2.dstr()))
-#             self.blk.make_nop(insn1)
-#         return 0

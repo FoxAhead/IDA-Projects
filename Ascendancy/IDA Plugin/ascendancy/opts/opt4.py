@@ -16,6 +16,8 @@ test:
 
 from ida_hexrays import *
 from dataclasses import dataclass
+
+from ascendancy.opts import GlbOpt
 from ascendancy.util import *
 
 
@@ -46,27 +48,19 @@ class ForContext:
         self.blk = self.mba.blocks
 
 
-def run(mba):
-    if is_func_lib(mba.entry_ea):
-        return True
-    r12 = 0
-    fix = Fix4()
-    fix.run(mba)
-    r12 = fix.err_code
-
-    return r12 == MERR_OK
-
-
-class Fix4(object):
+class Opt(GlbOpt):
 
     def __init__(self):
-        self.err_code = MERR_OK
+        super().__init__(4)
 
-    def run(self, mba):
-        ctx = ForContext(mba)
+    def _init(self):
+        pass
+
+    def _run(self):
+        ctx = ForContext(self.mba)
         self.iterate_blocks(ctx)
         if ctx.dirty:
-            mba.verify(True)
+            self.mba.verify(True)
             self.err_code = MERR_LOOP
             # vp = vd_printer_t()
             # mba._print(vp)

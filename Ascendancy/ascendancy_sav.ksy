@@ -13,8 +13,8 @@ seq:
     type: t_res_tree
   - id: block4_stars
     type: t_sav_block4_stars
-  - id: block5
-    type: t_sav_block5
+  - id: block5_square
+    type: t_sav_block5_squares
   - id: block6_planets
     type: t_sav_block6_planets
   - id: block7_ships
@@ -199,14 +199,24 @@ types:
         type: t_star
         repeat: expr
         repeat-expr: num
-  t_sav_block5:
+  t_square:
     seq:
-      - id: word_18245
+      - id: a
+        type: s1
+      - id: b
+        type: s1
+      - id: c
+        type: s1
+      - id: d
+        type: s1
+  t_sav_block5_squares:
+    seq:
+      - id: num
         type: s4
       - id: unknown_49c5
-        type: u1
+        type: t_square
         repeat: expr
-        repeat-expr: 4 * word_18245
+        repeat-expr: num
   t_vector3d:
     seq:
       - id: x
@@ -223,7 +233,7 @@ types:
         type: s2
       - id: unknown_e
         type: s2
-      - id: p_unknown_10
+      - id: p_squares
         type: s4
       - id: size
         type: u2
@@ -231,15 +241,15 @@ types:
       - id: type
         type: u2
         enum: planet_type
-      - id: word18
+      - id: surface_squares_num
         type: u2
-      - id: word1a
+      - id: total_squares_num
         type: u2
-      - id: word1c
+      - id: free_surface_squares_num
         type: s2
-      - id: word1e
+      - id: free_orbital_squares_num
         type: s2
-      - id: word20
+      - id: black_squares_num
         type: s2
       - id: z5
         type: s2

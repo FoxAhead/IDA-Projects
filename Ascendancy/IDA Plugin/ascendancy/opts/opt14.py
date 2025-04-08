@@ -34,7 +34,7 @@ def run(mba):
     if vstr2.changes:
         print_to_log("Optmization 14:")
         for ea, t1, t2 in vstr2.changes:
-            print_to_log("  %.8X: Change %s to %f" % (ea, t1, t2))
+            print_to_log("  %.8X: %s = %f" % (ea, t1, t2))
 
         # print_mba(mba)
 

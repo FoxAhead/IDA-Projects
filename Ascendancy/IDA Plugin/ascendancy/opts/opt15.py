@@ -3,143 +3,201 @@ summary: Optimization 15
 
 description:
 
-    Combine several reg++ in loops
+    Combine several kreg++ in loops inside on block
+    Move zeroes down in entry block
+    TODO - need to check that combined regs starts from the same value!
 
 test:
 
     54048
     46D81
+    466FC
+    3B5B8 - No optimization here: ops should be of the same size
+    4E809 - Was infinite moving zeroes down. Fixed by using fict_ea
 
 """
-
-from ida_hexrays import *
-import os
-from ascendancy.opts.statictxt import *
+from ascendancy.opts.glbopt import GlbOpt
 from ascendancy.util import *
 
 
-def run(mba):
-    if is_func_lib(mba.entry_ea):
-        return True
-    LoopManager.init(mba)
-    return Fix15(mba).run()
+class Opt(GlbOpt):
 
+    def __init__(self):
+        super().__init__(15, "Combine var++", True)
 
-class Fix15(object):
+    def _init(self):
+        self.zero_blk = None
+        self.zeroes = {}  # key = var_key, value = insn
+        self.adds = {}  # key = block.serial, value = insns[]
 
-    def __init__(self, mba):
-        self.mba = mba
-        self.add_insns = []
-        self.add_blk = None
-        self.err_code = MERR_OK
-
-    def run(self):
+    def _run(self):
         self.iterate_groups()
-        return self.err_code == MERR_OK
 
     def iterate_groups(self):
         for group in LoopManager.groups:
-            if self.group_need_optimization(group):
-                # print("group_need_optimization")
-                # for insn in self.add_insns:
-                #    print(text_insn(insn))
-                self.optimize_group(group)
-                self.try_to_move_zero_down(group)
+            self.collect_zeroes(group)
+            self.collect_adds(group)
+            #self.debug_print_collections(group)
+            if self.need_to_combine_adds():
+                self.combine_adds(group)
+            self.try_to_move_zero_down(group)
 
-    def group_need_optimization(self, group):
+    def collect_zeroes(self, group):
+        self.zeroes.clear()
+        self.zero_blk = self.get_entry_block_with_zeroes(group)
+        zero_insns = []
+        for insn in all_insns_in_block(self.zero_blk):
+            if insn_is_zero_var(insn):
+                zero_insns.append(insn)
+        for zero_insn in zero_insns:
+            if get_number_of_op_definitions_in_blocks(zero_insn.d, [self.zero_blk]) == 1:
+                self.zeroes[var_as_key(zero_insn.d)] = zero_insn
+
+    def collect_adds(self, group):
+        self.adds.clear()
+        # Find all var++ insns
         d = {}
-        self.add_insns.clear()
         for blk, insn in group.all_loops_blocks_insns(self.mba):
             # print(blk.serial, text_insn(insn))
-            if insn_is_inc_reg(insn):
-                d.setdefault(var_as_key(insn.l), []).append((blk.serial, insn))
+            if insn_is_inc_var(insn):
+                var_key = var_as_key(insn.l)
+                # Must have corresponding zero_insn with the same size
+                if var_key in self.zeroes:
+                    zero_insn = self.zeroes[var_key]
+                    if insn.l.size == zero_insn.d.size:
+                        d.setdefault(var_key, []).append((blk.serial, insn))
+        # Take only single var++ insns not redefined elsewere in the loops group
+        all_group_blocks = list(group.all_loops_blocks(self.mba))
         d2 = {}
-        add_insns = []
-        for key, value in d.items():
-            if len(value) == 1:
-                serial, add_insn = value[0]
-                add_op = add_insn.l
-                defines = 0
-                for blk, insn in group.all_loops_blocks_insns(self.mba):
-                    ml = mlist_t(add_op.r, add_op.size)
-                    if is_reg_defined_here(blk, ml, insn):
-                        defines = defines + 1
-                        if defines > 1:
-                            break
-                if defines == 1:
+        for key, adds in d.items():
+            if len(adds) == 1:
+                serial, add_insn = adds[0]
+                if get_number_of_op_definitions_in_blocks(add_insn.l, all_group_blocks) == 1:
                     d2.setdefault(serial, []).append(add_insn)
-                    add_insns.append(add_insn)
-        # Check all insn are from the same block
-        if len(d2) != 1:
-            add_insns.clear()
-        else:
-            self.add_blk = self.mba.get_mblock(list(d2.keys())[0])
-        # Leave only one regular reg
-        has_regular_reg = False
-        for add_insn in add_insns:
-            if add_insn.l.is_kreg():
-                self.add_insns.append(add_insn)
-            elif has_regular_reg == 0:
-                has_regular_reg = True
-                self.add_insns.insert(0, add_insn)
-        return len(self.add_insns) > 1
+        # ADD insns are now grouped by block
+        for serial, add_insns in d2.items():
+            add_insns_new = []
+            # Don't combine regular regs or stack vars. Put only one infront of the list.
+            has_regular_var = False
+            for add_insn in add_insns:
+                if add_insn.l.is_kreg():
+                    add_insns_new.append(add_insn)
+                elif not has_regular_var:
+                    has_regular_var = True
+                    add_insns_new.insert(0, add_insn)
+            if len(add_insns_new) > 0:
+                self.adds[serial] = add_insns_new
 
-    def optimize_group(self, group):
-        print_to_log("Optimization 15")
-        add_insn0 = self.add_insns[0]
-        add_op0 = add_insn0.l
-        for add_insn in self.add_insns[1:]:
-            add_op = mop_t(add_insn.l)
-            print_to_log("  %.8X: Changed %s to %s" % (add_insn.ea, add_op.dstr(), add_op0.dstr()))
-            self.add_blk.make_nop(add_insn)
-            self.add_blk.mark_lists_dirty()
-            for blk, insn in group.all_loops_blocks_insns(self.mba):
-                for op in uses_of_op(add_op, blk, insn):
-                    # print("USE %s" % op.dstr())
-                    op.r = add_op0.r
-                    blk.mark_lists_dirty()
-        self.err_code = MERR_LOOP
+    def need_to_combine_adds(self):
+        for serial, add_insns in self.adds.items():
+            if len(add_insns) > 1:
+                # Need to be several insns with the same size
+                add_insn0 = add_insns[0]
+                size0 = add_insn0.l.size
+                for add_insn in add_insns[1:]:
+                    if add_insn.l.size != size0:
+                        return False
+                return True
+        return False
+
+    def combine_adds(self, group):
+        for serial, add_insns in self.adds.items():
+            if len(add_insns) > 1:
+                add_blk = self.mba.get_mblock(serial)
+                add_insn0 = add_insns[0]
+                add_op0 = add_insn0.l
+                for add_insn in add_insns[1:]:
+                    add_op = mop_t(add_insn.l)
+                    self.print_to_log("  Merged: %s %s with %s" % (hex_addr(add_insn.ea, serial), add_op.dstr(), add_op0.dstr()))
+                    add_blk.make_nop(add_insn)
+                    self.mark_dirty(add_blk)
+                    for blk, insn in group.all_loops_blocks_insns(self.mba):
+                        for op in uses_of_op(add_op, blk, insn):
+                            # print("USE %s" % op.dstr())
+                            if add_op0.t == mop_r:
+                                op.make_reg(add_op0.r, add_op0.size)
+                            elif add_op0.t == mop_S:
+                                op.make_stkvar(self.mba, add_op0.s.off)
+                                op.size = add_op0.size
+                            self.mark_dirty(blk)
 
     def try_to_move_zero_down(self, group):
-        add_insn0 = self.add_insns[0]
-        add_op0 = add_insn0.l
+        # In every block take first add_insn and get its corresponding zero_insn
+        for serial, add_insns in self.adds.items():
+            # Take only end block of group
+            if serial == group.end:
+                add_insn0 = add_insns[0]
+                zero_insn = self.zeroes[var_as_key(add_insn0.l)]
+                zero_op = zero_insn.d
+                if zero_insn and not is_fict_ea(self.mba, zero_insn.ea):
+                    ml = mlist_t()
+                    self.zero_blk.append_use_list(ml, zero_op, MUST_ACCESS)
+                    if zero_insn.next is None or not self.zero_blk.is_used(ml, zero_insn.next, None, MUST_ACCESS):
+                        after_insn = find_last_blk_insn_not_jump(self.zero_blk)
+                        if not after_insn.equal_insns(zero_insn, EQ_CMPDEST):
+                            # print("Zero insn: %s" % text_insn(zero_insn, blk))
+                            insnn = minsn_t(zero_insn)
+                            insnn.ea = self.mba.alloc_fict_ea(zero_insn.ea)
+                            self.print_to_log("  Moved : %s to %s" % (hex_addr(zero_insn.ea), text_insn(insnn, self.zero_blk)))
+                            self.zero_blk.insert_into_block(insnn, after_insn)
+                            self.zero_blk.make_nop(zero_insn)
+                            self.mark_dirty(self.zero_blk)
+
+    def get_entry_block_with_zeroes(self, group):
+        """
+            If blk is 1WAY-BLOCK and single GOTO, then try get prevb
+        """
         blk = group.entry_block(self.mba)
-        zero_insn = None
-        insn = blk.head
-        while insn:
-            if zero_insn is None:
-                if insn_is_zero_reg(insn) and insn.d.r == add_op0.r:
-                    zero_insn = insn
-                    break
-            insn = insn.next
-        if zero_insn:
-            #print_blk(blk)
-            ml = mlist_t(zero_insn.d.r, zero_insn.d.size)
-            if zero_insn.next is None or not blk.is_used(ml, zero_insn.next, None, MUST_ACCESS):
-                after_insn = find_last_blk_insn_not_jump(blk)
-                #print(text_insn(zero_insn))
-                #print(text_insn(after_insn))
-                #print(zero_insn.equal_insns(after_insn, EQ_CMPDEST))
-                if not after_insn.equal_insns(zero_insn, EQ_CMPDEST):
-                #if after_insn.ea != zero_insn.ea:
-                    insnn = minsn_t(zero_insn)
-                    insnn.ea = after_insn.ea
-                    print_to_log("  Moved : %.8X to %s" % (zero_insn.ea, text_insn(insnn, blk)))
-                    blk.insert_into_block(insnn, after_insn)
-                    blk.make_nop(zero_insn)
-                    blk.mark_lists_dirty()
-                    self.err_code = MERR_LOOP
+        if blk.type == BLT_1WAY and block_is_single_goto(blk) and blk.prevb:
+            blk = blk.prevb
+        return blk
+
+    def debug_print_collections(self, group):
+        print("Group %d contains ADDs:" % group.entry)
+        for serial, add_insns in self.adds.items():
+            print("  Block %d:" % serial)
+            for add_insn in add_insns:
+                print("    %s" % text_insn(add_insn))
+        print("Zero block %d contains ZEROes:" % self.zero_blk.serial)
+        for var_key, zero_insn in self.zeroes.items():
+            print("  %s" % text_insn(zero_insn))
+
+
+def block_is_single_goto(blk):
+    insn = blk.head
+    has_goto = False
+    while insn:
+        if insn.opcode == m_goto:
+            has_goto = True
+        else:
+            return False
+        insn = insn.next
+    return has_goto
 
 
 def insn_is_inc_reg(insn):
     return insn.opcode == m_add and insn.l.is_reg() and insn.r.t == mop_n and insn.l == insn.d and insn.r.unsigned_value() == 1
 
 
-def insn_is_zero_reg(insn):
-    return insn.opcode == m_mov and insn.l.t == mop_n and insn.d.is_reg() and insn.l.unsigned_value() == 0
+def insn_is_inc_var(insn):
+    """
+        opcode l    r   d
+        add    var, #1, var
+    """
+    return insn.opcode == m_add and insn.l.t in {mop_r, mop_S} and insn.r.is_one() and insn.l == insn.d
 
 
-def is_reg_defined_here(blk, ml, insn):
+def insn_is_zero_var(insn):
+    """
+        opcode l   d
+        mov    #0, var
+    """
+    return insn.opcode == m_mov and insn.l.is_zero() and insn.d.t in {mop_r, mop_S}
+
+
+def is_op_defined_here(blk, op, insn):
+    ml = mlist_t()
+    blk.append_def_list(ml, op, MUST_ACCESS)
     _def = blk.build_def_list(insn, MUST_ACCESS)
     return _def.includes(ml)
 

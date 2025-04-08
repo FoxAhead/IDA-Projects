@@ -1,6 +1,7 @@
 import ida_kernwin
 import ida_hexrays
 from ascendancy.opts import *
+from ascendancy.opts import GlbOptManager
 from ascendancy.util import *
 
 
@@ -23,13 +24,23 @@ class HxePermHooks(ida_hexrays.Hexrays_Hooks):
 
 
 class HxeHooks(ida_hexrays.Hexrays_Hooks):
-    cnt = 0
-    ea = 0
+
+    def __init__(self, *args):
+        self.cnt = 0
+        self.ea = 0
+        GlbOptManager.register(opt4.Opt())
+        GlbOptManager.register(opt10.Opt())
+        GlbOptManager.register(opt11.Opt())
+        GlbOptManager.register(opt12.Opt())
+        # GlbOptManager.register(opt13.Opt()) # TODO
+        GlbOptManager.register(opt15.Opt())
+        super().__init__(*args)
 
     def flowchart(self, fc):
         # BEGIN OF OPTIMIZATIONS
         LogMessages.clear()
-        ea = 0
+        self.ea = 0
+        GlbOptManager.iteration = 0
         return 0
 
     def refresh_pseudocode(self, vu):
@@ -41,7 +52,8 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
                 print(msg)
             print()
         LogMessages.clear()
-        ea = 0
+        self.ea = 0
+        GlbOptManager.iteration = 0
         return 0
 
     def microcode(self, mba):
@@ -52,11 +64,11 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
 
     def preoptimized(self, mba):
         # print("PREOPTIMIZED BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        opt9.run(mba)    # JUMPOUT
-        opt6.run(mba)    # __CHP
+        opt9.run(mba)  # JUMPOUT
+        opt6.run(mba)  # __CHP
         opt2.run_a(mba)  # mov 0 assertion
-        opt7.run(mba)    # Prolog/Epilog
-        opt8.run(mba)    # SAR EDX, 1Fh
+        opt7.run(mba)  # Prolog/Epilog
+        opt8.run(mba)  # SAR EDX, 1Fh
         # print("PREOPTIMIZED END")
         return 0
 
@@ -74,23 +86,9 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def glbopt(self, mba):
-        #print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        r = [True]  # -> MERR_OK
-        print_glbopt_block(mba, [41, 42], 0, False)
-        r.append(opt4.run(mba))
-        print_glbopt_block(mba, [41, 42], 4, r[-1])
-        r.append(opt10.run(mba))
-        print_glbopt_block(mba, [41, 42], 10, r[-1])
-        r.append(opt11.run(mba))
-        print_glbopt_block(mba, [41, 42], 11, r[-1])
-        r.append(opt12.run(mba))
-        print_glbopt_block(mba, [41, 42], 12, r[-1])
-        r.append(opt13.run(mba))
-        print_glbopt_block(mba, [41, 42], 13, r[-1])
-        if all(r):
-            r.append(opt15.run(mba))
-        #print("GLBOPT END")
-        r = all(r)
+        # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        r = GlbOptManager.run(mba)
+        # print("GLBOPT END")
         return MERR_OK if r else MERR_LOOP
 
     def print_func(self, cfunc, printer):
@@ -100,16 +98,6 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def func_printed(self, cfunc):
-        #opt15.run(cfunc)
         opt5.run(cfunc)
         return 0
 
-
-def print_glbopt_block(mba, serials, opt, r):
-    return
-    if r:
-        return
-    print("After %d: %s" % (opt, r))
-    for serial in serials:
-        blk = mba.get_mblock(serial)
-        print_blk(blk)

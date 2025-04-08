@@ -42,54 +42,52 @@ description:
         48B40
         1B4F0
         16120 - Do not optimize inside loop
-        46CAC - Do not optimize inside loop - TODO Fix opt10
+        46CAC - Do not optimize inside loop
         54448 - TODO - optimize before loop 00054554
 
 """
+from ascendancy.opts import GlbOpt
 from ascendancy.util import *
 
 
-def run(mba):
-    if is_func_lib(mba.entry_ea):
-        return True
-    LoopManager.init(mba)
-    #if mba.entry_ea == 0x1D794:
-    #    print_to_log("Optimization 11 EXCLUSION: %.8X" % mba.entry_ea)
-    #    return True
-    r = True
-    r = r and run_with_reg(mba, mr_first)
-    r = r and run_with_reg(mba, 12)
-    return r
+class Opt(GlbOpt):
 
+    def __init__(self):
+        super().__init__(11)
 
-def run_with_reg(mba, reg):
-    mba.for_all_topinsns(vstr := Visitor11a(reg))
-    err_code = MERR_OK
-    for def_block in vstr.def_blocks:
-        if def_block["uses"] > 0:
-            # print_mba(mba)
-            print_to_log("Optimization 11 start from %.8X (reg=%d):" % (def_block["ea"], reg))
-            for addsub in def_block["addsubs"]:
-                blk = addsub["blk"]
-                insn = addsub["insn"]
-                off = addsub["off"]
-                ea = insn.ea
-                print_to_log("  %.2d  make_nop (off=0x%X): %s:" % (reg, off, text_insn(insn)))
-                blk.make_nop(insn)
-                blk.mark_lists_dirty()
-                err_code = MERR_LOOP
-                insnn = minsn_t(ea)
-                insnn.opcode = m_add
-                insnn.l.make_reg(reg, 4)
-                insnn.r.make_number(off, 4)
-                insnn.d.make_reg(reg, 4)
-                for op in addsub["useops"]:
-                    insnn.ea = op["topins"].ea
-                    print_to_log("  %.2d    create_from_insn: %s:" % (reg, text_insn(insnn)))
-                    op["op"].create_from_insn(insnn)
-                    blk.mark_lists_dirty()
-                    err_code = MERR_LOOP
-    return err_code == MERR_OK
+    def _init(self):
+        pass
+
+    def _run(self):
+        for reg in [mr_first, 12]:
+            self.run_with_reg(reg)
+
+    def run_with_reg(self, reg):
+        self.mba.for_all_topinsns(vstr := Visitor11a(reg))
+        for def_block in vstr.def_blocks:
+            if def_block["uses"] > 0:
+                # print_mba(mba)
+                print_to_log("Optimization 11 start from %.8X (reg=%d):" % (def_block["ea"], reg))
+                for addsub in def_block["addsubs"]:
+                    blk = addsub["blk"]
+                    insn = addsub["insn"]
+                    off = addsub["off"]
+                    ea = insn.ea
+                    print_to_log("  %.2d  make_nop (off=0x%X): %s:" % (reg, off, text_insn(insn)))
+                    blk.make_nop(insn)
+                    # if prev_insn := insn.prev:  # Trying to fix combinable here (opt1)
+                    #    prev_insn.clr_combinable()
+                    self.mark_dirty(blk)
+                    insnn = minsn_t(ea)
+                    insnn.opcode = m_add
+                    insnn.l.make_reg(reg, 4)
+                    insnn.r.make_number(off, 4)
+                    insnn.d.make_reg(reg, 4)
+                    for op in addsub["useops"]:
+                        insnn.ea = op["topins"].ea
+                        print_to_log("  %.2d    create_from_insn: %s:" % (reg, text_insn(insnn)))
+                        op["op"].create_from_insn(insnn)
+                        self.mark_dirty(blk)
 
 
 def is_reg_defined_here(blk, ml, insn):
@@ -98,21 +96,13 @@ def is_reg_defined_here(blk, ml, insn):
     return _def.includes(ml)
 
 
-def insn_is_addsub_reg(insn, reg):
-    return insn.opcode in [m_add, m_sub] and insn.l.is_reg(reg) and insn.r.t == mop_n and insn.d.is_reg(reg)
-
-
 def get_reg_addsub_off(insn, reg):
-    #print("get_reg_addsub_off %d" % reg)
+    # print("get_reg_addsub_off %d" % reg)
     if insn.opcode in [m_add, m_sub] and insn.l.is_reg(reg, 4) and insn.r.t == mop_n and insn.d.is_reg(reg, 4):
         sign = 1 if insn.opcode == m_add else -1
         return sign * insn.r.unsigned_value()
     else:
         return 0
-
-
-def find_use_here(blk, ml, insn):
-    _def = blk.build_use_list(insn, MAY_ACCESS | FULL_XDSU)
 
 
 class Visitor11a(minsn_visitor_t):
@@ -127,27 +117,27 @@ class Visitor11a(minsn_visitor_t):
         self.inside_loop = False
 
     def visit_minsn(self):
-        #self.inside_loop = bool(is_inside_loop(self.mba, self.blk))
+        # self.inside_loop = bool(is_inside_loop(self.mba, self.blk))
         self.inside_loop = LoopManager.serial_in_cycles(self.blk.serial)
         insn = self.curins
-        #print("curins = %s, inside_loop = %s" % (text_insn(self.curins), self.inside_loop))
+        # print("curins = %s, inside_loop = %s" % (text_insn(self.curins), self.inside_loop))
         if not self.insn_def and not self.inside_loop:
             if is_reg_defined_here(self.blk, self.ul_reg, insn):
-                #print("First def: %.8X: %s" % (insn.ea, insn.dstr()))
+                # print("First def: %.8X: %s" % (insn.ea, insn.dstr()))
                 self.insn_def = insn
                 self.off = 0
                 self.def_blocks.append({"ea": insn.ea, "uses": 0, "addsubs": []})
         if (off := get_reg_addsub_off(insn, self.reg)) != 0:
             if not self.inside_loop:
                 self.off = self.off + off
-                #print("  Offset eax: %.8X: %X" % (insn.ea, self.off))
+                # print("  Offset eax: %.8X: %X" % (insn.ea, self.off))
                 self.def_blocks[-1]["addsubs"].append({"blk": self.blk, "insn": insn, "off": self.off, "useops": []})
         elif self.insn_def and len(self.def_blocks[-1]["addsubs"]) > 0:
             if not self.inside_loop:
-                #print("    Search uses: %.8X: %s" % (insn.ea, insn.dstr()))
+                # print("    Search uses: %.8X: %s" % (insn.ea, insn.dstr()))
                 self.blk.for_all_uses(self.ul_reg, insn, insn.next, vstr_uses := Visitor11b())
                 for op in vstr_uses.ops:
-                    #print("      Use: %s" % op["op"].dstr())
+                    # print("      Use: %s" % op["op"].dstr())
                     self.def_blocks[-1]["addsubs"][-1]["useops"].append(op)
                     self.def_blocks[-1]["uses"] = self.def_blocks[-1]["uses"] + 1
             if (insn != self.insn_def) and is_reg_defined_here(self.blk, self.ul_reg, insn):

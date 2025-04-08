@@ -17,6 +17,7 @@ description:
         492F8
         55B74 - Complex ADD
         46480 - Uncommented condition for loops. May be errors
+        209AB - TODO - add_insn's ops can be changed along the way. Need more complex checks
 
 """
 from ascendancy.util import *
@@ -44,14 +45,17 @@ class Fix13(object):
     def run(self):
         self.mba.for_all_topinsns(vstr_adds := Visitor13a())
         for self.add_insn, self.add_blk in vstr_adds.adds:
-            # print(self.add_blk.serial, text_insn(self.add_insn))
+
+            #ml = self.add_blk.build_use_list(self.add_insn, MUST_ACCESS)
+            #print(text_insn(self.add_insn, self.add_blk), ml.dstr())
+
             self.processed.clear()
             self.uses.clear()
+            print("process_block:", self.add_blk.serial, text_insn(self.add_insn))
             self.process_block(self.add_blk, self.add_insn)
             if self.uses:
                 self.optimize_uses()
 
-        # self.iterate_blocks()
         return self.err_code == MERR_OK
 
     def process_block(self, blk, insn):
@@ -63,6 +67,10 @@ class Fix13(object):
             else:
                 insn = insn.next
             while insn:
+                ml = self.add_blk.build_use_list(self.add_insn, MUST_ACCESS)
+                if is_any_op_defined_here(blk, ml, insn):
+                    print(ml.dstr(), text_insn(insn))
+                    return
                 ml = mlist_t(self.add_insn.d.r, self.add_insn.d.size)
                 blk.for_all_uses(ml, insn, insn.next, vstr_uses := Visitor13(blk))
                 self.uses.extend(vstr_uses.uses)
@@ -74,98 +82,37 @@ class Fix13(object):
                 succ_block = self.mba.get_mblock(succ)
                 self.process_block(succ_block, None)
 
-    def iterate_blocks(self):
-        blk = self.mba.blocks
-        while blk:
-            if self.test_conditions(blk) and self.block_needs_optimization(blk):
-                self.optimize_block(blk)
-            blk = blk.nextb
-
-    def test_conditions(self, blk):
-        return (self.mba.entry_ea == 0x433E0 and blk.serial == 6) or (self.mba.entry_ea == 0x492F8 and blk.serial == 1)
-
-    def block_needs_optimization(self, blk):
-        insn = blk.head
-        while insn:
-            if insn_is_add_reg(insn):
-                if (prev_insn := insn.prev) and prev_insn.opcode == m_mov and prev_insn.d.is_kreg():
-                    pass
-                else:
-                    self.add_insn = insn
-                    return True
-            insn = insn.next
-        return False
-
     def optimize_uses(self):
         changed = False
         for use in self.uses:
+            print("  Changing (blk=%d): %s" % (use.blk.serial, text_insn(use.insn)))
             # print(use.blk.serial, text_insn(use.insn), use.op.dstr())
             insnn = minsn_t(self.add_insn)
             insnn.ea = use.insn.ea
             use.op.create_from_insn(insnn)
             if not changed:
                 print_to_log("Optimization 13")
+            print("  Changed (blk=%d): %s" % (use.blk.serial, text_insn(use.insn)))
             print_to_log("  Change (blk=%d): %s" % (use.blk.serial, text_insn(use.insn)))
             changed = True
         if changed:
             print_to_log("  NOP    (blk=%d): %s" % (self.add_blk.serial, text_insn(self.add_insn)))
             self.add_blk.make_nop(self.add_insn)
             self.add_blk.mark_lists_dirty()
+            print("MERR_LOOP")
             self.err_code = MERR_LOOP
-
-    def optimize_block(self, blk):
-        # print_blk(blk)
-        add_reg_l = self.add_insn.l.r
-        add_reg_d = self.add_insn.d.r
-        size = self.add_insn.l.size
-        r_op = self.add_insn.r
-        kreg0 = self.mba.alloc_kreg(size)
-        were_uses = False
-        after_insn = None
-        insn = self.add_insn.next
-        while insn:
-            changed = False
-            ml = mlist_t(add_reg_d, size)
-            blk.for_all_uses(ml, insn, insn.next, vstr_uses := Visitor13())
-            for use in vstr_uses.uses:
-                insnn = minsn_t(self.add_insn)
-                insnn.ea = insn.ea
-                insnn.l.make_reg(kreg0, size)
-                use["op"].create_from_insn(insnn)
-                changed = True
-            if changed:
-                print_to_log("Optimization 13: Change (blk=%d): %s" % (blk.serial, text_insn(insn)))
-                were_uses = True
-                after_insn = insn
-                self.err_code = MERR_LOOP
-                blk.mark_lists_dirty()
-            insn = insn.next
-        if were_uses:
-            insnn = InsnBuilder(self.add_insn.ea, m_mov, size).r(add_reg_l).r(kreg0).insn()
-            blk.insert_into_block(insnn, self.add_insn.prev)
-            blk.mark_lists_dirty()
-            self.err_code = MERR_LOOP
-        # print_blk(blk)
-
-
-def insn_is_add_reg(insn):
-    if insn.opcode == m_add and insn.l.is_reg() and insn.d.is_reg() and not insn.l.is_kreg():
-        if insn.r.t == mop_d and insn.r.d.r.t != mop_d:
-            return True
-    return False
-
-
-def insn_is_complex_add_reg(insn):
-    if insn.opcode == m_add and insn.l.is_reg() and insn.d.is_reg() and not insn.l.is_kreg():
-        if insn.r.t == mop_d:
-            return True
-    return False
 
 
 def is_reg_defined_here(blk, ml, insn):
     # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
     _def = blk.build_def_list(insn, MUST_ACCESS)
     return _def.includes(ml)
+
+
+def is_any_op_defined_here(blk, ml, insn):
+    # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
+    _def = blk.build_def_list(insn, MUST_ACCESS)
+    return _def.has_common(ml)
 
 
 class Visitor13(mlist_mop_visitor_t):
@@ -181,22 +128,29 @@ class Visitor13(mlist_mop_visitor_t):
         return 0
 
 
-def is_reg_defined_here(blk, ml, insn):
-    # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
-    _def = blk.build_def_list(insn, MUST_ACCESS)
-    return _def.includes(ml)
-
-
 class Visitor13a(minsn_visitor_t):
+    """
+    Find complex ADDs
+    """
 
     def __init__(self):
         minsn_visitor_t.__init__(self)
         self.adds = []
 
     def visit_minsn(self):
-        if insn_is_complex_add_reg(self.curins):# and not LoopManager.serial_in_cycles(self.blk.serial):
+        if insn_is_complex_add_reg(self.curins):  # and not LoopManager.serial_in_cycles(self.blk.serial):
             self.adds.append((self.curins, self.blk))
         return 0
+
+
+def insn_is_complex_add_reg(insn):
+    # l is regular reg
+    # d is reg
+    # r is insn
+    if insn.opcode == m_add and insn.l.is_reg() and insn.d.is_reg() and not insn.l.is_kreg():
+        if insn.r.t == mop_d:
+            return True
+    return False
 
 
 @dataclass

@@ -1,5 +1,5 @@
 import time
-from typing import List
+from typing import List, Set
 
 import networkx as nx
 from ida_hexrays import *
@@ -12,14 +12,19 @@ LogMessages = []
 
 
 def text_expr(expr):
-    return "%.8X: (%s) %s" % (expr.ea, get_ctype_name(expr._op), get_expr_name(expr))
+    return "%.6X: (%s) %s" % (expr.ea, get_ctype_name(expr._op), get_expr_name(expr))
 
 
 def text_insn(insn, blk=None):
-    if blk is None:
-        return "%.8X: %s" % (insn.ea if insn else 0, insn.dstr() if insn else None)
+    return "%s %s" % (hex_addr(insn.ea if insn else 0, blk), insn.dstr() if insn else None)
+
+
+def hex_addr(ea, blk=None):
+    if blk:
+        serial = blk.serial if type(blk) == mblock_t else blk
+        return "%.5X: %d." % (ea, serial)
     else:
-        return "%.8X: %d. %s" % (insn.ea if insn else 0, blk.serial, insn.dstr() if insn else None)
+        return "%.5X:" % ea
 
 
 def get_expr_name(expr):
@@ -188,26 +193,66 @@ class SingleLoop:
 class LoopsGroup:
     entry: int = -1
     loops: List[SingleLoop] = field(default_factory=list)
+    dirty: bool = True
 
     def __contains__(self, item):
         if type(item) == mblock_t:
-            return any(item.serial in loop for loop in self.loops)
+            # return any(item.serial in loop for loop in self.loops)
+            return item.serial in self.all_serials
         elif type(item) == int:
-            return any(item in loop for loop in self.loops)
+            # return any(item in loop for loop in self.loops)
+            return item in self.all_serials
         else:
             return False
 
+    def __str__(self):
+        return "%d -> [%d..%d]" % (self.entry, self.begin, self.end)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def add_loop(self, loop):
+        self.dirty = True
+        self.loops.append(loop)
+
+    def __calculate(self):
+        if self.dirty:
+            self.__common_serials = set.intersection(*map(set, [loop.serials for loop in self.loops]))
+            self.__all_serials = set.union(*map(set, [loop.serials for loop in self.loops]))
+            u1 = set()
+            u2 = set()
+            for loop in self.loops:
+                u1.add(loop.serials[0])
+                u2.add(loop.serials[-1])
+            self.__begin = list(u1)[0] if len(u1) == 1 else None
+            self.__end = list(u2)[0] if len(u2) == 1 else None
+            self.dirty = False
+
+    @property
+    def common_serials(self):
+        self.__calculate()
+        return self.__common_serials
+
+    @property
     def all_serials(self):
-        u = set()
-        for loop in self.loops:
-            u = u | set(loop.serials)
-        return list(u)
+        self.__calculate()
+        return self.__all_serials
+
+    @property
+    def begin(self):
+        self.__calculate()
+        return self.__begin
+
+    @property
+    def end(self):
+        self.__calculate()
+        return self.__end
 
     def entry_block(self, mba):
         return mba.get_mblock(self.entry)
 
     def all_loops_blocks(self, mba):
-        for serial in self.all_serials():
+        for serial in self.all_serials:
             yield mba.get_mblock(serial)
 
     def all_loops_blocks_insns(self, mba):
@@ -217,25 +262,13 @@ class LoopsGroup:
                 yield blk, insn
                 insn = insn.next
 
-    def begin(self):
-        u = set()
-        for loop in self.loops:
-            u.add(loop.serials[0])
-        if len(u) == 1:
-            return list(u)[0]
-
-    def end(self):
-        u = set()
-        for loop in self.loops:
-            u.add(loop.serials[-1])
-        if len(u) == 1:
-            return list(u)[0]
-
     def all_loops_contain_block(self, item):
         if type(item) == mblock_t:
-            return all(item.serial in loop for loop in self.loops)
+            # return all(item.serial in loop for loop in self.loops)
+            return item.serial in self.common_serials
         elif type(item) == int:
-            return all(item in loop for loop in self.loops)
+            # return all(item in loop for loop in self.loops)
+            return item in self.common_serials
         else:
             return False
 
@@ -330,7 +363,9 @@ class InsnBuilder(object):
         return self
 
     def S(self, mba, off):
-        self._op().make_stkvar(mba, off)
+        op = self._op()
+        op.make_stkvar(mba, off)
+        op.size = self.size
         return self
 
     def insn(self):
@@ -345,25 +380,27 @@ class InsnBuilder(object):
 
 class LoopManager(object):
     entry_ea = 0
-    cycles = []
-    all_serials_of_cycles = None
-    loops = []
-    groups = []
+    qty = 0
+    cycles = []  # All possible cycles computed by NetworkX
+    all_serials_of_cycles = None  # All serials that belong to the cycles. Not entry blocks.
+    loops = []  # List of all possible SingleLoops (contains entry block and list of loop blocks)
+    groups = []  # List of LoopsGroups (contains entry block and list of SingleLoops)
 
     @classmethod
     def init(cls, mba):
         # print("LoopManager.init: %X %X" % (cls.entry_ea, mba.entry_ea))
-        if cls.entry_ea != mba.entry_ea:
+        if cls.entry_ea != mba.entry_ea or cls.qty != mba.qty:
             cls.build_cycles(mba)
             cls.build_loops(mba)
-        # cls.print_loops_groups()
+            #cls.print_loops_groups()
         # print(cls.all_serials_of_cycles)
 
     @classmethod
     def build_cycles(cls, mba):
         # t1 = time.time()
-        # print("LoopManager.build_cycles begin")
+        #print("LoopManager.build_cycles begin")
         cls.entry_ea = mba.entry_ea
+        cls.qty = mba.qty
         cls.cycles.clear()
         G = nx.DiGraph()
         blk = mba.blocks
@@ -406,17 +443,24 @@ class LoopManager(object):
         for loop in cls.loops:
             if loop.entry not in d:
                 d[loop.entry] = LoopsGroup(loop.entry)
-            d[loop.entry].loops.append(loop)
+            d[loop.entry].add_loop(loop)
         cls.groups = list(d.values())
         # print("LoopManager.build_loops_groups = %.3f" % (time.time() - t1))
 
     @classmethod
     def print_loops_groups(cls):
         for group in cls.groups:
-            print("Group: %s - %s" % (group.entry, group.all_serials()))
+            print("Group: %s -> [%d..%d]" % (group.entry, group.begin, group.end))
+            print("  All: %s: " % group.all_serials)
+            print("  Common: %s: " % group.common_serials)
+            for loop in group.loops:
+                print("  %s" % loop.serials)
 
     @classmethod
     def serial_in_cycles(cls, serial):
+        """
+        Does serial participate in any loop?
+        """
         # print(serial, [serial in cycle for cycle in cls.cycles])
         # return any(serial in cycle for cycle in cls.cycles)
         return serial in cls.all_serials_of_cycles
@@ -429,3 +473,59 @@ def var_as_key(op):
         return "S-%d" % op.s.off
     else:
         return op.dstr()
+
+
+class XInsn(object):
+
+    def __init__(self, blk, idx):
+        self.blk = blk
+        self.idx = idx
+
+
+class XBlock(object):
+
+    def __init__(self, mba, blk):
+        self.mba = mba
+        self.blk = blk
+        self.xinsns = []
+        insn = blk.head
+        idx = 0
+        while insn:
+            self.xinsns = XInsn(blk, idx)
+            insn = insn.next
+
+
+def all_blocks_in_mba(mba):
+    blk = mba.blocks
+    while blk:
+        yield blk
+        blk = blk.nextb
+
+
+def all_insns_in_block(blk):
+    insn = blk.head
+    while insn:
+        yield insn
+        insn = insn.next
+
+
+def is_op_defined_in_insn(blk, op, insn):
+    # print("is_op_defined_in_insn op=%s" % op.dstr())
+    # print(text_insn(insn))
+    ml = mlist_t()
+    blk.append_def_list(ml, op, MUST_ACCESS)
+    _def = blk.build_def_list(insn, MUST_ACCESS)
+    return _def.includes(ml)
+
+
+def get_number_of_op_definitions_in_blocks(op, blocks):
+    definitions = 0
+    for blk in blocks:
+        for insn in all_insns_in_block(blk):
+            if is_op_defined_in_insn(blk, op, insn):
+                definitions = definitions + 1
+    return definitions
+
+
+def is_fict_ea(mba, ea):
+    return mba.map_fict_ea(ea) != ea

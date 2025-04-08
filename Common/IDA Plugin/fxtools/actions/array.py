@@ -17,6 +17,7 @@ class ActionArray:
         #     e0
         #   e1  e2
         # e3
+        # Starting from e1 - selected item
         if self.vu:
             vu = self.vu
             ami = ArrMembInfo()
@@ -38,9 +39,11 @@ class ActionArray:
                 ami.idx = e2.get_const_value()
             e3 = e1.cexpr.x
             if e1.op == ida_hexrays.cot_memref:
-                if (e3.op != ida_hexrays.cot_obj) and (e3.op != ida_hexrays.cot_memref) and (e3.op != ida_hexrays.cot_var):
-                    ida_kernwin.warning("e3 is not cot_obj nor cot_memref")
+                if e3.op not in {ida_hexrays.cot_obj, ida_hexrays.cot_memref, ida_hexrays.cot_var, ida_hexrays.cot_idx}:
+                    ida_kernwin.warning("e3 is not in {cot_obj, cot_memref, cot_var, cot_idx}")
                     return None
+            if e3.op == ida_hexrays.cot_idx:
+                e3 = e3.x
             # if e1.op == ida_hexrays.cot_memptr:
             #    if e3.op != ida_hexrays.cot_var:
             #        ida_kernwin.warning("e3 is not cot_var")
