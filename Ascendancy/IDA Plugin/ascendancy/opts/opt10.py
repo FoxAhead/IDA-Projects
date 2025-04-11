@@ -30,12 +30,12 @@ description:
         5A294 - Try to fix end condition
         1E150 -
         3EBDC - Was problem with stack variable
+        15E1C - TODO Nested loops - Vars initializations should be placed in individual subentry block, not in the main entry
 
 """
-import time
 
 from ascendancy.opts import GlbOpt
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 class Opt(GlbOpt):
@@ -52,14 +52,32 @@ class Opt(GlbOpt):
         self.loops = {}
 
     def _run(self):
-        self.iterate_groups()
-        if self.err_code == MERR_OK:
-            self.optimize_jumps()
+        self.iterate_groups2()
+        #if self.err_code == MERR_OK:
+        #    self.optimize_jumps()
         # print_mba(self.mba)
 
     def optimize_jumps(self):
         self.mba.for_all_topinsns(vstr := Visitor10b())
         self.err_code = vstr.err_code
+
+    def iterate_groups2(self):
+        for group in LoopManager.all_groups():
+            if self.group_needs_optimization2(group):
+                self.optimize_group(group)
+                #print("group_needs_optimization2 %s" % group.title())
+
+    def group_needs_optimization2(self, group):
+        if add_blk := unsingle_goto_block(group.end_block(self.mba)):
+            if add_insn := find_first_single_add_var_insn_in_block(add_blk):
+                if def_insn := find_single_def_op_insn_in_block(group.entry_block(self.mba), add_insn.l):
+                    self.def_insn = def_insn
+                    self.add_blk = add_blk
+                    self.add_insn = add_insn
+                    self.add_op = add_insn.l
+                    self.mult = add_insn.r.unsigned_value()
+                    return True
+        return False
 
     def iterate_groups(self):
         for group in LoopManager.groups:
@@ -71,11 +89,10 @@ class Opt(GlbOpt):
     def group_needs_optimization(self, group):
         # t1 = time.time()
         if group.begin is not None and group.end is not None:
-            #if d := find_single_add_reg_insn_in_blocks(group.all_loops_blocks(self.mba)):
             if d := find_single_add_var_insn_in_blocks(group.all_loops_blocks(self.mba)):
                 insn = d["insn"]
                 blk = d["blk"]
-                #if insn.l.t == mop_S:
+                # if insn.l.t == mop_S:
                 #    print("mop_S", insn.l.s.off)
                 #    ml = mlist_t()
                 #    blk.append_use_list(ml, insn.l, MUST_ACCESS)
@@ -96,40 +113,27 @@ class Opt(GlbOpt):
     def optimize_group(self, group):
         # t1 = time.time()
         self.print_to_log("  Group: %s %s" % (group, group.all_serials))
-        # print("    Optimize_loop %s" % loop)
-        # return
         size = self.add_insn.l.size
         kreg0 = self.mba.alloc_kreg(size)
         self.kreg0 = kreg0
         kregc = self.mba.alloc_kreg(4)
-        # Insert into block before loop
-        prev_blk = group.entry_block(self.mba)
-        # print(prev_blk.serial)
-        prev_insn = find_last_blk_insn_not_jump(prev_blk)
-        ea = prev_insn.ea if prev_insn else prev_blk.tail.ea
-        # ea = prev_blk.end
+        # Insert into entry block before loop
+        entry_blk = group.entry_block(self.mba)
+        prev_insn = find_last_blk_insn_not_jump(entry_blk)
+        ea = prev_insn.ea if prev_insn else entry_blk.tail.ea
         # Insert kregc = 0
         insnn = InsnBuilder(ea, m_mov).n(0).r(kregc).insn()
-        prev_blk.insert_into_block(insnn, prev_insn)
-        #print("  Insert: %s" % text_insn(insnn, prev_blk))
-        self.print_to_log("    Insert: %s" % text_insn(insnn, prev_blk))
-        # Insert kreg0 = add_reg into new block
+        entry_blk.insert_into_block(insnn, prev_insn)
+        self.print_to_log("    Insert: %s" % text_insn(insnn, entry_blk))
+        # Insert kreg0 = add_reg into entry block
         if self.add_op.t == mop_r:
             insnn = InsnBuilder(ea, m_mov, size).r(self.add_op.r).r(kreg0).insn()
         else:
             insnn = InsnBuilder(ea, m_mov, size).S(self.mba, self.add_op.s.off).r(kreg0).insn()
-        prev_blk.insert_into_block(insnn, prev_insn)
-        #print("  Insert: %s" % text_insn(insnn, prev_blk))
-        self.print_to_log("    Insert: %s" % text_insn(insnn, prev_blk))
-        self.mark_dirty(prev_blk)
-        try:
-            self.mba.verify(True)
-        except RuntimeError as e:
-            print("Error in optimize_group1: {0}".format(e))
-            print_mba(self.mba)
-            raise e
-        # Iterate over instructions in loop
-        # end_ea = loop.blocks[-1].tail.ea
+        entry_blk.insert_into_block(insnn, prev_insn)
+        self.print_to_log("    Insert: %s" % text_insn(insnn, entry_blk))
+        self.mark_dirty(entry_blk)
+        # Replace with new counter in all uses inside loops group
         for blk in group.all_loops_blocks(self.mba):
             after_add = False
             insn = blk.head
@@ -138,46 +142,34 @@ class Opt(GlbOpt):
                 if insn.equal_insns(self.add_insn, 0) and insn.ea == self.add_insn.ea and blk.serial == self.add_blk.serial:
                     after_add = True
                 else:
-                    #ml = mlist_t(add_op, size)
                     ml = mlist_t()
                     blk.append_use_list(ml, self.add_op, MUST_ACCESS)
                     blk.for_all_uses(ml, insn, insn.next, vstr_uses := Visitor10a(size))
                     for op in vstr_uses.ops:
+                        # mult * kregc
+                        insnn1 = InsnBuilder(insn.ea, m_mul).n(self.mult).r(kregc).insn()
                         if not after_add or (insn.ea == blk.tail.ea and is_insn_j(insn)):
-                            # kregc * mult
-                            insnn2 = InsnBuilder(insn.ea, m_mul).r(kregc).n(self.mult).insn()
+                            insnn2 = insnn1
                         else:
-                            # kregc * mult + mult
-                            insnn1 = InsnBuilder(insn.ea, m_mul).r(kregc).n(self.mult).insn()
+                            # mult * kregc + mult
                             insnn2 = InsnBuilder(insn.ea, m_add).i(insnn1).n(self.mult).insn()
                         # kreg0 + insnn2
                         insnn3 = InsnBuilder(insn.ea, m_add).r(kreg0).i(insnn2).insn()
-                        #if self.add_op.t == mop_S and blk.serial in {55}:
-                        #    pass
-                        #else:
-                        #print("  Changing: %s" % text_insn(insn, blk))
                         op["op"].create_from_insn(insnn3)
-                        #print("  Changed: %s" % text_insn(insn, blk))
                         changed = True
                 if changed:
                     self.print_to_log("    Change: %s" % text_insn(insn, blk))
                     self.mark_dirty(blk)
                 insn = insn.next
-        # Now add kregc = kregc + 1
-        # blk = loop.blocks[-1]
+        # Now add kregc = kregc + 1 to the end of the block
         blk = self.add_blk
         after_insn = find_last_blk_insn_not_jump(blk)
-        # after_insn = self.add_insn
         insnn = InsnBuilder(after_insn.ea, m_add).r(kregc).n(1).r(kregc).insn()
         blk.insert_into_block(insnn, after_insn)
-        #print_to_log("  Insert: %s" % text_insn(insnn, blk))
         self.print_to_log("    Move  : %s to %s" % (hex_addr(self.add_insn.ea), text_insn(insnn, blk)))
         # And erase add_insn
-        #print_to_log("  NOP:    %s" % text_insn(self.add_insn, blk))
         blk.make_nop(self.add_insn)
-        # self.add_insn.r.nnn.update_value(0)
         self.mark_dirty(blk)
-        # print_mba(self.mba)
         # print("optimize_group = %.3f" % (time.time() - t1))
 
     def try_optimize_end_condition(self, group):
@@ -277,15 +269,6 @@ class Visitor10b(minsn_visitor_t):
             self.err_code = MERR_LOOP
 
 
-def insn_is_add_var(insn):
-    """
-    add    var, #0xD.4, var
-    """
-    if insn.opcode == m_add and insn.r.t == mop_n and not insn.l.is_kreg():
-        return insn.l.t in {mop_r, mop_S} and insn.l == insn.d
-    return False
-
-
 def find_single_add_var_insn_in_blocks(blocks):
     d = {}
     for blk in blocks:
@@ -300,3 +283,22 @@ def find_single_add_var_insn_in_blocks(blocks):
     for var, insns in d.items():
         if len(insns) == 1:
             return insns[0]
+
+
+def find_first_single_add_var_insn_in_block(blk):
+    d = {}
+    for insn in all_insns_in_block(blk):
+        if insn_is_add_var(insn) and insn.r.unsigned_value() > 1:
+            d.setdefault(var_as_key(insn.l), []).append(insn)
+    for var, insns in d.items():
+        if len(insns) == 1:
+            return insns[0]
+
+
+def find_single_def_op_insn_in_block(blk, op):
+    insns = []
+    for insn in all_insns_in_block(blk):
+        if is_op_defined_in_insn(blk, op, insn):
+            insns.append(insn)
+    if len(insns) == 1:
+        return insns[0]

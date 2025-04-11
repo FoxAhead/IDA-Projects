@@ -1,4 +1,4 @@
-from ascendancy.util import *
+from ascendancy.utils import *
 from abc import ABC, abstractmethod
 
 

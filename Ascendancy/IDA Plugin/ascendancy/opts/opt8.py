@@ -14,8 +14,7 @@ description:
 
 """
 
-from ida_hexrays import *
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 def run(mba):

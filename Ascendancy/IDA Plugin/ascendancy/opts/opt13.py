@@ -20,7 +20,7 @@ description:
         209AB - TODO - add_insn's ops can be changed along the way. Need more complex checks
 
 """
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 def run(mba):

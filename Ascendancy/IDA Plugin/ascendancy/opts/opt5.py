@@ -14,10 +14,8 @@ test:
 
 """
 
-from ida_hexrays import *
-import os
 from ascendancy.opts.statictxt import *
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 def run(cfunc):

@@ -11,7 +11,7 @@ test:
 
 """
 
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 def run(mba):

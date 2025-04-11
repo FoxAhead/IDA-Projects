@@ -17,7 +17,7 @@ test:
 
 """
 from ascendancy.opts.glbopt import GlbOpt
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 class Opt(GlbOpt):
@@ -34,7 +34,7 @@ class Opt(GlbOpt):
         self.iterate_groups()
 
     def iterate_groups(self):
-        for group in LoopManager.groups:
+        for group in LoopManager.all_groups():
             self.collect_zeroes(group)
             self.collect_adds(group)
             #self.debug_print_collections(group)
@@ -44,7 +44,7 @@ class Opt(GlbOpt):
 
     def collect_zeroes(self, group):
         self.zeroes.clear()
-        self.zero_blk = self.get_entry_block_with_zeroes(group)
+        self.zero_blk = unsingle_goto_block(group.entry_block(self.mba))
         zero_insns = []
         for insn in all_insns_in_block(self.zero_blk):
             if insn_is_zero_var(insn):
@@ -143,15 +143,6 @@ class Opt(GlbOpt):
                             self.zero_blk.make_nop(zero_insn)
                             self.mark_dirty(self.zero_blk)
 
-    def get_entry_block_with_zeroes(self, group):
-        """
-            If blk is 1WAY-BLOCK and single GOTO, then try get prevb
-        """
-        blk = group.entry_block(self.mba)
-        if blk.type == BLT_1WAY and block_is_single_goto(blk) and blk.prevb:
-            blk = blk.prevb
-        return blk
-
     def debug_print_collections(self, group):
         print("Group %d contains ADDs:" % group.entry)
         for serial, add_insns in self.adds.items():
@@ -161,18 +152,6 @@ class Opt(GlbOpt):
         print("Zero block %d contains ZEROes:" % self.zero_blk.serial)
         for var_key, zero_insn in self.zeroes.items():
             print("  %s" % text_insn(zero_insn))
-
-
-def block_is_single_goto(blk):
-    insn = blk.head
-    has_goto = False
-    while insn:
-        if insn.opcode == m_goto:
-            has_goto = True
-        else:
-            return False
-        insn = insn.next
-    return has_goto
 
 
 def insn_is_inc_reg(insn):

@@ -2,7 +2,7 @@ import ida_kernwin
 import ida_hexrays
 from ascendancy.opts import *
 from ascendancy.opts import GlbOptManager
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 class HxePermHooks(ida_hexrays.Hexrays_Hooks):

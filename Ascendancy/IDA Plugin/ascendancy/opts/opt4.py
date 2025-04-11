@@ -14,11 +14,8 @@ test:
 
 """
 
-from ida_hexrays import *
-from dataclasses import dataclass
-
 from ascendancy.opts import GlbOpt
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 @dataclass

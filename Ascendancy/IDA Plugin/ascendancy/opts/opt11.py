@@ -47,7 +47,7 @@ description:
 
 """
 from ascendancy.opts import GlbOpt
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 class Opt(GlbOpt):

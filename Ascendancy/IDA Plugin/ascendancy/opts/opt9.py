@@ -32,11 +32,8 @@ description:
 """
 import ida_frame
 import ida_kernwin
-from ida_hexrays import *
-from ascendancy.util import *
+from ascendancy.utils import *
 import ida_ua
-import ida_allins
-import ascendancy.opts.opt7
 
 
 def run(mba):

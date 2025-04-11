@@ -14,13 +14,11 @@ tests:
 """
 import struct
 
-import ida_ieee
 import ida_name
 import idautils
-from ida_hexrays import *
 import ida_bytes
 
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 def run(mba):

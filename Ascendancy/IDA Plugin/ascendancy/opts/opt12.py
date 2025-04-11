@@ -25,7 +25,7 @@ description:
 
 """
 from ascendancy.opts import GlbOpt
-from ascendancy.util import *
+from ascendancy.utils import *
 
 
 class Opt(GlbOpt):
@@ -58,7 +58,7 @@ class Opt(GlbOpt):
         self.add_insns.clear()
         insn = blk.head
         while insn:
-            if insn_is_add_var(insn) and insn.l.size == 4:
+            if insn_is_add_var(insn, True) and insn.l.size == 4:
                 key = var_as_key(insn.l)
                 d.setdefault(key, []).append(insn)
             insn = insn.next
@@ -128,13 +128,6 @@ class Visitor12(mlist_mop_visitor_t):
         if op.t == mop_r and op.size == 4:
             self.uses.append({"op": op, "topins": self.topins})
         return 0
-
-
-def insn_is_add_var(insn):
-    """
-    add    var, #0xD.4, var
-    """
-    return insn.opcode == m_add and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d
 
 
 def get_number_of_definitions(op, blocks):

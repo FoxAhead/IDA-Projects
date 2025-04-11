@@ -25,7 +25,7 @@ class ActionArray:
                 ida_kernwin.warning("Please position the cursor on a union member")
                 return None
             e1 = vu.item.e
-            if (e1.op != ida_hexrays.cot_memref) and (e1.op != ida_hexrays.cot_memptr):
+            if e1.op not in {ida_hexrays.cot_memref, ida_hexrays.cot_memptr}:
                 ida_kernwin.warning("e1 is not cot_memref nor cot_memptr")
                 return None
             e0 = vu.cfunc.body.find_parent_of(e1)
