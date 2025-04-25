@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Set
 
 import ida_hexrays
 import ida_kernwin
@@ -19,7 +19,91 @@ def main():
         return False
     mba = get_microcode(func, ida_hexrays.MMAT_GLBOPT2)
     LoopManager2.init(mba)
-    LoopManager2.print_groups()
+
+    test2(mba).run2()
+    return
+
+    # LoopManager2.print_groups(True)
+    for group in LoopManager2.all_groups():
+        print(group.title())
+        # print(group.all_serials)
+        # for entry in group.entry_blocks(mba):
+        #    test1(group.all_loops_blocks(mba))
+
+
+class test2:
+
+    def __init__(self, mba):
+        self.mba = mba
+        self.visited = set()
+        self.chains = []
+
+    def run2(self):
+        g = LoopManager2.g.copy()
+        rem = []
+        for serial in g:
+            if LoopManager2.serial_in_cycles(serial):
+                rem.append(serial)
+        g.remove_nodes_from(rem)
+        rem = []
+        for serial in g:
+            if len(list(g.in_edges(serial))) > 1:
+                for r in list(g.in_edges(serial)):
+                    rem.append(r)
+        g.remove_edges_from(rem)
+        for serial in g.nodes:
+            if len(list(g.in_edges(serial))) == 0:
+                print(serial)
+
+
+        fname = r"D:\graph_%.X_cut.graphml" % self.mba.entry_ea
+        nx.write_graphml_lxml(g, fname)
+        print("Graph exported to: %s" % fname)
+
+
+    def run(self):
+        self.visited.clear()
+        self.chains.clear()
+        blk = self.mba.blocks
+        while blk:
+            if blk.serial not in self.visited:
+                if blk_can_be_start(blk):
+                    chain = []
+                    self.construct_chain(blk, chain)
+                    if chain:
+                        self.chains.append(chain)
+                        print(chain)
+                    else:
+                        print(blk.serial)
+            blk = blk.nextb
+
+    def construct_chain(self, blk, chain):
+        if blk.serial in self.visited:
+            return
+        self.visited.add(blk.serial)
+        if len(chain) == 0 and blk_can_be_start(blk) or blk_can_be_finish(blk):
+            chain.append(blk.serial)
+            if blk.nsucc() == 1:
+                succ_blk = self.mba.get_mblock(blk.succ(0))
+                self.construct_chain(succ_blk, chain)
+
+
+def blk_can_be_start(blk):
+    return blk.nsucc() == 1 and not LoopManager2.serial_in_cycles(blk.serial)
+
+
+def blk_can_be_finish(blk):
+    return blk.npred() < 2 and not LoopManager2.serial_in_cycles(blk.serial)
+
+
+def all_succ_blocks(mba: mba_t, blk: mblock_t):
+    for succ in list(blk.succset):
+        yield mba.get_mblock(succ)
+
+
+def test1(blocks):
+    for blk in blocks:
+        print(blk.serial)
 
 
 def get_microcode(func, maturity):
@@ -42,6 +126,7 @@ class LoopManager2(object):
     qty = 0
     all_serials_of_cycles = set()  # All serials that belong to the cycles. Not entry blocks.
     groups = []  # List of toplevel LoopsGroups (contains entry block and list of SingleLoops)
+    g: nx.DiGraph = None
 
     @classmethod
     def init(cls, mba):
@@ -58,7 +143,8 @@ class LoopManager2(object):
         cls.qty = mba.qty
         cls.all_serials_of_cycles.clear()
         cls.groups.clear()
-        cls.build_groups_recursive(cls.mba_to_graph(mba))
+        cls.g = cls.mba_to_graph(mba)
+        cls.build_groups_recursive(cls.g)
         # print("LoopManager.build_groups = %.3f" % (time.time() - t1))
 
     @classmethod
@@ -73,38 +159,35 @@ class LoopManager2(object):
 
     @classmethod
     def build_groups_recursive(cls, g, parent=None, entry_filter=None):
-        d = {}
+        d = {}  # Dict[entry, LoopsGroup]
         level = parent.level + 1 if parent else 0
         cycles = list(nx.simple_cycles(g))
         all_serials_of_cycles = set([serial for cycle in cycles for serial in cycle])
-        cls.all_serials_of_cycles.union(all_serials_of_cycles)
         for serial in g.nodes:
             # Get block out of any cycle - candidate for entry-block
             if serial not in all_serials_of_cycles and (not entry_filter or serial in entry_filter):
+                entry = serial
                 # And test it's successors if they are in any cycle
-                for succ in list(g.successors(serial)):
+                for succ in list(g.successors(entry)):
                     for cycle in cycles:
                         if succ in cycle:
+                            begin = succ
                             # This block should become begin-block, put it infront of the list
-                            while cycle[0] != succ:
+                            while cycle[0] != begin:
                                 cycle = rotate(cycle, 1)
-                            d.setdefault(serial, LoopsGroup(serial, level, parent)).add_loop(SingleLoop(serial, cycle))
+                            d.setdefault(begin, LoopsGroup(level, parent)).add_loop(SingleLoop(entry, cycle))
+        cls.all_serials_of_cycles.update(all_serials_of_cycles)
         for group in d.values():
-            # print(group)
             if parent:
                 parent.children.append(group)
             else:
                 cls.groups.append(group)
             g1 = g.copy()
-            if group.end is None:
-                s = set()
-                for loop in group.loops:
-                    s.add(loop.serials[-1])
-                for end in s:
-                    g1.remove_edge(end, group.begin)
-            else:
+            if group.end is not None:
+                # Cut the edge from end to begin
                 g1.remove_edge(group.end, group.begin)
-            cls.build_groups_recursive(g1, group, group.all_serials)
+                # And repeat cycle search for new graph
+                cls.build_groups_recursive(g1, group, group.all_serials)
 
     @classmethod
     def print_groups(cls, detailed=False):
@@ -120,6 +203,16 @@ class LoopManager2(object):
         Does serial participate in any loop?
         """
         return serial in cls.all_serials_of_cycles
+
+    @classmethod
+    def all_groups(cls, parent=None):
+        if parent is None:
+            for group in cls.groups:
+                yield from cls.all_groups(group)
+        else:
+            yield parent
+            for child in parent.children:
+                yield from cls.all_groups(child)
 
 
 @dataclass
@@ -151,9 +244,10 @@ class SingleLoop:
 
 @dataclass
 class LoopsGroup:
-    entry: int = -1
+    # TODO: 46480 - one loops group [25..24] have several entries: 21 and 23
     level: int = -1
     parent: "LoopsGroup" = None
+    entries: Set[int] = field(default_factory=set)
     loops: List[SingleLoop] = field(default_factory=list)
     dirty: bool = True
     children: List["LoopsGroup"] = field(default_factory=list)
@@ -183,13 +277,14 @@ class LoopsGroup:
         return s
 
     def title(self):
-        return "%sGroup %d -> [%s..%s]" % (self.indent(), self.entry, self.begin, self.end)
+        return "%sGroup %s -> [%d..%s]" % (self.indent(), self.entries, self.begin, self.end)
 
     def indent(self):
         return ".." * self.level
 
     def add_loop(self, loop):
         self.dirty = True
+        self.entries.add(loop.entry)
         self.loops.append(loop)
 
     def __calculate(self):
@@ -225,8 +320,15 @@ class LoopsGroup:
         self.__calculate()
         return self.__end
 
-    def entry_block(self, mba):
-        return mba.get_mblock(self.entry)
+    def entry_blocks(self, mba):
+        for entry in self.entries:
+            yield mba.get_mblock(entry)
+
+    def begin_block(self, mba):
+        return None if self.begin is None else mba.get_mblock(self.begin)
+
+    def end_block(self, mba):
+        return None if self.end is None else mba.get_mblock(self.end)
 
     def all_loops_blocks(self, mba):
         for serial in self.all_serials:

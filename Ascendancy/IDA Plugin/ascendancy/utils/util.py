@@ -1,4 +1,6 @@
 import time
+from dataclasses import dataclass
+
 from ida_hexrays import *
 import ida_pro
 import ida_lines
@@ -151,13 +153,24 @@ def all_insns_in_block(blk):
         insn = insn.next
 
 
-def is_op_defined_in_insn(blk, op, insn):
+def all_succ_blocks(mba: mba_t, blk: mblock_t):
+    for succ in list(blk.succset):
+        yield mba.get_mblock(succ)
+
+
+def is_op_defined_in_insn(blk: mblock_t, op: mop_t, insn: minsn_t):
     # print("is_op_defined_in_insn op=%s" % op.dstr())
     # print(text_insn(insn))
     ml = mlist_t()
     blk.append_def_list(ml, op, MUST_ACCESS)
     _def = blk.build_def_list(insn, MUST_ACCESS)
     return _def.includes(ml)
+
+
+def is_op_defined_in_block(blk: mblock_t, op: mop_t):
+    ml = mlist_t()
+    blk.append_def_list(ml, op, MUST_ACCESS)
+    return blk.maybdef.includes(ml)
 
 
 def get_number_of_op_definitions_in_blocks(op, blocks):
@@ -177,18 +190,56 @@ def block_is_single_goto(blk):
     return blk and blk.head and blk.head.opcode == m_goto and not blk.head.next
 
 
-def unsingle_goto_block(blk):
+def block_is_exit(mba, blk):
+    if blk and blk.type == BLT_1WAY:
+        succ_blk = mba.get_mblock(blk.succ(0))
+        # print("block_is_exit: succ_blk.type=%d succ_blk.nsucc=%d" % (succ_blk.type, succ_blk.nsucc()))
+        return succ_blk.type == BLT_STOP and succ_blk.nsucc() == 0
+    return False
+
+
+def unsingle_goto_block(mba: mba_t, blk: mblock_t):
     """
-        If blk is 1WAY-BLOCK and single GOTO, then try get prevb
+    If blk is 1WAY-BLOCK and single GOTO, then try get previous
     """
-    if blk and blk.type == BLT_1WAY and block_is_single_goto(blk) and blk.prevb:
-        return blk.prevb
+    if blk and blk.type == BLT_1WAY and block_is_single_goto(blk):
+        return mba.get_mblock(blk.pred(0))
     return blk
 
 
-def insn_is_add_var(insn, kregs=False):
+def insn_is_add_var(insn, no_kregs=False):
     """
     Find register or stack variable addition:
-        add    var, #0xD.4, var
+        add    var, #0xD, var
     """
-    return insn.opcode == m_add and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d and not (kregs and insn.l.is_kreg())
+    return insn.opcode == m_add and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d and not (no_kregs and insn.l.is_kreg())
+
+
+@dataclass
+class OpUse:
+    blk: mblock_t
+    topins: minsn_t
+    curins: minsn_t
+    op: mop_t
+
+
+class VisitorSimpleSearchUses(mlist_mop_visitor_t):
+
+    def __init__(self, blk: mblock_t, size: int, mopts):
+        mlist_mop_visitor_t.__init__(self)
+        self.blk = blk
+        self.size = size
+        self.mopts = mopts
+        self.uses = []
+
+    def visit_mop(self, op: mop_t):
+        if op.t in self.mopts and op.size == self.size:
+            self.uses.append(OpUse(self.blk, self.topins, self.curins, op))
+        return 0
+
+
+def find_op_uses_in_insn(blk: mblock_t, insn: minsn_t, op: mop_t, vstr):
+    ml = mlist_t()
+    blk.append_use_list(ml, op, MUST_ACCESS)
+    blk.for_all_uses(ml, insn, insn.next, vstr)
+    return vstr

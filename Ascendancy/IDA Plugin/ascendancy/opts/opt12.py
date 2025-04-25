@@ -87,10 +87,11 @@ class Opt(GlbOpt):
                     blk.append_use_list(ml, add_op, MUST_ACCESS)
                     blk.for_all_uses(ml, insn, insn.next, vstr_uses := Visitor12())
                     for use in vstr_uses.uses:
-                        if add_op.t == mop_r:
-                            insnn = InsnBuilder(insn.ea, m_add, size).r(add_op.r).n(mult).insn()
-                        else:
-                            insnn = InsnBuilder(insn.ea, m_add, size).S(self.mba, add_op.s.off).n(mult).insn()
+                        insnn = InsnBuilder(insn.ea, m_add, size).v(self.mba, add_op).n(mult).insn()
+                        # if add_op.t == mop_r:
+                        #     insnn = InsnBuilder(insn.ea, m_add, size).r(add_op.r).n(mult).insn()
+                        # else:
+                        #     insnn = InsnBuilder(insn.ea, m_add, size).S(self.mba, add_op.s.off).n(mult).insn()
                         use["op"].create_from_insn(insnn)
                         changed = True
                     if changed:

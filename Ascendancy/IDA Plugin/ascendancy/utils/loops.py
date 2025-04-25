@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Set
 
 import networkx as nx
-from ida_hexrays import mblock_t
+from ida_hexrays import mba_t, mblock_t
 
-from ascendancy.utils import rotate
+from ascendancy.utils import rotate, unsingle_goto_block
 
 
 class LoopManager(object):
@@ -12,6 +12,7 @@ class LoopManager(object):
     qty = 0
     all_serials_of_cycles = set()  # All serials that belong to the cycles. Not entry blocks.
     groups = []  # List of toplevel LoopsGroups (contains entry block and list of SingleLoops)
+    g: nx.DiGraph = None
 
     @classmethod
     def init(cls, mba):
@@ -28,7 +29,8 @@ class LoopManager(object):
         cls.qty = mba.qty
         cls.all_serials_of_cycles.clear()
         cls.groups.clear()
-        cls.build_groups_recursive(cls.mba_to_graph(mba))
+        cls.g = cls.mba_to_graph(mba)
+        cls.build_groups_recursive(cls.g)
         # print("LoopManager.build_groups = %.3f" % (time.time() - t1))
 
     @classmethod
@@ -43,21 +45,23 @@ class LoopManager(object):
 
     @classmethod
     def build_groups_recursive(cls, g, parent=None, entry_filter=None):
-        d = {}
+        d = {}  # Dict[entry, LoopsGroup]
         level = parent.level + 1 if parent else 0
         cycles = list(nx.simple_cycles(g))
         all_serials_of_cycles = set([serial for cycle in cycles for serial in cycle])
         for serial in g.nodes:
             # Get block out of any cycle - candidate for entry-block
             if serial not in all_serials_of_cycles and (not entry_filter or serial in entry_filter):
+                entry = serial
                 # And test it's successors if they are in any cycle
-                for succ in list(g.successors(serial)):
+                for succ in list(g.successors(entry)):
                     for cycle in cycles:
                         if succ in cycle:
+                            begin = succ
                             # This block should become begin-block, put it infront of the list
-                            while cycle[0] != succ:
+                            while cycle[0] != begin:
                                 cycle = rotate(cycle, 1)
-                            d.setdefault(serial, LoopsGroup(serial, level, parent)).add_loop(SingleLoop(serial, cycle))
+                            d.setdefault(begin, LoopsGroup(level, parent)).add_loop(SingleLoop(entry, cycle))
         cls.all_serials_of_cycles.update(all_serials_of_cycles)
         for group in d.values():
             if parent:
@@ -66,7 +70,9 @@ class LoopManager(object):
                 cls.groups.append(group)
             g1 = g.copy()
             if group.end is not None:
+                # Cut the edge from end to begin
                 g1.remove_edge(group.end, group.begin)
+                # And repeat cycle search for new graph
                 cls.build_groups_recursive(g1, group, group.all_serials)
 
     @classmethod
@@ -85,11 +91,14 @@ class LoopManager(object):
         return serial in cls.all_serials_of_cycles
 
     @classmethod
-    def all_groups(cls):
-        for group in cls.groups:
-            yield group
-            for child in group.children:
-                yield child
+    def all_groups(cls, parent=None):
+        if parent is None:
+            for group in cls.groups:
+                yield from cls.all_groups(group)
+        else:
+            yield parent
+            for child in parent.children:
+                yield from cls.all_groups(child)
 
 
 @dataclass
@@ -121,9 +130,10 @@ class SingleLoop:
 
 @dataclass
 class LoopsGroup:
-    entry: int = -1
+    # TODO: 46480 - one loops group [25..24] have several entries: 21 and 23
     level: int = -1
     parent: "LoopsGroup" = None
+    entries: Set[int] = field(default_factory=set)
     loops: List[SingleLoop] = field(default_factory=list)
     dirty: bool = True
     children: List["LoopsGroup"] = field(default_factory=list)
@@ -153,13 +163,14 @@ class LoopsGroup:
         return s
 
     def title(self):
-        return "%sGroup %d -> [%d..%s]" % (self.indent(), self.entry, self.begin, self.end)
+        return "%sGroup %s -> [%d..%s]" % (self.indent(), self.entries, self.begin, self.end)
 
     def indent(self):
         return ".." * self.level
 
     def add_loop(self, loop):
         self.dirty = True
+        self.entries.add(loop.entry)
         self.loops.append(loop)
 
     def __calculate(self):
@@ -195,8 +206,16 @@ class LoopsGroup:
         self.__calculate()
         return self.__end
 
-    def entry_block(self, mba):
-        return mba.get_mblock(self.entry)
+    def entry_blocks(self, mba: mba_t, unsingle_goto=False):
+        for entry in self.entries:
+            entry_blk = mba.get_mblock(entry)
+            if not unsingle_goto:
+                yield entry_blk
+            else:
+                yield unsingle_goto_block(mba, entry_blk)
+
+    def begin_block(self, mba):
+        return None if self.begin is None else mba.get_mblock(self.begin)
 
     def end_block(self, mba):
         return None if self.end is None else mba.get_mblock(self.end)

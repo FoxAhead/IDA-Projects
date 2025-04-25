@@ -49,6 +49,9 @@ tests:
     1E19F (long distance between SAR and eoff at 1E172)
     34ED1
     47DD5
+    39EBD, 3A18B, 3A287 - Fixed for SUB
+    3F15C - pattern 2 is first in the block and pattern 1 is located at previous block
+    4B7A0 - pattern 2 is NOT first in the block and pattern 1 is located at previous block
 
 """
 
@@ -72,14 +75,17 @@ class Visitor3b(minsn_visitor_t):
     def visit_minsn(self):
         if self._check_insn2(self.curins):
             # print("found insn2: %s" % text_insn(self.curins))
-            if self._check_insn1(self.insns2[-1].prev):
+            if self._check_insn1(self.insns2[-1].prev) or self._check_insn1(self.ensure_prev_insn(None)):
                 # print("found insn1")
                 before = text_insn(self.insn1)
                 self.insns2[2].l.nnn.update_value(0)
                 shift = int(self.val2 / 8)
                 bytes = 4 - shift
                 if self.mode == 1:
-                    self.insn1.r.nnn.update_value(self.val1 + shift)
+                    if self.insn1.opcode == m_add:
+                        self.insn1.r.nnn.update_value(self.val1 + shift)
+                    if self.insn1.opcode == m_sub:
+                        self.insn1.r.nnn.update_value(self.val1 - shift)
                 elif self.mode == 2:
                     self.insn1.l.a.g = self.val1 + shift
                 elif self.mode == 3:
@@ -137,10 +143,10 @@ class Visitor3b(minsn_visitor_t):
                     if insn2.d == insn1.r:
                         if is_mcode_addsub(insn2.opcode) and insn2.l == insn2.d and insn2.r.is_constant():
                             # if insn2.opcode == m_add and insn2.l == insn1.r and insn2.l == insn2.d and insn2.r.is_constant():
-                            if insn2.opcode == m_add:
-                                self.val1 = insn2.r.signed_value()
-                            if insn2.opcode == m_sub:
-                                self.val1 = -insn2.r.signed_value()
+                            # if insn2.opcode == m_add:
+                            self.val1 = insn2.r.signed_value()
+                            # if insn2.opcode == m_sub:
+                            #    self.val1 = -insn2.r.signed_value()
                             self.mode = 1
                             self.insn1 = insn2
                             return True
@@ -165,3 +171,13 @@ class Visitor3b(minsn_visitor_t):
             if insn.d == op:
                 return True
         return False
+
+    def ensure_prev_insn(self, insn):
+        """
+        Get previous insn from previous block if needed
+        """
+        if insn is None and (blk := self.blk.prevb):
+            prev_insn = blk.tail
+            if prev_insn.opcode != m_goto:
+                return blk.tail
+        return insn

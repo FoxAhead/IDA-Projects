@@ -51,6 +51,14 @@ class InsnBuilder(object):
         op.size = self.size
         return self
 
+    def v(self, mba, var_op):
+        if var_op.t == mop_r:
+            return self.r(var_op.r)
+        elif var_op.t == mop_S:
+            return self.S(mba, var_op.s.off)
+        else:
+            return None
+
     def insn(self):
         # print("self.opn = %d" % self.opn)
         if self.opn == 3:

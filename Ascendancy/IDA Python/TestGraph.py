@@ -17,7 +17,7 @@ def main():
 
     G = nx.DiGraph()
     G.add_edges_from(r)
-    nx.write_graphml_lxml(G, "D:\graph_%.X.graphml" % e)
+    #nx.write_graphml_lxml(G, "D:\graph_%.X.graphml" % e)
     # subax1 = plt.subplot(121)
     # nx.draw(G, with_labels=True, font_weight='bold', arrowsize=15)
     nx.draw(G, with_labels=True, font_weight='bold', arrowsize=15)

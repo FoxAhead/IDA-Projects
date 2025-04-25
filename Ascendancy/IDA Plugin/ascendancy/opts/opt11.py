@@ -43,9 +43,12 @@ description:
         1B4F0
         16120 - Do not optimize inside loop
         46CAC - Do not optimize inside loop
-        54448 - TODO - optimize before loop 00054554
+        54448 - Optimize before loop 00054554
+        4CDF8 - TODO - wrong optimization (4D612 - removed). Should rewrite using flow-graph
 
 """
+import dataclasses
+
 from ascendancy.opts import GlbOpt
 from ascendancy.utils import *
 
@@ -53,14 +56,95 @@ from ascendancy.utils import *
 class Opt(GlbOpt):
 
     def __init__(self):
-        super().__init__(11)
+        super().__init__(11, "Propagate offsets")
+        self.g: nx.DiGraph = None
 
     def _init(self):
-        pass
+        self.roots = []
 
     def _run(self):
+        self.build_trees()
         for reg in [mr_first, 12]:
-            self.run_with_reg(reg)
+            self.reg_op = mop_t(reg, 4)
+            self.def_blocks = []
+            self.run_with_reg2()
+
+    def build_trees(self):
+        self.g = LoopManager.g.copy()
+        rem = []
+        for serial in self.g:
+            if LoopManager.serial_in_cycles(serial):
+                rem.append(serial)
+        self.g.remove_nodes_from(rem)
+        rem = []
+        for serial in self.g:
+            if len(list(self.g.in_edges(serial))) > 1:
+                for r in list(self.g.in_edges(serial)):
+                    rem.append(r)
+        self.g.remove_edges_from(rem)
+        for serial in self.g:
+            if len(list(self.g.in_edges(serial))) == 0:
+                self.roots.append(serial)
+
+    def run_with_reg2(self):
+        for root in self.roots:
+            self.search_in_block_recursive(root, OptPlan())
+        for def_block in self.def_blocks:
+            if def_block.uses > 0:
+                # print_mba(mba)
+                reg = self.reg_op.r
+                mreg_name = get_mreg_name(self.reg_op.r, self.reg_op.size).upper()
+                self.print_to_log("  Start from %.8X (reg=%s):" % (def_block.ea, mreg_name))
+                for addsub in def_block.addsubs:
+                    blk = addsub.blk
+                    insn = addsub.insn
+                    off = addsub.off
+                    ea = insn.ea
+                    self.print_to_log("  %s  make_nop (off=0x%X): %s:" % (mreg_name, off, text_insn(insn)))
+                    blk.make_nop(insn)
+                    # if prev_insn := insn.prev:  # Trying to fix combinable here (opt1)
+                    #    prev_insn.clr_combinable()
+                    self.mark_dirty(blk)
+                    insnn = minsn_t(ea)
+                    insnn.opcode = m_add
+                    insnn.l.make_reg(reg, 4)
+                    insnn.r.make_number(off, 4)
+                    insnn.d.make_reg(reg, 4)
+                    for op in addsub.useops:
+                        insnn.ea = op.topins.ea
+                        self.print_to_log("  %s    create_from_insn: %s:" % (mreg_name, text_insn(insnn)))
+                        op.op.create_from_insn(insnn)
+                        self.mark_dirty(blk)
+
+    def search_in_block_recursive(self, serial, in_plan):
+        #print("search_in_block_recursive", serial)
+        blk = self.mba.get_mblock(serial)
+        plan = dataclasses.replace(in_plan)
+        if serial == 0:
+            plan.defined = is_op_defined_in_block(blk, self.reg_op)
+            plan.offset = 0
+            self.def_blocks.append(DefinitionBlock())
+        for insn in all_insns_in_block(blk):
+            #print("defined=%s, insn=%s" % (plan.defined, text_insn(insn)))
+            if is_op_defined_in_insn(blk, self.reg_op, insn) and not is_insn_addsub_op(insn, self.reg_op):
+                # print("First def: %.8X: %s" % (insn.ea, insn.dstr()))
+                plan.defined = True
+                plan.offset = 0
+                self.def_blocks.append(DefinitionBlock(ea=insn.ea))
+            elif plan.defined:
+                if is_insn_addsub_op(insn, self.reg_op):
+                    plan.offset += insn.r.unsigned_value() if insn.opcode == m_add else - insn.r.unsigned_value()
+                    #print("  Offset eax: %.8X: %X" % (insn.ea, plan.offset))
+                    self.def_blocks[-1].addsubs.append(AddSubOperation(blk=blk, insn=insn, off=plan.offset))
+                elif len(self.def_blocks[-1].addsubs) > 0:
+                    # print("    Search uses: %.8X: %s" % (insn.ea, insn.dstr()))
+                    vstr = find_op_uses_in_insn(blk, insn, self.reg_op, VisitorSimpleSearchUses(blk, self.reg_op.size, {mop_r}))
+                    for use in vstr.uses:
+                        # print("      Use: %s" % op["op"].dstr())
+                        self.def_blocks[-1].addsubs[-1].useops.append(use)
+                        self.def_blocks[-1].uses += 1
+        for succ in list(self.g.successors(serial)):
+            self.search_in_block_recursive(succ, plan)
 
     def run_with_reg(self, reg):
         self.mba.for_all_topinsns(vstr := Visitor11a(reg))
@@ -94,6 +178,10 @@ def is_reg_defined_here(blk, ml, insn):
     # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
     _def = blk.build_def_list(insn, MUST_ACCESS)
     return _def.includes(ml)
+
+
+def is_insn_addsub_op(insn, op):
+    return insn.opcode in [m_add, m_sub] and insn.l == op and insn.d == insn.l
 
 
 def get_reg_addsub_off(insn, reg):
@@ -155,3 +243,24 @@ class Visitor11b(mlist_mop_visitor_t):
         if op.t == mop_r and op.size == 4:
             self.ops.append({"op": op, "topins": self.topins})
         return 0
+
+
+@dataclass
+class AddSubOperation:
+    blk: mblock_t
+    insn: minsn_t
+    off: int
+    useops: List[mop_t] = field(default_factory=list)
+
+
+@dataclass
+class DefinitionBlock:
+    ea: int = 0
+    uses: int = 0
+    addsubs: List[AddSubOperation] = field(default_factory=list)
+
+
+@dataclass
+class OptPlan:
+    defined: bool = False
+    offset: int = 0

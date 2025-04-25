@@ -1,26 +1,7 @@
-import ida_kernwin
 import ida_hexrays
 from ascendancy.opts import *
 from ascendancy.opts import GlbOptManager
 from ascendancy.utils import *
-
-
-class HxePermHooks(ida_hexrays.Hexrays_Hooks):
-
-    def __init__(self, actions):
-        self.actions = actions
-        ida_hexrays.Hexrays_Hooks.__init__(self)
-
-    def populating_popup(self, widget, popup_handle, vu):
-        for name, data in self.actions.items():
-            label, shortcut = data
-            ida_kernwin.attach_action_to_popup(
-                vu.ct,
-                popup_handle,
-                name,
-                "AscendancyPlugin/"
-            )
-        return 0
 
 
 class HxeHooks(ida_hexrays.Hexrays_Hooks):
@@ -32,8 +13,9 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         GlbOptManager.register(opt10.Opt())
         GlbOptManager.register(opt11.Opt())
         GlbOptManager.register(opt12.Opt())
-        # GlbOptManager.register(opt13.Opt()) # TODO
         GlbOptManager.register(opt15.Opt())
+        GlbOptManager.register(opt13.Opt())  # TODO
+        # GlbOptManager.register(opt16.Opt())
         super().__init__(*args)
 
     def flowchart(self, fc):
@@ -58,8 +40,8 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
 
     def microcode(self, mba):
         self.ea = mba.entry_ea
-        opt14.run(mba)
-        opt3.run(mba)
+        opt14.run(mba)  # Print floats
+        opt3.run(mba)  # SAR 10h; SAR 18h -> Word; Byte
         return 0
 
     def preoptimized(self, mba):
@@ -68,12 +50,14 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         opt6.run(mba)  # __CHP
         opt2.run_a(mba)  # mov 0 assertion
         opt7.run(mba)  # Prolog/Epilog
-        opt8.run(mba)  # SAR EDX, 1Fh
+        opt8.run(mba)  # SAR EDX, 1Fh -> CDQ
         # print("PREOPTIMIZED END")
         return 0
 
     def locopt(self, mba):
+        # print("LOCOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         # opt2.run_b(mba)
+        # print("LOCOPT END")
         return 0
 
     def resolve_stkaddrs(self, mba):
@@ -91,6 +75,10 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         # print("GLBOPT END")
         return MERR_OK if r else MERR_LOOP
 
+    # def prealloc(self, mba):
+    #     print("PREALLOC BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+    #     print("PREALLOC END")
+
     def print_func(self, cfunc, printer):
         # Note: we can't print/str()-ify 'cfunc' here,
         # because that'll call print_func() us recursively.
@@ -100,4 +88,3 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
     def func_printed(self, cfunc):
         opt5.run(cfunc)
         return 0
-
