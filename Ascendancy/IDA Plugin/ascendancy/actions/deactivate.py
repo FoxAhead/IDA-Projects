@@ -1,3 +1,5 @@
+import ida_kernwin
+
 from ascendancy.actions import AscendancyPluginAction
 
 

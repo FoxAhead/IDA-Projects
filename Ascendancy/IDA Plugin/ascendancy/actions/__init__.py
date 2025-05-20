@@ -5,3 +5,4 @@ from .saved_regs import ActionFuncSavedRegs
 from .propagate_var import ActionPropagateVar
 from .glboptdump import ActionGlbOptDump
 from .print_loops_groups import ActionPrintLoopsGroups
+from .reload import ActionReload

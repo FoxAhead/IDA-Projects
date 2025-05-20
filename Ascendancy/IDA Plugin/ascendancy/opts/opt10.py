@@ -34,9 +34,17 @@ description:
         46FA2 - TODO - May be not all adds should be converted. v33 += 0x1E stands for 30 degrees, not offset
         45958 - Error if optimizing ADD 1 - Don't optimize here
         35C38 - The counter is used after the loop
+        12AE4 - The counter is used after the loop
         434E4 - Error if using recursive block traversal
+        17430 - Add op is defined far before entry-block
+        12AE4 - Add op is defined before entry-block
+        4937C - If first add_op is rejected, process other in this iteration
+        40224 - Use recursion and graph.is_redefined_globally() to find earlier definitions
+        1B354 - Add_op is used in two subsequent loops without redefenition
+        10010 - Don't add exit-assertion if add_op is not used further
 
 """
+import math
 
 from ascendancy.opts import GlbOpt
 from ascendancy.utils import *
@@ -48,13 +56,13 @@ class Opt(GlbOpt):
         super().__init__(10, "Optimize do while loops")
 
     def _init(self):
-        self.add_insn = None
-        self.add_op = None
-        self.add_blk = None
-        self.kreg0 = None
-        self.mult = 0
-        self.def_insns = {}  # [entry_blk.serial, def_insn]
-        self.loops = {}
+        self.add_insn: minsn_t = None
+        self.add_op: mop_t = None
+        self.add_blk: mblock_t = None
+        self.kreg0: int = None
+        self.mult: int = 0
+        self.defs = {}  # [entry_blk.serial, def_insn]
+        # self.loops = {}
         self.visited_blocks = set()
 
     def _run(self):
@@ -64,35 +72,114 @@ class Opt(GlbOpt):
         # print_mba(self.mba)
 
     def optimize_jumps(self):
-        self.mba.for_all_topinsns(vstr := Visitor10b())
+        self.mba.for_all_topinsns(vstr := VisitorJumpsOptimizator())
         self.err_code = vstr.err_code
 
     def iterate_groups(self):
         for group in LoopManager.all_groups():
             if self.group_needs_optimization(group):
+                # self.debug_print(group)
                 self.optimize_group(group)
                 self.try_optimize_end_condition(group)
-                # print("group_needs_optimization2 %s" % group.title())
+                # print("group_needs_optimization %s" % group.title())
 
     def group_needs_optimization(self, group: LoopsGroup):
         # Looking at the valid end-block
         if add_blk := unsingle_goto_block(self.mba, group.end_block(self.mba)):
             # Add op should be added once in the end-block
-            if add_insn := find_first_single_add_var_insn_in_block(add_blk):
+            for add_insn in find_single_add_var_insns_in_block(add_blk):
                 # Add op should be defined (actually added) once in the whole group
                 if get_number_of_op_definitions_in_blocks(add_insn.l, group.all_loops_blocks(self.mba)) == 1:
                     # Add op should be defined (set initial value) once in the entry-block or entry-block is the first (then assume op is function argument)
-                    for entry_block in group.entry_blocks(self.mba, True):
-                        if (def_insn := find_single_def_op_insn_in_block(entry_block, add_insn.l)) or (entry_block.serial == 1 and entry_block.type == BLT_1WAY):
-                            self.def_insns[entry_block.serial] = def_insn
-                        else:
-                            return False
-                    self.add_blk = add_blk
-                    self.add_insn = add_insn
-                    self.add_op = mop_t(add_insn.l)  # Make a copy of the operand because it will be NOPed
-                    self.mult = add_insn.r.unsigned_value()
-                    return True
+                    self.defs.clear()
+                    if self.find_add_op_initialization_in_entry(group, add_insn.l) or self.find_add_op_initialization_earlier2(group, add_insn.l):
+                        # if self.find_add_op_initialization_in_entry(group, add_insn.l):
+                        self.add_blk = add_blk
+                        self.add_insn = add_insn
+                        self.add_op = mop_t(add_insn.l)  # Make a copy of the operand because it will be NOPed
+                        self.mult = add_insn.r.unsigned_value()
+                        if self.def_and_mult_are_good():
+                            # if group.begin == 49 and self.add_op.t == mop_S and self.add_op.s.off == 128:  # and self.add_op.is_reg(8):
+                            return True
         return False
+
+    def debug_print(self, group: LoopsGroup):
+        print(group.title())
+        print("  ADD_OP: %s" % self.add_op.dstr())
+        print("  DEFS:")
+        for serial, def_insn in self.defs.items():
+            print("    %s" % text_insn(def_insn, serial))
+        # print("  ADD_BLK: %d" % self.add_blk.serial)
+        print("  ADD_INSN: %s" % text_insn(self.add_insn, self.add_blk))
+        # print("  MULT: %d" % self.mult)
+
+    def def_and_mult_are_good(self):
+        # If mult == 1 and def is add_op = 0, then don't take this add_op for optimization
+        all_zero_def = all(insn_is_zero_var(def_insn) for def_insn in self.defs.values())
+        return not (all_zero_def and self.mult == 1)
+
+    def find_add_op_initialization_in_entry(self, group, add_op):
+        # Look for definition in entry blocks
+        for entry_block in group.entry_blocks(self.mba, True):
+            if def_insn := find_single_def_op_insn_in_block(entry_block, add_op):
+                self.defs[entry_block.serial] = def_insn
+            else:
+                self.defs.clear()
+                return False
+        return True
+
+    def find_add_op_initialization_earlier(self, group, add_op):
+        # In some cases add_op is initialized earlier than entry block
+        if len(group.entries) == 1:  # For simplicity
+            for entry_blk in group.entry_blocks(self.mba):
+                blk = self.get_single_pred_block(entry_blk)
+                while blk:
+                    if blk.serial == 0:
+                        if is_op_defined_in_block(blk, add_op):
+                            self.defs[entry_blk.serial] = None
+                            return True
+                    else:
+                        for insn in all_insns_in_block(blk, backwards=True):
+                            if is_op_defined_in_insn(blk, add_op, insn):
+                                self.defs[blk.serial] = insn
+                                return True
+                    blk = self.get_single_pred_block(blk)
+        return False
+
+    def find_add_op_initialization_earlier2(self, group, add_op):
+        # In some cases add_op is initialized earlier than entry block
+        self.defs.clear()
+        if len(group.entries) == 1:  # For simplicity
+            for entry_blk in group.entry_blocks(self.mba):
+                self.visited_blocks.clear()
+                self.find_add_op_initialization_earlier_recursive(add_op, entry_blk, entry_blk, entry_blk.tail)
+        return len(self.defs) > 0
+
+    def find_add_op_initialization_earlier_recursive(self, add_op, blk, blk_to, insn_to):
+        if blk.serial in self.visited_blocks:
+            return
+        self.visited_blocks.add(blk.serial)
+        if blk.serial == 0:
+            if is_op_defined_in_block(blk, add_op):
+                blk1 = self.mba.get_mblock(1)
+                if not is_op_defined_between(self.mba.get_graph(), add_op, blk1, blk_to, blk1.head, insn_to):
+                    self.defs[0] = None
+                    return
+        else:
+            for insn in all_insns_in_block(blk, backwards=True):
+                if is_op_defined_in_insn(blk, add_op, insn):
+                    # print("defined in", text_insn(insn))
+                    if insn.next is None or not is_op_defined_between(self.mba.get_graph(), add_op, blk, blk_to, insn.next, insn_to):
+                        self.defs[blk.serial] = insn
+                        return
+        for pred_blk in all_pred_blocks(self.mba, blk):
+            self.find_add_op_initialization_earlier_recursive(add_op, pred_blk, blk_to, insn_to)
+
+    def get_single_pred_block(self, blk):
+        if blk.npred() == 1 or blk.npred() == 2 and blk.serial in blk.predset:
+            for pred_blk in all_pred_blocks(self.mba, blk):
+                if pred_blk.serial != blk.serial:
+                    return pred_blk
 
     def optimize_group(self, group: LoopsGroup):
         # t1 = time.time()
@@ -101,28 +188,41 @@ class Opt(GlbOpt):
         size = self.add_op.size
         self.kreg0 = self.mba.alloc_kreg(size)
         self.kregc = self.mba.alloc_kreg(4)
-        # Insert into entry block before loop
+        # Initialize counter: Insert kregc = 0 into entry block before loop
         for entry_blk in group.entry_blocks(self.mba, True):
             after_insn = find_last_blk_insn_not_jump(entry_blk)
             ea = after_insn.ea if after_insn else entry_blk.tail.ea
-            # Insert kregc = 0
+            # kregc = 0
             insnn = InsnBuilder(ea, m_mov).n(0).r(self.kregc).insn()
             entry_blk.insert_into_block(insnn, after_insn)
             self.print_to_log("    Insert: %s" % text_insn(insnn, entry_blk))
-            # Insert kreg0 = add_reg into entry block
-            after_insn = self.def_insns[entry_blk.serial]
-            if self.add_op.t == mop_r:
-                insnn = InsnBuilder(ea, m_mov, size).r(self.add_op.r).r(self.kreg0).insn()
-            else:
-                insnn = InsnBuilder(ea, m_mov, size).S(self.mba, self.add_op.s.off).r(self.kreg0).insn()
-            entry_blk.insert_into_block(insnn, after_insn)
-            self.print_to_log("    Insert: %s" % text_insn(insnn, entry_blk))
             self.mark_dirty(entry_blk)
+        # Define starting value: Insert kreg0 = add_reg into definition block
+        for def_blk_serial, def_insn in self.defs.items():
+            self.print_to_log("    DEF   : %s" % text_insn(def_insn, def_blk_serial))
+            # print("Definition %s: " % text_insn(def_insn, def_blk_serial))
+            if def_blk_serial == 0 or def_blk_serial not in group.entries:
+                # Assume that there is a single entry block
+                for entry_blk in group.entry_blocks(self.mba):
+                    def_blk = entry_blk
+                    after_insn = None
+                    ea = entry_blk.head.ea
+            else:
+                def_blk = self.mba.get_mblock(def_blk_serial)
+                after_insn = def_insn
+                ea = after_insn.ea
+            # kreg0 = initial add_op
+            insnn = InsnBuilder(ea, m_mov, size).var(self.mba, self.add_op).r(self.kreg0).insn()
+            def_blk.insert_into_block(insnn, after_insn)
+            self.print_to_log("    Insert: %s" % text_insn(insnn, def_blk))
+            self.mark_dirty(def_blk)
+        # Add assertions to exits
+        self.optimize_exits(group)
         # Replace with new counter in all uses inside loops group
         # self.visited_blocks.clear()
         # self.optimize_block_recursive(group, self.add_blk)
-        #for blk in group.all_loops_blocks(self.mba):
-        for blk in self.get_blocks_for_traversal(group):
+        for blk in group.all_loops_blocks(self.mba):
+            # for blk in self.get_blocks_for_traversal(group):
             self.optimize_block(blk, blk not in group)
         # Now add kregc = kregc + 1 to the end of the block
         blk = self.add_blk
@@ -136,15 +236,20 @@ class Opt(GlbOpt):
         # print("optimize_group = %.3f" % (time.time() - t1))
 
     def get_blocks_for_traversal(self, group):
+        """
+            Sometimes the counter is used after the loop
+            Try to build blocks list for traversal which include some outer blocks
+        """
         blocks = []
-        # Take all group blocks and their succesors that lead to exit
+        # Take all group blocks and their succesors
         for blk in group.all_loops_blocks(self.mba):
             blocks.append(blk)
             for succ in list(blk.succset):
                 if succ not in group:
                     succ_blk = self.mba.get_mblock(succ)
-                    if block_is_exit(self.mba, succ_blk):
-                        #print("block_is_exit %d" % succ_blk.serial)
+                    # if block_is_exit(self.mba, succ_blk):
+                    if succ_blk.type == BLT_1WAY:
+                        # print("block_is_exit %d" % succ_blk.serial)
                         blocks.append(succ_blk)
         return blocks
 
@@ -152,7 +257,7 @@ class Opt(GlbOpt):
         if blk.serial in self.visited_blocks or blk.serial in group.entries:
             return
         self.visited_blocks.add(blk.serial)
-        op_was_redefined = self.optimize_block(blk)
+        op_was_redefined = self.optimize_block(blk, blk not in group)
         # Stop traversal if op was redefined
         if op_was_redefined:
             return
@@ -165,25 +270,16 @@ class Opt(GlbOpt):
         blk_changed = False
         op_was_redefined = False
         for insn in all_insns_in_block(blk):
-            #print("optimize_block", text_insn(insn, blk))
+            # print("optimize_block", text_insn(insn, blk))
             if blk.serial == self.add_blk.serial and insn.equal_insns(self.add_insn, EQ_CMPDEST) and insn.ea == self.add_insn.ea:
                 after_add = True
             else:
-                vstr = find_op_uses_in_insn(blk, insn, self.add_op, VisitorSimpleSearchUses(blk, self.add_op.size, {mop_r, mop_S}))
+                vstr = find_op_uses_in_insn(blk, insn, self.add_op)
                 for var_use in vstr.uses:
-                    # mult * kregc
-                    insnn1 = InsnBuilder(insn.ea, m_mul).n(self.mult).r(self.kregc).insn()
-                    if not after_add or (insn.ea == blk.tail.ea and is_insn_j(insn)):
-                        insnn2 = insnn1
-                    else:
-                        # Because we are "moving" addition towards tail of the end-block,
-                        # we should compensate usage with +mult addition in all overtaken instruction
-                        # mult * kregc + mult
-                        insnn2 = InsnBuilder(insn.ea, m_add).i(insnn1).n(self.mult).insn()
-                    # kreg0 + insnn2
-                    insnn3 = InsnBuilder(insn.ea, m_add).r(self.kreg0).i(insnn2).insn()
-                    self.print_to_log("    Change: %s" % text_insn(insn, blk))
-                    var_use.op.create_from_insn(insnn3)
+                    insnn = self.build_new_counter_insn(insn.ea, after_add and not (insn.ea == blk.tail.ea and is_insn_j(insn)))
+                    self.print_to_log("    Change: %s" % (text_insn(insn, blk)))
+                    var_use.op.create_from_insn(insnn)
+                    self.print_to_log("    Changed: %s" % (text_insn(insn, blk)))
                     blk_changed = True
             # Check if op is redefined here
             if check_redef and is_op_defined_in_insn(blk, self.add_op, insn):
@@ -194,36 +290,137 @@ class Opt(GlbOpt):
             self.mark_dirty(blk)
         return op_was_redefined
 
+    def optimize_exits(self, group):
+        exits = set()
+        # Find exits - not cycle blocks after this loops group
+        for blk in group.all_loops_blocks(self.mba):
+            for succ in list(blk.succset):
+                # if succ not in group:
+                if not LoopManager.serial_in_cycles(succ):
+                    exits.add(succ)
+        # print("Exits: ", exits)
+        for serial in exits:
+            exit_blk = self.mba.get_mblock(serial)
+            # If it is empty block - ignore it
+            if exit_blk.head is None:
+                continue
+            # If add_op is not used further from this block - ignore it
+            if not is_op_used_starting_from_this_block(self.mba, self.add_op, exit_blk):
+                continue
+            j_insn = None
+            use_j_insn = False
+            ea = exit_blk.head.ea
+            if exit_blk.npred() == 1:
+                end_blk = self.mba.get_mblock(exit_blk.pred(0))
+                if end_blk.serial == group.end:
+                    if is_mcode_jcond(end_blk.tail.opcode):
+                        j_insn = end_blk.tail
+                        if j_insn.opcode == m_jnz and j_insn.d.b == group.begin and j_insn.l == self.add_op:
+                            use_j_insn = True
+                        elif j_insn.opcode == m_jz and j_insn.d.b == exit_blk.serial and j_insn.l == self.add_op:
+                            use_j_insn = True
+            if use_j_insn:
+                insnn = InsnBuilder(ea, m_mov, self.add_op.size).r(mr_none).var(self.mba, self.add_op).insn()
+                insnn.l = mop_t(j_insn.r)
+            else:
+                insnn1 = self.build_new_counter_insn(ea, False)
+                insnn = InsnBuilder(ea, m_mov, self.add_op.size).i(insnn1).var(self.mba, self.add_op).insn()
+            exit_blk.insert_into_block(insnn, None)
+            self.print_to_log("    Exit: %s" % text_insn(insnn, exit_blk))
+            self.mark_dirty(exit_blk)
+
+    def build_new_counter_insn(self, ea, compensate):
+        if self.mult > 1:
+            # mult * kregc
+            insnn1 = InsnBuilder(ea, m_mul).n(self.mult).r(self.kregc).insn()
+            if not compensate:
+                insnn2 = insnn1
+            else:
+                # Because we are "moving" addition towards tail of the end-block,
+                # we should compensate usage with +mult addition in all overtaken instruction
+                # mult * kregc + mult
+                insnn2 = InsnBuilder(ea, m_add).i(insnn1).n(self.mult).insn()
+            # kreg0 + insnn2
+            insnn3 = InsnBuilder(ea, m_add).r(self.kreg0).i(insnn2).insn()
+        else:
+            if not compensate:
+                insnn3 = InsnBuilder(ea, m_add).r(self.kreg0).r(self.kregc).insn()
+            else:
+                insnn2 = InsnBuilder(ea, m_add).r(self.kregc).n(self.mult).insn()
+                insnn3 = InsnBuilder(ea, m_add).r(self.kreg0).i(insnn2).insn()
+        return insnn3
+
     def try_optimize_end_condition(self, group: LoopsGroup):
         if end_blk := unsingle_goto_block(self.mba, group.end_block(self.mba)):
             j_insn = end_blk.tail
             # If tail insn of end-block is jcond and r-operand is var
             if is_insn_j(j_insn) and j_insn.r.t in {mop_r, mop_S}:
-                insns = []
-                # Then look at entry block
-                for entry_blk in group.entry_blocks(self.mba, True):
-                    insns.clear()
-                    for insn in all_insns_in_block(entry_blk):
-                        # And search ADD instruction with destination of r-operand
-                        if insn.opcode == m_add and insn.l.t == mop_r and insn.d == j_insn.r:
-                            # Preceded with MOV instruction
-                            if (prev_insn := insn.prev):
-                                if (prev_insn := prev_insn.prev) and prev_insn.opcode == m_mov and prev_insn.l.is_reg(insn.l.r):
-                                    if self.add_op.t == mop_r and prev_insn.d.is_reg(self.add_op.r):
-                                        insns.append(insn)
-                    if len(insns) != 1:
-                        return
-                if len(insns) == 1:
-                    insn = insns[0]
+                variant = self.find_init_of_end_condition(group, j_insn, found_init := FoundInsn())
+                # insns = []
+                ## Then look at entry block
+                # for entry_blk in group.entry_blocks(self.mba, True):
+                #    insns.clear()
+                #    for insn in all_insns_in_block(entry_blk):
+                #        # Variant 1: Search ADD instruction with destination of r-operand
+                #        if insn.opcode == m_add and insn.l.t == mop_r and insn.d == j_insn.r:
+                #            # Preceded with MOV instruction
+                #            if prev_insn := insn.prev:
+                #                if (prev_insn := prev_insn.prev) and prev_insn.opcode == m_mov and prev_insn.l.is_reg(insn.l.r):
+                #                    if self.add_op.t == mop_r and prev_insn.d.is_reg(self.add_op.r):
+                #                        insns.append(insn)
+                #    if len(insns) != 1:
+                #        return
+                if variant == 1:
+                    insn = found_init.insn
                     size = insn.l.size
                     insnn = minsn_t(insn)
                     insnn.l.make_reg(self.kreg0, size)
                     j_insn.r.create_from_insn(insnn)
                     self.print_to_log("  Optimize end conditions: %s" % text_insn(j_insn))
                     self.mark_dirty(end_blk)
+                elif variant == 2:
+                    insn = found_init.insn
+                    size = insn.r.size
+                    kreg = self.mba.alloc_kreg(size)
+                    insnn = InsnBuilder(insn.ea, m_mov, size).r(insn.r.r).r(kreg).insn()
+                    found_init.blk.insert_into_block(insnn, found_init.insn)
+                    self.mark_dirty(found_init.blk)
+                    insnn = minsn_t(insn)
+                    insnn.r.make_reg(kreg, size)
+                    j_insn.r.create_from_insn(insnn)
+                    self.mark_dirty(end_blk)
+                    self.print_to_log("  Optimize end conditions (var2): %s" % text_insn(j_insn))
+
+    def find_init_of_end_condition(self, group: LoopsGroup, j_insn: minsn_t, found_insn: "FoundInsn"):
+        if len(group.entries) != 1:
+            return 0
+        d = {}
+        variant = 0
+        for entry_blk in group.entry_blocks(self.mba, True):
+            d.clear()
+            for insn in all_insns_in_block(entry_blk):
+                # Variant 1: Search ADD instruction with destination of r-operand
+                if insn.opcode == m_add and insn.l.t == mop_r and insn.d == j_insn.r:
+                    # Preceded with MOV instruction
+                    if prev_insn := insn.prev:
+                        if (prev_insn := prev_insn.prev) and prev_insn.opcode == m_mov and prev_insn.l.is_reg(insn.l.r):
+                            if self.add_op.t == mop_r and prev_insn.d.is_reg(self.add_op.r):
+                                d.setdefault(1, []).append(insn)
+                # Variant 2: mul    #4.4, eax.4{73}, %var_3C.4
+                if insn.opcode == m_mul and insn.l.t == mop_n and insn.r.t == mop_r and insn.d == j_insn.r:
+                    d.setdefault(2, []).append(insn)
+            if len(d) != 1:
+                return 0
+            for var, insns in d.items():
+                if len(insns) != 1:
+                    return 0
+                found_insn.blk = entry_blk
+                found_insn.insn = insns[0]
+                variant = var
+        return variant
 
 
-class Visitor10b(minsn_visitor_t):
+class VisitorJumpsOptimizator(minsn_visitor_t):
 
     def __init__(self):
         minsn_visitor_t.__init__(self)
@@ -242,33 +439,46 @@ class Visitor10b(minsn_visitor_t):
     def check_j_insn_needs_optimization(self):
         insn = self.curins
         # print("Check if j_insn needs optimization %s" % text_insn(insn))
-        if insn.l.is_insn() and insn.r.is_insn():
+        # Variant 1: reg + X < reg + Y
+        if insn.l.is_insn(m_add) and insn.r.is_insn(m_add):
             insn1 = insn.l.d
             insn2 = insn.r.d
-            if insn1.opcode == m_add and insn2.opcode == m_add:
-                if insn1.l.is_reg() and insn2.l.is_reg() and insn1.l.r == insn2.l.r:
-                    self.j_l = insn1
-                    self.j_r = insn2
-                    self.optimization = 1
-                    return True
-        elif insn.l.is_insn() and insn.l.d.l.t == mop_n and insn.r.t == mop_n:
+            if insn1.l.is_reg() and insn2.l.is_reg() and insn1.l.r == insn2.l.r:
+                self.j_l = insn1
+                self.j_r = insn2
+                self.optimization = 1
+                return True
+        # Variant 2: N1 * var < N2
+        elif insn.l.is_insn(m_mul) and insn.l.d.l.t == mop_n and insn.r.t == mop_n:
             self.j_l = insn.l.d
             self.j_r = insn.r
             self.optimization = 2
             return True
+        # Variant 3: N1 * var1 < N2 * var2
+        elif insn.l.is_insn(m_mul) and insn.r.is_insn(m_mul):
+            insn1 = insn.l.d
+            insn2 = insn.r.d
+            if insn1.l.is_constant() and insn2.l.is_constant():
+                self.j_l = insn1
+                self.j_r = insn2
+                self.optimization = 3
+                return True
 
     def optimize_j_insn(self):
         if self.optimization == 1:
             self.optimize_j_insn1()
         elif self.optimization == 2:
             self.optimize_j_insn2()
+        elif self.optimization == 3:
+            self.optimize_j_insn3()
 
     def optimize_j_insn1(self):
         # print("optimize_j_insn1")
         self.j_l.l.make_number(0, 4)
         self.j_r.l.make_number(0, 4)
         print_to_log("Optimization 10 - Optimize jump 1 (%s)" % text_insn(self.curins))
-        self.blk.mark_lists_dirty()
+        mark_dirty(self.mba, self.blk)
+        # self.blk.mark_lists_dirty()
         self.err_code = MERR_LOOP
 
     def optimize_j_insn2(self):
@@ -279,7 +489,21 @@ class Visitor10b(minsn_visitor_t):
             self.j_l.l.make_number(1, 4)
             self.j_r.make_number(n2 // n1, 4)
             print_to_log("Optimization 10 - Optimize jump 2 (%s)" % text_insn(self.curins))
-            self.blk.mark_lists_dirty()
+            mark_dirty(self.mba, self.blk)
+            # self.blk.mark_lists_dirty()
+            self.err_code = MERR_LOOP
+
+    def optimize_j_insn3(self):
+        # print("optimize_j_insn3")
+        n1 = self.j_l.l.unsigned_value()
+        n2 = self.j_r.l.unsigned_value()
+        m = math.gcd(n1, n2)
+        if m > 1:
+            self.j_l.l.make_number(n1 // m, 4)
+            self.j_r.l.make_number(n2 // m, 4)
+            print_to_log("Optimization 10 - Optimize jump 3 (%s)" % text_insn(self.curins))
+            mark_dirty(self.mba, self.blk)
+            # self.blk.mark_lists_dirty()
             self.err_code = MERR_LOOP
 
 
@@ -299,14 +523,19 @@ def find_single_add_var_insn_in_blocks(blocks):
             return insns[0]
 
 
-def find_first_single_add_var_insn_in_block(blk):
+def find_single_add_var_insns_in_block(blk):
+    """
+    Take add instructions that are only one for each var
+    """
     d = {}
     for insn in all_insns_in_block(blk):
         if insn_is_good_add_var(insn):
             d.setdefault(var_as_key(insn.l), []).append(insn)
+    out_insns = []
     for var, insns in d.items():
         if len(insns) == 1:
-            return insns[0]
+            out_insns.append(insns[0])
+    return out_insns
 
 
 def find_def_op_insns_in_block(blk, op):
@@ -333,8 +562,46 @@ def insn_is_good_add_var(insn):
     if insn_is_add_var(insn):
         if insn.r.unsigned_value() > 1:
             return True
+        # Consider mult=1 only for non kregs with size=4
         elif not insn.l.is_kreg() and insn.l.size == 4:
             return True
     return False
 
 
+@dataclass
+class FoundInsn:
+    blk: mblock_t = None
+    insn: minsn_t = None
+
+
+def mark_dirty(mba: mba_t, blk: mblock_t, verify=True):
+    blk.mark_lists_dirty()
+    blk.make_lists_ready()
+    # self.err_code = MERR_LOOP
+    if verify:
+        try:
+            mba.verify(True)
+        except RuntimeError as e:
+            print("Error in opt%d (blk=%d): %s" % (10, blk.serial, e))
+            print_blk(blk)
+            print("mustbdef", blk.mustbdef.dstr())
+            print("maybdef", blk.maybdef.dstr())
+            # print_mba(self.mba)
+            raise e
+
+
+def is_op_used_starting_from_this_block(mba, op, blk):
+    visited = set()
+    return is_op_used_in_block_recursive(mba, op, blk, visited)
+
+
+def is_op_used_in_block_recursive(mba, op, blk, visited):
+    if blk.serial in visited:
+        return False
+    visited.add(blk.serial)
+    if is_op_used_in_block(blk, op):
+        return True
+    for succ_blk in all_succ_blocks(mba, blk):
+        if is_op_used_in_block_recursive(mba, op, succ_blk, visited):
+            return True
+    return False

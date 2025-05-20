@@ -20,6 +20,9 @@ description:
         209AB - add_insn's ops can be changed along the way. Need to copy redefined ops
         2EC50
         45958 - use of destination reg should be in form ADD reg
+        571B8 - No need of optimization here
+        57220 - Need to opimize one add_ins at a time, because next one could be optimized and become wrong
+                Also used op is redefined in shorter form (eax -> ax). Need to copy this op also.
 
 """
 from typing import Dict
@@ -43,7 +46,7 @@ class Opt(GlbOpt):
     def _run(self):
         # Search complex add_reg insns
         self.mba.for_all_topinsns(vstr_adds := VisitorSearchComplexAddRegInsns())
-        for self.add_blk, self.add_insn, self.used_ops in vstr_adds.adds:
+        for self.add_blk, self.add_insn, self.used_ops in reversed(vstr_adds.adds):
             self.processed.clear()
             self.uses.clear()
             # print("process_block:", self.add_blk.serial, text_insn(self.add_insn))
@@ -51,7 +54,15 @@ class Opt(GlbOpt):
             #    print(op.op.dstr(), op.op.valnum)
             self.process_block(self.add_blk, self.add_insn)
             if self.uses:
-                self.optimize_uses()
+                # print("add_insn=%s" % text_insn(self.add_insn, self.add_blk))
+                # print("  USED_OPS")
+                # for used_op in self.used_ops:
+                #    print("    op=%s, ops:%s, was_redefined=%s, need_copy=%s" %(used_op.op.dstr(), [op.dstr() for op in used_op.ops], used_op.was_redefined, used_op.need_copy))
+                # print("  DEST_USES")
+                # for use in self.uses:
+                #    print("    blk=%d, insn=%s, op=%s" % (use.blk.serial, text_insn(use.insn), use.op.dstr()))
+                if self.optimize_uses():
+                    break
 
         return self.err_code == MERR_OK
 
@@ -75,32 +86,31 @@ class Opt(GlbOpt):
                 #    return
                 ml = mlist_t(self.add_insn.d.r, self.add_insn.d.size)
                 blk.for_all_uses(ml, insn, insn.next, vstr_uses := VisitorSearchOpUses(blk))
+                if vstr_uses.other:
+                    return
                 if vstr_uses.uses:
                     self.uses.extend(vstr_uses.uses)
                     for used_op in self.used_ops:
                         if used_op.was_redefined:
                             used_op.need_copy = True
-                ml = mlist_t(self.add_insn.d.r, self.add_insn.d.size)
-                # Stop traversing if reg is redefined here
-                if is_reg_defined_here(blk, ml, insn):
+                # Stop traversing if destination reg is redefined here
+                if is_op_defined_in_insn(blk, self.add_insn.d, insn):
                     # print("reg_defined_here")
                     return
                 insn = insn.next
-            for succ in list(blk.succset):
-                succ_block = self.mba.get_mblock(succ)
-                self.process_block(succ_block, None)
+            for succ_blk in all_succ_blocks(self.mba, blk):
+                self.process_block(succ_blk, None)
 
     def optimize_uses(self):
         # print("optimize_uses")
         changed = False
-
         # self.add_insn_insn_op.for_all_ops(vstr := Visitor13b())
         # vstr.ops.setdefault(var_as_key(self.add_insn_reg_op), []).append(self.add_insn_reg_op)
         for used_op in self.used_ops:
             op_copy = mop_t(used_op.op)
             if used_op.need_copy:
                 kreg = self.mba.alloc_kreg(op_copy.size)
-                insnn = InsnBuilder(self.add_insn.ea, m_mov, op_copy.size).v(self.mba, op_copy).r(kreg).insn()
+                insnn = InsnBuilder(self.add_insn.ea, m_mov, op_copy.size).var(self.mba, op_copy).r(kreg).insn()
                 self.add_blk.insert_into_block(insnn, self.add_insn.prev)
                 for op in used_op.ops:
                     op.make_reg(kreg, op_copy.size)
@@ -118,29 +128,32 @@ class Opt(GlbOpt):
             self.print_to_log("  NOP    (blk=%d): %s" % (self.add_blk.serial, text_insn(self.add_insn)))
             self.add_blk.make_nop(self.add_insn)
             self.mark_dirty(self.add_blk, False)
+        return changed
 
 
-def is_reg_defined_here(blk, ml, insn):
-    # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
-    _def = blk.build_def_list(insn, MUST_ACCESS)
-    return _def.includes(ml)
+# def is_reg_defined_here(blk, ml, insn):
+#     # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
+#     _def = blk.build_def_list(insn, MUST_ACCESS)
+#     return _def.includes(ml)
 
 
-def is_any_op_defined_here(blk, ml, insn):
-    # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
-    _def = blk.build_def_list(insn, MUST_ACCESS)
-    # return _def.has_common(ml)
-    return _def.intersect(ml)
+# def is_any_op_defined_here(blk, ml, insn):
+#     # _def = blk.build_def_list(insn, MAY_ACCESS | FULL_XDSU)
+#     _def = blk.build_def_list(insn, MUST_ACCESS)
+#     # return _def.has_common(ml)
+#     return _def.intersect(ml)
 
 
 class VisitorSearchOpUses(mlist_mop_visitor_t):
     """
     Find usage of reg
     """
+
     def __init__(self, blk):
         mlist_mop_visitor_t.__init__(self)
         self.blk = blk
         self.uses = []
+        self.other = False
 
     def visit_mop(self, op):
         if op.is_reg() and op.size == 4:
@@ -151,13 +164,14 @@ class VisitorSearchOpUses(mlist_mop_visitor_t):
             else:
                 # If there is also some other form of usage then don't optimize this reg
                 self.uses.clear()
+                self.other = True
                 return 1
         return 0
 
 
 class VisitorSearchComplexAddRegInsns(minsn_visitor_t):
     """
-    Find complex ADDs: one part is reg and another is insn
+    Find complex ADDs: one part is reg and another is insn, destination is another reg
     """
 
     def __init__(self):
@@ -175,11 +189,12 @@ class VisitorSearchComplexAddRegInsns(minsn_visitor_t):
 def insn_is_complex_add_reg(insn, lr):
     # l is regular reg / insn
     # r is insn / regular reg
-    # d is reg
+    # d is reg (not l/r)
     if insn.opcode == m_add and insn.d.is_reg() and insn.d.size == 4:
         if pair := get_ops_pair_from_complex_add_reg_insn(insn):
-            lr.update(pair)
-            return True
+            if pair["reg"] != insn.d:
+                lr.update(pair)
+                return True
     return False
 
 

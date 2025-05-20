@@ -1,19 +1,10 @@
 import time
 from dataclasses import dataclass
-from typing import List
 
 from ida_hexrays import *
 import ida_pro
 import ida_lines
 import idc
-
-
-REG_EAX = 8
-REG_EDX = 12
-REG_ECX = 16
-REG_EBX = 20
-REG_EDI = 32
-REG_ESI = 36
 
 LogMessages = []
 
@@ -27,7 +18,7 @@ def text_insn(insn, blk=None):
 
 
 def hex_addr(ea, blk=None):
-    if blk is not None:
+    if blk:
         serial = blk.serial if type(blk) == mblock_t else blk
         return "%.5X: %d." % (ea, serial)
     else:
@@ -155,14 +146,14 @@ def all_blocks_in_mba(mba: mba_t):
         blk = blk.nextb
 
 
-def all_insns_in_block(blk: mblock_t, i1: minsn_t = None, backwards: bool = False):
+def all_insns_in_block(blk: mblock_t, backwards=False) -> minsn_t:
     if backwards:
-        insn = blk.tail if i1 is None else i1
+        insn = blk.tail
         while insn:
             yield insn
             insn = insn.prev
     else:
-        insn = blk.head if i1 is None else i1
+        insn = blk.head
         while insn:
             yield insn
             insn = insn.next
@@ -184,19 +175,7 @@ def is_op_defined_in_insn(blk: mblock_t, op: mop_t, insn: minsn_t):
     ml = mlist_t()
     blk.append_def_list(ml, op, MUST_ACCESS)
     _def = blk.build_def_list(insn, MUST_ACCESS)
-    #return _def.includes(ml)
-    return _def.has_common(ml)
-
-
-def is_op_defined_between(graph, op, blk1, blk2, m1, m2):
-    """
-    Check if op is defined in range [blk1.m1, blk2.m2)
-    """
-    ml = mlist_t()
-    blk1.append_def_list(ml, op, MUST_ACCESS)
-    a = graph.is_redefined_globally(ml, blk1.serial, blk2.serial, m1, m2, MUST_ACCESS)
-    # print(op.dstr(), blk1.serial, blk2.serial, text_insn(m1), text_insn(m2), a)
-    return a
+    return _def.includes(ml)
 
 
 def is_op_defined_in_block(blk: mblock_t, op: mop_t):
@@ -205,26 +184,12 @@ def is_op_defined_in_block(blk: mblock_t, op: mop_t):
     return blk.maybdef.includes(ml)
 
 
-def is_op_used_in_block(blk: mblock_t, op: mop_t):
-    ml = mlist_t()
-    blk.append_use_list(ml, op, MUST_ACCESS)
-    return blk.mustbuse.includes(ml)
-
-
-def get_number_of_op_definitions_in_blocks(op: mop_t, blocks: List[mblock_t]):
+def get_number_of_op_definitions_in_blocks(op, blocks):
     definitions = 0
     for blk in blocks:
         for insn in all_insns_in_block(blk):
             if is_op_defined_in_insn(blk, op, insn):
                 definitions = definitions + 1
-    return definitions
-
-
-def get_number_of_op_definitions_in_block(op: mop_t, blk: mblock_t, i1: minsn_t = None):
-    definitions = 0
-    for insn in all_insns_in_block(blk, i1=i1):
-        if is_op_defined_in_insn(blk, op, insn):
-            definitions = definitions + 1
     return definitions
 
 
@@ -258,19 +223,10 @@ def unsingle_goto_block(mba: mba_t, blk: mblock_t):
 
 def insn_is_add_var(insn, no_kregs=False):
     """
-    Check if register or stack variable addition:
+    Find register or stack variable addition:
         add    var, #0xD, var
     """
     return insn.opcode == m_add and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d and not (no_kregs and insn.l.is_kreg())
-
-
-def insn_is_zero_var(insn):
-    """
-    Check if zero is assigned to var:
-        opcode l   d
-        mov    #0, var
-    """
-    return insn and insn.opcode == m_mov and insn.l.is_zero() and insn.d.t in {mop_r, mop_S}
 
 
 @dataclass
@@ -296,19 +252,8 @@ class VisitorSimpleSearchUses(mlist_mop_visitor_t):
         return 0
 
 
-def find_op_uses_in_insn(blk: mblock_t, insn: minsn_t, op: mop_t, vstr: mlist_mop_visitor_t = None):
+def find_op_uses_in_insn(blk: mblock_t, insn: minsn_t, op: mop_t, vstr):
     ml = mlist_t()
     blk.append_use_list(ml, op, MUST_ACCESS)
-    if vstr is None:
-        vstr = VisitorSimpleSearchUses(blk, op.size, {mop_r, mop_S})
     blk.for_all_uses(ml, insn, insn.next, vstr)
-    return vstr
-
-
-def find_op_uses(blk: mblock_t, i1: minsn_t, i2: minsn_t, op: mop_t, vstr: mlist_mop_visitor_t = None):
-    ml = mlist_t()
-    blk.append_use_list(ml, op, MUST_ACCESS)
-    if vstr is None:
-        vstr = VisitorSimpleSearchUses(blk, op.size, {mop_r, mop_S})
-    blk.for_all_uses(ml, i1, i2, vstr)
     return vstr

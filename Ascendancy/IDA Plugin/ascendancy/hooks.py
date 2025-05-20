@@ -9,12 +9,13 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
     def __init__(self, *args):
         self.cnt = 0
         self.ea = 0
+        GlbOptManager.clear()
         GlbOptManager.register(opt4.Opt())
+        GlbOptManager.register(opt12.Opt())
         GlbOptManager.register(opt10.Opt())
         GlbOptManager.register(opt11.Opt())
-        GlbOptManager.register(opt12.Opt())
         GlbOptManager.register(opt15.Opt())
-        GlbOptManager.register(opt13.Opt())  # TODO
+        GlbOptManager.register(opt13.Opt())
         # GlbOptManager.register(opt16.Opt())
         super().__init__(*args)
 
@@ -51,12 +52,14 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         opt2.run_a(mba)  # mov 0 assertion
         opt7.run(mba)  # Prolog/Epilog
         opt8.run(mba)  # SAR EDX, 1Fh -> CDQ
+        opt16.run(mba) # Inlined StrCpy
         # print("PREOPTIMIZED END")
         return 0
 
     def locopt(self, mba):
         # print("LOCOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         # opt2.run_b(mba)
+        #opt12.run(mba)
         # print("LOCOPT END")
         return 0
 
@@ -70,9 +73,9 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def glbopt(self, mba):
-        # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        #print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         r = GlbOptManager.run(mba)
-        # print("GLBOPT END")
+        #print("GLBOPT END")
         return MERR_OK if r else MERR_LOOP
 
     # def prealloc(self, mba):

@@ -28,6 +28,7 @@ description:
     Test:
         36020
         3420C - Multiple jumpouts and different exit block
+        17E88 - TODO - XTRN block is already present at PREOPTIMIZED maturity. Need to optimize XTRN directly
 
 """
 import ida_frame
@@ -123,10 +124,12 @@ class Visitor9b(minsn_visitor_t):
         elif insn.opcode == m_goto and insn.l.t == mop_v:
             op = insn.l
         else:
+            #print(text_insn(insn))
             return 0
         func = ida_funcs.get_func(op.g)
         toea = op.g
         if self.entry_ea != func.start_ea:
+            #print("Found %s" % text_insn(insn))
             self.toea = toea
             self.sp = ida_frame.get_spd(func, toea)
             self.lst.append((insn, op, insn.ea, toea))
@@ -140,7 +143,7 @@ def Fix9(mba):
         if blk.type == BLT_XTRN:
             if (blk1 := blk.prevb) and blk1.flags & MBL_FAKE and blk1.type == BLT_1WAY:
                 if (blk2 := blk.nextb) and blk2.flags & MBL_FAKE and blk2.type == BLT_STOP:
-                    print("FOUND BLT_XTRN %d %.8X %.8X" % (blk.serial, blk.start, blk.end))
+                    #print("FOUND BLT_XTRN %d %.8X %.8X" % (blk.serial, blk.start, blk.end))
                     insns = []
                     if collect_exit_insns(blk.start, insns):
                         # print_insns(insns)

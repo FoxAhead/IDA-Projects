@@ -22,8 +22,8 @@ from ascendancy.utils import *
 
 
 def run_a(mba):
-    # if is_func_lib(mba.entry_ea):
-    #     return 0
+    if is_func_lib(mba.entry_ea):
+        return 0
     mba.for_all_topinsns(Visitor2())
     return 0
 

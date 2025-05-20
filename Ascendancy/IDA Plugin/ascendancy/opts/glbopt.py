@@ -42,6 +42,7 @@ class GlbOpt(ABC):
 
     def mark_dirty(self, blk: mblock_t, verify=True):
         blk.mark_lists_dirty()
+        blk.make_lists_ready()
         self.err_code = MERR_LOOP
         if verify:
             try:
@@ -49,5 +50,7 @@ class GlbOpt(ABC):
             except RuntimeError as e:
                 print("Error in opt%d (blk=%d): %s" % (self.num, blk.serial, e))
                 print_blk(blk)
+                print("mustbdef", blk.mustbdef.dstr())
+                print("maybdef", blk.maybdef.dstr())
                 # print_mba(self.mba)
                 raise e

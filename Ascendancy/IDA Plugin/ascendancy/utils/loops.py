@@ -130,7 +130,7 @@ class SingleLoop:
 
 @dataclass
 class LoopsGroup:
-    # TODO: 46480 - one loops group [25..24] have several entries: 21 and 23
+    # 46480 - one loops group [25..24] have several entries: 21 and 23
     level: int = -1
     parent: "LoopsGroup" = None
     entries: Set[int] = field(default_factory=set)

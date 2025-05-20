@@ -18,8 +18,6 @@ class ActionPropagateVar(AscendancyPluginAction):
             else:
                 self.eas.add(e0.ea)
 
-
-
     def _update(self, ctx):
         if e0 := self.get_curr_var_asg_expr(ctx):
             if e0.ea in self.eas:

@@ -10,7 +10,7 @@ def main():
                 xs = list(XrefsTo(funcea))
                 d[funcea] = len(xs)
     l = sorted(d.items(), key=lambda item: item[1], reverse=True)
-    for idx, (ea, xs) in enumerate(l[:25]):
+    for idx, (ea, xs) in enumerate(l[:50]):
         print("%.2d. %.8X %s: %d" % (idx + 1, ea, idc.get_func_name(ea), xs))
 
 

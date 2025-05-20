@@ -1,127 +1,13 @@
 from dataclasses import dataclass, field
 from typing import List, Set
 
-import ida_hexrays
-import ida_kernwin
 import networkx as nx
-from ida_hexrays import *
+from ida_hexrays import mba_t, mblock_t
+
+from utils import rotate, unsingle_goto_block
 
 
-def main():
-    ida_kernwin.msg_clear()
-
-    current_address = ida_kernwin.get_screen_ea()
-    if current_address == ida_idaapi.BADADDR:
-        ida_kernwin.warning("Could not open Microcode Explorer (bad cursor address)")
-        return
-    func = ida_funcs.get_func(current_address)
-    if not func:
-        return False
-    mba = get_microcode(func, ida_hexrays.MMAT_GLBOPT2)
-    LoopManager2.init(mba)
-
-    test2(mba).run2()
-    return
-
-    # LoopManager2.print_groups(True)
-    for group in LoopManager2.all_groups():
-        print(group.title())
-        # print(group.all_serials)
-        # for entry in group.entry_blocks(mba):
-        #    test1(group.all_loops_blocks(mba))
-
-
-class test2:
-
-    def __init__(self, mba):
-        self.mba = mba
-        self.visited = set()
-        self.chains = []
-
-    def run2(self):
-        g = LoopManager2.g.copy()
-        rem = []
-        for serial in g:
-            if LoopManager2.serial_in_cycles(serial):
-                rem.append(serial)
-        g.remove_nodes_from(rem)
-        rem = []
-        for serial in g:
-            if len(list(g.in_edges(serial))) > 1:
-                for r in list(g.in_edges(serial)):
-                    rem.append(r)
-        #g.remove_edges_from(rem)
-        for serial in g.nodes:
-            if len(list(g.in_edges(serial))) == 0:
-                print(serial)
-
-
-        fname = r"D:\graph_%.X_cut.graphml" % self.mba.entry_ea
-        nx.write_graphml_lxml(g, fname)
-        print("Graph exported to: %s" % fname)
-
-
-    def run(self):
-        self.visited.clear()
-        self.chains.clear()
-        blk = self.mba.blocks
-        while blk:
-            if blk.serial not in self.visited:
-                if blk_can_be_start(blk):
-                    chain = []
-                    self.construct_chain(blk, chain)
-                    if chain:
-                        self.chains.append(chain)
-                        print(chain)
-                    else:
-                        print(blk.serial)
-            blk = blk.nextb
-
-    def construct_chain(self, blk, chain):
-        if blk.serial in self.visited:
-            return
-        self.visited.add(blk.serial)
-        if len(chain) == 0 and blk_can_be_start(blk) or blk_can_be_finish(blk):
-            chain.append(blk.serial)
-            if blk.nsucc() == 1:
-                succ_blk = self.mba.get_mblock(blk.succ(0))
-                self.construct_chain(succ_blk, chain)
-
-
-def blk_can_be_start(blk):
-    return blk.nsucc() == 1 and not LoopManager2.serial_in_cycles(blk.serial)
-
-
-def blk_can_be_finish(blk):
-    return blk.npred() < 2 and not LoopManager2.serial_in_cycles(blk.serial)
-
-
-def all_succ_blocks(mba: mba_t, blk: mblock_t):
-    for succ in list(blk.succset):
-        yield mba.get_mblock(succ)
-
-
-def test1(blocks):
-    for blk in blocks:
-        print(blk.serial)
-
-
-def get_microcode(func, maturity):
-    """
-    Return the mba_t of the given function at the specified maturity.
-    """
-    mbr = ida_hexrays.mba_ranges_t(func)
-    hf = ida_hexrays.hexrays_failure_t()
-    ml = ida_hexrays.mlist_t()
-    ida_hexrays.mark_cfunc_dirty(func.start_ea)
-    mba = ida_hexrays.gen_microcode(mbr, hf, ml, ida_hexrays.DECOMP_NO_WAIT | ida_hexrays.DECOMP_ALL_BLKS, maturity)
-    if not mba:
-        print("0x%08X: %s" % (hf.errea, hf.desc()))
-        return None
-    return mba
-
-
-class LoopManager2(object):
+class LoopManager(object):
     entry_ea = 0
     qty = 0
     all_serials_of_cycles = set()  # All serials that belong to the cycles. Not entry blocks.
@@ -320,9 +206,13 @@ class LoopsGroup:
         self.__calculate()
         return self.__end
 
-    def entry_blocks(self, mba):
+    def entry_blocks(self, mba: mba_t, unsingle_goto=False):
         for entry in self.entries:
-            yield mba.get_mblock(entry)
+            entry_blk = mba.get_mblock(entry)
+            if not unsingle_goto:
+                yield entry_blk
+            else:
+                yield unsingle_goto_block(mba, entry_blk)
 
     def begin_block(self, mba):
         return None if self.begin is None else mba.get_mblock(self.begin)
@@ -348,11 +238,3 @@ class LoopsGroup:
             return item in self.common_serials
         else:
             return False
-
-
-def rotate(l, n):
-    return l[n:] + l[:n]
-
-
-if __name__ == '__main__':
-    main()

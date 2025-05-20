@@ -1,10 +1,8 @@
-import ida_kernwin
-
 from ascendancy.actions import AscendancyPluginAction
 
 
-class ActionActivate(AscendancyPluginAction):
-    label = "Activate"
+class ActionReload(AscendancyPluginAction):
+    label = "Reload"
 
     def _activate(self, ctx):
         pass
