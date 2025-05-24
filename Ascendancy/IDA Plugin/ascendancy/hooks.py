@@ -16,7 +16,8 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         GlbOptManager.register(opt11.Opt())
         GlbOptManager.register(opt15.Opt())
         GlbOptManager.register(opt13.Opt())
-        # GlbOptManager.register(opt16.Opt())
+        #GlbOptManager.register(opt0.Opt())
+        GlbOptManager.register(opt17.Opt())
         super().__init__(*args)
 
     def flowchart(self, fc):
@@ -68,6 +69,15 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         # print_mba(mba)
         return 0
 
+    def maturity(self, cfunc: cfunc_t, new_maturity):
+        #print("MATURITY BEGIN: cfunc.maturity=%d, new_maturity=%d" % (cfunc.maturity, new_maturity))
+        #if cfunc.maturity == CMAT_TRANS2:
+        opt18.run(cfunc)
+        #opt19.run(cfunc)
+        #print("MATURITY END")
+        return 0
+
+
     def combine(self, blk, insn):
         opt1.run(blk, insn)
         return 0
@@ -90,4 +100,5 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
 
     def func_printed(self, cfunc):
         opt5.run(cfunc)
+        #opt18.run(cfunc)
         return 0

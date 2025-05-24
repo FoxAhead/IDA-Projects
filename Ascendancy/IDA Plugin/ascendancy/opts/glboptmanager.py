@@ -25,6 +25,7 @@ class GlbOptManager(object):
         rr = True
         for num, opt in cls.opts.items():
             if not opt.delayed or rr:
+                LoopManager.init(mba)
                 r = opt.run(mba)
                 results[num] = r
                 rr = rr and r

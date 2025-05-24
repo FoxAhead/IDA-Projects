@@ -19,7 +19,7 @@ class GlbOpt(ABC):
         self.err_code = MERR_OK
         self._init()
         if not is_func_lib(mba.entry_ea) and self.active:
-            LoopManager.init(mba)
+            #LoopManager.init(mba)
             self._run()
         return self.err_code == MERR_OK
 

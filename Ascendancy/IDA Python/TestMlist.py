@@ -18,9 +18,9 @@ def main():
 
     ml1 = mlist_t()
     ml2 = mlist_t()
-    ml1.add(10, 2)
-    ml2.add(8, 2)
-    ml2.add(12, 2)
+    ml1.add(8, 6)
+    ml2.add(12, 4)
+    #ml2.add(12, 2)
 
     compare_lists(ml1, ml2)
     compare_lists(ml2, ml1)

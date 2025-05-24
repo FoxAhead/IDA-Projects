@@ -61,7 +61,9 @@ from ascendancy.utils import *
 def run(mba):
     if is_func_lib(mba.entry_ea):
         return 0
-    mba.for_all_topinsns(Visitor3b())
+    mba.for_all_topinsns(vstr := Visitor3b())
+    if vstr.result:
+        print_to_log("Optmization 3 (SAR 10h; SAR 18h -> Word; Byte): %s" % vstr.result)
 
 
 class Visitor3b(minsn_visitor_t):
@@ -71,6 +73,7 @@ class Visitor3b(minsn_visitor_t):
         self.insns1 = []  # Group with pattern 1
         self.insns2 = []  # Group with pattern 2
         self.mode = 0
+        self.result = {}
 
     def visit_minsn(self):
         if self._check_insn2(self.curins):
@@ -101,7 +104,8 @@ class Visitor3b(minsn_visitor_t):
                 self.insns1[0].l.change_size(bytes)
                 self.insns1[0].opcode = m_xds
                 self.blk.mark_lists_dirty()
-                print_to_log("Optimization 3 changed: [%s] to: [%s]" % (before, after))
+                self.result[hex_addr(self.insn1.ea)] = self.insn1.r.dstr()
+                #print_to_log("Optimization 3 changed: [%s] to: [%s]" % (before, after))
         return 0
 
     def _check_insn2(self, insn):

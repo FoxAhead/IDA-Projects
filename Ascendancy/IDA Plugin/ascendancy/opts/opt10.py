@@ -291,43 +291,45 @@ class Opt(GlbOpt):
         return op_was_redefined
 
     def optimize_exits(self, group):
-        exits = set()
-        # Find exits - not cycle blocks after this loops group
-        for blk in group.all_loops_blocks(self.mba):
-            for succ in list(blk.succset):
-                # if succ not in group:
-                if not LoopManager.serial_in_cycles(succ):
-                    exits.add(succ)
-        # print("Exits: ", exits)
-        for serial in exits:
-            exit_blk = self.mba.get_mblock(serial)
-            # If it is empty block - ignore it
-            if exit_blk.head is None:
-                continue
-            # If add_op is not used further from this block - ignore it
-            if not is_op_used_starting_from_this_block(self.mba, self.add_op, exit_blk):
-                continue
-            j_insn = None
-            use_j_insn = False
-            ea = exit_blk.head.ea
-            if exit_blk.npred() == 1:
-                end_blk = self.mba.get_mblock(exit_blk.pred(0))
-                if end_blk.serial == group.end:
-                    if is_mcode_jcond(end_blk.tail.opcode):
-                        j_insn = end_blk.tail
-                        if j_insn.opcode == m_jnz and j_insn.d.b == group.begin and j_insn.l == self.add_op:
-                            use_j_insn = True
-                        elif j_insn.opcode == m_jz and j_insn.d.b == exit_blk.serial and j_insn.l == self.add_op:
-                            use_j_insn = True
-            if use_j_insn:
-                insnn = InsnBuilder(ea, m_mov, self.add_op.size).r(mr_none).var(self.mba, self.add_op).insn()
-                insnn.l = mop_t(j_insn.r)
-            else:
-                insnn1 = self.build_new_counter_insn(ea, False)
-                insnn = InsnBuilder(ea, m_mov, self.add_op.size).i(insnn1).var(self.mba, self.add_op).insn()
-            exit_blk.insert_into_block(insnn, None)
-            self.print_to_log("    Exit: %s" % text_insn(insnn, exit_blk))
-            self.mark_dirty(exit_blk)
+        for exit_blk in group.all_exit_blocks(self.mba):
+        # exits = set()
+        # # Find exits - not cycle blocks after this loops group
+        # for blk in group.all_loops_blocks(self.mba):
+        #     for succ in list(blk.succset):
+        #         # if succ not in group:
+        #         if not LoopManager.serial_in_cycles(succ):
+        #             exits.add(succ)
+        # # print("Exits: ", exits)
+        # for serial in exits:
+        #     exit_blk = self.mba.get_mblock(serial)
+        #     # If it is empty block - ignore it
+        #     if exit_blk.head is None:
+        #         continue
+            # Process if add_op is used further from this block
+            if is_op_used_starting_from_this_block(self.mba, self.add_op, exit_blk):
+                j_insn = None
+                use_j_insn = False
+                ea = exit_blk.head.ea
+                # Try to get end condition from j_cond
+                if exit_blk.npred() == 1:
+                    end_blk = self.mba.get_mblock(exit_blk.pred(0))
+                    if end_blk.serial == group.end:
+                        if is_mcode_jcond(end_blk.tail.opcode):
+                            j_insn = end_blk.tail
+                            if j_insn.opcode == m_jnz and j_insn.d.b == group.begin and j_insn.l == self.add_op:
+                                use_j_insn = True
+                            elif j_insn.opcode == m_jz and j_insn.d.b == exit_blk.serial and j_insn.l == self.add_op:
+                                use_j_insn = True
+                if use_j_insn:
+                    # Use end condition
+                    insnn = InsnBuilder(ea, m_mov, self.add_op.size).r(mr_none).var(self.mba, self.add_op).insn()
+                    insnn.l = mop_t(j_insn.r)
+                else:
+                    insnn1 = self.build_new_counter_insn(ea, False)
+                    insnn = InsnBuilder(ea, m_mov, self.add_op.size).i(insnn1).var(self.mba, self.add_op).insn()
+                exit_blk.insert_into_block(insnn, None)
+                self.print_to_log("    Exit: %s" % text_insn(insnn, exit_blk))
+                self.mark_dirty(exit_blk)
 
     def build_new_counter_insn(self, ea, compensate):
         if self.mult > 1:
@@ -590,18 +592,3 @@ def mark_dirty(mba: mba_t, blk: mblock_t, verify=True):
             raise e
 
 
-def is_op_used_starting_from_this_block(mba, op, blk):
-    visited = set()
-    return is_op_used_in_block_recursive(mba, op, blk, visited)
-
-
-def is_op_used_in_block_recursive(mba, op, blk, visited):
-    if blk.serial in visited:
-        return False
-    visited.add(blk.serial)
-    if is_op_used_in_block(blk, op):
-        return True
-    for succ_blk in all_succ_blocks(mba, blk):
-        if is_op_used_in_block_recursive(mba, op, succ_blk, visited):
-            return True
-    return False

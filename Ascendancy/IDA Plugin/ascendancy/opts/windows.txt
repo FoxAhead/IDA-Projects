@@ -1,0 +1,2238 @@
+MEM_REQ        2300000
+
+HAZEVIBLES     200
+NUMTABLES      23
+TABLE          DATA\RACEA03.HAZ
+TABLE          DATA\BLACK00.HAZ
+TABLE          DATA\BLACK04.HAZ
+TABLE          DATA\BLACK08.HAZ
+TABLE          DATA\BLACK12.HAZ
+TABLE          DATA\BLACK16.HAZ
+TABLE          DATA\BLACK20.HAZ
+TABLE          DATA\BLACK24.HAZ
+TABLE          DATA\RED01.HAZ
+TABLE          DATA\GREEN01.HAZ
+TABLE          DATA\BLUE01.HAZ
+TABLE          DATA\WHITE00.HAZ
+TABLE          DATA\WHITE01.HAZ
+TABLE          DATA\WHITE02.HAZ
+TABLE          DATA\WHITE03.HAZ
+TABLE          DATA\WHITE04.HAZ
+TABLE          DATA\WHITE05.HAZ
+TABLE          DATA\WHITE06.HAZ
+TABLE          DATA\WHITE07.HAZ
+TABLE          DATA\WHITE08.HAZ
+TABLE          DATA\WHITE09.HAZ
+TABLE          DATA\HILITE00.HAZ
+TABLE          DATA\BW.HAZ
+
+
+FONTS          300
+SMALLFONT      DATA\SMFONT.FNT
+LARGEFONT      DATA\BIGFONT.FNT
+
+TYPE           100
+STATENUMBER    0
+SHAPEFILE      DATA\0OPENING.SHP
+
+TYPE           0
+NAME           INTRO
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             200
+X1             477
+Y1             230
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     6
+SENDPARAM2     1
+HELPINDEX      intro
+WINITEMS       1
+TEXTITEM       0 Play^Introduction 3 0 0
+
+TYPE           0
+NAME           PLAYTUTORIAL
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             240
+X1             477
+Y1             270
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     15
+SENDPARAM2     1
+HELPINDEX      tutorial
+WINITEMS       1
+TEXTITEM       0 Tutorial 3 0 0
+
+TYPE           0
+NAME           FRESHGAME
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             280
+X1             477
+Y1             310
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     3
+SENDPARAM2     1
+HELPINDEX      newgame
+WINITEMS       1
+TEXTITEM       0 New^Game 3 0 0
+
+
+TYPE           0
+NAME           RESUME
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             320
+X1             477
+Y1             350
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     1
+SENDPARAM2     1
+HELPINDEX      resume
+WINITEMS       1
+TEXTITEM       0 Return^to^Current^Game 3 0 0
+
+
+TYPE           0
+NAME           LOAD
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             360
+X1             477
+Y1             390
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     4
+SENDPARAM2     1
+HELPINDEX      loadgame
+WINITEMS       2
+TEXTITEM       0 Load^Game 2 0 4
+TEXTITEM       0 Alt-L 2 0 18
+
+
+TYPE           0
+NAME           SAVE      
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             400
+X1             477
+Y1             430
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     2
+SENDPARAM2     1
+HELPINDEX      savegame
+WINITEMS       2
+TEXTITEM       0 Save^Game 2 0 4
+TEXTITEM       0 Alt-S 2 0 18
+
+
+
+TYPE           0
+NAME           EXITTODOS
+PARENT         NONE
+STATE          1 0
+MOUSEFOCUS     1
+X0             159
+Y0             440
+X1             477
+Y1             470
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    2
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      exitdos
+WINITEMS       2
+TEXTITEM       0 Exit^to^DOS 2 0 4
+TEXTITEM       0 Alt-X 2 0 18
+
+
+
+
+
+TYPE           100
+STATENUMBER    1
+SHAPEFILE      DATA\1STARMAP.SHP
+
+TYPE           5
+NAME           RACES
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+X0             474
+Y0             286
+X1             632
+Y1             316
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     7
+SENDPARAM2     1
+HELPINDEX      1races
+WINITEMS       1
+TEXTITEM       0 Species 0 2 2
+
+
+TYPE           2
+NAME           COSMOSWnd
+PARENT         NONE
+STATE          4 1 3 7 13
+X0             7
+Y0             7
+X1             465
+Y1             472
+BACKGRNDCOLOR  0
+STAR_SHAPES    DATA\COS_STAR.SHP
+SHIP_SHAPES    DATA\COS_SHIP.SHP
+NUM_STARS      100
+NUM_LANES      100
+SMALLSEED      1
+MEDIUMSEED     1
+LARGESEED      1
+HUGESEED       1
+CURSORSHAPE    2
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      coswnd
+
+
+TYPE           0
+NAME           ROTRIGHT
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             495
+Y0             364
+X1             509
+Y1             394
+SHAPEFRAME     8
+SOUNDCHANNEL   0
+SENDMESSAGE    51
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           ROTLEFT
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             479
+Y0             364
+X1             494
+Y1             394
+SHAPEFRAME     9
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           ROTUP
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             518
+Y0             364
+X1             548
+Y1             379
+SHAPEFRAME     10
+SOUNDCHANNEL   0
+SENDMESSAGE    52
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           ROTDOWN
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             518
+Y0             380
+X1             548
+Y1             394
+SHAPEFRAME     11
+SOUNDCHANNEL   0
+SENDMESSAGE    53
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           ZOOMOUT
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             557
+Y0             380
+X1             587
+Y1             394
+SHAPEFRAME     12
+SOUNDCHANNEL   0
+SENDMESSAGE    55
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           ZOOMIN
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             557
+Y0             364
+X1             587
+Y1             379
+SHAPEFRAME     13
+SOUNDCHANNEL   0
+SENDMESSAGE    54
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      1spin
+WINITEMS       0
+
+TYPE           0
+NAME           CENTERHOLO
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+X0             596
+Y0             364
+X1             626
+Y1             394
+SHAPEFRAME     14
+SOUNDCHANNEL   0
+SENDMESSAGE    56
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      1center
+WINITEMS       0
+
+TYPE           25
+NAME           TOGLANES
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+BUTTONSTATE    1
+X0             479
+Y0             403
+X1             509
+Y1             433
+SHAPEFRAME     15
+SOUNDCHANNEL   0
+SENDMESSAGE    57
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      toglane
+WINITEMS       0
+
+TYPE           25
+NAME           TOGEMPIRE
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+BUTTONSTATE    0
+X0             518
+Y0             403
+X1             548
+Y1             433
+SHAPEFRAME     16
+SOUNDCHANNEL   0
+SENDMESSAGE    60
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      togemp
+WINITEMS       0
+
+TYPE           25
+NAME           TOGSHIPS
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+BUTTONSTATE    1
+X0             557
+Y0             403
+X1             587
+Y1             433
+SHAPEFRAME     17
+SOUNDCHANNEL   0
+SENDMESSAGE    58
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      togship
+WINITEMS       0
+
+TYPE           25
+NAME           TOGCOLONIES
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+MOUSEFOCUS     1
+BUTTONSTATE    1
+X0             596
+Y0             403
+X1             626
+Y1             433
+SHAPEFRAME     18
+SOUNDCHANNEL   0
+SENDMESSAGE    61
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      togcol
+WINITEMS       0
+
+
+TYPE           3
+NAME           RACECONTROLS
+PARENT         COSMOSWnd
+STATE          3 1 7 13
+X0             474
+Y0             442
+X1             632
+Y1             472
+SHAPEFRAME     19
+SENDMESSAGE    62
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      rcontrol
+NUMCONTROLS    7
+RACE1CONTROL   1 479 449 495 465 0 20
+RACE2CONTROL   2 501 449 517 465 0 25
+RACE3CONTROL   4 523 449 539 465 0 30
+RACE4CONTROL   8 545 449 561 465 0 35
+RACE5CONTROL   16 567 449 583 465 0 40
+RACE6CONTROL   32 589 449 605 465 0 45
+RACE7CONTROL   64 611 449 627 465 0 50
+
+
+
+TYPE           0
+NAME           RESEARCH
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+X0             474
+Y0             208
+X1             632
+Y1             238
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     20
+SENDPARAM2     1
+HELPINDEX      1res
+WINITEMS       2
+TEXTITEM       0 Research 0 2 2
+SHAPEITEM      1 data\1starmap.shp 3 109 0
+
+
+
+TYPE           0
+NAME           FLEET
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+X0             474
+Y0             169
+X1             632
+Y1             199
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     18
+SENDPARAM2     1
+HELPINDEX      1ships
+WINITEMS       2
+TEXTITEM       0 Ships 0 2 2
+SHAPEITEM      1 data\1starmap.shp 4 109 0
+
+
+
+TYPE           0
+NAME           STATUS
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+X0             474
+Y0             130
+X1             632
+Y1             160
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     10
+SENDPARAM2     1
+HELPINDEX      1plan
+WINITEMS       2
+TEXTITEM       0 Planets 0 2 2
+SHAPEITEM      1 data\1starmap.shp 5 109 0
+
+TYPE           0
+NAME           SPECIALAB
+PARENT         NONE
+STATE          1 1 
+MOUSEFOCUS     1
+X0             474
+Y0             247
+X1             632
+Y1             277
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    5
+SENDPARAM1     0
+SENDPARAM2     1
+HELPINDEX      1special
+WINITEMS       2
+TEXTITEM       0 Special^Ability 0 2 2
+SHAPEITEM      1 data\1starmap.shp 7 109 0
+
+
+
+TYPE           15
+NAME           TURNCOUNT
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     0
+X0             474
+Y0             7
+X1             632
+Y1             43
+SHAPEFRAME     65
+DIGITFRAMES    55
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      turncnt
+WINITEMS       0
+
+TYPE           0
+NAME           NEXTTURN
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+X0             474
+Y0             52
+X1             548
+Y1             82
+SHAPEFRAME     65
+SOUNDCHANNEL   0
+SENDMESSAGE    7
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      1next1
+WINITEMS       0
+
+TYPE           25
+NAME           NEXTTURNCONT
+PARENT         NONE
+STATE          1 1
+MOUSEFOCUS     1
+BUTTONSTATE    0
+X0             557
+Y0             52
+X1             632
+Y1             82
+SHAPEFRAME     66
+SOUNDCHANNEL   0
+SENDMESSAGE    8
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      1next2
+WINITEMS       0
+
+
+TYPE           100
+STATENUMBER    3
+SHAPEFILE      DATA\3CFGNEW.SHP
+
+TYPE           18
+NAME           NEWGAMEWND
+PARENT         NONE
+STATE          1 3 
+MOUSEFOCUS     0
+X0             334
+Y0             12
+X1             488
+Y1             364
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      ngwnd
+WINITEMS       0
+
+TYPE           0
+NAME           GALAXY_MORE
+PARENT         NEWGAMEWND
+STATE          1 3 
+MOUSEFOCUS     1
+X0             7
+Y0             381
+X1             122
+Y1             472
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    501
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      gmore
+WINITEMS       2
+SHAPEITEM      1 data\3cfgnew.shp 0 0 0
+TEXTITEM       0 Star^Density 2 0 10
+
+TYPE           0
+NAME           PLAYERS_MORE
+PARENT         NEWGAMEWND
+STATE          1 3 
+MOUSEFOCUS     1
+X0             131
+Y0             381
+X1             246
+Y1             472
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    503
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      spemore
+WINITEMS       2
+SHAPEITEM      1 data\3cfgnew.shp 0 0 0
+TEXTITEM       0 Species 2 0 10
+
+TYPE           0
+NAME           DIFFICULTYMORE
+PARENT         NEWGAMEWND
+STATE          1 3 
+MOUSEFOCUS     1
+X0             255
+Y0             381
+X1             370
+Y1             472
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    505
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      atmos_h
+WINITEMS       2
+SHAPEITEM      1 data\3cfgnew.shp 0 0 0
+TEXTITEM       0 Atmosphere 2 0 10
+
+TYPE           0
+NAME           Player^Color
+PARENT         NONE
+STATE          1 3 
+MOUSEFOCUS     0
+X0             379
+Y0             381
+X1             493
+Y1             419
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      pcolor
+WINITEMS       0
+
+TYPE           10
+NAME           RACELIST
+PARENT         NEWGAMEWND
+STATE          1 3 
+MOUSEFOCUS     0
+X0             502
+Y0             45
+X1             632
+Y1             372
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      racelist
+
+TYPE           11
+NAME           LOADSCREEN
+PARENT         NONE
+STATE          3 2 4 15 
+MOUSEFOCUS     0
+X0             7
+Y0             7
+X1             632
+Y1             37
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      loadscr
+WINITEMS       0
+
+TYPE           10
+NAME           LOADLIST
+PARENT         LOADSCREEN
+STATE          3 2 4 15
+MOUSEFOCUS     0
+X0             7
+Y0             46
+X1             632
+Y1             472
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      loadscr
+
+
+TYPE           100
+STATENUMBER    7
+SHAPEFILE      DATA\7RACESEL.SHP
+
+TYPE           6
+NAME           RACE_1
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             7
+X1             632
+Y1             37
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_2
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             46
+X1             632
+Y1             76
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_3
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             85
+X1             632
+Y1             115
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_4
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             124
+X1             632
+Y1             154
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_5
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             163
+X1             632
+Y1             193
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_6
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             202
+X1             632
+Y1             232
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           6
+NAME           RACE_7
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             241
+X1             632
+Y1             271
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     13
+SENDPARAM2     1
+HELPINDEX      racesel
+WINITEMS       0
+
+TYPE           0
+NAME           Intelligence
+PARENT         NONE
+STATE          1 7 
+MOUSEFOCUS     1
+X0             474
+Y0             303
+X1             632
+Y1             333
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     14
+SENDPARAM2     1
+HELPINDEX      inteli
+WINITEMS       0
+
+
+
+TYPE           100
+STATENUMBER    8
+SHAPEFILE      DATA\8SHIPDES.SHP
+
+TYPE           8
+NAME           SHIPDESSCREEN
+PARENT         NONE
+STATE          1 8 
+MOUSEFOCUS     0
+X0             7
+Y0             114
+X1             476
+Y1             472
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     1
+SENDPARAM2     1
+HELPINDEX      shipdes
+
+TYPE           10
+NAME           GIZLIST
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     0
+X0             485
+Y0             86
+X1             632
+Y1             471
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+
+TYPE           0
+NAME           WEAPONS
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             485
+Y0             7
+X1             515
+Y1             37
+SHAPEFRAME     2
+SOUNDCHANNEL   0
+SENDMESSAGE    51
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      weapon
+WINITEMS       0
+
+TYPE           0
+NAME           HULL
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             524
+Y0             7
+X1             593
+Y1             37
+SHAPEFRAME     3
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      hull
+WINITEMS       0
+
+TYPE           0
+NAME           DEFENSES
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             602
+Y0             7
+X1             632
+Y1             37
+SHAPEFRAME     4
+SOUNDCHANNEL   0
+SENDMESSAGE    52
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      defense
+WINITEMS       0
+
+TYPE           0
+NAME           ENGINES
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             485
+Y0             46
+X1             515
+Y1             76
+SHAPEFRAME     5
+SOUNDCHANNEL   0
+SENDMESSAGE    54
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      engine
+WINITEMS       0
+
+TYPE           0
+NAME           SENSORS
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             524
+Y0             46
+X1             554
+Y1             76
+SHAPEFRAME     6
+SOUNDCHANNEL   0
+SENDMESSAGE    53
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      scanner
+WINITEMS       0
+
+TYPE           0
+NAME           ENERGY
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             563
+Y0             46
+X1             593
+Y1             76
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    55
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      energy
+WINITEMS       0
+
+TYPE           0
+NAME           SPECIAL
+PARENT         SHIPDESSCREEN
+STATE          1 8 
+MOUSEFOCUS     1
+X0             602
+Y0             46
+X1             632
+Y1             76
+SHAPEFRAME     8
+SOUNDCHANNEL   0
+SENDMESSAGE    57
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      special
+WINITEMS       0
+
+
+TYPE           16
+NAME           STATUSWND
+PARENT         NONE
+STATE          1 10 
+MOUSEFOCUS     0
+X0             7
+Y0             7
+X1             632
+Y1             472
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      statwnd
+WINITEMS       0
+
+TYPE           10
+NAME           STATPLANLST
+PARENT         STATUSWND
+STATE          1 10 
+MOUSEFOCUS     0
+X0             7
+Y0             46
+X1             632
+Y1             472
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      statwnd
+
+
+TYPE           100
+STATENUMBER    13
+SHAPEFILE      DATA\13NEGOT.SHP
+
+TYPE           21
+NAME           NEGSCREEN
+PARENT         NONE
+STATE          1 13 
+MOUSEFOCUS     0
+X0             320
+Y0             0
+X1             639
+Y1             479
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      negscr
+WINITEMS       0
+
+TYPE           26
+NAME           ALIENDIP
+PARENT         NEGSCREEN
+STATE          1 13 
+MOUSEFOCUS     0
+X0             336
+Y0             215
+X1             632
+Y1             316
+SHAPEFRAME     -1
+SOUNDCHANNEL   -0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      aliendip
+WINITEMS       0
+
+TYPE           10
+NAME           PLAYERDIP
+PARENT         NEGSCREEN
+STATE          1 13 
+MOUSEFOCUS     0
+X0             336
+Y0             325
+X1             632
+Y1             472
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      playdip
+
+
+TYPE           12
+NAME           INTELSCREEN
+PARENT         NONE
+STATE          1 14 
+MOUSEFOCUS     0
+X0             7
+Y0             7
+X1             632
+Y1             34
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    3
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      intscr
+WINITEMS       0
+
+TYPE           10
+NAME           INTELLIST
+PARENT         INTELSCREEN
+STATE          1 14 
+MOUSEFOCUS     0
+X0             7
+Y0             46
+X1             632
+Y1             472
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      intscr
+
+
+TYPE           100
+STATENUMBER    16
+SHAPEFILE      DATA\16BATTLE.SHP
+
+TYPE           19
+NAME           BatControlWnd
+PARENT         NONE
+STATE          1 16
+MOUSEFOCUS     0
+X0             0
+Y0             0
+X1             0
+Y1             0
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           10
+NAME           BatListWnd
+PARENT         BatControlWnd
+STATE          1 16 
+MOUSEFOCUS     0
+X0             474
+Y0             142
+X1             632
+Y1             394
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+
+TYPE           4
+NAME           BatModeWnd
+PARENT         NONE
+STATE          1 16
+X0             7
+Y0             7
+X1             465
+Y1             472
+BACKGRNDCOLOR  0
+CURSORSHAPE    2
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batmode
+
+TYPE           25
+NAME           TOGGRID
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+BUTTONSTATE    1
+X0             557
+Y0             403
+X1             587
+Y1             433
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    74
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      toggrid
+WINITEMS       0
+
+TYPE           0
+NAME           BATROTLEFT
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             479
+Y0             403
+X1             493
+Y1             433
+SHAPEFRAME     1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      batspin
+WINITEMS       0
+
+TYPE           0
+NAME           BATROTRIGHT
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             494
+Y0             403
+X1             509
+Y1             433
+SHAPEFRAME     2
+SOUNDCHANNEL   0
+SENDMESSAGE    51
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      batspin
+WINITEMS       0
+
+TYPE           0
+NAME           BATZOOMIN
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             518
+Y0             403
+X1             548
+Y1             418
+SHAPEFRAME     3
+SOUNDCHANNEL   0
+SENDMESSAGE    54
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      batspin
+WINITEMS       0
+
+TYPE           0
+NAME           BATZOOMOUT
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             518
+Y0             419
+X1             548
+Y1             433
+SHAPEFRAME     4
+SOUNDCHANNEL   0
+SENDMESSAGE    55
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      batspin
+WINITEMS       0
+
+TYPE           0
+NAME           RECENTER
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             596
+Y0             442
+X1             626
+Y1             472
+SHAPEFRAME     5
+SOUNDCHANNEL   0
+SENDMESSAGE    71
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batcent
+WINITEMS       0
+
+TYPE           25
+NAME           TOGELEV
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+BUTTONSTATE    1
+X0             596
+Y0             403
+X1             626
+Y1             433
+SHAPEFRAME     6
+SOUNDCHANNEL   0
+SENDMESSAGE    76
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      togele
+WINITEMS       0
+
+TYPE           31
+NAME           ABANDON
+PARENT         BatModeWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             479
+Y0             442
+X1             548
+Y1             472
+SHAPEFRAME     8
+SOUNDCHANNEL   0
+SENDMESSAGE    84
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      bataban
+WINITEMS       0
+
+TYPE           32
+NAME           My^Items
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             479
+Y0             103
+X1             548
+Y1             133
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    804
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      myitem
+WINITEMS       0
+
+TYPE           0
+NAME           Other^Items
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             557
+Y0             103
+X1             626
+Y1             133
+SHAPEFRAME     9
+SOUNDCHANNEL   0
+SENDMESSAGE    805
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      otitem
+WINITEMS       0
+
+TYPE           0
+NAME           Repeat
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             531
+Y0             55
+X1             574
+Y1             85
+SHAPEFRAME     17
+SOUNDCHANNEL   0
+SENDMESSAGE    809
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      batrep
+WINITEMS       0
+
+
+TYPE           0
+NAME           Pass
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             479
+Y0             55
+X1             522
+Y1             85
+SHAPEFRAME     16
+SOUNDCHANNEL   0
+SENDMESSAGE    807
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batpass
+WINITEMS       0
+
+TYPE           0
+NAME           Auto
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             583
+Y0             55
+X1             626
+Y1             85
+SHAPEFRAME     18
+SOUNDCHANNEL   0
+SENDMESSAGE    808
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batauto
+WINITEMS       0
+
+TYPE           0
+NAME           W
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             479
+Y0             103
+X1             509
+Y1             133
+SHAPEFRAME     12
+SOUNDCHANNEL   0
+SENDMESSAGE    810
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batlw
+WINITEMS       0
+
+TYPE           0
+NAME           S
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             518
+Y0             103
+X1             548
+Y1             133
+SHAPEFRAME     13
+SOUNDCHANNEL   0
+SENDMESSAGE    811
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batls
+WINITEMS       0
+
+TYPE           0
+NAME           Z
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             557
+Y0             103
+X1             587
+Y1             133
+SHAPEFRAME     15
+SOUNDCHANNEL   0
+SENDMESSAGE    813
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batspec
+WINITEMS       0
+
+TYPE           0
+NAME           I
+PARENT         BatControlWnd
+STATE          1 16
+MOUSEFOCUS     1
+X0             596
+Y0             103
+X1             626
+Y1             133
+SHAPEFRAME     14
+SOUNDCHANNEL   0
+SENDMESSAGE    812
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      batelse
+WINITEMS       0
+
+
+TYPE           7
+NAME           PLANETALLOC
+PARENT         NONE
+STATE          1 17 
+MOUSEFOCUS     0
+X0             0
+Y0             0
+X1             639
+Y1             479
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    3
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      planal
+WINITEMS       0
+
+TYPE           10
+NAME           PLANLIST
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             120
+Y0             120
+X1             520
+Y1             420
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+
+TYPE           14
+NAME           PLSQUARE
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             152
+Y0             120
+X1             487
+Y1             375
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           29
+NAME           PLRES
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             7
+Y0             7
+X1             114
+Y1             106
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      plres
+WINITEMS       0
+
+TYPE           29
+NAME           PLIND
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             123
+Y0             7
+X1             230
+Y1             106
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     1
+SENDPARAM2     0
+HELPINDEX      plind
+WINITEMS       0
+
+TYPE           29
+NAME           PLPRO
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             239
+Y0             7
+X1             346
+Y1             106
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     2
+SENDPARAM2     0
+HELPINDEX      plpro
+WINITEMS       0
+
+TYPE           29
+NAME           PLPOP
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             355
+Y0             7
+X1             454
+Y1             106
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     4
+SENDPARAM2     0
+HELPINDEX      plpop
+WINITEMS       0
+
+TYPE           29
+NAME           PLBUILD
+PARENT         PLANETALLOC
+STATE          1 17 
+MOUSEFOCUS     0
+X0             463
+Y0             8
+X1             632
+Y1             106
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    51
+SENDPARAM1     1
+SENDPARAM2     0
+HELPINDEX      plbuild
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT0
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             300
+X1             500
+Y1             330
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT1
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             265
+X1             500
+Y1             295
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT2
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             265
+X1             500
+Y1             295
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT3
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             195
+X1             500
+Y1             225
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT4
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             160
+X1             500
+Y1             190
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           PLSQBUT5
+PARENT         PLSQUARE
+STATE          1 17 
+MOUSEFOCUS     1
+X0             300
+Y0             230
+X1             500
+Y1             260
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    55
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           17
+NAME           FLEETWND
+PARENT         NONE
+STATE          1 18 
+MOUSEFOCUS     0
+X0             7
+Y0             7
+X1             632
+Y1             472
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      fleetwin
+WINITEMS       0
+
+TYPE           10
+NAME           STATSHIPLST
+PARENT         FLEETWND
+STATE          1 18 
+MOUSEFOCUS     0
+X0             7
+Y0             46
+X1             632
+Y1             472
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      fleetwin
+
+
+TYPE           100
+STATENUMBER    20
+SHAPEFILE      DATA\20RES.SHP
+
+TYPE           9
+NAME           RESWIN
+PARENT         NONE
+STATE          1 20 
+MOUSEFOCUS     0
+X0             7
+Y0             46
+X1             476
+Y1             472
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     0
+SENDPARAM2     1
+HELPINDEX      reswin
+WINITEMS       0
+
+TYPE           0
+NAME           RESROTLEFT
+PARENT         RESWIN
+STATE          1 20
+MOUSEFOCUS     1
+X0             524
+Y0             442
+X1             539
+Y1             472
+SHAPEFRAME     0
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      resmove
+WINITEMS       0
+
+TYPE           0
+NAME           RESROTRIGHT
+PARENT         RESWIN
+STATE          1 20
+MOUSEFOCUS     1
+X0             540
+Y0             442
+X1             554
+Y1             472
+SHAPEFRAME     1
+SOUNDCHANNEL   0
+SENDMESSAGE    51
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      resmove
+WINITEMS       0
+
+TYPE           0
+NAME           RESMOVEUP
+PARENT         RESWIN
+STATE          1 20
+MOUSEFOCUS     1
+X0             563
+Y0             442
+X1             593
+Y1             457
+SHAPEFRAME     2
+SOUNDCHANNEL   0
+SENDMESSAGE    52
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      resmove
+WINITEMS       0
+
+TYPE           0
+NAME           RESMOVEDOWN
+PARENT         RESWIN
+STATE          1 20
+MOUSEFOCUS     1
+X0             563
+Y0             458
+X1             593
+Y1             472
+SHAPEFRAME     3
+SOUNDCHANNEL   0
+SENDMESSAGE    53
+SENDPARAM1     999
+SENDPARAM2     0
+HELPINDEX      resmove
+WINITEMS       0
+
+TYPE           1
+NAME           INTROFLIC
+PARENT         NONE
+STATE          1 6
+X0             0
+Y0             0
+X1             639
+Y1             479
+FLICFILE       data\intro65a.flc
+BUFFERMEGS     2
+PRELOADMEGS    2
+MAXFRAME_KB    64
+READSIZE_KB    24
+SKIPFRAME      -1
+SENDMESSAGE    3
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+LOOPCOUNT      1
+SHOWINFO       0
+
+TYPE           30
+NAME           STARTGAME
+PARENT         NONE
+STATE          1 12
+MOUSEFOCUS     0
+X0             0
+Y0             0
+X1             639
+Y1             400
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+
+TYPE           24
+NAME           ENDGAME
+PARENT         NONE
+STATE          1 9
+MOUSEFOCUS     0
+X0             0
+Y0             0
+X1             639
+Y1             479
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+
+TYPE           13
+NAME           WMGRDEBUG
+X0             0
+Y0             0
+X1             335
+Y1             323
+cX0            7
+cY0            7
+cX1            327
+cY1            274
+SHAPEFILE      DATA\TESTDLG.SHP
+
+TYPE           0
+NAME           W
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             15
+Y0             283
+X1             45
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1002
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           M
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             55
+Y0             283
+X1             85
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1003
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           C
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             95
+Y0             283
+X1             125
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1004
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           P
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             135
+Y0             283
+X1             165
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1005
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           N
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             175
+Y0             283
+X1             205
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    1006
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+
+TYPE           0
+NAME           EXIT
+PARENT         WMGRDEBUG
+STATE          0
+MOUSEFOCUS     1
+X0             249
+Y0             283
+X1             318
+Y1             313
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    201
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           10
+NAME           DBGWNDLIST
+PARENT         WMGRDEBUG
+STATE          0 
+MOUSEFOCUS     0
+X0             7
+Y0             57
+X1             327
+Y1             274
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+
+TYPE           20
+NAME           HELPWINDOW
+PARENT         NONE
+STATE          0 
+MOUSEFOCUS     0
+X0             152
+Y0             120
+X1             487
+Y1             375
+SHAPEFRAME     7
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           HELPBUTTON0
+PARENT         HELPWINDOW
+STATE          0 
+MOUSEFOCUS     1
+X0             160
+Y0             120
+X1             479
+Y1             359
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           HELPBUTTON1
+PARENT         HELPWINDOW
+STATE          0 
+MOUSEFOCUS     1
+X0             160
+Y0             120
+X1             479
+Y1             359
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           HELPBUTTON2
+PARENT         HELPWINDOW
+STATE          0 
+MOUSEFOCUS     1
+X0             160
+Y0             120
+X1             479
+Y1             359
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           HELPBUTTON3
+PARENT         HELPWINDOW
+STATE          0 
+MOUSEFOCUS     1
+X0             160
+Y0             120
+X1             479
+Y1             359
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           HELPBUTTON4
+PARENT         HELPWINDOW
+STATE          0 
+MOUSEFOCUS     1
+X0             160
+Y0             120
+X1             479
+Y1             359
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           22
+NAME           ABILITYWIN
+PARENT         NONE
+STATE          0 
+MOUSEFOCUS     0
+X0             60
+Y0             100
+X1             395
+Y1             355
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           ABILBUTTON0
+PARENT         ABILITYWIN
+STATE          0 
+MOUSEFOCUS     1
+X0             60
+Y0             100
+X1             395
+Y1             355
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           ABILBUTTON1
+PARENT         ABILITYWIN
+STATE          0 
+MOUSEFOCUS     1
+X0             60
+Y0             100
+X1             395
+Y1             355
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           23
+NAME           EVENTWIN
+PARENT         NONE
+STATE          0 
+MOUSEFOCUS     0
+X0             60
+Y0             100
+X1             395
+Y1             355
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    0
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           EVENTBUTTON0
+PARENT         EVENTWIN
+STATE          0 
+MOUSEFOCUS     1
+X0             70
+Y0             320
+X1             180
+Y1             345
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+TYPE           0
+NAME           EVENTBUTTON1
+PARENT         EVENTWIN
+STATE          0 
+MOUSEFOCUS     1
+X0             275
+Y0             320
+X1             385
+Y1             345
+SHAPEFRAME     -1
+SOUNDCHANNEL   0
+SENDMESSAGE    50
+SENDPARAM1     0
+SENDPARAM2     0
+HELPINDEX      0
+WINITEMS       0
+
+END            -1
+

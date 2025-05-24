@@ -116,12 +116,13 @@ class Opt(GlbOpt):
                     add_blk.make_nop(add_insn)
                     self.mark_dirty(add_blk)
                     # Inspect blocks for usage and replace var
-                    for blk in self.get_blocks_for_traversal(group):
+                    #for blk in self.get_blocks_for_traversal(group):
+                    for blk in group.all_loops_blocks(self.mba):
                         before0 = 1
                         before = 1
                         for insn in all_insns_in_block(blk):
-                            # If this is the add_blk then consider position of instructions
-                            # If insn is between add_insn0 and add_insn, then add/sub 1
+                            # If this is the add_blk then consider position of instructions:
+                            # if insn is between add_insn0 and add_insn, then add/sub 1
                             if blk.serial == add_blk.serial:
                                 if insn.equal_insns(add_insn0, EQ_CMPDEST):
                                     before0 = -1
@@ -130,18 +131,33 @@ class Opt(GlbOpt):
                                     before = -1
                                     continue
                             diff = before0 - before
-                            for op in uses_of_op(add_op, blk, insn):
+                            vstr = find_op_uses_in_insn(blk, insn, add_op)
+                            for var_use in vstr.uses:
+                            #for op in uses_of_op(add_op, blk, insn):
                                 # print("USE %s" % op.dstr())
                                 if diff == 0:
+                                    # var_use.op = add_op0  # May use this?
                                     if add_op0.t == mop_r:
-                                        op.make_reg(add_op0.r, add_op0.size)
+                                        var_use.op.make_reg(add_op0.r, add_op0.size)
                                     elif add_op0.t == mop_S:
-                                        op.make_stkvar(self.mba, add_op0.s.off)
-                                        op.size = add_op0.size
+                                        var_use.op.make_stkvar(self.mba, add_op0.s.off)
+                                        var_use.op.size = add_op0.size
                                 else:
                                     insnn = InsnBuilder(insn.ea, m_add if diff > 0 else m_sub, add_op0.size).var(self.mba, add_op0).n(1).insn()
-                                    op.create_from_insn(insnn)
+                                    var_use.op.create_from_insn(insnn)
                                 self.mark_dirty(blk)
+                    # Process exits
+                    self.optimize_exits(group, add_op0, add_op)
+
+    def optimize_exits(self, group: LoopsGroup, add_op0: mop_t, add_op: mop_t):
+        for exit_blk in group.all_exit_blocks(self.mba):
+            # Process if add_op is used further from this block
+            if is_op_used_starting_from_this_block(self.mba, add_op, exit_blk):
+                ea = exit_blk.head.ea
+                insnn = InsnBuilder(ea, m_mov, add_op.size).var(self.mba, add_op0).var(self.mba, add_op).insn()
+                exit_blk.insert_into_block(insnn, None)
+                self.print_to_log("    Exit: %s" % text_insn(insnn, exit_blk))
+                self.mark_dirty(exit_blk)
 
     def get_blocks_for_traversal(self, group):
         """

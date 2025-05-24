@@ -16,10 +16,10 @@ class LoopManager(object):
 
     @classmethod
     def init(cls, mba):
-        # print("LoopManager.init: %X %X" % (cls.entry_ea, mba.entry_ea))
+        #print("LoopManager.init: %X %X" % (cls.entry_ea, mba.entry_ea))
         if cls.entry_ea != mba.entry_ea or cls.qty != mba.qty:
             cls.build_groups(mba)
-            # cls.print_loops_groups()
+            #cls.print_loops_groups()
         # print(cls.all_serials_of_cycles)
 
     @classmethod
@@ -238,3 +238,17 @@ class LoopsGroup:
             return item in self.common_serials
         else:
             return False
+
+    def all_exit_blocks(self, mba: mba_t):
+        serials = set()
+        # Find exits - not cycle blocks after this loops group
+        for blk in self.all_loops_blocks(mba):
+            for succ in list(blk.succset):
+                # if succ not in group:
+                if not LoopManager.serial_in_cycles(succ):
+                    serials.add(succ)
+        for serial in serials:
+            exit_blk = mba.get_mblock(serial)
+            # Take only blocks with instructions
+            if exit_blk.head is not None:
+                yield exit_blk

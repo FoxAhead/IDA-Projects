@@ -2,11 +2,11 @@ import time
 from dataclasses import dataclass
 from typing import List
 
+import idaapi
 from ida_hexrays import *
 import ida_pro
 import ida_lines
 import idc
-
 
 REG_EAX = 8
 REG_EDX = 12
@@ -19,7 +19,7 @@ LogMessages = []
 
 
 def text_expr(expr):
-    return "%.6X: (%s) %s" % (expr.ea, get_ctype_name(expr._op), get_expr_name(expr))
+    return "%.6X: (op=%s) (type=%s) %s" % (expr.ea, get_ctype_name(expr.op), expr.type, get_expr_name(expr))
 
 
 def text_insn(insn, blk=None):
@@ -37,7 +37,7 @@ def hex_addr(ea, blk=None):
 def get_expr_name(expr):
     name = expr.print1(None)
     name = ida_lines.tag_remove(name)
-    name = ida_pro.str2user(name)
+    #name = ida_pro.str2user(name)
     return name
 
 
@@ -184,7 +184,7 @@ def is_op_defined_in_insn(blk: mblock_t, op: mop_t, insn: minsn_t):
     ml = mlist_t()
     blk.append_def_list(ml, op, MUST_ACCESS)
     _def = blk.build_def_list(insn, MUST_ACCESS)
-    #return _def.includes(ml)
+    # return _def.includes(ml)
     return _def.has_common(ml)
 
 
@@ -202,13 +202,15 @@ def is_op_defined_between(graph, op, blk1, blk2, m1, m2):
 def is_op_defined_in_block(blk: mblock_t, op: mop_t):
     ml = mlist_t()
     blk.append_def_list(ml, op, MUST_ACCESS)
-    return blk.maybdef.includes(ml)
+    # return blk.maybdef.includes(ml)
+    return blk.maybdef.has_common(ml)
 
 
 def is_op_used_in_block(blk: mblock_t, op: mop_t):
     ml = mlist_t()
     blk.append_use_list(ml, op, MUST_ACCESS)
-    return blk.mustbuse.includes(ml)
+    # return blk.mustbuse.includes(ml)
+    return blk.mustbuse.has_common(ml)
 
 
 def get_number_of_op_definitions_in_blocks(op: mop_t, blocks: List[mblock_t]):
@@ -312,3 +314,30 @@ def find_op_uses(blk: mblock_t, i1: minsn_t, i2: minsn_t, op: mop_t, vstr: mlist
         vstr = VisitorSimpleSearchUses(blk, op.size, {mop_r, mop_S})
     blk.for_all_uses(ml, i1, i2, vstr)
     return vstr
+
+
+def is_op_used_starting_from_this_block(mba: mba_t, op: mop_t, blk: mblock_t):
+    visited = set()
+    return is_op_used_in_block_recursive(mba, op, blk, visited)
+
+
+def is_op_used_in_block_recursive(mba: mba_t, op: mop_t, blk: mblock_t, visited):
+    if blk.serial in visited:
+        return False
+    visited.add(blk.serial)
+    if is_op_used_in_block(blk, op):
+        return True
+    for succ_blk in all_succ_blocks(mba, blk):
+        if is_op_used_in_block_recursive(mba, op, succ_blk, visited):
+            return True
+    return False
+
+
+def get_tinfo_by_ordinal(ordinal: int):
+    local_typestring = idc.get_local_tinfo(ordinal)
+    if local_typestring:
+        p_type, fields = local_typestring
+        local_tinfo = ida_typeinf.tinfo_t()
+        local_tinfo.deserialize(idaapi.cvar.idati, p_type, fields)
+        return local_tinfo
+    return None

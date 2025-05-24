@@ -4,6 +4,7 @@ summary: Optimization 12
 description:
 
     Move ADDs down inside block
+    Move ZEROes closer to loop
 
 10. 0 add    edx.4, #2.4, edx.4{9}                ; 0001F0B3
 10. 1 stx    al.1, ds.2{10}, (edx.4{9}-#1.4)      ; 0001F0B6
@@ -24,6 +25,7 @@ description:
         1F119 - May be change offset of stack var? %var_474@999 -> %var_474@1000 -> %var_8C
         466FC
         347CC
+        493BC - Move ZEROes closer to loop
 
 """
 from ascendancy.opts import GlbOpt
@@ -38,7 +40,7 @@ def run(mba):
 class Opt(GlbOpt):
 
     def __init__(self):
-        super().__init__(12, "Move ADDs down inside block")
+        super().__init__(12, "Move ADDs down inside block. Move ZEROes closer to loop.")
 
     def _init(self):
         self.add_blk = None
@@ -48,6 +50,7 @@ class Opt(GlbOpt):
 
     def _run(self):
         self.iterate_blocks()
+        self.move_zeroes()
 
     def iterate_blocks(self):
         for blk in all_blocks_in_mba(self.mba):
@@ -123,8 +126,47 @@ class Opt(GlbOpt):
             blk.make_nop(add_insn)
             self.mark_dirty(blk)
 
+    def move_zeroes(self):
+        self.zeroes = []
+        self.collect_zeroes()
+        for zero in self.zeroes:
+            self.optimize_zero(zero)
+
+    def collect_zeroes(self):
+        for blk in all_blocks_in_mba(self.mba):
+            if not LoopManager.serial_in_cycles(blk.serial):
+                for insn in all_insns_in_block(blk):
+                    if insn_is_zero_var(insn):
+                        self.zeroes.append(ZeroInsn(blk, insn))
+
+    def optimize_zero(self, zero: "ZeroInsn"):
+        blk = zero.blk
+        op = zero.insn.d
+        if not is_op_used_in_block(blk, op):
+            using_succ_blks = []
+            for succ_blk in all_succ_blocks(self.mba, blk):
+                if is_op_used_starting_from_this_block(self.mba, op, succ_blk):
+                    using_succ_blks.append(succ_blk)
+            if len(using_succ_blks) == 1:
+                succ_blk = using_succ_blks[0]
+                if not LoopManager.serial_in_cycles(succ_blk.serial) and succ_blk.npred() == 1:
+                    self.move_zero(zero, succ_blk)
+
+    def move_zero(self, zero: "ZeroInsn", to_blk: mblock_t):
+        insnn = minsn_t(zero.insn)
+        #insnn.ea = self.mba.alloc_fict_ea(zero.insn.ea)
+        self.print_to_log("  Moved0: %s to %s" % (text_insn(zero.insn, zero.blk), text_insn(insnn, to_blk)))
+        zero.blk.make_nop(zero.insn)
+        self.mark_dirty(zero.blk)
+        to_blk.insert_into_block(insnn, None)
+        self.mark_dirty(to_blk)
+
 
 def insn_is_add_reg(insn: minsn_t):
     return insn.opcode == m_add and insn.l.is_reg() and insn.r.t == mop_n and insn.d.is_reg() and insn.l.r == insn.d.r and not insn.l.is_kreg()
 
 
+@dataclass
+class ZeroInsn:
+    blk: mblock_t = None
+    insn: minsn_t = None
