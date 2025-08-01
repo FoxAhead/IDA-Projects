@@ -50,6 +50,9 @@ class Visitor5(cfunc_parentee_t):
                 val = expr.a[0].get_const_value()
                 self.create_cmt(self._get_parent_expr_ea(expr), val)
                 # print("%.8X: %s" % (tl.ea, cmt))
+            elif expr.a[0].op == cot_add and expr.a[0].x.op == cot_var and expr.a[0].y.op == cot_num:
+                val = expr.a[0].y.get_const_value()
+                self.create_cmt(self._get_parent_expr_ea(expr), val)
             else:
                 self._find_and_comment_arg_var(expr)
         return 0

@@ -47,6 +47,32 @@ class Opt(GlbOpt):
                     self.optimize_strcat(blk)
 
     def optimize_strcpy(self, blk: mblock_t):
+        blks = self.collect_blocks_up(blk.nextb, 2)
+        for blk in blks:
+            self.nop_blk(blk)
+        blk = blks[0]
+        ea = blk.tail.ea
+
+        callargs = mcallargs_t()
+        fa = mcallarg_t(mop_t(REG_EDI, 4))
+        fa.type = tinfo_t.get_stock(STI_PCHAR)
+        fa.name = "dst"
+        callargs.push_back(fa)
+        fa = mcallarg_t(mop_t(REG_ESI, 4))
+        fa.type = tinfo_t.get_stock(STI_PCCHAR)
+        fa.name = "src"
+        callargs.push_back(fa)
+        rettype = tinfo_t.get_stock(STI_PCHAR)
+        insnn = self.mba.create_helper_call(ea, "strcat", rettype, callargs)
+        # insnn = InsnBuilder(ea, m_call).v(0x79020).insn()
+        insnn.opcode = m_call
+        insnn.l.make_gvar(0x79020)
+        blk.insert_into_block(insnn, blk.tail)
+
+        self.mark_dirty(blk)
+
+        return
+
         insns1 = []
         for insn in all_insns_in_block(blk):
             blk.make_nop(insn)
@@ -143,8 +169,8 @@ class Opt(GlbOpt):
 
         self.mark_dirty(blk)
 
-        blk = blks[0]
-        ea = blk.tail.ea
+        # blk = blks[0]
+        # ea = blk.tail.ea
 
         # insnn = InsnBuilder(ea, m_mov).r(kreg_edx).r(REG_EDX).insn()
         # after_insn = blk.insert_into_block(insnn, blk.tail)

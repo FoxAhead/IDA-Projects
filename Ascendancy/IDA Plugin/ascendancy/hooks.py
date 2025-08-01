@@ -9,19 +9,21 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
     def __init__(self, *args):
         self.cnt = 0
         self.ea = 0
+        self.opt1 = None
         GlbOptManager.clear()
-        GlbOptManager.register(opt4.Opt())
+        # GlbOptManager.register(opt4.Opt())  OBSOLETE
         GlbOptManager.register(opt12.Opt())
         GlbOptManager.register(opt10.Opt())
         GlbOptManager.register(opt11.Opt())
         GlbOptManager.register(opt15.Opt())
         GlbOptManager.register(opt13.Opt())
-        #GlbOptManager.register(opt0.Opt())
         GlbOptManager.register(opt17.Opt())
+        #GlbOptManager.register(opt0.Opt())
         super().__init__(*args)
 
     def flowchart(self, fc):
         # BEGIN OF OPTIMIZATIONS
+        self.opt1 = opt1.Opt()
         LogMessages.clear()
         self.ea = 0
         GlbOptManager.iteration = 0
@@ -32,6 +34,8 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         if LogMessages:
             self.cnt = self.cnt + 1
             print("# %d - Ascendancy Plugin: %.8X" % (self.cnt, self.ea))
+            if self.opt1:
+                self.opt1.print_results()
             for msg in LogMessages:
                 print(msg)
             print()
@@ -53,14 +57,14 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         opt2.run_a(mba)  # mov 0 assertion
         opt7.run(mba)  # Prolog/Epilog
         opt8.run(mba)  # SAR EDX, 1Fh -> CDQ
-        opt16.run(mba) # Inlined StrCpy
+        opt16.run(mba)  # Inlined StrCpy
         # print("PREOPTIMIZED END")
         return 0
 
     def locopt(self, mba):
         # print("LOCOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         # opt2.run_b(mba)
-        #opt12.run(mba)
+        # opt12.run(mba)
         # print("LOCOPT END")
         return 0
 
@@ -70,22 +74,21 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def maturity(self, cfunc: cfunc_t, new_maturity):
-        #print("MATURITY BEGIN: cfunc.maturity=%d, new_maturity=%d" % (cfunc.maturity, new_maturity))
-        #if cfunc.maturity == CMAT_TRANS2:
-        opt18.run(cfunc)
-        #opt19.run(cfunc)
-        #print("MATURITY END")
+        # print("MATURITY BEGIN: cfunc.maturity=%d, new_maturity=%d" % (cfunc.maturity, new_maturity))
+        # if cfunc.maturity == CMAT_TRANS2:
+        opt18.run(cfunc)  # WinMgr_FindWnd cast return type
+        opt19.run(cfunc)  # Float comparisons
+        # print("MATURITY END")
         return 0
 
-
     def combine(self, blk, insn):
-        opt1.run(blk, insn)
+        self.opt1.run(blk, insn)
         return 0
 
     def glbopt(self, mba):
-        #print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         r = GlbOptManager.run(mba)
-        #print("GLBOPT END")
+        # print("GLBOPT END")
         return MERR_OK if r else MERR_LOOP
 
     # def prealloc(self, mba):
@@ -99,6 +102,6 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def func_printed(self, cfunc):
-        opt5.run(cfunc)
-        #opt18.run(cfunc)
+        opt5.run(cfunc)  # Static comments
+        # opt18.run(cfunc)
         return 0

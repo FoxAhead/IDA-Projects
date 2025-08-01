@@ -16,6 +16,7 @@ test:
     4E809 - Was infinite moving zeroes down. Fixed by using fict_ea
     10010 - Several entries/zero_blks. Need to correlate zero_blk with corresponding zero_insn
     33AF0 - Collect zero_insn if there are no other definitions AFTER it
+    521C0 - TODO - (00052644) Group ops by size also for correct combinations
 
 """
 from ascendancy.opts.glbopt import GlbOpt
@@ -38,7 +39,7 @@ class Opt(GlbOpt):
         for group in LoopManager.all_groups():
             self.collect_zeroes(group)
             self.collect_adds(group)
-            # self.debug_print_collections(group)
+            #self.debug_print_collections(group)
             if self.need_to_combine_adds():
                 self.combine_adds(group)
             self.try_to_move_zero_down(group)

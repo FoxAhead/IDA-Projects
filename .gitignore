@@ -1,4 +1,5 @@
 Far Cry 2/
+Ascendancy/Graphs
 
 .idea/
 __pycache__/
@@ -10,3 +11,4 @@ __pycache__/
 *.idb
 *.idb.6.8
 *.dmp
+*.gid

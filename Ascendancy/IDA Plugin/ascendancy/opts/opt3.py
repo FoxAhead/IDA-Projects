@@ -63,7 +63,7 @@ def run(mba):
         return 0
     mba.for_all_topinsns(vstr := Visitor3b())
     if vstr.result:
-        print_to_log("Optmization 3 (SAR 10h; SAR 18h -> Word; Byte): %s" % vstr.result)
+        print_to_log("Optimization 3 (SAR 10h; SAR 18h -> Word; Byte): %s" % vstr.result)
 
 
 class Visitor3b(minsn_visitor_t):

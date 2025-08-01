@@ -385,7 +385,8 @@ class Opt(GlbOpt):
                     size = insn.r.size
                     kreg = self.mba.alloc_kreg(size)
                     insnn = InsnBuilder(insn.ea, m_mov, size).r(insn.r.r).r(kreg).insn()
-                    found_init.blk.insert_into_block(insnn, found_init.insn)
+                    # Save r op before mul
+                    found_init.blk.insert_into_block(insnn, found_init.insn.prev)
                     self.mark_dirty(found_init.blk)
                     insnn = minsn_t(insn)
                     insnn.r.make_reg(kreg, size)

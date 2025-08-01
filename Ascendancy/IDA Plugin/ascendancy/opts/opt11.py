@@ -66,7 +66,7 @@ class Opt(GlbOpt):
 
     def _run(self):
         ChainItem.global_id = 0
-        for reg in [mr_first, 12, 16, 20]:
+        for reg in [mr_first, 12, 16, 20, REG_ESI]:
             self.run_with_reg(reg)
 
     # def traverse_items(self, item):

@@ -37,7 +37,7 @@ def hex_addr(ea, blk=None):
 def get_expr_name(expr):
     name = expr.print1(None)
     name = ida_lines.tag_remove(name)
-    #name = ida_pro.str2user(name)
+    # name = ida_pro.str2user(name)
     return name
 
 
@@ -184,7 +184,6 @@ def is_op_defined_in_insn(blk: mblock_t, op: mop_t, insn: minsn_t):
     ml = mlist_t()
     blk.append_def_list(ml, op, MUST_ACCESS)
     _def = blk.build_def_list(insn, MUST_ACCESS)
-    # return _def.includes(ml)
     return _def.has_common(ml)
 
 
@@ -204,6 +203,13 @@ def is_op_defined_in_block(blk: mblock_t, op: mop_t):
     blk.append_def_list(ml, op, MUST_ACCESS)
     # return blk.maybdef.includes(ml)
     return blk.maybdef.has_common(ml)
+
+
+def is_op_used_in_insn(blk: mblock_t, insn: minsn_t, op: mop_t):
+    ml = mlist_t()
+    blk.append_use_list(ml, op, MUST_ACCESS)
+    _use = blk.build_use_list(insn, MUST_ACCESS)
+    return _use.has_common(ml)
 
 
 def is_op_used_in_block(blk: mblock_t, op: mop_t):
@@ -264,6 +270,23 @@ def insn_is_add_var(insn, no_kregs=False):
         add    var, #0xD, var
     """
     return insn.opcode == m_add and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d and not (no_kregs and insn.l.is_kreg())
+
+
+def insn_is_addsub_var(insn, no_kregs=False):
+    """
+    Check if register or stack variable addition:
+        add    var, #0xD, var
+    """
+    return insn.opcode in {m_add, m_sub} and insn.r.t == mop_n and insn.l.t in {mop_r, mop_S} and insn.l == insn.d and not (no_kregs and insn.l.is_kreg())
+
+
+def get_addsub_value(insn: minsn_t) -> int:
+    return insn.r.unsigned_value() if insn.opcode == m_add else -insn.r.unsigned_value()
+
+
+def update_addsub_insn(insn: minsn_t, new_value: int):
+    insn.opcode = m_sub if new_value < 0 else m_add
+    insn.r.update_numop_value(abs(new_value))
 
 
 def insn_is_zero_var(insn):

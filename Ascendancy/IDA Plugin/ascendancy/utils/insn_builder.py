@@ -16,7 +16,7 @@ class InsnBuilder(object):
         if self.opn == 1:
             #print("InsnBuilder._op(): l, opcode=%s" % self._insn.opcode)
             op = self._insn.l
-            if self._insn.opcode in [m_mov]:
+            if self._insn.opcode in {m_mov, m_xdu}:
                 self.opn = self.opn + 1
             elif self._insn.opcode in {m_push}:
                 self.opn = self.opn + 2
@@ -42,9 +42,9 @@ class InsnBuilder(object):
         # print("InsnBuilder n: %s" % text_insn(self._insn))
         return self
 
-    def r(self, r):
+    def r(self, r, size=None):
         # print("InsnBuilder r: %s" % r)
-        self._op().make_reg(r, self.size)
+        self._op().make_reg(r, self.size if size is None else size)
         # print("InsnBuilder r: %s" % text_insn(self._insn))
         return self
 

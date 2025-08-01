@@ -36,24 +36,34 @@ test:
 from ascendancy.utils import *
 
 
-def run(blk, insn):
-    # print("combine: %s" % text_insn(insn, blk))
-    # print_blk(blk)
-    if is_func_lib(insn.ea):
-        return 0
-    # buf = insn.dstr()
-    # if ("jnz " in buf) and ("0xFFFFFFFF.4" in buf):
-    if is_mcode_jcond(insn.opcode) and insn.r.is_equal_to(0xFFFFFFFF, False) and insn.l.is_insn(m_ldx):
-        print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
-        insn.clr_combinable()
-    # elif (next_insn := insn.next) and next_insn.opcode == m_nop:
-    #    print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
-    #    insn.clr_combinable()
-    elif insn.opcode == m_stx:
-        if (next_insn := insn.next) and next_insn.opcode == m_stx:
-            print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+class Opt():
+    def __init__(self):
+        self.eas = []
+
+    def run(self, blk, insn):
+        # print("combine: %s" % text_insn(insn, blk))
+        # print_blk(blk)
+        if is_func_lib(insn.ea):
+            return 0
+        # buf = insn.dstr()
+        # if ("jnz " in buf) and ("0xFFFFFFFF.4" in buf):
+        if is_mcode_jcond(insn.opcode) and insn.r.is_equal_to(0xFFFFFFFF, False) and insn.l.is_insn(m_ldx):
+            # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+            self.eas.append(insn.ea)
             insn.clr_combinable()
-    elif insn.opcode == m_ldx:
-        if (next_insn := insn.next) and next_insn.opcode == m_ldx:
-            print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
-            insn.clr_combinable()
+        # elif (next_insn := insn.next) and next_insn.opcode == m_nop:
+        #    print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+        #    insn.clr_combinable()
+        elif insn.opcode == m_stx:
+            if (next_insn := insn.next) and next_insn.opcode == m_stx:
+                # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+                self.eas.append(insn.ea)
+                insn.clr_combinable()
+        elif insn.opcode == m_ldx:
+            if (next_insn := insn.next) and next_insn.opcode == m_ldx:
+                # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+                self.eas.append(insn.ea)
+                insn.clr_combinable()
+
+    def print_results(self):
+        print("Optimization 1 - Clear combinable: %s" % self.eas)

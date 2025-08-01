@@ -26,6 +26,7 @@ description:
         466FC
         347CC
         493BC - Move ZEROes closer to loop
+        0001F38E - TODO: Move SUBs down inside block
 
 """
 from ascendancy.opts import GlbOpt
@@ -40,11 +41,11 @@ def run(mba):
 class Opt(GlbOpt):
 
     def __init__(self):
-        super().__init__(12, "Move ADDs down inside block. Move ZEROes closer to loop.")
+        super().__init__(12, "Move ADDs/SUBs down inside block. Move ZEROes closer to loop.")
 
     def _init(self):
         self.add_blk = None
-        self.add_insns = []
+        self.add_insns = []  # ADDs/SUBs
         self.mult = 0
         self.loops = {}
 
@@ -65,7 +66,8 @@ class Opt(GlbOpt):
         d = {}
         self.add_insns.clear()
         for insn in all_insns_in_block(blk):
-            if insn_is_add_var(insn, True) and insn.l.size == 4:
+            #if insn_is_add_var(insn, True) and insn.l.size == 4:
+            if insn_is_addsub_var(insn, True) and insn.l.size == 4:
                 d.setdefault(var_as_key(insn.l), []).append(insn)
         # Add op should be defined only once in the block
         for key, insns in d.items():
@@ -82,7 +84,7 @@ class Opt(GlbOpt):
             if insn := add_insn.next:
                 add_op = add_insn.l
                 size = add_op.size
-                mult = add_insn.r.unsigned_value()
+                mult = get_addsub_value(add_insn)
                 changed = False
                 after_insn = None
                 vstr = find_op_uses(blk, insn, None, add_op)
@@ -91,38 +93,24 @@ class Opt(GlbOpt):
                 for use in vstr.uses:
                     if is_insn_j(use.topins):
                         continue
-                    # print("topins=%s, curins=%s, op=%s" %(text_insn(use.topins), text_insn(use.curins), use.op.dstr()))
-                    # if use.curins.opcode == m_add and use.curins.l.is_insn(m_add) and use.curins.l.d.r.is_constant():
-                    #     n = use.curins.l.d.r.unsigned_value()
-                    #     use.curins.l.d.r.update_numop_value(n + mult)
-                    # else:
                     if use.curins.opcode == m_add and use.curins.l.t == mop_a and use.curins.l.a.t == mop_S:
                         use.curins.l.a.s.off += mult
                     elif use.curins.opcode in {m_add, m_sub} and use.curins.r.is_constant():
-                        n = use.curins.r.unsigned_value() if use.curins.opcode == m_add else - use.curins.r.unsigned_value()
-                        n += mult
-                        use.curins.opcode = m_sub if n < 0 else m_add
-                        use.curins.r.update_numop_value(abs(n))
+                        update_addsub_insn(use.curins, get_addsub_value(use.curins) + mult)
                     else:
-                        insnn = InsnBuilder(use.topins.ea, m_add, size).var(self.mba, add_op).n(mult).insn()
+                        insnn = InsnBuilder(use.topins.ea, add_insn.opcode, size).var(self.mba, add_op).n(mult).insn()
                         use.op.create_from_insn(insnn)
                     self.print_to_log("  Change: %s" % (text_insn(use.topins, blk)))
                     after_insn = use.topins
                     changed = True
-                    # use.topins.for_all_insns(Visitor())
                 if changed:
                     self.mark_dirty(blk)
                     add_insns.append((add_insn, after_insn))
         for add_insn, after_insn in add_insns:
-            # after_insn = find_last_blk_insn_not_jump(blk)
-            # if add_insn.ea != after_insn.ea:
             insnn = minsn_t(add_insn)
-            # insnn.ea = after_insn.ea
             insnn.ea = self.mba.alloc_fict_ea(add_insn.ea)
             self.print_to_log("  Moved : %s to %s" % (hex_addr(add_insn.ea), text_insn(insnn, blk)))
-            # print_to_log("  Insert: %s" % text_insn(insnn, blk))
             blk.insert_into_block(insnn, after_insn)
-            # print_to_log("  NOP:    %s" % text_insn(add_insn, blk))
             blk.make_nop(add_insn)
             self.mark_dirty(blk)
 
@@ -154,7 +142,7 @@ class Opt(GlbOpt):
 
     def move_zero(self, zero: "ZeroInsn", to_blk: mblock_t):
         insnn = minsn_t(zero.insn)
-        #insnn.ea = self.mba.alloc_fict_ea(zero.insn.ea)
+        # insnn.ea = self.mba.alloc_fict_ea(zero.insn.ea)
         self.print_to_log("  Moved0: %s to %s" % (text_insn(zero.insn, zero.blk), text_insn(insnn, to_blk)))
         zero.blk.make_nop(zero.insn)
         self.mark_dirty(zero.blk)
