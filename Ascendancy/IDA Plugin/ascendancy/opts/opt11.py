@@ -53,6 +53,7 @@ import dataclasses
 
 from ascendancy.opts import GlbOpt
 from ascendancy.utils import *
+import ascendancy.opts.opt10 as opt10
 
 
 class Opt(GlbOpt):
@@ -63,10 +64,14 @@ class Opt(GlbOpt):
 
     def _init(self):
         self.visited: Dict[int, BlockInfo] = {}
+        self.ends_of_groups: Dict[int, LoopsGroup] = {}
 
     def _run(self):
         ChainItem.global_id = 0
-        for reg in [mr_first, 12, 16, 20, REG_ESI]:
+        for group in LoopManager.all_groups():
+            if end_blk := unsingle_goto_block(self.mba, group.end_block(self.mba)):
+                self.ends_of_groups[end_blk.serial] = group
+        for reg in [REG_EAX, REG_EDX, REG_ECX, REG_EBX, REG_ESI]:
             self.run_with_reg(reg)
 
     # def traverse_items(self, item):
@@ -80,9 +85,9 @@ class Opt(GlbOpt):
         for serial, blk_info in self.visited.items():
             print("blk=%d" % serial)
             for item in blk_info.items:
-                print("id=%.4d, type=%d, blk=%d, insn=%s, offset=%d" % (item.id, item.type, item.blk.serial if item.blk else -1, text_insn(item.insn), item.offset))
-                print("  prev: %s" % [i.id for i in item.prev])
-                print("  next: %s" % [i.id for i in item.next])
+                print("  id=%.4d, type=%d, blk=%d, insn=%s, offset=%d" % (item.id, item.type, item.blk.serial if item.blk else -1, text_insn(item.insn), item.offset))
+                print("    prev: %s" % ["%.4d" % i.id for i in item.prev])
+                print("    next: %s" % ["%.4d" % i.id for i in item.next])
 
     def run_with_reg(self, reg):
         self.reg_op = mop_t(reg, 4)
@@ -115,16 +120,26 @@ class Opt(GlbOpt):
             bad_chain = False
             if blk.type != BLT_STOP:
                 for item in first_item.prev:
-                    if inb_item.get_type() > 0 and item.get_type() > 0:
+                    inb_item_type = inb_item.get_type()
+                    item_type = item.get_type()
+                    if inb_item_type > 1 and item_type > 1:
                         if item.get_offset() == inb_item.get_offset():
                             continue
-                    elif item.get_type() == inb_item.get_type():
+                    elif inb_item_type == item_type:
                         continue
+                    elif inb_item_type == 3 and item_type == 0:  # 110CE, 111F9
+                        continue
+                    elif inb_item_type == 3 and item_type == 1:
+                        continue
+                    elif inb_item_type == 1 and item_type == 3:
+                        continue
+                    # print("bad chain inb_item=%.4d type=%d off=%d" % (inb_item.id, inb_item_type, inb_item.get_offset()))
+                    # print("bad chain item=%.4d type=%d off=%d" % (item.id, item_type, item.get_offset()))
                     bad_chain = True
                     break
             join_chain_items(first_item, inb_item)
             if bad_chain:
-                #print("destroy_chain blk=%d, item=%d" % (blk.serial, first_item.id))
+                #print("destroy_chain blk=%d, item=%.4d" % (blk.serial, first_item.id))
                 #self.debug_print_items()
                 self.destroy_chain(first_item)
             return
@@ -153,10 +168,11 @@ class Opt(GlbOpt):
                     new_item = blk_info.add_item(ChainItem(1, blk, insn))
                     curr_item = join_chain_items(new_item, curr_item)
                 elif curr_item.is_defined():
-                    # Add/Sub
-                    new_item = blk_info.add_item(ChainItem(2, blk, insn))
-                    new_item.offset = curr_item.get_offset() + get_value_from_addsub(insn)
-                    curr_item = join_chain_items(new_item, curr_item)
+                    if not self.is_op_loop_counter(blk, self.reg_op):
+                        # Add/Sub
+                        new_item = blk_info.add_item(ChainItem(2, blk, insn))
+                        new_item.offset = curr_item.get_offset() + get_value_from_addsub(insn)
+                        curr_item = join_chain_items(new_item, curr_item)
             elif curr_item.is_defined() and curr_item.get_offset() > 0:
                 vstr = find_op_uses_in_insn(blk, insn, self.reg_op, VisitorSimpleSearchUses(blk, self.reg_op.size, {mop_r}))
                 if len(vstr.uses) > 0:
@@ -171,6 +187,16 @@ class Opt(GlbOpt):
         # Process block succesors
         for succ_blk in all_succ_blocks(self.mba, blk):
             self.process_block_recursive(succ_blk, curr_item)
+
+    # Check if this op is actually increasing loop counter
+    def is_op_loop_counter(self, blk: mblock_t, op: mop_t):
+        # Will take some logic from opt10
+        # First, this block should be the end-block of the loops group
+        if group := self.ends_of_groups.get(blk.serial):
+            # Second, add op should be defined (actually added) once in the whole group
+            if get_number_of_op_definitions_in_blocks(op, group.all_loops_blocks(self.mba)) == 1:
+                return True
+        return False
 
     def destroy_chain(self, item: "ChainItem"):
         # return

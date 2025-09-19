@@ -42,6 +42,8 @@ description:
         40224 - Use recursion and graph.is_redefined_globally() to find earlier definitions
         1B354 - Add_op is used in two subsequent loops without redefenition
         10010 - Don't add exit-assertion if add_op is not used further
+        2FEB8 - Extended Variant 1 in find_init_of_end_condition() to mop_S (1. 3 add    %var_C.4{2}, #0x10E.4, edx.4{3}       ; 0002FEE0)
+        434E4 - add_op from group {61} -> [70..69] is used in the subgroup {71} -> [63..62]
 
 """
 import math
@@ -84,23 +86,25 @@ class Opt(GlbOpt):
                 # print("group_needs_optimization %s" % group.title())
 
     def group_needs_optimization(self, group: LoopsGroup):
-        # Looking at the valid end-block
-        if add_blk := unsingle_goto_block(self.mba, group.end_block(self.mba)):
-            # Add op should be added once in the end-block
-            for add_insn in find_single_add_var_insns_in_block(add_blk):
-                # Add op should be defined (actually added) once in the whole group
-                if get_number_of_op_definitions_in_blocks(add_insn.l, group.all_loops_blocks(self.mba)) == 1:
-                    # Add op should be defined (set initial value) once in the entry-block or entry-block is the first (then assume op is function argument)
-                    self.defs.clear()
-                    if self.find_add_op_initialization_in_entry(group, add_insn.l) or self.find_add_op_initialization_earlier2(group, add_insn.l):
-                        # if self.find_add_op_initialization_in_entry(group, add_insn.l):
-                        self.add_blk = add_blk
-                        self.add_insn = add_insn
-                        self.add_op = mop_t(add_insn.l)  # Make a copy of the operand because it will be NOPed
-                        self.mult = add_insn.r.unsigned_value()
-                        if self.def_and_mult_are_good():
-                            # if group.begin == 49 and self.add_op.t == mop_S and self.add_op.s.off == 128:  # and self.add_op.is_reg(8):
-                            return True
+        # # Looking at the valid end-block
+        # if add_blk := unsingle_goto_block(self.mba, group.end_block(self.mba)):
+        #     # Add op should be added once in the end-block
+        #     for add_insn in find_single_add_var_insns_in_block(add_blk):
+        # In some cases there can be additional counters located not in end-block (for example in if-branch)
+        for add_blk, add_insn in find_single_add_var_insns_in_blocks(group.all_loops_blocks(self.mba)):
+            # Add op should be defined (actually added) once in the whole group
+            if get_number_of_op_definitions_in_blocks(add_insn.l, group.all_loops_blocks(self.mba)) == 1:
+                # Add op should be defined (set initial value) once in the entry-block or entry-block is the first (then assume op is function argument)
+                self.defs.clear()
+                if self.find_add_op_initialization_in_entry(group, add_insn.l) or self.find_add_op_initialization_earlier2(group, add_insn.l):
+                    # if self.find_add_op_initialization_in_entry(group, add_insn.l):
+                    self.add_blk = add_blk
+                    self.add_insn = add_insn
+                    self.add_op = mop_t(add_insn.l)  # Make a copy of the operand because it will be NOPed
+                    self.mult = add_insn.r.unsigned_value()
+                    if self.def_and_mult_are_good():
+                        # if group.begin == 49 and self.add_op.t == mop_S and self.add_op.s.off == 128:  # and self.add_op.is_reg(8):
+                        return True
         return False
 
     def debug_print(self, group: LoopsGroup):
@@ -224,6 +228,10 @@ class Opt(GlbOpt):
         for blk in group.all_loops_blocks(self.mba):
             # for blk in self.get_blocks_for_traversal(group):
             self.optimize_block(blk, blk not in group)
+        ## Also traverse subgroups (434E4)
+        #for child_group in group.children:
+        #    for blk in child_group.all_loops_blocks(self.mba):
+        #        self.optimize_block(blk, blk not in group)
         # Now add kregc = kregc + 1 to the end of the block
         blk = self.add_blk
         after_insn = find_last_blk_insn_not_jump(blk)
@@ -292,19 +300,19 @@ class Opt(GlbOpt):
 
     def optimize_exits(self, group):
         for exit_blk in group.all_exit_blocks(self.mba):
-        # exits = set()
-        # # Find exits - not cycle blocks after this loops group
-        # for blk in group.all_loops_blocks(self.mba):
-        #     for succ in list(blk.succset):
-        #         # if succ not in group:
-        #         if not LoopManager.serial_in_cycles(succ):
-        #             exits.add(succ)
-        # # print("Exits: ", exits)
-        # for serial in exits:
-        #     exit_blk = self.mba.get_mblock(serial)
-        #     # If it is empty block - ignore it
-        #     if exit_blk.head is None:
-        #         continue
+            # exits = set()
+            # # Find exits - not cycle blocks after this loops group
+            # for blk in group.all_loops_blocks(self.mba):
+            #     for succ in list(blk.succset):
+            #         # if succ not in group:
+            #         if not LoopManager.serial_in_cycles(succ):
+            #             exits.add(succ)
+            # # print("Exits: ", exits)
+            # for serial in exits:
+            #     exit_blk = self.mba.get_mblock(serial)
+            #     # If it is empty block - ignore it
+            #     if exit_blk.head is None:
+            #         continue
             # Process if add_op is used further from this block
             if is_op_used_starting_from_this_block(self.mba, self.add_op, exit_blk):
                 j_insn = None
@@ -403,10 +411,10 @@ class Opt(GlbOpt):
             d.clear()
             for insn in all_insns_in_block(entry_blk):
                 # Variant 1: Search ADD instruction with destination of r-operand
-                if insn.opcode == m_add and insn.l.t == mop_r and insn.d == j_insn.r:
+                if insn.opcode == m_add and insn.l.t in {mop_r, mop_S} and insn.d == j_insn.r:
                     # Preceded with MOV instruction
                     if prev_insn := insn.prev:
-                        if (prev_insn := prev_insn.prev) and prev_insn.opcode == m_mov and prev_insn.l.is_reg(insn.l.r):
+                        if (prev_insn := prev_insn.prev) and prev_insn.opcode == m_mov and prev_insn.l == insn.l:
                             if self.add_op.t == mop_r and prev_insn.d.is_reg(self.add_op.r):
                                 d.setdefault(1, []).append(insn)
                 # Variant 2: mul    #4.4, eax.4{73}, %var_3C.4
@@ -541,6 +549,22 @@ def find_single_add_var_insns_in_block(blk):
     return out_insns
 
 
+def find_single_add_var_insns_in_blocks(blocks):
+    """
+    Take add instructions that are only one for each var
+    """
+    d = {}
+    for blk in blocks:
+        for insn in all_insns_in_block(blk):
+            if insn_is_good_add_var(insn):
+                d.setdefault(var_as_key(insn.l), []).append((blk, insn))
+    out_adds = []
+    for var, adds in d.items():
+        if len(adds) == 1:
+            out_adds.append(adds[0])
+    return out_adds
+
+
 def find_def_op_insns_in_block(blk, op):
     """
     Find insns with op definitions in the block
@@ -591,5 +615,3 @@ def mark_dirty(mba: mba_t, blk: mblock_t, verify=True):
             print("maybdef", blk.maybdef.dstr())
             # print_mba(self.mba)
             raise e
-
-

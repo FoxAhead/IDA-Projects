@@ -223,6 +223,9 @@ class LoopsGroup:
     def all_loops_blocks(self, mba):
         for serial in self.all_serials:
             yield mba.get_mblock(serial)
+        for child_group in self.children:
+            for blk in child_group.all_loops_blocks(mba):
+                yield blk
 
     def all_loops_blocks_insns(self, mba):
         for blk in self.all_loops_blocks(mba):

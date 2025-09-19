@@ -19,6 +19,8 @@ class GlbOptManager(object):
 
     @classmethod
     def run(cls, mba):
+        if is_func_lib(mba.entry_ea):
+            return True
         cls.iteration = cls.iteration + 1
         results = {}
         cls.print_result(mba)

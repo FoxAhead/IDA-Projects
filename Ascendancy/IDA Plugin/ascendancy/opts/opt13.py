@@ -53,8 +53,8 @@ class Opt(GlbOpt):
         self.mba.for_all_topinsns(vstr_adds := VisitorSearchComplexAddRegInsns())
         self.adds = vstr_adds.adds
         for self.add in reversed(self.adds):
-            #print("add.insn=%s, add.used_ops:" % text_insn(self.add.insn, self.add.blk))
-            #for op in self.add.used_ops:
+            # print("add.insn=%s, add.used_ops:" % text_insn(self.add.insn, self.add.blk))
+            # for op in self.add.used_ops:
             #    print("  %s" % op.op.dstr())
             self.processed.clear()
             self.dest_uses.clear()
@@ -64,8 +64,8 @@ class Opt(GlbOpt):
                 # print("  USED_OPS")
                 # for used_op in self.used_ops:
                 #    print("    op=%s, ops:%s, was_redefined=%s, need_copy=%s" %(used_op.op.dstr(), [op.dstr() for op in used_op.ops], used_op.was_redefined, used_op.need_copy))
-                #print("  DEST_USES")
-                #for use in self.dest_uses:
+                # print("  DEST_USES")
+                # for use in self.dest_uses:
                 #    print("    blk=%d, insn=%s, op=%s" % (use.blk.serial, text_insn(use.insn), use.op.dstr()))
                 if self.optimize_uses():
                     break
@@ -73,7 +73,7 @@ class Opt(GlbOpt):
     def process_block(self, blk, start_insn):
         # Recursively collect all destination reg uses
         if blk.serial not in self.processed:
-            #print("processing_block %d" % blk.serial)
+            # print("processing_block %d" % blk.serial)
             self.processed.add(blk.serial)
             # Start either from first insn of block or next insn after start_insn
             insn = blk.head if start_insn is None else start_insn.next
@@ -99,7 +99,7 @@ class Opt(GlbOpt):
                             used_op.need_copy = True
                 # Stop traversing if destination reg is redefined here
                 if is_op_defined_in_insn(blk, self.add.insn.d, insn):
-                    #print("reg_defined_here")
+                    # print("reg_defined_here")
                     return True
                 insn = insn.next
             for succ_blk in all_succ_blocks(self.mba, blk):
@@ -142,6 +142,7 @@ class Opt(GlbOpt):
                 return True
         return False
 
+
 @dataclass
 class OpUse:
     blk: mblock_t
@@ -162,6 +163,7 @@ class ComplexAddReg:
     blk: mblock_t = None
     insn: minsn_t = None
     sub_insn: minsn_t = None
+    sub_insn2: minsn_t = None
     reg_op: mop_t = None
     used_ops: List[VarUsedInAddInsn] = field(default_factory=list)
 
@@ -203,9 +205,13 @@ class VisitorSearchComplexAddRegInsns(minsn_visitor_t):
     def visit_minsn(self):
         if add := get_complex_add_reg_insn(self.curins):
             add.blk = self.blk
-            # If add.reg_op == destination reg then add.blk should not be loop-block
-            if add.reg_op != add.insn.d or not LoopManager.serial_in_cycles(add.blk.serial):
-                # Also collect all ops used in this add_insn (l + r)
+            if add.reg_op:
+                # If add.reg_op == destination reg then add.blk should not be loop-block
+                if add.reg_op != add.insn.d or not LoopManager.serial_in_cycles(add.blk.serial):
+                    # Also collect all ops used in this add_insn (l + r)
+                    add.used_ops = get_ops_used_in_add_insn(self.curins)
+                    self.adds.append(add)
+            else:
                 add.used_ops = get_ops_used_in_add_insn(self.curins)
                 self.adds.append(add)
         return 0
@@ -220,6 +226,11 @@ def get_complex_add_reg_insn(insn) -> ComplexAddReg:
             return ComplexAddReg(insn=insn, sub_insn=insn.r.d, reg_op=insn.l)
         if insn.r.is_reg() and insn.l.t == mop_d:
             return ComplexAddReg(insn=insn, sub_insn=insn.l.d, reg_op=insn.r)
+        # Some special cases. May be enhanced in future for general use
+        if insn.ea == 0x435B5 and insn.l.is_insn(m_add) and insn.r.is_insn(m_mul):
+            return ComplexAddReg(insn=insn, sub_insn=insn.l.d, sub_insn2=insn.r.d, reg_op=None)
+        if insn.ea == 0x43A97 and insn.l.t == mop_a and insn.r.is_insn(m_mul):
+            return ComplexAddReg(insn=insn, sub_insn=insn.r.d, reg_op=insn.l)
     return None
 
 

@@ -103,5 +103,6 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
 
     def func_printed(self, cfunc):
         opt5.run(cfunc)  # Static comments
+        opt20.run(cfunc)  # Gwshare comments
         # opt18.run(cfunc)
         return 0

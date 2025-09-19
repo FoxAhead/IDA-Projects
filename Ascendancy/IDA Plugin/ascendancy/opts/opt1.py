@@ -66,4 +66,5 @@ class Opt():
                 insn.clr_combinable()
 
     def print_results(self):
-        print("Optimization 1 - Clear combinable: %s" % self.eas)
+        if self.eas:
+            print("Optimization 1 - Clear combinable:", ", ".join("%.5X" % ea for ea in self.eas))

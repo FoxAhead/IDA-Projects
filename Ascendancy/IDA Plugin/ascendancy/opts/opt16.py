@@ -8,6 +8,7 @@ description:
 test:
 
     261B8
+    2EA8C - 
 
 """
 import ida_bytes
@@ -209,7 +210,11 @@ class Opt(GlbOpt):
                             self.pattern = 1  # strcpy
                             self.begin = blk.start
                             self.end = blk.start + 24
-        return self.pattern > 0
+                elif b.hex().upper() == '8A062688073C0074118A460183C6022688470183C7023C0075':
+                    self.pattern = 1  # strcpy
+                    self.begin = blk.start
+                    self.end = blk.start + 26
+            return self.pattern > 0
 
     def find_edx_def(self, blk: mblock_t):
         if blk := blk.prevb:
