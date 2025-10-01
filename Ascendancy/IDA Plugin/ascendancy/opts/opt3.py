@@ -52,6 +52,7 @@ tests:
     39EBD, 3A18B, 3A287 - Fixed for SUB
     3F15C - pattern 2 is first in the block and pattern 1 is located at previous block
     4B7A0 - pattern 2 is NOT first in the block and pattern 1 is located at previous block
+    3F3F8 - Had to build simple graph with preds for searching multiple patterns 1
 
 """
 
@@ -61,112 +62,139 @@ from ascendancy.utils import *
 def run(mba):
     if is_func_lib(mba.entry_ea):
         return 0
-    mba.for_all_topinsns(vstr := Visitor3b())
+    dpreds = build_simple_preds(mba)
+    mba.for_all_topinsns(vstr := Visitor3b(dpreds))
     if vstr.result:
         print_to_log("Optimization 3 (SAR 10h; SAR 18h -> Word; Byte): %s" % vstr.result)
 
 
 class Visitor3b(minsn_visitor_t):
 
-    def __init__(self):
+    def __init__(self, dpreds):
         super().__init__()
-        self.insns1 = []  # Group with pattern 1
-        self.insns2 = []  # Group with pattern 2
-        self.mode = 0
+        self.dpreds = dpreds
+        self.p1_infos = []  # Pattern 1 infos
+        self.p2_info = None  # Pattern 2 info
         self.result = {}
 
     def visit_minsn(self):
-        if self._check_insn2(self.curins):
-            # print("found insn2: %s" % text_insn(self.curins))
-            if self._check_insn1(self.insns2[-1].prev) or self._check_insn1(self.ensure_prev_insn(None)):
-                # print("found insn1")
-                before = text_insn(self.insn1)
-                self.insns2[2].l.nnn.update_value(0)
-                shift = int(self.val2 / 8)
+        if self._find_pattern2(self.curins):
+            # self._debug_print_p2()
+            if self._find_pattern1(self.p2_info.insns[-1].prev):
+                # self._debug_print_p1()
+                self.p2_info.insns[2].l.nnn.update_value(0)
+                shift = int(self.p2_info.val / 8)
                 bytes = 4 - shift
-                if self.mode == 1:
-                    if self.insn1.opcode == m_add:
-                        self.insn1.r.nnn.update_value(self.val1 + shift)
-                    if self.insn1.opcode == m_sub:
-                        self.insn1.r.nnn.update_value(self.val1 - shift)
-                elif self.mode == 2:
-                    self.insn1.l.a.g = self.val1 + shift
-                elif self.mode == 3:
-                    before = text_insn(self.insn1)
-                    insnn = minsn_t(self.insn1.ea)
-                    insnn.opcode = m_add
-                    insnn.l = self.insn1.l
-                    insnn.r.make_number(shift, 4, self.insn1.ea)
-                    insnn.d = insnn.l
-                    self.insn1.l.create_from_insn(insnn)
-                after = text_insn(self.insn1)
-                self.insns1[1].d.change_size(bytes)
-                self.insns1[0].l.change_size(bytes)
-                self.insns1[0].opcode = m_xds
-                self.blk.mark_lists_dirty()
-                self.result[hex_addr(self.insn1.ea)] = self.insn1.r.dstr()
+                for p1_info in self.p1_infos:
+                    if p1_info.variant == 1:
+                        if p1_info.insn.opcode == m_add:
+                            p1_info.insn.r.nnn.update_value(p1_info.val + shift)
+                        if p1_info.insn.opcode == m_sub:
+                            p1_info.insn.r.nnn.update_value(p1_info.val - shift)
+                    elif p1_info.variant == 2:
+                        p1_info.insn.l.a.g = p1_info.val + shift
+                    elif p1_info.variant == 3:
+                        insnn = minsn_t(p1_info.insn.ea)
+                        insnn.opcode = m_add
+                        insnn.l = p1_info.insn.l
+                        insnn.r.make_number(shift, 4, p1_info.insn.ea)
+                        insnn.d = insnn.l
+                        p1_info.insn.l.create_from_insn(insnn)
+                    p1_info.insns[1].d.change_size(bytes)
+                    p1_info.insns[0].l.change_size(bytes)
+                    p1_info.insns[0].opcode = m_xds
+                    p1_info.blk.mark_lists_dirty()
+                    self.result[hex_addr(p1_info.insn.ea)] = p1_info.insn.r.dstr()
                 #print_to_log("Optimization 3 changed: [%s] to: [%s]" % (before, after))
         return 0
 
-    def _check_insn2(self, insn):
-        # Find the instructions group with SAR
+    def _find_pattern2(self, insn):
+        # Find the instructions group with SAR (pattern 2)
+        # insn2: 1.31 mov    #0x18.1, t1.1                         ; 0003F415 d=t1.1
+        # insn1: 1.32 cfshr  edi.4, t1.1, cf.1                     ; 0003F415 u=edi.4, t1.1   d=cf.1
+        # insn0: 1.33 sar    edi.4, t1.1, edi.4                    ; 0003F415 u=edi.4, t1.1   d=edi.4
+        self.p2_info = PatternInfo()
         if insn and insn.opcode == m_sar:
-            if collect_insns_up(insn, self.insns2) == 3:
-                insn0, insn1, insn2 = self.insns2
+            if collect_insns_up(insn, self.p2_info.insns) == 3:
+                insn0, insn1, insn2 = self.p2_info.insns
                 if insn1.opcode == m_cfshr and insn1.l == insn0.l and insn1.r == insn0.r:
                     if insn2.opcode == m_mov and insn2.l.is_constant() and insn2.d == insn0.r:
-                        self.val2 = insn2.l.unsigned_value()
-                        if self.val2 in (16, 24):
-                            self.op = insn0.l
+                        val = insn2.l.unsigned_value()
+                        if val in (16, 24):
+                            self.p2_info.blk = self.blk
+                            self.p2_info.op = insn0.l
+                            self.p2_info.val = val
                             return True
 
-    def _check_insn1(self, insn):
+    def _find_pattern1(self, insn):
+        self.p1_infos.clear()
+        self._find_pattern1_recursive(self.blk, insn, set())
+        return bool(self.p1_infos)
+
+    def _find_pattern1_recursive(self, blk, insn, visited):
+        if blk.serial in visited:
+            return False
+        visited.add(blk.serial)
         # Now check uppper instructions in the block
+        p1_info = PatternInfo()
         while insn:
-            # print("_check_insn1: %s" % text_insn(insn))
-            if self.analize_upper_insns(insn, self.insns1):
+            if self.analize_upper_insns(insn, p1_info):
+                p1_info.blk = blk
+                self.p1_infos.append(p1_info)
                 return True
-            elif self.is_op_modified_here(self.op, self.insns1):
+            elif self.is_op_modified_here(self.p2_info.op, p1_info.insns):
                 return False
-            elif len(self.insns1) > 0:
-                insn = self.insns1[-1].prev
+            elif len(p1_info.insns) > 0:
+                insn = p1_info.insns[-1].prev
             else:
                 return False
+        for prev_blk_serial in self.dpreds[blk.serial]:
+            prev_blk = self.mba.get_mblock(prev_blk_serial)
+            self._find_pattern1_recursive(prev_blk, prev_blk.tail, visited)
 
-    def analize_upper_insns(self, insn, lst):
-        len = collect_insns_up(insn, lst)
+    # def _check_insn1(self, insn):
+    #     # Now check uppper instructions in the block
+    #     while insn:
+    #         # print("_check_insn1: %s" % text_insn(insn))
+    #         if self.analize_upper_insns(insn, self.insns1):
+    #             return True
+    #         elif self.is_op_modified_here(self.op, self.insns1):
+    #             return False
+    #         elif len(self.insns1) > 0:
+    #             insn = self.insns1[-1].prev
+    #         else:
+    #             return False
+
+    def analize_upper_insns(self, insn, p1_info):
+        len = collect_insns_up(insn, p1_info.insns)
         if len >= 3:
             if len == 3:
-                insn0, insn1, insn2 = self.insns1
+                insn0, insn1, insn2 = p1_info.insns
             else:
-                insn0, insn1, insn2, insn3, *other = self.insns1
-            if insn0.opcode == m_mov and insn0.d == self.op:
+                insn0, insn1, insn2, insn3, *other = p1_info.insns
+            if insn0.opcode == m_mov and insn0.d == self.p2_info.op:
                 # print_insns(self.insns1)
                 # print("len(self.insns1) = %d" % len(self.insns1))
                 if insn1.opcode == m_ldx and insn1.d == insn0.l:
                     if insn2.d == insn1.r:
                         if is_mcode_addsub(insn2.opcode) and insn2.l == insn2.d and insn2.r.is_constant():
-                            # if insn2.opcode == m_add and insn2.l == insn1.r and insn2.l == insn2.d and insn2.r.is_constant():
-                            # if insn2.opcode == m_add:
-                            self.val1 = insn2.r.signed_value()
-                            # if insn2.opcode == m_sub:
-                            #    self.val1 = -insn2.r.signed_value()
-                            self.mode = 1
-                            self.insn1 = insn2
+                            p1_info.val = insn2.r.signed_value()
+                            p1_info.variant = 1
+                            p1_info.insn = insn2
                             return True
                         elif insn2.opcode == m_mov and insn2.l.is_glbaddr():
-                            self.val1 = insn2.l.a.g
-                            self.mode = 2
-                            self.insn1 = insn2
+                            p1_info.val = insn2.l.a.g
+                            p1_info.variant = 2
+                            p1_info.insn = insn2
                             return True
                         elif insn2.opcode == m_add and insn2.l.is_glbaddr():
-                            self.val1 = insn2.l.a.g
-                            self.mode = 2
-                            self.insn1 = insn2
+                            p1_info.val = insn2.l.a.g
+                            p1_info.variant = 2
+                            p1_info.insn = insn2
                             return True
                     elif len > 3 and is_insn_mov_ds_seg(insn2) and insn3 and insn3.opcode == m_mov and insn3.d == insn1.r:
-                        self.mode = 3
-                        self.insn1 = insn3
+                        p1_info.variant = 3
+                        p1_info.insn = insn3
                         return True
         return False
 
@@ -176,12 +204,55 @@ class Visitor3b(minsn_visitor_t):
                 return True
         return False
 
-    def ensure_prev_insn(self, insn):
-        """
-        Get previous insn from previous block if needed
-        """
-        if insn is None and (blk := self.blk.prevb):
-            prev_insn = blk.tail
-            if prev_insn.opcode != m_goto:
-                return blk.tail
-        return insn
+    # def ensure_prev_insn(self, insn):
+    #     """
+    #     Get previous insn from previous block if needed
+    #     """
+    #     if insn is None and (blk := self.blk.prevb):
+    #         prev_insn = blk.tail
+    #         if prev_insn.opcode != m_goto:
+    #             return blk.tail
+    #     return insn
+
+    def _debug_print_p2(self):
+        print("found pattern 2: %s; val=%d" % (text_insn(self.p2_info.insns[0], self.p2_info.blk), self.p2_info.val))
+
+    def _debug_print_p1(self):
+        print("found patterns 1:")
+        for p1_info in self.p1_infos:
+            print("  %s; variant=%d; val=%d" % (text_insn(p1_info.insns[0], p1_info.blk), p1_info.variant, p1_info.val))
+
+
+def build_simple_preds(mba):
+    dea = {}
+    d = {}
+    for blk in all_blocks_in_mba(mba):
+        d[blk.serial] = []
+        if not (blk.flags & MBL_FAKE):
+            dea[blk.start] = blk.serial
+    for blk in all_blocks_in_mba(mba):
+        if (insn_j := blk.tail) and (m_jcnd <= insn_j.opcode <= m_goto):
+            if is_mcode_jcond(insn_j.opcode):
+                d[dea[insn_j.d.g]].append(blk.serial)
+                if blk.nextb:
+                    d[blk.nextb.serial].append(blk.serial)
+            elif insn_j.opcode == m_goto:
+                d[dea[insn_j.l.g]].append(blk.serial)
+            elif insn_j.opcode == m_ijmp:
+                d[mba.qty - 1].append(blk.serial)
+            elif insn_j.opcode == m_jtbl:
+                for t in list(insn_j.r.c.targets):
+                    d[t].append(blk.serial)
+        elif blk.nextb:
+            d[blk.nextb.serial].append(blk.serial)
+    return d
+
+
+@dataclass
+class PatternInfo:
+    blk: mblock_t = None
+    insns: List[minsn_t] = field(default_factory=list)
+    variant: int = 0
+    op: mop_t = None
+    val: int = 0
+    insn: minsn_t = None

@@ -62,6 +62,7 @@ class AscendancyCore(object):
         idaapi.require("ascendancy.utils")
         idaapi.require("ascendancy.opts.opt0")
         idaapi.require("ascendancy.opts.opt1")
+        idaapi.require("ascendancy.opts.opt3")
         idaapi.require("ascendancy.opts.opt10")
         idaapi.require("ascendancy.opts.opt11")
         idaapi.require("ascendancy.opts.opt12")
