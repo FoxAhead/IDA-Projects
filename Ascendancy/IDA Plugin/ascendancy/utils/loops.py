@@ -220,12 +220,13 @@ class LoopsGroup:
     def end_block(self, mba):
         return None if self.end is None else mba.get_mblock(self.end)
 
-    def all_loops_blocks(self, mba):
+    def all_loops_blocks(self, mba, with_subgroups=True):
         for serial in self.all_serials:
             yield mba.get_mblock(serial)
-        for child_group in self.children:
-            for blk in child_group.all_loops_blocks(mba):
-                yield blk
+        if with_subgroups:
+            for child_group in self.children:
+                for blk in child_group.all_loops_blocks(mba):
+                    yield blk
 
     def all_loops_blocks_insns(self, mba):
         for blk in self.all_loops_blocks(mba):

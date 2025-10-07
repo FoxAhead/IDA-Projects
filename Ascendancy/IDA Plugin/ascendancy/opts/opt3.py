@@ -53,6 +53,7 @@ tests:
     3F15C - pattern 2 is first in the block and pattern 1 is located at previous block
     4B7A0 - pattern 2 is NOT first in the block and pattern 1 is located at previous block
     3F3F8 - Had to build simple graph with preds for searching multiple patterns 1
+    4E758 - Consider goto block number
 
 """
 
@@ -237,13 +238,20 @@ def build_simple_preds(mba):
                 if blk.nextb:
                     d[blk.nextb.serial].append(blk.serial)
             elif insn_j.opcode == m_goto:
-                d[dea[insn_j.l.g]].append(blk.serial)
+                if insn_j.l.t == mop_v:
+                    d[dea[insn_j.l.g]].append(blk.serial)
+                elif insn_j.l.t == mop_b:
+                    d[insn_j.l.b].append(blk.serial)
             elif insn_j.opcode == m_ijmp:
                 d[mba.qty - 1].append(blk.serial)
             elif insn_j.opcode == m_jtbl:
                 for t in list(insn_j.r.c.targets):
                     d[t].append(blk.serial)
         elif blk.nextb:
+            if insn := blk.tail:
+                if insn.opcode == m_call and insn.l.t == mop_v:
+                    if insn.is_noret_call():
+                        continue
             d[blk.nextb.serial].append(blk.serial)
     return d
 

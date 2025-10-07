@@ -91,7 +91,7 @@ class Opt(GlbOpt):
         #     # Add op should be added once in the end-block
         #     for add_insn in find_single_add_var_insns_in_block(add_blk):
         # In some cases there can be additional counters located not in end-block (for example in if-branch)
-        for add_blk, add_insn in find_single_add_var_insns_in_blocks(group.all_loops_blocks(self.mba)):
+        for add_blk, add_insn in find_single_add_var_insns_in_blocks(group.all_loops_blocks(self.mba, with_subgroups=False)):
             # Add op should be defined (actually added) once in the whole group
             if get_number_of_op_definitions_in_blocks(add_insn.l, group.all_loops_blocks(self.mba)) == 1:
                 # Add op should be defined (set initial value) once in the entry-block or entry-block is the first (then assume op is function argument)
@@ -156,6 +156,7 @@ class Opt(GlbOpt):
         if len(group.entries) == 1:  # For simplicity
             for entry_blk in group.entry_blocks(self.mba):
                 self.visited_blocks.clear()
+                self.visited_blocks.update(group.all_serials)  # Exclude serials of this group
                 self.find_add_op_initialization_earlier_recursive(add_op, entry_blk, entry_blk, entry_blk.tail)
         return len(self.defs) > 0
 
@@ -173,6 +174,10 @@ class Opt(GlbOpt):
             for insn in all_insns_in_block(blk, backwards=True):
                 if is_op_defined_in_insn(blk, add_op, insn):
                     # print("defined in", text_insn(insn))
+                    # This should be definition, but not in form like: 14. 0 add    ebx.4, #1.4, ebx.4                   ; 0004D8E9
+                    if insn.opcode == m_add and insn.l == insn.d and insn.r.t == mop_n:
+                        continue
+                    #
                     if insn.next is None or not is_op_defined_between(self.mba.get_graph(), add_op, blk, blk_to, insn.next, insn_to):
                         self.defs[blk.serial] = insn
                         return
@@ -455,6 +460,11 @@ class VisitorJumpsOptimizator(minsn_visitor_t):
             insn1 = insn.l.d
             insn2 = insn.r.d
             if insn1.l.is_reg() and insn2.l.is_reg() and insn1.l.r == insn2.l.r:
+                self.j_l = insn1
+                self.j_r = insn2
+                self.optimization = 1
+                return True
+            elif insn1.l.t == mop_a and insn1.l == insn2.l:
                 self.j_l = insn1
                 self.j_r = insn2
                 self.optimization = 1
