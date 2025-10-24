@@ -1,2 +1,2 @@
-xcopy "IDA Plugin\*.py" "%APPDATA%\Hex-Rays\IDA Pro\plugins\" /E /S /Y
-start ANTAG.EXE.idb
+CALL 0-copy_ida_plugin.cmd
+START ANTAG.EXE.idb

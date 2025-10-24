@@ -1,18 +1,12 @@
-import os
+from .base import BaseResourceLoader
 
 
-class StaticTexts(object):
-    texts = [''] * 200
+class StaticTxt(BaseResourceLoader):
+    #texts = [''] * 200
 
-    def __init__(self, filename, debug=False):
-        self.filename = filename
-        self.debug = debug
-        self._load_texts()
-
-    def _load_texts(self):
-        script_dir = os.path.dirname(__file__)
-        filename = os.path.join(script_dir, self.filename)
-        with open(filename, 'r') as file:
+    def parse(self, file_path):
+        result = {}
+        with open(file_path, 'r') as file:
             while line := file.readline():
                 if line.startswith("//"):
                     tokens = line[2:].strip().replace(' ', '')
@@ -29,9 +23,7 @@ class StaticTexts(object):
                                 text = ''
                                 while (line := file.readline()) != '\n':
                                     text = text + line
-                            self.texts[i] = text.rstrip()
-                            if self.debug:
-                                print("%d: %s" % (i, self.texts[i]))
-
-
-st = StaticTexts("static.txt", False)
+                            result[i] = text.rstrip()
+                            #if self.debug:
+                            #    print("%d: %s" % (i, self.texts[i]))
+        return result

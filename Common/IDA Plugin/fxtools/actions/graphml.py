@@ -13,7 +13,23 @@ def run(ctx):
     func = ida_funcs.get_func(current_address)
     if not func:
         return False
-    mba = get_microcode(func, ida_hexrays.MMAT_GLBOPT3)
+
+    matlist = [
+        [str(ida_hexrays.MMAT_LOCOPT), 'MMAT_LOCOPT'],
+        [str(ida_hexrays.MMAT_CALLS), 'MMAT_CALLS'],
+        [str(ida_hexrays.MMAT_GLBOPT1), 'MMAT_GLBOPT1'],
+        [str(ida_hexrays.MMAT_GLBOPT2), 'MMAT_GLBOPT2'],
+        [str(ida_hexrays.MMAT_GLBOPT3), 'MMAT_GLBOPT3'],
+        [str(ida_hexrays.MMAT_LVARS), 'MMAT_LVARS'],
+    ]
+    print(matlist)
+    chooser = MaturityChoose(matlist)
+    chooser.deflt = 4
+    level = chooser.Show(modal=True)
+    if level <= 0:
+        print("Canceled")
+        return
+    mba = get_microcode(func, int(matlist[level][0]))
     G = nx.DiGraph()
     blk = mba.blocks
     while blk:
@@ -22,7 +38,7 @@ def run(ctx):
         blk = blk.nextb
     fname = r"D:\graph_%.X.graphml" % mba.entry_ea
     nx.write_graphml_lxml(G, fname)
-    print("Graph exported to: %s" % fname)
+    print("Graph for %s exported to: %s" % (matlist[level][1], fname))
 
 
 def get_microcode(func, maturity):
@@ -38,3 +54,24 @@ def get_microcode(func, maturity):
         print("0x%08X: %s" % (hf.errea, hf.desc()))
         return None
     return mba
+
+
+class MaturityChoose(ida_kernwin.Choose):
+
+    def __init__(self, items):
+        ida_kernwin.Choose.__init__(
+            self,
+            "Select maturity level",
+            [
+                ["Level", ida_kernwin.Choose.CHCOL_DEC | 10],
+                ["Maturity", ida_kernwin.Choose.CHCOL_PLAIN | 60],
+            ],
+            icon=-1, y1=-2,
+            flags=ida_kernwin.Choose.CH_MODAL | ida_kernwin.Choose.CH_NOIDB)
+        self.items = items
+
+    def OnGetLine(self, n):
+        return self.items[n]
+
+    def OnGetSize(self):
+        return len(self.items)

@@ -5,12 +5,14 @@ from ascendancy.utils import *
 
 class GlbOptManager(object):
     iteration = 0
+    step = 0
     opts = {}
     dump_to_files = False
 
     @classmethod
     def clear(cls):
         cls.iteration = 0
+        cls.step = 0
         cls.opts.clear()
 
     @classmethod
@@ -21,8 +23,9 @@ class GlbOptManager(object):
     def run(cls, mba):
         if is_func_lib(mba.entry_ea):
             return True
-        cls.iteration = cls.iteration + 1
         results = {}
+        cls.iteration += 1
+        cls.step = 0
         cls.print_result(mba)
         rr = True
         for num, opt in cls.opts.items():
@@ -48,13 +51,14 @@ class GlbOptManager(object):
             return
         if r:
             return
+        cls.step += 1
         if not serials:
             blocks = all_blocks_in_mba(mba)
         else:
             blocks = [mba.get_mblock(serial) for serial in serials]
         header = "Iteration %d%s" % (cls.iteration, " - GlbOpt %d" % num if num else "")
         if cls.dump_to_files:
-            filepath = r"GlbOptManager.dmp\%.X-%.2d-%d.txt" % (mba.entry_ea, cls.iteration, num)
+            filepath = r"GlbOptManager.dmp\%.X-%.2d-%d-%d.txt" % (mba.entry_ea, cls.iteration, cls.step, num)
             filedir = os.path.dirname(filepath)
             os.makedirs(filedir, exist_ok=True)
             if num == 0 and cls.iteration == 1:

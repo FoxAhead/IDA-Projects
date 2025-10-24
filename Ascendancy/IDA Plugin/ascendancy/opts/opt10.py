@@ -55,7 +55,7 @@ from ascendancy.utils import *
 class Opt(GlbOpt):
 
     def __init__(self):
-        super().__init__(10, "Optimize do while loops")
+        super().__init__(10, "Loops")
 
     def _init(self):
         self.add_insn: minsn_t = None

@@ -234,12 +234,16 @@ def build_simple_preds(mba):
     for blk in all_blocks_in_mba(mba):
         if (insn_j := blk.tail) and (m_jcnd <= insn_j.opcode <= m_goto):
             if is_mcode_jcond(insn_j.opcode):
-                d[dea[insn_j.d.g]].append(blk.serial)
+                if insn_j.d.g in dea:
+                    d[dea[insn_j.d.g]].append(blk.serial)
                 if blk.nextb:
                     d[blk.nextb.serial].append(blk.serial)
             elif insn_j.opcode == m_goto:
                 if insn_j.l.t == mop_v:
-                    d[dea[insn_j.l.g]].append(blk.serial)
+                    if insn_j.l.g in dea:
+                        d[dea[insn_j.l.g]].append(blk.serial)
+                    elif blk.nextb:
+                        d[blk.nextb.serial].append(blk.serial)
                 elif insn_j.l.t == mop_b:
                     d[insn_j.l.b].append(blk.serial)
             elif insn_j.opcode == m_ijmp:

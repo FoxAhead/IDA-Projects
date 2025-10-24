@@ -15,7 +15,8 @@ import re
 
 from ida_typeinf import tinfo_t
 
-from ascendancy.opts.windowstxt import *
+from ascendancy.config import Config
+from ascendancy.resources import Resources
 from ascendancy.utils import *
 
 
@@ -33,6 +34,9 @@ class Visitor18(cfunc_parentee_t):
 
     def __init__(self, f: cfunc_t):
         super().__init__(f)
+        self.ADDRS = set()
+        self.ADDRS.add(Config.get_name_address("WinMgr_FindWnd"))
+        self.ADDRS.add(Config.get_name_address("WinMgr_FindWndWithState"))
         self.typ0 = get_tinfo_by_ordinal(37)
         self.typ: tinfo_t = None
         self.call_expr: cexpr_t = None
@@ -41,6 +45,7 @@ class Visitor18(cfunc_parentee_t):
         self.ordinal: int = 0
         self.variant: int = 0
         self.result = {}
+
 
     def visit_expr(self, expr: cexpr_t):
         if self.is_expr_call_findwnd(expr):
@@ -68,11 +73,11 @@ class Visitor18(cfunc_parentee_t):
         return 0
 
     def is_expr_call_findwnd(self, expr: cexpr_t):
-        if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.x.obj_ea in {0x56DA8, 0x56E18} and expr.a:
+        if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.x.obj_ea in self.ADDRS and expr.a:
             self.call_expr = expr
             self.wnd_name = get_expr_name(self.call_expr.a[1]).replace('"', '').replace('&', '')
-            if self.wnd_name in wt.names:
-                self.ordinal = find_ordinal_by_wnd_typen(wt.names[self.wnd_name])
+            if self.wnd_name in Resources["wt"]:
+                self.ordinal = find_ordinal_by_wnd_typen(Resources["wt"][self.wnd_name])
                 if self.ordinal > 0:
                     self.typ = get_tinfo_by_ordinal(self.ordinal)
                     self.pexpr = self.parent_expr()

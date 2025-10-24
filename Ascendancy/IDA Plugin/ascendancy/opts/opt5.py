@@ -13,8 +13,8 @@ test:
     50D70
 
 """
-
-from ascendancy.opts.statictxt import *
+from ascendancy.config import Config
+from ascendancy.resources import Resources
 from ascendancy.utils import *
 
 
@@ -44,7 +44,8 @@ class Visitor5(cfunc_parentee_t):
     #     return 0
 
     def visit_expr(self, expr):
-        if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.x.obj_ea == 0x1CEA8 and expr.a:
+        funcea = Config.get_name_address("StaticTxtRead")
+        if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.x.obj_ea == funcea and expr.a:
             if expr.a[0].op == cot_num:
                 # print("%.8X: %s" % (expr.ea, self._get_expr_name(expr)))
                 val = expr.a[0].get_const_value()
@@ -75,7 +76,7 @@ class Visitor5(cfunc_parentee_t):
     def create_cmt(self, ea, val):
         self.ea_lst.append(ea)
         # cmt = "Static text %d: %s" % (val, self.texts[val])
-        cmt = "%d: %s" % (val, st.texts[val])
+        cmt = "%d: %s" % (val, Resources["st"][val])
         tl = treeloc_t()
         tl.ea = ea
         tl.itp = ITP_SEMI

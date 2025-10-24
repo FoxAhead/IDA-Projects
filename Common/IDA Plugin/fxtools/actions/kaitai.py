@@ -62,6 +62,7 @@ def needed_enum(type_name, field_name):
 def kaitaize_name(name):
     if type(name) != str:
         return name
+    name = name.lstrip('_')
     pattern = re.compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
     name = pattern.sub('_', name).lower()
     return name
@@ -99,7 +100,10 @@ def iterate_members(tinfo, name, dt, de):
                 array_data = array_type_data_t()
                 udt_member.type.get_array_details(array_data)
                 # print('%04X' % (udt_member.offset // 8), udt_member.name, udt_member.type, array_data.elem_type, array_data.nelems, sep=', ')
-                t = str(array_data.elem_type)
+                if array_data.elem_type.is_ptr():
+                    t = 'void *'
+                else:
+                    t = str(array_data.elem_type)
                 t1 = TYPE_TO_KSY.get(t, t)
                 if t == 'char' and array_data.nelems > 10:
                     h = {'id': udt_member.name, 'type': 'str', 'size': array_data.nelems, 'encoding': 'ASCII', 'terminator': 0}

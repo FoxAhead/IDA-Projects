@@ -3,10 +3,10 @@ import ida_idaapi
 import ida_kernwin
 import idaapi
 import idc
+import ascendancy.config
+from ascendancy.resources import Resources
 import ascendancy.hooks
 from ascendancy.actions import *
-
-ida_idaapi.require("ascendancy.hooks")
 
 
 class AscendancyCore(object):
@@ -31,12 +31,9 @@ class AscendancyCore(object):
         if not ida_hexrays.init_hexrays_plugin():
             return False
         self._hxe_hooks = None
-
-        fname = idc.get_root_filename().upper()
-        if "ANTAG.EXE" in fname:
-            print("Ascendancy plugin enabled")
-        else:
+        if not ascendancy.config.Config.init():
             return False
+        Resources.load()
         self.action_manager.register_action(ActionActivate(ucb=lambda ctx: not self.active, acb=self.activate))
         self.action_manager.register_action(ActionDeactivate(ucb=lambda ctx: self.active, acb=self.deactivate))
         self.action_manager.register_action(ActionFuncSavedRegs(wt=[ida_kernwin.BWN_DISASM, ida_kernwin.BWN_PSEUDOCODE]), "Ctrl+F11")
@@ -46,6 +43,7 @@ class AscendancyCore(object):
         self.action_manager.register_action(ActionReload(acb=self.reload))
         self._hxe_hooks = ascendancy.hooks.HxeHooks()
         self.activate()
+        print("Ascendancy IDA Plugin - loaded for %s (start=0x%.08X)" % (ascendancy.config.Config.target, ascendancy.config.Config.startea))
         return True
 
     def unload(self):
@@ -57,6 +55,8 @@ class AscendancyCore(object):
     def reload(self, ctx=None):
         self.deactivate()
         self._hxe_hooks = None
+        idaapi.require("ascendancy.config")
+        ascendancy.config.Config.init()
         idaapi.require("ascendancy.utils.util")
         idaapi.require("ascendancy.utils.insn_builder")
         idaapi.require("ascendancy.utils")

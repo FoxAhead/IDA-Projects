@@ -12,12 +12,12 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         self.opt1 = None
         GlbOptManager.clear()
         # GlbOptManager.register(opt4.Opt())  OBSOLETE
-        GlbOptManager.register(opt12.Opt())
-        GlbOptManager.register(opt10.Opt())
-        GlbOptManager.register(opt11.Opt())
-        GlbOptManager.register(opt15.Opt())
-        GlbOptManager.register(opt13.Opt())
-        GlbOptManager.register(opt17.Opt())
+        GlbOptManager.register(opt12.Opt())  # Move ADDs and ZEROes
+        GlbOptManager.register(opt10.Opt())  # Loops optimizations
+        GlbOptManager.register(opt11.Opt())  # Fold consecutive offset arithmetic
+        GlbOptManager.register(opt15.Opt())  # (Delayed) Combine var++
+        GlbOptManager.register(opt13.Opt())  # (Delayed) Reuse complex ADDs destinations
+        GlbOptManager.register(opt17.Opt())  # (Delayed) Swap ADD l,r in STX
         #GlbOptManager.register(opt0.Opt())
         super().__init__(*args)
 
@@ -94,6 +94,12 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
     # def prealloc(self, mba):
     #     print("PREALLOC BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
     #     print("PREALLOC END")
+    #     return MERR_OK
+
+    # def resolve_stkaddrs(self, mba):
+    #     print("RESOLVE_STKADDRS BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+    #     print("RESOLVE_STKADDRS END")
+    #     return 0
 
     def print_func(self, cfunc, printer):
         # Note: we can't print/str()-ify 'cfunc' here,

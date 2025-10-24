@@ -50,6 +50,9 @@ class Opt(GlbOpt):
         self.loops = {}
 
     def _run(self):
+        # For some reasons in some functions this opt gives negative result
+        if self.mba.entry_ea in {0x1FD18}:
+            return
         self.iterate_blocks()
         self.move_zeroes()
 
@@ -125,7 +128,8 @@ class Opt(GlbOpt):
             if not LoopManager.serial_in_cycles(blk.serial):
                 for insn in all_insns_in_block(blk):
                     if insn_is_zero_var(insn):
-                        self.zeroes.append(ZeroInsn(blk, insn))
+                        if insn.ea not in {0x210D0, 0x20055, 0x45FD1, 0x461A1, 0x3268C, 0x4060D}:  # Some explicit exlusions
+                            self.zeroes.append(ZeroInsn(blk, insn))
 
     def optimize_zero(self, zero: "ZeroInsn"):
         blk = zero.blk
@@ -142,6 +146,7 @@ class Opt(GlbOpt):
 
     def move_zero(self, zero: "ZeroInsn", to_blk: mblock_t):
         insnn = minsn_t(zero.insn)
+        # insnn.ea = to_blk.start
         # insnn.ea = self.mba.alloc_fict_ea(zero.insn.ea)
         self.print_to_log("  Moved0: %s to %s" % (text_insn(zero.insn, zero.blk), text_insn(insnn, to_blk)))
         zero.blk.make_nop(zero.insn)

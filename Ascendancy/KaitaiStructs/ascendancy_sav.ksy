@@ -153,22 +153,22 @@ types:
         type: s4
   t_star:
     seq:
-      - id: a
+      - id: type
         type: s4
-      - id: unknown_4
+      - id: index
         type: s2
       - id: unknown_6
         type: s2
-      - id: v
+      - id: position
         type: t_vector3d
-      - id: unknown_14
-        type: s1
-      - id: unknown_15
-        type: s1
-      - id: unknown_16
-        type: s1
-      - id: unknown_17
-        type: s1
+      - id: planets_races_bits
+        type: u1
+      - id: ships_races_bits
+        type: u1
+      - id: explored_path_to_bits
+        type: u1
+      - id: explored_bits
+        type: u1
       - id: unknown_18
         type: s4
       - id: name
@@ -176,14 +176,13 @@ types:
         size: 16
         encoding: ascii
         terminator: 0
-      - id: unknown_2c
-        type: str
-        size: 24
-        encoding: ascii
-        terminator: 0
-      - id: unknown_44
+      - id: lanes
+        type: s4
+        repeat: expr
+        repeat-expr: 6
+      - id: lanes_num
         type: s2
-      - id: unknown_46
+      - id: planets
         type: s4
         repeat: expr
         repeat-expr: 5
@@ -315,34 +314,40 @@ types:
   t_hull_cell:
     seq:
       - id: gizmo_index
-        type: u1
-      - id: unknown_01
+        type: s1
+      - id: uses_per_turn_left
         type: s2
-      - id: unknown_03
+      - id: active
+        type: s4
+  t_target:
+    seq:
+      - id: type
+        type: s1
+      - id: p_object
         type: s4
   t_ship:
     seq:
-      - id: unknown_0
+      - id: total_weapon_damage
         type: s4
-      - id: unknown_4
+      - id: total_shield_strength
         type: s4
-      - id: unknown_8
+      - id: total_star_lane_drive_potential
         type: s4
-      - id: unknown_c
+      - id: total_star_lane_hyperdrive_potential
         type: s4
-      - id: unknown_10
+      - id: total_drive_max_distance
         type: s4
       - id: unknown_14
         type: s4
-      - id: unknown_18
+      - id: total_generator_power
         type: s4
-      - id: unknown_1c
+      - id: total_power_for_drives
         type: s4
-      - id: unknown_20
+      - id: total_scanner_range_per_turn
         type: s4
-      - id: unknown_24
+      - id: cloaking_level
         type: s4
-      - id: unknown_28
+      - id: has_colonizer
         type: s4
       - id: unknown_2c
         type: s4
@@ -355,53 +360,43 @@ types:
         terminator: 0
       - id: unknown_50
         type: s2
-      - id: unknown_52
+      - id: day_built
         type: s4
       - id: race_index
         type: s2
       - id: location_type
-        type: s1
+        type: u1
       - id: p_location
         type: s4
-      - id: unknown_5d
+      - id: order
         type: s1
-      - id: unknown_5e
+      - id: order_target_object
         type: s4
       - id: unknown_62
         type: s1
-      - id: unknown_63
+      - id: p_cur_hull_cell
         type: s4
-      - id: unknown_67
-        type: s1
-      - id: unknown_68
-        type: s4
+      - id: target
+        type: t_target
       - id: unknown_6c
-        type: s4
-      - id: unknown_70
-        type: s4
-      - id: unknown_74
-        type: s4
+        type: t_vector3d
       - id: unknown_78
-        type: s4
-      - id: unknown_7c
-        type: s4
-      - id: unknown_80
-        type: f4
+        type: t_vector3d
       - id: unknown_84
         type: s4
-      - id: unknown_88
+      - id: available_power
         type: s4
-      - id: unknown_8c
+      - id: hull_integrity
         type: s4
-      - id: unknown_90
+      - id: current_shield_strength
         type: s4
-      - id: unknown_94
+      - id: available_moves
         type: s4
-      - id: unknown_98
+      - id: full_hull_integrity
         type: s4
-      - id: unknown_9c
+      - id: special_effects
         type: s2
-      - id: vector
+      - id: position
         type: t_vector3d
       - id: hull_size
         type: s1
@@ -412,8 +407,8 @@ types:
       - id: hull_cells_num
         type: s4
       - id: gizmos_num
-        type: s4
-  t_ship2:
+        type: s4  
+  t_ship_entry:
     seq:
       - id: index
         type: s4
@@ -424,7 +419,7 @@ types:
       - id: ships_num
         type: s4
       - id: ships
-        type: t_ship2
+        type: t_ship_entry
         repeat: expr
         repeat-expr: ships_num
   t_race:
@@ -521,16 +516,22 @@ types:
     seq:
       - id: z10000
         size: 10000
-  t_type09:
+  t_connection:
     seq:
-      - id: z
-        size: 0x19e
+      - id: stars
+        type: s4
+        repeat: expr
+        repeat-expr: 100
+      - id: stars_num
+        type: s2
+      - id: centroid_position
+        type: t_vector3d
   t_sav_block11:
     seq:
       - id: num
         type: s4
-      - id: type09
-        type: t_type09
+      - id: connection
+        type: t_connection
         repeat: expr
         repeat-expr: num
   t_sector:

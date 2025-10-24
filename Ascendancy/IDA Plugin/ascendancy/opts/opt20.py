@@ -11,8 +11,8 @@ test:
     30A90
 
 """
-
-from ascendancy.opts.gwsharetxt import *
+from ascendancy.config import Config
+from ascendancy.resources import Resources
 from ascendancy.utils import *
 
 
@@ -35,6 +35,7 @@ class Visitor20(cfunc_parentee_t):
 
     def __init__(self, cfunc):
         self.ea_lst.clear()
+        self.GWSHARE_OBJ_EA = Config.get_name_address("GwshareShpCacheIndexes")
         cfunc_parentee_t.__init__(self, cfunc)
 
     # def visit_expr(self, expr):
@@ -46,8 +47,9 @@ class Visitor20(cfunc_parentee_t):
         #     if expr.y.x.obj_ea == 0xFFEA0:
         #         val = expr.y.y.get_const_value()
         #         self.create_cmt(self._get_parent_expr_ea(expr), val)
+
         if expr.op == cot_idx and expr.x.op == cot_obj and expr.y.op == cot_num:
-            if expr.x.obj_ea == 0xFFEA0:
+            if expr.x.obj_ea == self.GWSHARE_OBJ_EA:
                 val = expr.y.get_const_value()
                 self.create_cmt(self._get_parent_expr_ea(expr), val)
         # if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.x.obj_ea == 0x1CEA8 and expr.a:
@@ -81,7 +83,7 @@ class Visitor20(cfunc_parentee_t):
     def create_cmt(self, ea, val):
         self.ea_lst.append(ea)
         # cmt = "Static text %d: %s" % (val, self.texts[val])
-        cmt = "%d: %s" % (val, gt.names[val])
+        cmt = "%d: %s" % (val, Resources["gw"][val])
         tl = treeloc_t()
         tl.ea = ea
         tl.itp = ITP_SEMI
