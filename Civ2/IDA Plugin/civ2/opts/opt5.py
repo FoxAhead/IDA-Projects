@@ -15,22 +15,20 @@ test:
 import idaapi
 from ida_hexrays import *
 import os
+from civ2.config import Config
 import civ2.opts.statictxt
 from civ2.util import *
 
-ADDRESSES = [[0x00401BF4, 0x00403995, 0x00403387, 0x004023A1], [0x00409520, 0x0048F30B, 0x0042095E, 0x00000000]]
-
-
-def run(cfunc, mode=0):
+def run(cfunc):
     civ2.opts.statictxt.load_static_texts()
     if is_func_lib(cfunc.entry_ea):
         return 0
     # cfunc.del_orphan_cmts()
     # cfunc.save_user_cmts()
-    vstr = Visitor5(cfunc, mode)
+    vstr = Visitor5(cfunc)
     vstr.apply_to(cfunc.body, None)
     if vstr.ea_lst:
-        print_to_log("Optimization 5 (%d) static comments: %s" % (mode, list(map(hex, vstr.ea_lst))))
+        print_to_log("Optimization 5 static comments: %s" % list(map(hex, vstr.ea_lst)))
     # cfunc.del_orphan_cmts()
     # cfunc.save_user_cmts()
     # vstr.apply_to_exprs(cfunc.body, None)
@@ -39,9 +37,8 @@ def run(cfunc, mode=0):
 class Visitor5(cfunc_parentee_t):
     ea_lst = []
 
-    def __init__(self, cfunc, mode):
+    def __init__(self, cfunc):
         self.ea_lst.clear()
-        self.mode = mode
         cfunc_parentee_t.__init__(self, cfunc)
 
     # def visit_expr(self, expr):
@@ -50,30 +47,30 @@ class Visitor5(cfunc_parentee_t):
 
     def visit_expr(self, expr):
         if expr.op == cot_call and expr.x and expr.x.op == cot_obj and expr.a:
-            if expr.x.obj_ea == ADDRESSES[self.mode][0]:
+            if (expr.x.obj_ea == Config.get_name_address("txtStrcatLabelString")) or (expr.x.obj_ea == Config.get_name_address("txtAppendLabelString")):
                 if expr.a[0].op == cot_num:
                     # print("%.8X: %s" % (expr.ea, self._get_expr_name(expr)))
                     val = expr.a[0].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[val])
                     # print("%.8X: %s" % (tl.ea, cmt))
                 elif expr.a[0].op == cot_add:
                     if expr.a[0].y and expr.a[0].y.op == cot_num:
                         val = expr.a[0].y.get_const_value()
-                        self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
+                        self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[val])
                 # else:
                 #    self._find_and_comment_arg_var(expr)
-            elif expr.x.obj_ea == ADDRESSES[self.mode][1]:
+            elif expr.x.obj_ea == Config.get_name_address("StrcatLabelString"):
                 if expr.a[1].op == cot_num:
                     val = expr.a[1].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
-            elif expr.x.obj_ea == ADDRESSES[self.mode][2]:
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[val])
+            elif expr.x.obj_ea == Config.get_name_address("GetStringInList"):
                 if expr.a[0].y and expr.a[0].y.op == idaapi.cot_num:
                     val = expr.a[0].y.get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
-            elif expr.x.obj_ea == ADDRESSES[self.mode][3]:
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[val])
+            elif expr.x.obj_ea == Config.get_name_address("UpdateMenuItem"):
                 if expr.a[1].op == cot_num:
                     val = expr.a[1].get_const_value()
-                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[self.mode][val])
+                    self.create_cmt(self._get_parent_expr_ea(expr), val, civ2.opts.statictxt.st.labels[val])
 
             # elif expr.x.obj_ea == 0x00402C48:  # j_Q_CityHasImprovement_sub_43D20A
             #    if expr.a[1].op == cot_num:

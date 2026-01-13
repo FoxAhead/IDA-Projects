@@ -1,34 +1,35 @@
 import os
+from civ2.config import Config
 
 LABELS_FNAMES = ["labels.txt", "labelsToT.txt"]
 
 
 class StaticTexts(object):
-    labels = [[], []]
+    labels = []
     improve = []
 
     def __init__(self, debug=False):
         self.debug = debug
-        self._load_labels(0)
-        self._load_labels(1)
+        self._load_labels()
         self._load_rules()
 
-    def _load_labels(self, mode):
+    def _load_labels(self):
         script_dir = os.path.dirname(__file__)
-        filename = os.path.join(script_dir, LABELS_FNAMES[mode])
+        labels_fname = Config.get_name_address("LABELS_FNAME")
+        filename = os.path.join(script_dir, labels_fname)
         i = -1
-        self.labels[mode].clear()
+        self.labels.clear()
         with open(filename, 'r') as file:
             while line := file.readline():
                 if i >= 0:
-                    self.labels[mode][i] = line.rstrip()
+                    self.labels[i] = line.rstrip()
                     if self.debug:
-                        print("%d: %s" % (i, self.labels[mode][i]))
+                        print("%d: %s" % (i, self.labels[i]))
                     i += 1
                 elif line.startswith("@LABELS"):
                     line = file.readline()
                     val = int(line)
-                    self.labels[mode] = [''] * val
+                    self.labels = [''] * val
                     i = 0
         print('Civ2 plugin: %s loaded' % filename)
 

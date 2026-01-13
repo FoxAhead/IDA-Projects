@@ -1,0 +1,32 @@
+ANTAG.EXE: # v1.6.10
+  CRC32:
+    - 0x7A9B321B
+  start: 0x783B4
+  strcpy: 0x79020
+  strcat: 0
+  StaticTxtRead: 0x1CEA8
+  WinMgr_FindWnd: 0x56DA8
+  WinMgr_FindWndWithState: 0x56DA8
+  GwshareShpCacheIndexes: 0xFFEA0
+
+ASCEND.EXE: # v1.6
+  CRC32:
+    - 0x76D52101
+  start: 0x73774
+  strcpy: 0x743E0
+  strcat: 0
+  StaticTxtRead: 0x1CE70
+  WinMgr_FindWnd: 0x5216C
+  WinMgr_FindWndWithState: 0x521DC
+  GwshareShpCacheIndexes: 0  #TODO
+
+PATCH.EXE: # v1.6.5
+  CRC32:
+    - 0x8AB98421
+  start: 0x737C4
+  strcpy: 0x74430
+  strcat: 0
+  StaticTxtRead: 0  #TODO
+  WinMgr_FindWnd: 0  #TODO
+  WinMgr_FindWndWithState: 0  #TODO
+  GwshareShpCacheIndexes: 0  #TODO

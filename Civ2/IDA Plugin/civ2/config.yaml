@@ -1,0 +1,21 @@
+Civ2 MGE:
+  CRC32:
+    - 0x4F37F726
+  start: 0x005F6E90
+  LABELS_FNAME: "labels.txt"
+  txtStrcatLabelString: 0x00401BF4
+  txtAppendLabelString: 0x00403896
+  StrcatLabelString: 0x00403995
+  GetStringInList: 0x00403387
+  UpdateMenuItem: 0x004023A1
+
+Civ2 ToT:
+  CRC32:
+    - 0x1BB98E07
+  start: 0x005B54E0
+  LABELS_FNAME: "labelsToT.txt"
+  txtStrcatLabelString: 0x00409520
+  txtAppendLabelString: 0x00000000  # TODO
+  StrcatLabelString: 0x0048F30B
+  GetStringInList: 0x0042095E
+  UpdateMenuItem: 0x00000000  # TODO

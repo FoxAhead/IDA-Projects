@@ -8,8 +8,7 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
     cnt = 0
     ea = 0
 
-    def __init__(self, mode, actions):
-        self.mode = mode
+    def __init__(self, actions):
         self.actions = actions
         ida_hexrays.Hexrays_Hooks.__init__(self)
 
@@ -84,6 +83,6 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def func_printed(self, cfunc):
-        opt5.run(cfunc, self.mode)
+        opt5.run(cfunc)
         return 0
 

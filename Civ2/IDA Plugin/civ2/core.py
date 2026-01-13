@@ -1,4 +1,5 @@
 import civ2.hooks
+import civ2.config
 from civ2.actions import *
 import ida_kernwin
 from ida_hexrays import *
@@ -20,13 +21,7 @@ class Civ2Core(object):
         self._registered_actions = {}
         self._hxe_hooks = None
         fname = idc.get_root_filename().upper()
-        if "CIV2.540.EXE" in fname:
-            print("Civ2 MGE plugin enabled")
-            mode = 0
-        elif "CIV2TOTX64.EXE" in fname:
-            print("Civ2 ToT plugin enabled")
-            mode = 1
-        else:
+        if not civ2.config.Config.init():
             return False
         self._register_action(ActionEnable(self))
         self._register_action(ActionDisable(self))
@@ -35,8 +30,9 @@ class Civ2Core(object):
         self._register_action(ActionConvertTo8())
         self._register_action(ActionConvertTo16())
         self._register_action(ActionConvertTo32())
-        self._hxe_hooks = civ2.hooks.HxeHooks(mode, self._registered_actions)
+        self._hxe_hooks = civ2.hooks.HxeHooks(self._registered_actions)
         self._hxe_hooks.hook()
+        print("Civ2 IDA Plugin - loaded for %s" % civ2.config.Config.info())
         return True
 
     def unload(self):

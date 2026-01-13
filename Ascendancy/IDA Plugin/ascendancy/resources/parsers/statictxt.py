@@ -2,8 +2,6 @@ from .base import BaseResourceLoader
 
 
 class StaticTxt(BaseResourceLoader):
-    #texts = [''] * 200
-
     def parse(self, file_path):
         result = {}
         with open(file_path, 'r') as file:

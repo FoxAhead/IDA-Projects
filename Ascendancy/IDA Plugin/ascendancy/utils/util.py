@@ -14,6 +14,7 @@ REG_ECX = 16
 REG_EBX = 20
 REG_EDI = 32
 REG_ESI = 36
+REG_DS = 104
 
 LogMessages = []
 

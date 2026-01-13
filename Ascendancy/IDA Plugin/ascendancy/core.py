@@ -43,7 +43,7 @@ class AscendancyCore(object):
         self.action_manager.register_action(ActionReload(acb=self.reload))
         self._hxe_hooks = ascendancy.hooks.HxeHooks()
         self.activate()
-        print("Ascendancy IDA Plugin - loaded for %s (start=0x%.08X)" % (ascendancy.config.Config.target, ascendancy.config.Config.startea))
+        print("Ascendancy IDA Plugin - loaded for %s" % ascendancy.config.Config.info())
         return True
 
     def unload(self):
@@ -73,6 +73,7 @@ class AscendancyCore(object):
         idaapi.require("ascendancy.opts.opt18")
         idaapi.require("ascendancy.opts.opt19")
         idaapi.require("ascendancy.opts.opt20")
+        idaapi.require("ascendancy.opts.opt21")
         idaapi.require("ascendancy.opts")
         idaapi.require("ascendancy.hooks")
         self._hxe_hooks = ascendancy.hooks.HxeHooks()

@@ -29,7 +29,7 @@ void __fastcall __spoils<> sub_1B4F0(P_Matrices a1)
 
 test:
     sub_1BBC8
-    1B4F0 - TODO - Case 2
+    1B4F0 - Case 2 (STX)
 
 """
 
@@ -41,30 +41,23 @@ class Opt():
         self.eas = []
 
     def run(self, blk, insn):
-        # print("combine: %s" % text_insn(insn, blk))
-        # print_blk(blk)
         if is_func_lib(insn.ea):
             return 0
-        # buf = insn.dstr()
-        # if ("jnz " in buf) and ("0xFFFFFFFF.4" in buf):
+        # Case 1
         if is_mcode_jcond(insn.opcode) and insn.r.is_equal_to(0xFFFFFFFF, False) and insn.l.is_insn(m_ldx):
-            # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
             self.eas.append(insn.ea)
             insn.clr_combinable()
-        # elif (next_insn := insn.next) and next_insn.opcode == m_nop:
-        #    print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
-        #    insn.clr_combinable()
+        # Case 2
         elif insn.opcode == m_stx:
-            if (next_insn := insn.next) and next_insn.opcode == m_stx:
-                # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
+            if (next_insn := insn.next) and next_insn.opcode == m_stx and insn.r.is_reg(REG_DS, 2) and next_insn.r.is_reg(REG_DS, 2):
                 self.eas.append(insn.ea)
                 insn.clr_combinable()
-        elif insn.opcode == m_ldx:
-            if (next_insn := insn.next) and next_insn.opcode == m_ldx:
-                # print_to_log("Optimization 1 - Clear combinable: [%s]" % text_insn(insn))
-                self.eas.append(insn.ea)
-                insn.clr_combinable()
+        # Case 3 TODO (Need example)
+        # elif insn.opcode == m_ldx:
+        #     if (next_insn := insn.next) and next_insn.opcode == m_ldx:
+        #         self.eas.append(insn.ea)
+        #         insn.clr_combinable()
 
     def print_results(self):
         if self.eas:
-            print("Optimization 1 - Clear combinable:", ", ".join("%.5X" % ea for ea in self.eas))
+            print("Optimization 1 - Clear combinable:", ", ".join("%.5X" % ea for ea in sorted(self.eas)))

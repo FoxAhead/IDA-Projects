@@ -1,59 +1,42 @@
+import os
+import ida_nalt
 import idc
-
-NAME_ADDRESSES = {
-    "ASCEND.EXE": {
-        "start": 0x73774,
-        "strcpy": 0x743E0,
-        "strcat": 0,
-        "StaticTxtRead": 0x1CE70,
-        "WinMgr_FindWnd": 0x5216C,
-        "WinMgr_FindWndWithState": 0x521DC,
-        "GwshareShpCacheIndexes": 0,  #TODO
-    },
-    "PATCH.EXE": {
-        "start": 0x737C4,
-        "strcpy": 0x74430,
-        "strcat": 0,
-        "StaticTxtRead": 0,  #TODO
-        "WinMgr_FindWnd": 0,  #TODO
-        "WinMgr_FindWndWithState": 0,  #TODO
-        "GwshareShpCacheIndexes": 0,  #TODO
-    },
-    "ANTAG.EXE": {
-        "start": 0x783B4,
-        "strcpy": 0x79020,
-        "strcat": 0,
-        "StaticTxtRead": 0x1CEA8,
-        "WinMgr_FindWnd": 0x56DA8,
-        "WinMgr_FindWndWithState": 0x56DA8,
-        "GwshareShpCacheIndexes": 0xFFEA0,
-    },
-}
+import yaml
 
 
 class Config:
+    NAME_ADDRESSES = None
     target: str = None
+    crc32: int = 0
     startea: int = 0
 
     @classmethod
-    def init(cls):
-        cls.set_target(idc.get_root_filename(), idc.get_entry(idc.get_entry_ordinal(0)))
+    def init(cls, filename="config.yaml"):
+        script_dir = os.path.dirname(__file__)
+        filepath = os.path.join(script_dir, filename)
+        with open(filepath) as file:
+            cls.NAME_ADDRESSES = yaml.safe_load(file)
+        startea = idc.get_entry(idc.get_entry_ordinal(0))
+        crc32 = ida_nalt.retrieve_input_file_crc32()
+        cls.set_target(crc32, startea)
         return cls.target is not None
 
     @classmethod
-    def set_target(cls, name, start):
-        normalized = name.upper()
-        # Get expected start address
-        startea = NAME_ADDRESSES.get(normalized, {}).get("start", 0)
-        if start == startea:
-            # Validate if provided start address matches expected start address
-            cls.target = normalized
-            cls.startea = startea
-        else:
-            # Clear configuration if validation fails
-            cls.target = None
-            cls.startea = 0
+    def set_target(cls, crc32, startea):
+        cls.target = None
+        cls.crc32 = 0
+        cls.startea = 0
+        for target, names in cls.NAME_ADDRESSES.items():
+            if crc32 in names["CRC32"] and startea == names["start"]:
+                cls.target = target
+                cls.crc32 = crc32
+                cls.startea = startea
+                break
 
     @classmethod
     def get_name_address(cls, name):
-        return NAME_ADDRESSES[cls.target].get(name, 0)
+        return cls.NAME_ADDRESSES[cls.target].get(name, 0)
+
+    @classmethod
+    def info(cls):
+        return "target=%s (CRC32=0x%.08X, start=0x%.08X)" % (cls.target, cls.crc32, cls.startea)
