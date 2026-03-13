@@ -1,0 +1,1233 @@
+;Translation - AME
+-First Dummy String - Never seen hopefully
+AMERICAN
+
+Final version of Street Wars
+
+Current bank balance
+Current date
+Current status of Cousin's mission
+
+Pause Game
+Setup Options & Save Game
+View position of current character
+Show background on radar
+Toggle see-thru view of buildings
+Exit current screen
+Reset speed of game
+Increase speed of game
+
+View nearest Cement Yard
+View nearest Brick Yard
+View nearest Steel Yard
+View HQ data screen
+View and/or purchase new land
+View City Hall status
+Review current mission
+Manufacture and deliver gadgets
+Review latest complaints from tenants
+Go to house with this complaint
+See next complaint
+Go to source of last conflict
+Go to latest raid site
+
+
+Stop & wait around
+Toggle auto-repair function
+Destroy building or object
+Cancel character
+Manual repair of building/fence
+Run home
+Go to hospital
+
+
+Call unemployed Worker to site
+#Fixer
+#Gangster
+#Idle
+#No-one working on site
+#Building:[SPC]
+#Expected completion:[SPC]
+#Unknown
+#Finished
+#Requirements:-
+#[SPC]units
+#[SPC]of[SPC]
+#Stock Levels:-
+#No Resources needed
+#Work underway
+#Coffee break in progress
+#Work cannot continue
+#[SPC]enemy guy(s) on site
+*Worker is on his way
+*Another worker is on his way
+*No free workers available
+[SPC]units of Cement
+[SPC]units of Brick
+[SPC]units of Steel
+
+
+Select what tenant should produce
+Sell property to City Hall
+Set percentage of rent paid to City Hall as bribe
+#Income : $
+#Income : NONE
+#Child[SPC]
+#Stress
+#Bribe
+#Never
+#ON HOLD
+#I'm stressed out and leaving in[SPC]
+*Next kid will be a tenant
+*Next kid will be a Worker
+*Next kid will be a Fixer
+*Next kid will be a Gangster
+*This tenant will now pay rent
+Create bribe bag outside HQ
+Wake up the tenant
+#Zombies are slowing breeding down.
+#All my money was stolen by thugs last month
+
+
+Cancel current work
+Upgrade current building
+Show requirements before upgrade possible
+WORK ON HOLD
+*Select gadget to make/deliver
+*Workers busy (x {N})
+*Workers ready (x {N})
+*No workers present
+*Awaiting workers
+*Production cancelled!
+Next gadget
+Previous gadget
+Start manufacturing selected gadget
+Used :[SPC]
+
+
+Start undesirable's task
+Go and view current location of undesirable
+Abort current task and recall character
+CURRENTLY IN PRISON[CR][CR]Expected release date = {E}.
+HE HAS BEEN KILLED[CR][CR]A replacement will appear in {E}.
+There's no one at home...
+Select an action.
+You don't have enough money to do that.
+
+
+Select a weapon
+Buy current weapon
+Cost : $
+
+
+#% complete
+*Awaiting workers
+
+
+View possible tenants for property
+Appoint tenant
+#Rent : $
+#[SPC]days
+#Existing tenants
+*Property is Empty
+#MONEY
+#REPRO
+#STRESS
+#LIFE
+#DAMAGE
+#NONE AVAILABLE
+#available
+
+
+#Upgrading =[SPC]
+*The upgrade is waiting for Workers
+There are Workers in the grounds
+
+
+View gadgets in this building
+Scroll up installed gadgets
+Scroll down installed gadgets
+#Gadget :[SPC]
+
+
+Police Station information
+Select an Estate to examine
+#[SPC]Estate
+#Your Buildings on Estate :[SPC]
+#Enemy Buildings on Estate :[SPC]
+#Total Police commissioned =[SPC]
+#Police cost per month = $
+#Police HQ
+#NOT BUILT
+#Name
+#Type
+#Sentence
+#Prisons cells available :[SPC]
+Police Beacons currently available : {N}
+
+
+
+
+
+
+#Cemetery capacity =[SPC]
+#Number of people buried =[SPC]
+#Patients In Hospital
+#Recovery
+#Fit & Well
+#None
+
+
+Review previous messages
+Toggle progress messages on/off
+Toggle game hints on/off
+Toggle icon help text on/off
+Send message to other players
+*No Messages received yet
+*Message sent
+*Message cancelled
+*Please type your message:
+*Future help messages will be ignored
+*Help messages will be shown in future
+*In future, hints will not be shown
+*Hints will now be shown
+*Info will appear when mouse is held over buttons
+*No info will be given for icons
+
+
+#Headquarters
+
+
+Rotate direction of building site
+Toggle building info on/off
+Purchase a building
+Cancel Estate Agent functions
+Show Resources
+Show Businesses
+Show Utilities
+Show Undesirables
+#Building Type[CR]:[SPC]
+#Purchase Cost[CR]: $
+#Resale Value[CR]: $
+#[SPC]units needed
+#No. left to build
+#Foundation size
+#No more of this type allowed
+#NONE LEFT
+#CEMENT needed
+#BRICKS needed
+#STEEL needed
+
+
+#Gadget Factory
+*You cannot place it here!
+*Cannot place object while people underneath!
+*Already too many Subway sites
+*Subways must be placed on sidewalks of Estates
+*You already have a Subway on this block
+*You already have enough of those!
+*You cannot afford to build that!
+
+
+Increase overdraft
+Reduce overdraft
+View people data
+View accounts data
+View performance statistics
+View graph of bank balances
+View graph of number of buildings
+View graph of tenant's stress 
+View graph of land area used
+View graph of crimes committed
+Display graphs as bar charts
+Display graphs as line charts
+*BANK BALANCE
+*NO. OF BUILT BUILDINGS
+*AVERAGE STRESS OF TENANTS
+*LAND AREA USED
+*CRIME WAVE FIGURES
+*NO DATA AVAILABLE YET
+*Pay all outstanding tax now
+#Loan = $
+#Monthly Interest = $
+#Assets = $
+#Monthly Income = $
+#Potential Income = $
+#Current
+#Year[SPC]
+#TOTAL
+#TOTALS
+*TAXATION PER YEAR (Payable every 5)
+#Building Tax
+#People Tax
+#Undes. Tax
+#Land Tax
+#Tax surcharge
+#Tax refund
+#Tax to date
+#Interest so far
+#Total due
+#Due in[SPC]
+#% stressed
+*You cannot borrow any more...
+*Bank Loan is already zero
+*Not enough money to repay loan
+*Not enough money to pay tax
+
+
+Allow selection of important characters
+Scroll up through list of men
+Scroll down through list of men
+Cancel current selection
+Summon selected people to current site
+*No-one selected yet
+*They're on their way...
+
+
+
+Create Fixer from {N} spare Worker(s)
+Create Gangster from {N} spare Worker(s)
+Create Tenant from {N} spare Worker(s)
+Create Worker from 2 spare Tenants
+Purchase a Worker from City Hall ($5000)
+#In
+#Use
+#In
+#HQ
+#In
+#Prod.
+#Land Usage =[SPC]
+A new Territory Marker Barrel will be delivered when your next building is finished.
+The next Territory Marker Barrel will be delivered after completing {N} more buildings.
+You have been awarded with your first Territory Marker Barrel for successfully completing another building.  It will be delivered from City Hall shortly
+Another Territory Marker Barrel is being delivered and will be with you shortly.
+*Not enough Workers in HQ
+*Cannot convert any more
+*Workers Converted...
+*Tenant created.
+*Worker created.
+*Not enough Tenants to convert
+*All rents increased
+*All rents decreased
+*Worker purchased
+*Cannot afford a Worker
+*Cannot afford to pay bribe
+*A bribe has been placed outside
+*The bribe has been increased
+#Bribes received by:
+
+
+Purchase this Estate from City Hall
+Go to currently selected Estate
+*Not enough money to buy Estate
+View mission status
+View 2nd mission status
+View 3rd mission status
+
+
+View all current Businesses
+Select next building
+Select previous building
+Go to currently selected building
+#Vacant property
+#Ghosts have taken over
+#Infested property
+*No Businesses built yet!
+
+Accept current message window
+Cancel/Decline current option
+Go to source of message
+Go to City Hall
+
+*Action cancelled!
+
+*is moving
+*is attacking
+*has stopped
+
+*Weapon purchased
+*Gadget purchased
+*Building purchased
+*[REDBG][SPC]Not enough money in bank![SPC]
+#Empty
+#Infested
+
+
+#STATUS
+#PEOPLE
+#EFFIC.
+
+[HDR]
+Serial No. 1 supplied to Infogrames UK
+
+
+Dear[SPC]
+Player
+You have[SPC]
+[SPC]days to solve this problem.
+Yours sincerely,
+This property is beyond repair.  Get out quickly.
+In order to repair your fence as well as your building, it will now cost ${N}.[CR][CR]Do you want to do it?
+Your property is in perfect condition and doesn't need repairing.
+This is an emergency repair and very expensive.  It will cost ${N} and rising...[CR][CR]Are you sure you want to?
+Due to your building being infested, this repair will cost you ${N} and rising...[CR][CR]Are you sure you want to?
+Your sewage pipes are ruptured badly.  Do you want me to try and fix the damage?
+
+
+One of your buildings has started to deteriorate, either do a manual repair to it or send a Fixer round.  Jump straight to the building by clicking on the Arrow icon.
+
+
+{I}
+[CEN]TAX BILL NOW DUE![CR][CR] $[WHTFG]{N}[COLR] is now due. Go to City Hall to pay it now before it accrues interest.
+WARNING[CR]You are overdrawn at the bank.  If you continue, you will be made bankrupt and thrown out of the game.
+Selling your building in its current condition will give you a price of ${N}.  Do you wish to sell?
+You cannot sell your building in its current condition!
+This property cannot be sold without the Tenant's permission, and he is not at home!
+[CEN]ABORT CURRENT GAME[CR][CEN]Are you sure?
+[CEN]THIS WILL ABORT THE CURRENT GAME![CR][CEN]Are you really sure?
+Are you sure you wish to restart this level?
+[CEN]Are you sure you wish to exit?
+Upgrading this building requires:-{R}[CR]Do you wish to continue?
+You need more money to upgrade this building. It requires:-{R}
+You need more resources to upgrade this building. It needs:-{R}
+Cost = $
+[SPC][SPC][SPC][SPC][SPC]
+
+Overcrowding will soon occur of {W}. Stop production now.
+You were warned about over producing {W}.  When Cousin Luigi has finished, more children won't be a problem.
+
+
+City Hall will not allow you to buy more land until building standards are improved. You are only making use of {N}% of your available land.
+Until you improve the building layout on [WHTFG]{B} Estate[COLR], City Hall refuses to let you buy more land.
+You cannot purchase any more Estates while [WHTFG]{B} Estate[COLR] remains empty.
+As you have not paid your overdue tax, City Hall will not allow you to buy any more Estates.
+
+
+{H}I asked you time and time again but in the end I had to complain to City Hall.  Maybe you'll listen to me next time.
+[REDBG][SPC]Tenant left due to complaint not being solved.[SPC]
+{H}I'm sick of having to walk everywhere.  Start putting some Subway sites closer to make my life easier or you don't get any rent off me.{T}
+{H}HELP!!  I can't see anything for the smoke in here.{T}
+{H}HELP!!  That guy next door has got a problem with his house. It's on fire.  Do something 'cause I don't want my kids getting burnt.{T}
+{H}Your factory has been going day and night.  I can't stand the noise anymore.  Close it down or give me something to block out the noise.{T}
+{H}Y'know, I really think that commie next-door needs his fence 'trimming', I am going to get my Uncle Vito to come and see to it, unless my rent goes down dramatically.{T}
+{H}This place is like O'Flannagan's bar on a Saturday night, loud explosions and people gettin killed everywhere, install some thick curtains immediately to block out the noise.{T}
+{H}Look what's been done to my fence.  I need it repaired now.{T}
+{H}I've seen some nasty undesirable types wandering around this estate.  My kids might get into trouble and hurt themselves.{T}
+{H}I have seen an eight foot high cockroach in the garden of a neighbors house.  HELP!{T}
+{H}I'm not having those noisy builders digging up my garden all day and night whilst I'm around.  You can hardly hear yourself think when they start up.{T}
+
+
+This house is way below my standards.  I would hate to reside in such a common house.  Do I have to?
+If you force me to live here you'll regret it. Are you sure you want me to?
+I can't carry out my work in a building like this. Are you sure you want me to live here?
+You've got to be kidding, no way will I live in that house unless you force me.
+In my day they built better cardboard boxes than this. You aren't serious about me living here?
+This house is a dump. What happened to building regulations when this was constructed. Do I have to live here?
+I may have simple tastes but even I have some standards. You really expect me to live here?
+This place looks like it's already been vandalized.  What's left for me to do to it!  Must I live here?
+I don't like the idea of living here.  Are you sure you want me to?
+This doesn't look like my sort of house.  Are you sure?
+We're not living anywhere near weirdoes.  If you get rid of them we might reconsider.
+That house is definitely unsuitable for us in its current condition.
+*Tenant has died of old age!
+One of your Tenants has died of old age and you have none left to replace him.  You can view the house by clicking on the arrow.
+*Tenant has left due to stress...
+*I've gone to the cemetery to see Uncle Vincent
+*Work unable to continue due to Tenant
+*I'm off to work, see you this evening
+*I'm off for my Hospital appointment
+*I'm quickly cleaning up the yard 
+The tenant is too stressed to think about having kids at the moment.
+We will not move into a house that is in that condition with cockroaches everywhere.
+We have decided to defect to your family because of our bad treatment by our old family.  So here's a house for free!!!
+
+
+*I'm tired.  I'm off to get some sleep...
+*I'm no longer needed so I'm going home.
+*It's so easy...
+*There is nothing left to steal...
+*Those resources are not yet available
+
+
+-uaHood1 (Extort)
+Get the gang together and torch someone's building.
+-uaHood6 (Picket)
+Kidnap some poor defenseless Tenant and hold him for ransom.
+Try to collect some resources to repair the church spire whether people want to give or not.
+-uaPriest3 (Money)
+Negotiate the release of someone who is locked up.
+-uaGhost1 (Haunt)
+Paralyze with fear some enemy character and take control of him.
+-uaGhost3 (Zombie)
+Give someone the Cloak of Darkness to let them carry out their work in secret. 
+Get out into the street and party...
+Distract the officials...
+-uaHooker6 (Party)
+Attack a building and demolish the entire place
+-uaBruto2 (Rampage)
+-uaBruto3 (Fence)
+Let loose the whirling dervish...
+Plant bomb in someone's building and run for it.
+Open all the faucets in someone's building and flood the place.
+
+-uaHood1 (Extort)
+*Select a building for a bonfire...
+-uaHood6 (Picket)
+*Select your Tenant victim...
+*Select resource site to approach...
+-uaPriest3 (Money)
+*Select a building containing prisoners...
+-uaGhost1 (Haunt)
+*Select someone to terrify...
+-uaGhost3 (Zombie)
+*Select someone to hide...
+*Choose where to party...
+*Select a Policeman to distract...
+-uaHooker6 (Party)
+*Select building to attack...
+-uaBruto2 (Rampage)
+-uaBruto3 (Fence)
+*Select an area to demolish...
+*Select a building to target...
+*Select a building to flood...
+*Choose where to deliver to...
+*Just having a look around!
+
+Your tenants on {B} Estate are having money extorted from them.
+Your hoods are extorting lots of money from tenants on {B} Estate.
+Someone has just torched one of your properties on {B} Estate
+Your hoods are busy torching one of the properties on {B} Estate.
+Your building has been closed down by a rival gang.
+No work is being done at this building on {B} Estate.
+Your tenant has been grabbed at gunpoint and bundled back to the hoods' hideout.
+Your hoods have captured the tenant from {B} Estate and they are holding him back at their base.
+You have reluctantly 'donated' some of the resources from your site on {B} Estate to the church.
+You have received some very generous 'donations' for the church repairs.
+The local priests have been visiting your HQ and someone donated rather more than they should have.
+You have successfully collected quite a large 'donation'.
+A priest has negotiated the release of all your prisoners.
+Your priest has negotiated the release of all your prisoners.
+Ghosts have taken over your building on {B} Estate.
+Your ghost has taken over the building on {B} Estate.
+One of your men has seen a ghost and appears possessed.
+You now have control of this man temporarily while he is possessed.
+There have been unconfirmed reports of zombies being seen on {B} Estate.
+You have infested the entire {B} Estate with zombies.
+-Unused GHOST4
+Your man is now invisible to the opposition for a while.
+Some of your men are being distracted from their work.
+You have managed to distract some of the opposition men from their duty.
+One of your Policemen appears to be getting a little too intimate with one of the local residents.  Sort it out!
+You have distracted a Policeman on his beat.
+There is a party going on at one of your houses on {B} estate.
+There is a party going on at one of the houses on {B} Estate.
+Bruto has started to demolish one of your buildings on {B} Estate.
+Bruto is demolishing one of the buildings on {B} Estate.
+A madman has escaped and is rampaging around your site on {B} Estate.
+Bruto is rampaging around the site on {B} Estate and all construction work has stopped.
+Your fence is getting totally smashed by a nut.  Be on the lookout for someone trying to take your building over.
+Bruto is taking out all his pent-up aggression on that fence. There'll be plenty of firewood tonight.
+Bruto has gone completely insane and is smashing up the place.
+Bruto is smashing up the place.
+There's a bomb in your garden.  It would be a good idea for you to get here as soon as possible.
+That bomb should sort them out nicely.
+Raw sewage is pouring out of one of your buildings on {B} Estate.
+That should put a spanner in their plumbing works once and for all.
+
+*He is on his way...
+*She is on her way...
+*They are on their way...
+One of your buildings was destroyed by a massive explosion.  Watch who you double cross in future.
+
+
+The Don's favorite Cousin, Carmine has just arrived in town to see you.  He's here to check out all the businesses you've taken over and make sure you're running them right. 'You have [WHTFG]{MD}[COLR] to take me on a tour of them, then I'll report back to the Don.'{MZ}
+You're either an honest punk or more clever than me.  I can't see anything wrong with the books so I'll go and tell the Don you seem to be an OK guy.  Shame, I was looking forward to taking you for a ride...
+You've had your chance to show me round the businesses, I'm not waiting any longer.  I'm off to tell the Don you've messed up big time.
+Carlos, another of the Don's Cousins, has just turned up unexpectedly. 'I hear you've got some great brothels in town, well I need some relaxation for a year and want to do it in your best Brothel. I'll give [WHTFG]{MD}[COLR] to sort this out.'{MZ}
+Well you've done me proud, I feel really good after all that relaxation.  I'll make sure the rest of the Family get to hear about the high quality services you have.
+You think it's funny just because I wanted something a little special.  Well let's see if you're still laughing when I tell the Don how badly you've treated me.
+Guido, the Don's nastiest Cousin, has paid a surprise visit to town.  'The Don has asked me to check up and report back to him on how well you're running things around here. You've got [WHTFG]{MD}[COLR] to impress me...'
+You're lucky this time.  You seem to be doing alright for the Family in this town.  I'll go back and tell the Don everything and that you send your respects.
+You're here to do a job for the Family and you're not doing it very well.  You take too long to get rid of the competition and you aren't showing enough respect.  You'll be hearing real soon from the Don. 
+
+
+[CEN]WELL DONE!!![CR][CR][CEN]You did good in the end and have done everything the Family expected of you.  The Don is very pleased.  You made him money, you ran other punks out of town and you showed respect for the Family.  He will expect even more of you in the future so make sure you don't let him and the Family down...
+[CEN]BAD LUCK[CR][CR][CEN]Another Family in town has beaten you to it and completed the mission before you.
+[CEN]BAD LUCK[CR][CR][CEN]You never managed to get your act together running the Family's businesses so you've run out of money.
+[CEN]BAD LUCK[CR][CR]If you'd kept your eyes open then your HQ would still be standing and not blown to smithereens.  Sweet dreams sucker!
+[CEN]BAD LUCK[CR][CR]No one likes paying their taxes but you had plenty of chances to pay all your overdue tax and didn't.  Don't let this happen again.
+[CEN]You had your chance and you blew it.  You only get to cross the Don once in your life and after that it's curtains...
+[CEN]BAD LUCK![CR][CR]Not showing the Don respect by carrying out his wishes in the generous time he gives you, means you are no longer a member of the Family.  If you think you're up to trying again then you'd better do it right next time.
+
+
+{P} has been wiped out due to the destruction of his HQ.
+{P} has been closed down by City Hall for non-payment of his taxes.  Let this be a lesson to you.
+{P} has gone bankrupt due to mismanagement.  Unfortunately, you were not invited to the bankrupt stock sale of his assets and City Hall got the lot.
+{P} has been thrown out of the game due to not successfully completing one of his missions.
+
+Your tax bill has been outstanding for more than 5 years.  It must be paid within the next year or City Hall will close you down.
+
+IF YOU FAIL THE DON THEN IT'S CURTAINS FOR YOU!!!
+Failure to do this will cause City Hall to repossess [WHTFG]
+[COLR][SPC]of your most expensive buildings.
+Due to failing the mission given to you by City Hall, they have decided to repossess {N} of your most expensive buildings.  Maybe next time you'll learn to be a bit quicker.
+
+
+The following set of missions will introduce you to all the basic functions of the game.  The computer will occasionally help you with hints.
+You must build a {S0}'Soup Kitchen'[COLR] next to your HQ.  Once built you should place a {S1}tenant[COLR] in it and start it {S2}breeding[COLR] some more workers.
+Congratulations!  You are doing well.  Now you need to buy some {S0}more land[COLR] and build a {S1}Cement Factory[COLR] and a {S2}Gadget Factory[COLR] on it.  When the Cement Factory is finished, send some Workers inside to {S3}restock[COLR] the factory back up to 10 units of cement.  Make sure that you continue breeding at least two more workers.
+Well done!  Now it's time to start making some money.  First, {S0}upgrade your 'Soup Kitchen'[COLR] by manufacturing an oven in the Gadget Factory and installing it in the Soup Kitchen.  Make sure your new 'Diner' is {S1}paying you rent[COLR] every month.  While waiting for this, you should convert some of your {S2}Workers into Fixers[COLR] and put them to work looking after your new Estates.
+You're getting the hang of this.  Now you need to get some more buildings up and running to breed extra people.  Build another {S0}'Soup Kitchen'[COLR] and a {S1}'Drinking Den'[COLR].  Make one of the buildings {S2}breed Workers[COLR] and have the other {S3}breed some more Tenants[COLR] so as to replace all the ones you are using.  To keep everyone happy, make some {S4}Trees[COLR] in the Gadget Factory and plant a few in the grounds of your buildings.
+You're really getting there.  An opposing Mob Family has just arrived in town and I want you to {S0}kill them off[COLR] as quickly as possible.  Make sure that when you teach them a lesson, that you use a Gangster to do the hit and not just your Workers.  So before you set off to wack them, create a {S1}Gangster[COLR] in your HQ out of some of your spare Workers.
+Well done, you managed to finish them off.  Now I need you to {S0}destroy all that family's buildings[COLR], I don't want any trace left.  However, there is now another gang in town belonging to the Barbino family.  Make sure you don't kill any of them because they're too powerful.  You had better build a {S1}Hospital[COLR] and {S2}restore your Worker's energy[COLR] ready for what I want you to do next.  You should also start breeding at least one {S3}level 2 Tenant[COLR] from one of your upgraded businesses ready for later.
+I warned you not to kill any of the Barbino family!  Their Don is far too strong for us.  I'm going to hand your head to them on a plate for this!
+Congratulations!  You got rid of all the evidence.  Now it's time to start taking on the Barbino family.  I want you to {S0}take over[COLR] one of their businesses and then {S1}sell it[COLR] just to show them who's boss around here.  We also need to start getting more business and make some money, so go and knock out a {S2}few drunken bums[COLR] and carry them home.  Make sure they start using some of your new upgraded businesses.
+Okay!  We got to start knocking off some of the other gang now.  But we got to do it real quiet.  If you build a {S0}Cemetery[COLR] and {S1}dump the bodies[COLR] in there, no-one will notice.  Three of their people should be enough for now.  To make sure they understand who's boss, {S2}mark the Cemetery[COLR] as being our land by positioning flaming barrels to cover the entire site.
+Right, we're getting a lot of hassle from City Hall so we need to cool things for a while.  Collect a couple of {S0}Police Beacons[COLR] and place them on the sidewalks so that we start getting some police patrols around our Estates.  Make sure all of your businesses are paying {S1}at least 10%[COLR] of their income to the Police 'benevolent fund' and deliver a {S2}bribe of $10,000[COLR] to the other gang to keep them quiet for a while.  Just concentrate on building some {S3}level 2 houses[COLR] and the problem will go away.
+I think you managed to fool them.  Now it's time to start wreaking havoc on the opposition.  First, build a couple of {S0}'Pool Halls'[COLR] and use the Thugs inside them to take out some of their {S1}Businesses[COLR] and their {S2}tenants[COLR].  One problem, before YOU can build a Pool Hall, you'll need to {S3}take-over one[COLR] that the enemy has built.  Anyone objects, then kill em.  This is where it starts getting fun!
+OK Junior, you seem to have got the hang of being a trainee Mob boss quite well.  Now it's time you tried to take over a real city.
+
+We got a problem out in the sticks that we want you to fix for us.  Joey the Runt ({P1}) and Limp Lenny ({P2}) have joined forces in order to take over a town called Cripples Bend.  Our stool pigeon tells us that Lenny has a funeral home which is full of gold bullion extorted from the local prospecters. We want you to raise an army and get that gold for us.
+Make us look legitimate, build a small parade of business' as a cover for our organization.  Build a {S0}quack's office[COLR], a {S1}peep show[COLR], a {S2}soup kitchen[COLR] and a {S3}drinking den[COLR].  Get them {S4}breeding workers[COLR].  Do not attack the enemy until we tell you.
+Now we want to cause a few accidents for Joey the Runt ({P1}) without getting caught.  Build {S0}four soup kitchens[COLR] as near as possible to his business interests, don't put tenants inside and maybe infest them with a few bodies.  After they {S1}burn down and explode[COLR], you get $2.000 for each of Joey's Buildings that are damaged by the blasts.
+Hee hee.  Nice one.  Now let's start leaning on Lenny ({P2}) as well.  Send some of your {S0}workers on a suicide mission[COLR] round to his Funeral Parlor.  Make sure you don't damage his place but we need to get {S1}Lenny raided by the cops[COLR] so they cart him {S2}off to prison[COLR].  Also start making at least {S3}one gangster[COLR] to protect us from any retaliation.
+Good, that should keep Lenny out of the way for long enough.  Make sure you have {S0}three gangsters[COLR] and get them to clear the way for our guys to capture Joey's assets ({P1}). We need to take over {S1}four of his existing businesses[COLR].  Remember to dispose of the bodies, we don't want to involve the Cops.
+That was tough, but now we must finish off Joey the Runt ({P1}).  Get your toughest guys to {S0}take out his HQ[COLR] and any other of his interests still standing.  Watch out for Joey's secret weapon (the Pool Hall) and make sure you {S1}capture it[COLR] before you kill him off!
+Congratulations, you destroyed Joey the Runt's organization.  Joey was found in a ditch outside town wearing a baseball bat.  We think Lenny got to him before we could - too bad.  However, it has scared Lenny out of town.  He has left with his boys in an airship, but we will find him.
+You have killed Lenny.  Now we will never find where the gold has been hidden.  The Don's response is gonna be swift and final.
+
+We've found Limp Lenny!  Him and his boys have resurfaced in Rangoon, Burma.  We think he has swapped his gold for a Ruby known as the Red Eye of Mandalay.  Fly out with some of your guys and ask him to hand it over.
+Limp Lenny is scared, but we ain't strong enough to kill him yet.  Lenny has opened an American restaurant as a cover for his operation.  We want you to {S0}do the same[COLR].  Also try and {S1}kidnap Lenny alive[COLR], if he's got the Ruby on him you can leave right away - this could be tricky.
+Limp Lenny has escaped, but my nephew Carlos has the Ruby in his safekeeping.  However, Lenny will try to kill Carlos before he can leave Rangoon, so I'm sending Carlos to you for protection.  {S0}Keep him alive[COLR] in one of your {S1}brothels[COLR] {S2}for a while[COLR].
+Carlos tells us that you are a cool customer.  We have decided to send you some help from Chicago - two tommy gun boys.  They will arrive as soon as you {S0}build a Hotel[COLR] with adequate {S1}security[COLR] and {S2}communication[COLR].  Make sure Lenny has {S3}no competing businesses[COLR].
+Bad news, Carlos got ambushed at the airport and we've lost the Ruby.  We want you to hit Lenny's {S0}Restaurant[COLR], kill the guards and take it over, remembering to get rid of all the bodies. 
+That's swell!  You got us the Restaurant but Lenny has got away with the Ruby.  He is hiding somewhere in town, so {S0}hunt him and his henchmen down[COLR] and {S1}take them out[COLR].
+Fabulous, you got us the Ruby.  Limp Lenny is maggot food and his organization has collapsed.  We are going to sell the Ruby and invest in a new project down in Mexico.
+[CEN]Congratulations![CR][CR]Your two tommy gun boys will be arriving soon to help you out.
+
+We got big trouble down in Mexico.  Our guy in Dead Dog Ditch is buried in the desert along with his entire organization.  We know who rubbed him out, the Fernandez brothers, Bent Benny, Marco the stiff, Enrique, Fat Jerry and Johnny the pimp. These guys are from Colombia and we think they are trying to smuggle their whole mob across the border which runs right through the middle of the town. You have to stop them from getting into the U.S.  The Cops are useless so it's up to you.  They control a vital steel plant which is the only source of steel in the desert.
+Take over the {S0}Colombians buildings[COLR] on our side of the border fence and start producing guys to turn into gangsters. Make sure that you have {S1}two gangsters at our HQ[COLR]. If any {S2}Colombians cross the border[COLR], make sure you send them packing.  You get $2000 for every Colombian that goes to jail.
+We need to {S0}build a prison[COLR] to hold these guys but we ain't got no steel.  Send {S1}our Priest[COLR] over the border and get him to force some out of the Colombians steel plant. Make sure he keeps away from their gangsters.
+We want you to use some of that jungle Voodoo on them, get an {S0}evil spirit[COLR] to take over {S1}one of their gangsters[COLR] and get him to rub out {S2}two of their fixers[COLR] - they will never suspect us.  You'll need to {S3}bribe the cops[COLR] to {S4}guard any holes in the border[COLR] just in case.
+We have overstepped the mark by moving into their territory, the Colombians have threatened to wipe you and your guys out. We need to buy time to send you reinforcements, raise {S0}$50,000[COLR] by producing some lucrative businesses in your part of town.  {S1}Brothels[COLR], {S2}Night Clubs[COLR] and {S3}Hotels[COLR] will be OK as long as you have {S4}enough clients[COLR].  Once you have the money, give it to the {S0}Fernandez Bros at their HQ[COLR], this should stall them.
+Guido the Weasel is coming to town to observe the operation.  Get {S0}four gangsters[COLR] to {S1}protect him[COLR] and then {S2}smash the Colombians[COLR].  If Guido likes what he sees he will ally his family with ours.
+Hey, fantastic work.  Guido says you are a major league thug who deserves promotion. We are so pleased with your performance we have decided to let you set up your own family in Capitol City.
+
+So, you've made it to the big time.  Capitol City has been run by other Families for too long.  Over on the West side is Frankie O'Flaherty's booze empire, on the East side is Harvey Goldsteen's gambling joints and in the North you've got Tony 'Im no Gimp' Padella and his band of freaks.  Every one of them will turn you into fish bait rather than give you the time of day.  They've heard you're coming to town and have already made sure some of your boys have fallen foul of the law.  Just getting rid of them is not always enough - they have Family...
+Too late, all your Gangsters have been sent to Prison with life sentences.  You will have to {S0}negotiate their release[COLR] using the {S1}Priest[COLR] from your local Church.  And it's time to do some modernization.  First, {S2}all businesses[COLR] must have {S3}electric lights[COLR] to improve trade and second, {S4}telegraph poles[COLR] so people can stay in touch.  After all, it is the 1930's...
+Right, now we can see what we are up against.  There is a problem in the West, the booze business is stealing our trade.  To put a stop to it you should {S0}kidnap Frankie O'Flaherty[COLR] ({P2}) and put him where the sun don't shine.  Then you can start to take down his empire by {S1}destroying his distillery[COLR] - don't leave a single bottle of beer unbroken.
+Beer, Beer everywhere but not a drop to drink.  Frankie's boys are really mad at you so to keep them quiet you should first {S0}take over a Slaughter House[COLR], and {S1}use Bruto the Nutter[COLR] to take out three of O' Flaherty's buildings.  You'll then need to sort Tony Padella's bunch ({P3}).  Position Police Beacons on his estates so that {S2}most of his undesirable rabble get arrested[COLR], making sure you've built enough {S3}prisons to hold them all.[COLR]
+That was really close!  The problem is, Harvey Goldsteen's mob ({P1}) in the East have been expanding their operation.  You need to {S0}capture three of his businesses[COLR] and put them to good use.  Don't forget, Cousin Carmine is due in town and he'll want to check the books.  Make sure he {S1}visits all three of your new businesses[COLR] and leaves town in one piece.  After Carmine has gone, you need to teach Harvey a lesson and put {S2}three of his Gangsters[COLR] in the cemetery!
+You thought you'd seen the last of the O'Flaherty gang.  Wrong - Frankie's brother, Cecil, has come back mob-handed to get revenge.  You'll have to use all the underhanded tricks in the book to beat him so start by building {S0}a Pool Hall[COLR] and {S1}a Haunted Prison[COLR], and just to make sure, build {S3}a Strip Joint[COLR] and {S5}a Junk Yard[COLR] as well.  Teach O'Flaherty's gang a lesson by {S6}using all the Undesirable's functions[COLR] from the buildings you have just constructed.
+Carry on like this and you might just become the next Don.  The Family are asking for one more favor.  They want to make Capitol City theirs.  The only way you can accomplish this is to completely {S0}wipe out all the other Families.[COLR]  Leave no trace - nothing.  The Don is expecting a lot from you in doing this, his last request!
+Well done, the town is yours and you have done everything that was expected of you.  The Don and his Family send their deepest respects and wish that your wallet always be full, your pistol ever cocked, your children plentiful and your tax bills small.  You will not be forgotten, the Family will call upon your services in the near future.  So don't leave town and stay by the phone...
+
+
+[SPC][CR][SPC][SPC]Welcome to Street Wars.[SPC][CR][SPC]
+
+
+First, select which building you wish to construct on the right hand side.
+Position the cursor over where you want to build.  If cursor is red then it is not a legal position.
+Now click left mouse button to place site.
+Now determine maximum size of plot of land by dragging the back and sides, then click again.  You can right click to cancel the action.
+Now position the building's foundation within the grounds and left click to build it.
+To buy more land, first select a new estate on the map and then click on the 'Buy Land' icon.
+To put a tenant in this house you must first select which tenant by clicking on the 'Appoint Tenant' icon.
+Select the desired tenant.  Different tenants have different characteristics such as speed of breeding or how much rent they will pay.
+Currently you are generating money from this tenant.  You can select to 'breed' a Worker or another tenant by clicking to the left.
+This is your HQ screen which allows you to monitor how many people and tenants you currently have and that are in production.  In here you can also convert Workers into other types of characters.
+One of your tenants has started to complain.  You can see his complaint by clicking on the flashing icon above.
+Your property has become infested due to being left empty too long.  You must perform a manual repair to remove the infestation.  It will cost a lot of money.
+To view the interior of a building, position the mouse pointer over the foundations of a building and press the left mouse button.
+To view the status of building work, click the left button whilst on top of the building site foundation.
+To start work on this building site, bring your men onto site.  This can be done simply by clicking on the 'Call Workman' icon.
+You can select a person by clicking the left mouse button whilst the cursor is near a man.
+You can now move the currently selected person by positioning the cursor where you want to move to and pressing the right mouse button.
+Start building [FLASH]NOW[COLR] by clicking on House Icon below.
+You can exit any data screen by right clicking while your mouse is not over any other icons.
+You are now able to upgrade this building.
+You need to bring workers on site to perform the upgrade work.
+To restock this resource, bring workers into the building.
+There is now more types of buildings available to you.  Make sure you check them out!
+Select which object to manufacture.  Click again to create more.
+Position cursor over the building to which you wish to deliver this object and then click the left button.
+Position cursor where you wish to place this gadget and click left mouse button.
+
+
+The Knife is only good as a short range weapon.
+The Pistol is a long-range weapon. It has rapid fire but it is not very powerful.
+A Shotgun is powerful weapon as long as you get the first shot in - slow to reload.
+No gangster is fully equipped without his trusty machine gun.
+Soup Kitchen: Lowest grade, Level 1 business
+Drinking Den: Lowest grade, Level 1 business
+Peep Show: Low grade Level 2 business
+Local Quack: Low grade Level 2 business
+Coffin Makers: Medium grade, Level 3 business
+Flop House: Medium grade, Level 3 business
+Picture House: High grade, Level 4 business
+Hack's Office: High grade, Level 4 business
+Saloon: Top grade, Level 5 business
+Gambling Den: Top grade, Level 5 business
+Cement Yard, for producing building construction material.
+Brick Yard, for producing building construction material.
+Steel Plant, for producing building construction material.
+Gadget Factory, for producing essential business and household products.
+Police Station, allows you to monitor and control Police activity. Also to act as small prisons.
+Prison : allows people to be locked up longer than in a Police Station.
+Cemetery, for the quick, no questions asked, disposal of bodies.
+Hospital, to return all your people to full health.
+Haunted Prison, where Spooky offers a range of ghostly services.
+Slaughter House, where Bruto the Nutter keeps his blades sharp.
+Church, where the local Holy Joes hang out.
+Junk Yard, where Junior 'The Saboteur' will supply you with explosive services.
+Pool Hall, is where you go when you need a few legs broken or a bit of honest intimidation done.
+Waterside Bar, for whenever you are looking for some female company or to have a party. 
+
+
+This building cannot be upgraded
+You need to install an OVEN to upgrade to a Diner.
+You need to install ELECTRIC LIGHTS to upgrade to a Restaurant.
+You need to install a STILL to upgrade to a Brewery.
+You need to install a GENERATOR to upgrade to a Distillery.
+You need to install TWO BEDS to upgrade to a Brothel.
+You need to install ELECTRIC LIGHTS and CURTAINS to upgrade to a Burlesque Theatre.
+You need to install a MEDICINE CABINET to upgrade to a Pox Doctor.
+You need to install a TELEPHONE and BED to upgrade to a Clinic.
+You need to install CURTAINS, an OVEN and at least one DEAD BODY to upgrade to an Undertakers.
+You need to install ELECTRIC LIGHTS, TELEPHONE and a COCKROACH TRAP to upgrade to a Funeral Parlor.
+You need to install CURTAINS and TWO BEDS to upgrade to a Boarding House.
+You need to install FIVE BEDS and a TELEPHONE to upgrade to a Hotel.
+You need to install ELECTRIC LIGHTS, a GENERATOR and a TELEPHONE to upgrade to a Nickelodeon.
+You need to install TWO GENERATORS and CURTAINS to upgrade to a Cinema.
+You need to install a PRINTING PRESS and a TELEPHONE to upgrade to a Print Office.
+You need to install a SAFE, a STEEL DOOR and a STILL to upgrade to a News Corporation.
+You need to install a STILL and an ALARM to upgrade to a Speak-Easy.
+You need to install a SAFE, TELEPHONE, GENERATOR and LIGHTS to upgrade to a Night Club.
+You need to install a TELEPHONE, a STEEL DOOR and an ALARM to upgrade to a Bookmakers.
+You need to install a STILL, PRINTING PRESS and a SAFE to upgrade to a Casino.
+You need to have at least $200,000 to upgrade your HQ.
+You need to have at least $300,000 to upgrade your HQ.
+
+
+#Current Game....
+#Empty Game Slot
+#Saved Game[SPC]-[SPC]
+#[CEN]Select which game to load.....
+#[CEN]Select slot to save game.....
+#Saved Game
+#Settings
+#Play Game
+#Network Game
+#No Network
+#Replay Intro
+#Exit Program
+#QUIT CURRENT GAME
+#RESTART CURRENT LEVEL
+#Return
+#Continue
+#EASY
+#MEDIUM
+#HARD
+#Play Tutorial
+#Automatic Screen Scroll[SPC]:[SPC]
+#Display actions of your undesirables[SPC]:[SPC]
+#YES
+#NO
+#Screen Scroll Speed[SPC]:[SPC]
+#Pause game during messages[SPC]:[SPC]
+#Display Animation Sequences[SPC]:[SPC]
+#Adjust Music Volume
+#Adjust Sound Effect Volume
+#Save current game
+#SAVING.....
+
+
+#Empty
+#COMPUTER
+#ACCEPT
+#ABORT
+
+
+STREET WARS
+#USED
+#Imminent
+#years
+#year
+#day
+#days
+#Group[SPC]
+#[SPC]defined
+#[SPC]cancelled
+#[SPC]is on its way
+#[SPC]re-selected
+#[SPC]does not exist
+
+
+*Select position to move to...
+*Target person or building to attack...
+*Target site or object to destroy...
+*Select site to take over...
+
+
+*No Buildings left to build.
+*Not enough money to repair building.
+*That resource is not built yet.
+*The Gadget Factory is not built yet.
+*This house has no complaints!
+*There are currently no complaints!
+*There have not been any conflicts yet.
+*There have not been any raids yet.
+*Only gangsters can attack buildings.
+*Too many items already on order!
+*Insufficient room for larger stocks
+
+
+*This is where the latest conflict occurred
+*This is where the latest raid occurred
+*Task aborted...
+*On my way...
+*On our way...
+*reporting...
+*Moving...
+*is attacking the building
+*is off to destroy the building...
+*will remove that object...
+*is off to take over the building...
+*Gadget has been ordered
+*Building Repaired.
+*has been ordered.
+*Estate has been bought
+
+
+#Cost = $
+#Enemy Estate
+#Building site
+#Value $
+#Unsaleable
+#Happiness :[SPC]
+#Stress :[SPC]
+#Complaint (
+#Owned by you.
+#Owned by enemy.
+#No
+#ENEMY
+#Eff:
+#Knocked Out
+#DEAD
+#Bribe : $
+#Weakest[SPC]
+#[SPC]
+
+
+This business has been closed by order of the Police.  It will re-open in {E}.
+
+
+Cement Works
+Brick Yard
+Steel Factory
+Soup Kitchen
+Diner
+Restaurant
+Drinking Den
+Brewery
+Distillery
+Peep Show
+Brothel
+Burlesque Theatre
+Quack
+Pox-Doctor
+Clinic
+Coffin Maker
+Undertaker
+Funeral Parlor
+Picture House
+Nickelodeon
+Cinema
+Hack's Office
+Print Office
+Newspaper Office
+Saloon
+Speak Easy
+Night Club
+Flop House
+Boarding House
+Grand Hotel
+Gambling Den
+Bookmakers
+Casino
+Police Station
+Gadget Factory
+Prison
+Cemetery
+Hospital
+Strip Joint
+Old Church
+Slaughter House
+Haunted Prison
+Pool Hall
+Scrap Yard
+HQ
+City Hall
+
+
+City Hall
+Green Team
+Red Team
+Blue Team
+Yellow Team
+
+
+Knife
+Hand Gun
+Shotgun
+Machine Gun
+
+
+
+Worker
+Workers
+Fixer
+Fixers
+Gangster
+Gangsters
+Tenant
+Tenants
+Tenant
+Tenants
+Cousin
+Cousins
+Baby
+Babies
+Child
+Children
+Teenager
+Teenagers
+Bruto
+Brutos
+Priest
+Priests
+Saboteur
+Saboteurs
+Ghost
+Ghosts
+Hoodlum
+Hoods
+Hooker
+Hookers
+Zombie
+Zombies
+Police
+Police
+Cockroach
+Cockroaches
+Dog
+Dogs
+Delivery Man
+Delivery Men
+Territory Marker
+Territory Markers
+Client
+Clients
+Police beacon
+Police beacons
+Bribe
+Bribes
+
+
+#Cement
+#Brick
+#Steel
+
+
+Evergreen Tree
+Deciduous Tree
+Subway Site
+Ghost Gunk
+Electric Light
+Telephone
+Still
+Emergency exit
+Dog Kennel
+Home Repair Shed
+Printing Press
+Generator
+Oven
+Deluxe Bed
+Cockroach Trap
+Curtains
+Burglar Alarm
+Steel door
+Medicine cabinet
+Safe
+
+
+Level 1 Tenants
+Level 2 Tenants
+Level 3 Tenants
+Level 4 Tenants
+Level 5 Tenants
+Workers
+Fixers
+Gangsters
+
+
+East View
+South View
+West View
+North View
+
+#[SPC]time.
+#[SPC]overdue.
+
+
+Rental Income
+Building Sales
+Site Refunds
+Land Sales
+Building Purchases
+Building Upgrades
+Estate Costs
+Manual Repairs
+Auto-Repairs
+Gadgets
+Manufacturing
+Garden Objects
+Weapons
+Police Pay
+Bank Interest
+Taxation
+Bribes Paid
+
+#JOIN GAME
+#NEW GAME
+#Please type in your name
+#Please type in your game's name
+#REJECT
+#[SPC][SPC][SPC]Click here to send messages...
+View position of Delivery man
+*Factory is being picketed...
+
+
+#Hick Town
+#Hick Town 2
+#Hick Town 3
+#Hick Town 4
+#Hick Town 5
+#Hick Town 6
+#Hick Town 7
+#Hick Town 8
+#Hick Town 9
+#Hick Town 10
+#Cripple's Bend
+#Cripple's Bend 2
+#Cripple's Bend 3
+#Cripple's Bend 4
+#Cripple's Bend 5
+#Rangoon Rumpus
+#Rangoon Rumpus 2
+#Rangoon Rumpus 3
+#Rangoon Rumpus 4
+#Rangoon Rumpus 5
+#Dead Dog Ditch
+#Dead Dog Ditch 2
+#Dead Dog Ditch 3
+#Dead Dog Ditch 4
+#Dead Dog Ditch 5
+#Capitol City
+#Capitol City 2
+#Capitol City 3
+#Capitol City 4
+#Capitol City 5
+#Capitol City 6
+
+
+Sewage Outlet
+Truss Lane
+Rickets Road
+Boiled Beef
+Serrano Height
+Swank Avenue
+Yokels End
+Chicken Pie
+Dirt Track Lane
+Bumpkins Way
+Crop Circle Hill
+Shepherdess Walk
+Greenford Road
+Scouse End
+Oil Drum Lane
+Snowflake Alley
+Blocked Drain
+Methane Way
+Carbon Monoxide
+Gas Works Road
+Monte Casino
+Combustion Lane
+Frost Bite Way
+Pig Iron Road
+Ballast Lane
+Offal Square
+Scum Alley
+Rusty Road
+Black Mill
+Blast Furnace
+Noodle Plaza
+Pork Ball Alley
+Mushroom Square
+Egg Fried Garden
+Pressed Duck
+Singapore Noodle
+Chilli Beef
+Chairman Mau
+Confucius End
+Prawn Cracker
+Sea Weed Lane
+Crab Foo Yung
+Pancake Roll
+Dead End
+Boot Hill
+Bone Yard Park
+Wino's End
+Poker Point
+Pueblo Bastardos
+Slaughter House
+Burnt Butt
+Nixon Plaza
+Dead Dog Island
+Smog Lane
+Back Passage
+Paradise Gardens
+Slag Heap
+Clinton's Pass
+Scrapyard Lane
+Squallor View
+Burnt Tyre
+Trashcan Alley
+Skids Row
+Walkers End
+Southern Drip
+Phlegm Park
+Semtex Road
+Rude Boy Lane
+Asbestos Alley
+Rubber Goods
+Vapor Road
+Pig Penn
+Old Bull
+Dogon Hills
+New Prospect
+Great Kills
+Stunted View
+Garfield South
+
+
+Slick Joey
+Nik the Knife
+Kenny the Kid
+Bugsy Serrano
+
+[SPC]&[SPC]
+
+[CEN]Network game out of sync![CR][CEN]You may need to quit and restart.
+
+STREET WARS [CR](C) 1999-2001 Studio 3 Ltd [CR][CR]Production team: [CR][CR]The Godfather: [CR]John Twiddy [CR][CR]Chief Forgers: [CR]Phil Thornton [CR] Joe Walker [CR]Nick Lovibond [CR][CR]The Don: [CR]Mark Cale [CR][CR]Mastermind: [CR]Phil Thornton [CR][CR]Scams: [CR]John Twiddy [CR]Tim Best [CR][CR]Piano Player: [CR]Martin Oliver [CR][CR]Mouth Organ: [CR]Jason Serrano [CR][CR]Consigliere: [CR]Tim Best [CR][CR]Squealers: [CR]G.V. Long [CR]Bailey Harper [CR]Martin Oliver [CR][CR]Associates: [CR]Nick Steadman [CR]Nick Lee [CR]Jason Serrano [CR]Robin Levy [CR]Matt Risley [CR]Attlee Baptiste [CR][CR]Molls: [CR] Anita, Beth, Cleeta & Lin [CR][CR]Undercover: [CR]Eddie 'Muscles' Edmondson [CR][CR]Informers: [CR]Jon Dale [CR]Stuart Arrowsmith [CR]Marc Bowden [CR]Lee Cummins [CR]Steve Almond [CR]John Jennings [CR]Richard Brooks [CR]Ryan Wooldridge [CR]Nick Evans [CR]Kelvin Cannon [CR]Tim Marrett [CR]Tony McGarry [CR]Simon Crawford [CR]Steve Aspinwall [CR][CR][CR][CR][CR]
+
+
+Street Wars Setup
+Select Installation Type and Location
+This will perform a MINIMUM install by default.  To alter this, select one of the tick boxes below:-
+MEDIUM
+MAXIMUM
+Setup has finished installing Street Wars on your computer.[CR][CR]An icon has been placed in the START Menu to allow you to run the game.
+Run the game immediately
+
+
+
+
+
+
+
+
+When are you going to learn to do as you're told?  You were supposed to kidnap Frankie, not murder the punk.  If the Don had a kinder side to him he might have let this 'oversight' go unpunished.
+Not quite got the hang of this yet have you?  The Don said he wanted you to kidnap Frankie.  But what do you do - take over his stinking house.  The Don wants you to know that he's not pleased.
+Do you know how to read?  When the Don sends you a message telling you to kidnap Frankie then that's what he means, not go mad and destroy the punk's two-bit empire.  In a hurry to know what the Don is like when he's unhappy?  Because you're going to find out real soon.
+Wondering why it's so quiet?  It might have something to do with you wiping everyone out.  Did the Don tell you to do that?  No, he didn't.  He did ask you to do other things though for him, important things and now you can't do them.  Do you think the Don's pleased with you?  You're going to find out just how he feels anytime now. 
+Trying something new like thinking for yourself?  The Don didn't tell you to take over or destroy Lenny's place yet.  So the Don has decided to do a little thinking of his own and you ain't going to like what he thinks about you.
+You were NOT told by the Don to attack this house!  You seem to think you know better than the Don - you can pay your respects to the others who thought that way the next time you go fishing.  Carry on this way and you're really going to regret it.
+Hey trigger-happy.  You don't want to whack this person yet.  His family are real close to the Don and asked for him to be left alone - that means don't kill him....Well not yet anyway. 
+#Police Interest
+Do you know what Joey's secret weapon is?  The Don made it plain enough when he told you what to do, so why upset the Don and kill Joey before you get your hands on it?  The Don is really angry and you're going to find out just how much.
+The Don's cousin comes to town, wanders around, sees a few of the sites and samples some local delicacies.  Then what happens?  You go and let him get killed.  I wouldn't want to be in your shoes when the Don finds out!
+#years
+#year
+#day
+#days
+Display reward animations[SPC]:[SPC]
+NEVER
+ONLY ONCE
+ALWAYS
+SHE HAS BEEN KILLED[CR][CR]A replacement will appear in {E}.
+{H}There's that smell again!  I'm sure it's getting worse in here, it's so bad I can't breathe.  And look at those walls, they're rotting away as I stand here.{T}
+{H}That stench from next door is getting unbearable and now something is beginning to seep under the fence!{T}
+Show first set of gadgets
+Show second set of gadgets
+Show third set of gadgets
+Show fourth set of gadgets
+#0
+#Press [FLASH]ESC[COLR] to exit Demo
+Please insert Street Wars CD into original CD drive and then re-run the game.
+Please re-insert Street Wars CD and press SPACE.
+Please re-insert Mob Rule CD and press SPACE.
+
+
+[SPC][CR][SPC][SPC]Welcome to Mob Rule.[SPC][CR][SPC]
+MOB RULE [CR](C) 1999-2001 Studio 3 Ltd [CR][CR]Production team: [CR][CR]The Godfather: [CR]John Twiddy [CR][CR]Chief Forgers: [CR]Phil Thornton [CR] Joe Walker [CR]Nick Lovibond [CR][CR]The Don: [CR]Mark Cale [CR][CR]Mastermind: [CR]Phil Thornton [CR][CR]Scams: [CR]John Twiddy [CR]Tim Best [CR][CR]Piano Player: [CR]Martin Oliver [CR][CR]Mouth Organ: [CR]Jason Serrano [CR][CR]Consigliere: [CR]Tim Best [CR][CR]Squealers: [CR]G.V. Long [CR]Bailey Harper [CR]Martin Oliver [CR][CR]Associates: [CR]Nick Steadman [CR]Nick Lee [CR]Jason Serrano [CR]Robin Levy [CR]Matt Risley [CR]Attlee Baptiste [CR][CR]Molls: [CR] Anita, Beth, Cleeta & Lin [CR][CR]Undercover: [CR]Eddie 'Muscles' Edmondson [CR][CR]Informers: [CR]Jon Dale [CR]Stuart Arrowsmith [CR]Marc Bowden [CR]Lee Cummins [CR]Steve Almond [CR]John Jennings [CR]Richard Brooks [CR]Ryan Wooldridge [CR]Nick Evans [CR]Kelvin Cannon [CR]Tim Marrett [CR]Tony McGarry [CR]Simon Crawford [CR]Steve Aspinwall [CR][CR]The New York Connection: [CR]Gilles Dana [CR]Peter von Schlossberg [CR]Walter Walker [CR]Jeff Siegel [CR]Lea Rekow [CR]Peter Binazeski [CR]John Crowe [CR]Sue Daulton [CR]Susanne Colten [CR][CR][CR][CR][CR]
+
+
+
+-speed364
+-worker928
+-pickup036
+-weapons563
+-tenants872
+-other024
+-loans458
+-estates216
+-houses462
+-build830
+-actions737
+-gadgets215
+-upgrade934
+-complain400
+-cadets369
+-teams142
+-maps029
+
+
+-End-4
+-End-3
+-End-2
+-End-1
+-THE END
+-End+1
+
+Play Tutorial
+Play Game
+Autosave
+[SPC]has joined.
+[SPC]has left.
+Use one of your men to pick this territory marker up and move it
+Now move this marker elsewhere to extend your territory but not too far
+Type of house
+Condition of house
+Strength of building
+Type of tenant living in house
+Stress level of tenant
+Type of children being produced by tenant
+Amount of rent being paid
+Time till next child is completed
+{P}'s computer has disconnected from this game.
+Freeplay Mode
+END
+
+

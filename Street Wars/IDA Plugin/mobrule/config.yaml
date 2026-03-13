@@ -1,0 +1,5 @@
+MR.EXE:
+  CRC32:
+    - 0xE5FBEC50
+  start: 0x49A7C9
+  GetGameText: 0x454EA5
