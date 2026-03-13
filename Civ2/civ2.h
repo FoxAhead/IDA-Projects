@@ -11,6 +11,7 @@
 
 struct tagWNDCLASSA;
 struct HWND__;
+struct HINSTANCE__;
 struct HICON__;
 struct HBRUSH__;
 struct tagLOGFONTA;
@@ -41,8 +42,58 @@ union _LARGE_INTEGER;
 struct tagMIXERCONTROLW;
 struct _EXCEPTION_RECORD;
 struct _CONTEXT;
+struct T_WindowStructure;
 struct T_DrawInfo;
 struct T_ControlInfoScroll;
+struct T_Palette;
+struct tagLOGPALETTE;
+struct T_Sprite;
+struct _iobuf;
+struct T_ControlInfo;
+struct T_ControlInfoButton;
+struct T_ControlInfoListItem;
+struct T_FontInfo;
+struct tagRGBTRIPLE;
+struct _SMALL_RECT;
+struct T_ControlInfoEdit;
+struct T_ControlInfoRadioGroup;
+struct T_ControlInfoRadio;
+struct T_ControlInfoCheckbox;
+struct T_ListItem;
+struct T_ListboxItem;
+struct T_Edit;
+struct T_DlgTextLine;
+struct T_MenuBar;
+struct T_Menu;
+struct IDirectDraw;
+struct IDirectDrawClipper;
+struct IDirectDrawClipperVtbl;
+struct _RGNDATA;
+struct IUnknown;
+struct IUnknownVtbl;
+struct IDirectDrawPalette;
+struct IDirectDrawPaletteVtbl;
+struct _DDSURFACEDESC;
+struct IDirectDrawSurface;
+struct IDirectDrawSurfaceVtbl;
+struct _DDBLTFX;
+struct _DDBLTBATCH;
+struct _DDOVERLAYFX;
+struct _DDCAPS_DX7;
+struct T_ParleyWin;
+struct T_ScenarioEvent;
+struct T_SoundSystem;
+struct T_ControlInfoListBox;
+struct T_PediaItemName;
+struct T_PediaLink;
+struct tagBITMAPFILEHEADER;
+struct tagMCI_OPEN_PARMSA;
+struct tagMCI_STATUS_PARMS;
+struct tagMCI_SET_PARMS;
+struct tagMCI_PLAY_PARMS;
+struct tagMCI_SEEK_PARMS;
+struct T_NetCur;
+struct T_Net178;
 
 /* 1 */
 struct _SCOPETABLE_ENTRY
@@ -118,7 +169,7 @@ typedef LONG LPARAM;
 typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 /* 18 */
-typedef #19 *HINSTANCE;
+typedef HINSTANCE__ *HINSTANCE;
 
 /* 20 */
 typedef HICON__ *HICON;
@@ -152,6 +203,12 @@ struct tagWNDCLASSA
 
 /* 14 */
 struct HWND__
+{
+  int unused;
+};
+
+/* 19 */
+struct HINSTANCE__
 {
   int unused;
 };
@@ -699,44 +756,190 @@ struct _msExcept
   _msExcInfo Info[];
 };
 
+/* 262 */
+typedef T_DrawInfo *P_DrawInfo;
+
+/* 309 */
+struct __unaligned T_DrawPort
+{
+  void **_Proc;
+  int Width;
+  int Height;
+  int BmWidth4;
+  int BmWidth4u;
+  RECT ClientRectangle;
+  RECT WindowRectangle;
+  LPBYTE pBmp;
+  int *RowsOffset;
+  LONG PrevPaletteID;
+  P_DrawInfo DrawInfo;
+  int ColorDepth;
+};
+
+/* 267 */
+typedef T_Palette *P_Palette;
+
+/* 256 */
+typedef T_WindowStructure *P_WindowStructure;
+
+/* 301 */
+struct __unaligned T_WindowProcs
+{
+  void (__cdecl *ProcMouseMove)(int X, int Y);
+  void *ProcLButtonDown;
+  void *ProcLButtonUpEnd;
+  void *ProcLButtonUp;
+  void *ProcRButtonDown;
+  void *ProcRButtonUpEnd;
+  void *ProcRButtonUp;
+  void *ProcLButtonDblClk;
+  void *ProcKeyDown1;
+  void *ProcKeyUp;
+  void *ProcKeyDown2;
+  void *ProcChar;
+  void *ProcClose;
+  void *ProcSysCommandMinimize;
+  void *ProcSysCommandRestore;
+  void *ProcSetFocus;
+  void *ProcSize;
+  void *ProcMove;
+  void *ProcCommNotify;
+  void *ProcHScroll;
+  void *ProcHScrollThumbTrack;
+  void *ProcVScroll;
+  void *ProcVScrollThumbTrack;
+  void *Proc24;
+  void *ProcEnterSizeMove;
+  void *ProcExitSizeMove;
+};
+
+/* 407 */
+typedef T_MenuBar *P_MenuBar;
+
+/* 418 */
+struct __unaligned T_WindowInfo1
+{
+  int Style;
+  P_Palette Palette;
+  P_WindowStructure WindowStructure;
+  int Unknown_0C;
+  T_WindowProcs WindowProcs;
+  P_MenuBar MenuBar;
+  POINT MinTrackSize;
+  POINT MaxTrackSize;
+  DWORD PopupActive;
+  int Unknown_90;
+  int Unknown_94;
+  LPVOID ProcMenuExec;
+  int Unknown_9C;
+  int Unknown_A0;
+  LPVOID WaitProc;
+  int LButtonDown;
+  int RButtonDown;
+  int HScrollPos;
+  int VScrollPos;
+};
+
+/* 299 */
+typedef T_ControlInfo *P_ControlInfo;
+
+/* 305 */
+typedef T_ControlInfoButton *P_ControlInfoButton;
+
 /* 254 */
 #pragma pack(push, 1)
 struct T_WindowInfo
 {
-  LONG Unknown1;
-  LONG Unknown2;
-  LONG WindowStructure;
-  LONG Unknown4;
-  LONG WindowProcs[20];
-  char Unknown5[44];
-  DWORD PopupActive;
-  char Unknown6[44];
-  LONG ButtonInfoOK;
-  LONG ButtonInfoCancel;
+  T_WindowInfo1 WindowInfo1;
+  P_ControlInfo ControlInfo;
+  P_ControlInfoButton ButtonInfoOK;
+  P_ControlInfoButton ButtonInfoCancel;
+  BYTE _AutoFocus;
 };
 #pragma pack(pop)
+
+/* 251 */
+struct __unaligned T_GraphicsInfo
+{
+  T_DrawPort DrawPort;
+  T_WindowInfo WindowInfo;
+  __int8 Unknown5[3];
+  LPVOID UpdateProc;
+};
+
+/* 252 */
+typedef tagSIZE SIZE;
+
+/* 306 */
+typedef T_Sprite *P_Sprite;
+
+/* 312 */
+typedef T_ControlInfoListItem *P_ControlInfoListItem;
+
+/* 327 */
+struct __unaligned T_WinButton
+{
+  int Code;
+  int Unknown_04;
+  int Unknown_08;
+  int Width;
+  int Height;
+  P_Sprite Sprite;
+  P_ControlInfoListItem ListItem;
+};
+
+/* 317 */
+typedef T_FontInfo *P_FontInfo;
+
+/* 330 */
+struct __unaligned T_MSWindow
+{
+  T_GraphicsInfo GraphicsInfo;
+  int Unknown_114;
+  int _CaptionHeight;
+  int Border;
+  int _ResizeBorderWidth;
+  POINT ClientTopLeft;
+  SIZE ClientSize;
+  char Title[132];
+  int Unknown_1B8[10];
+  int Unknown_1E0;
+  int Unknown_1E4;
+  int Unknown_1E8;
+  int Unknown_1EC[4];
+  int WinButtonCount;
+  T_WinButton WinButtons[6];
+  LPVOID WinButtonProc;
+  RECT RectDrawPort;
+  RECT RectClient;
+  P_FontInfo FontInfo1;
+  P_FontInfo FontInfo2;
+  P_FontInfo FontInfo3;
+};
 
 /* 103 */
 #pragma pack(push, 1)
 struct T_CitySprite
 {
-  int X1;
-  int Y1;
-  int X2;
-  int Y2;
+  RECT Rectangle;
   int Type;
   int Index;
 };
 #pragma pack(pop)
 
 /* 102 */
-#pragma pack(push, 1)
-struct T_CitySpritesInfo
+struct __unaligned T_CitySprites
 {
-  T_CitySprite CitySprites[200];
-  int CitySpritesItems;
+  T_CitySprite Sprites[200];
+  int Count;
 };
-#pragma pack(pop)
+
+/* 316 */
+struct __unaligned T_FontInfo
+{
+  HGLOBAL hFontData;
+  int Height;
+};
 
 /* 265 */
 typedef T_ControlInfoScroll *P_ControlInfoScroll;
@@ -745,29 +948,28 @@ typedef T_ControlInfoScroll *P_ControlInfoScroll;
 #pragma pack(push, 1)
 struct T_CityWindow
 {
-  __int8 Unknown1[20];
-  RECT ClientRect;
-  RECT WindowRect;
-  __int8 Unknown2[20];
-  T_WindowInfo WindowInfo;
-  __int8 Unknown3[460];
-  T_CitySpritesInfo CitySpritesInfo;
+  T_MSWindow MSWindow;
+  T_CitySprites CitySprites;
   int CityIndex;
-  int Unknown4;
-  int Unknown5;
-  int Unknown6;
-  int Unknown7;
-  int Unknown8;
+  BOOL Minimized;
+  BOOL Hidden;
+  BOOL NoUpdate;
+  int CityModalMode;
+  int CentralInfo;
   int ImproveListStart;
   int ImproveCount;
-  __int8 Unknown9[24];
+  SIZE Unknown_15BC;
+  int Unknown_15C4;
+  int Unknown_15C8;
+  int Unknown_15CC;
+  int Unknown_15D0;
   int WindowSize;
-  __int8 Unknown10[4];
+  int Zoom;
   RECT RectCitizens;
-  RECT Rect1;
+  RECT RectResources;
   RECT RectFoodStorage;
-  RECT Rect3;
-  RECT Rect4;
+  RECT RectBuilding;
+  RECT RectButtons;
   RECT RectSupportOut;
   RECT RectImproveOut;
   RECT RectInfoOut;
@@ -776,11 +978,198 @@ struct T_CityWindow
   RECT RectSupportIn;
   RECT RectInfoIn;
   RECT RectImproveScroll;
-  __int8 Unknown11[8];
-  int ControlInfo[10];
+  T_FontInfo FontInfo;
+  P_ControlInfo ControlInfo[10];
   P_ControlInfoScroll ControlInfoScroll;
 };
 #pragma pack(pop)
+
+/* 261 */
+#pragma pack(push, 1)
+struct T_DrawInfo
+{
+  HGLOBAL hDrawInfo;
+  HDC DeviceContext;
+  HGDIOBJ Unknown1;
+  HBITMAP hBmp;
+  HGDIOBJ ReplacedObject;
+  int IsTopDownDIB;
+  int Width;
+  int Height;
+  int bmWidth4;
+  LPVOID pBmp;
+};
+#pragma pack(pop)
+
+/* 271 */
+struct tagPALETTEENTRY
+{
+  BYTE peRed;
+  BYTE peGreen;
+  BYTE peBlue;
+  BYTE peFlags;
+};
+
+/* 270 */
+typedef tagPALETTEENTRY PALETTEENTRY;
+
+/* 266 */
+struct T_Palette
+{
+  WORD palVersion;
+  WORD palNumEntries;
+  PALETTEENTRY Colors[256];
+  HPALETTE hpal;
+  int ID;
+  int Unknown_040C;
+  int Unknown_0410;
+  int Unknown_0414;
+  int Unknown_0418;
+  int Unknown_041C;
+  int Unknown_0420;
+  char Unknown_0424;
+  char Unknown_0425;
+  char Unknown_0426;
+  char Unknown_0427;
+  HGLOBAL hGlobal_0428;
+  HGLOBAL hGlobal_042C;
+  HGLOBAL hGlobal_0430;
+};
+
+/* 310 */
+typedef T_DrawPort *P_DrawPort;
+
+/* 255 */
+#pragma pack(push, 1)
+struct T_WindowStructure
+{
+  HGLOBAL hMem;
+  HWND HWindow;
+  HDC DeviceContext;
+  int Unknown_0C;
+  int Unknown_10;
+  HBRUSH hBrush;
+  HPALETTE hPal;
+  HCURSOR Cursor;
+  HICON Icon;
+  P_DrawPort DrawPortBG;
+  int Unknown_28;
+  P_DrawPort DrawPort;
+  int Moveable;
+  int Sizeable;
+  int CaptionHeight;
+  int ResizeBorderWidth;
+  int Unknown_40;
+  int Unknown_44;
+  int Style;
+};
+#pragma pack(pop)
+
+/* 362 */
+struct __unaligned T_Heap
+{
+  __int8 Unknown_00;
+  __int8 Unknown_01;
+  __int8 Unknown_02;
+  __int8 Unknown_03;
+  HGLOBAL hMem;
+  LPVOID Base;
+  WORD Size;
+  WORD BaseSize;
+  WORD FreeSize;
+};
+
+/* 409 */
+typedef T_Menu *P_Menu;
+
+/* 406 */
+struct __unaligned T_MenuBar
+{
+  HMENU hMenu;
+  T_Heap Heap;
+  __int16 Unknown_16;
+  int Flags;
+  P_Menu FirstMenu;
+};
+
+/* 257 */
+typedef T_WindowInfo *P_WindowInfo;
+
+/* 298 */
+struct __unaligned T_ControlInfo
+{
+  int ControlType;
+  int Code;
+  P_WindowInfo WindowInfo;
+  RECT Rect;
+  HWND HWindow;
+  P_ControlInfo NextControlInfo;
+  char Unknown_24;
+  char HotKey;
+  char Unknown_26;
+  char Unknown_27;
+  int HotKeyPos;
+};
+
+/* 304 */
+struct __unaligned T_ControlInfoButton
+{
+  T_ControlInfo ControlInfo;
+  int Active;
+  void *Proc;
+  int ButtonColor;
+  P_FontInfo FontInfo;
+};
+
+/* 275 */
+struct __unaligned T_Sprite
+{
+  RECT Rectangle1;
+  RECT Rectangle2;
+  RECT Rectangle3;
+  BYTE Color;
+  BYTE Unknown_31;
+  BYTE Unknown_32;
+  BYTE Unknown_33;
+  HGLOBAL hMem;
+  LPBYTE pMem;
+};
+
+/* 311 */
+struct __unaligned T_ControlInfoListItem
+{
+  T_ControlInfo ControlInfo;
+  int Unknown_2C;
+  LPVOID ProcMouseMove;
+  LPVOID ProcLButtonUp;
+  LPVOID ProcLButtonDown;
+  LPVOID ProcLButtonDblClk;
+};
+
+/* 264 */
+#pragma pack(push, 1)
+struct T_ControlInfoScroll
+{
+  T_ControlInfo ControlInfo;
+  LPVOID ProcRedraw;
+  LPVOID ProcTrack;
+  int PageSize;
+  int _WindowCreated;
+  int CurrentPosition;
+};
+#pragma pack(pop)
+
+/* 408 */
+struct __unaligned T_Menu
+{
+  char *Text;
+  int Num;
+  int Flags;
+  int SubCount;
+  P_Menu NextMenu;
+  P_Menu PrevMenu;
+  P_Menu FirstSubMenuOrParent;
+};
 
 /* 104 */
 union __declspec(align(8)) __m64
@@ -1312,35 +1701,81 @@ enum MACRO_GCL
 /* 112 */
 enum MACRO_SW_MAXIMIZE
 {
-  SW_MAXIMIZE = 3,
-  SW_SHOWNOACTIVATE = 4,
-  SW_SHOW = 5,
-  SW_MINIMIZE = 6,
-  SW_SHOWMINNOACTIVE = 7,
-  SW_SHOWNA = 8,
-  SW_RESTORE = 9,
-  SW_SHOWDEFAULT = 10,
-  SW_FORCEMINIMIZE = 11,
+};
+
+/* 625 */
+enum MACRO_CIV2_UNIT_TYPE : __int8
+{
+  CIV2_TYPE_SETTLERS = 0x0,
+  CIV2_TYPE_ENGINEERS = 0x1,
+  CIV2_TYPE_WARRIORS = 0x2,
+  CIV2_TYPE_PHALANX = 0x3,
+  CIV2_TYPE_ARCHERS = 0x4,
+  CIV2_TYPE_LEGION = 0x5,
+  CIV2_TYPE_PIKEMEN = 0x6,
+  CIV2_TYPE_MUSKETEERS = 0x7,
+  CIV2_TYPE_FANATICS = 0x8,
+  CIV2_TYPE_PARTISANS = 0x9,
+  CIV2_TYPE_ALPINE_TROOPS = 0xA,
+  CIV2_TYPE_RIFLEMEN = 0xB,
+  CIV2_TYPE_MARINES = 0xC,
+  CIV2_TYPE_PARATROOPERS = 0xD,
+  CIV2_TYPE_MECH_INF = 0xE,
+  CIV2_TYPE_HORSEMEN = 0xF,
+  CIV2_TYPE_CHARIOT = 0x10,
+  CIV2_TYPE_ELEPHANT = 0x11,
+  CIV2_TYPE_CRUSADERS = 0x12,
+  CIV2_TYPE_KNIGHTS = 0x13,
+  CIV2_TYPE_DRAGOONS = 0x14,
+  CIV2_TYPE_CAVALRY = 0x15,
+  CIV2_TYPE_ARMOR = 0x16,
+  CIV2_TYPE_CATAPULT = 0x17,
+  CIV2_TYPE_CANNON = 0x18,
+  CIV2_TYPE_ARTILLERY = 0x19,
+  CIV2_TYPE_HOWITZER = 0x1A,
+  CIV2_TYPE_FIGHTER = 0x1B,
+  CIV2_TYPE_BOMBER = 0x1C,
+  CIV2_TYPE_HELICOPTER = 0x1D,
+  CIV2_TYPE_STLTH_FTR = 0x1E,
+  CIV2_TYPE_STLTH_BMBR = 0x1F,
+  CIV2_TYPE_TRIREME = 0x20,
+  CIV2_TYPE_CARAVEL = 0x21,
+  CIV2_TYPE_GALLEON = 0x22,
+  CIV2_TYPE_FRIGATE = 0x23,
+  CIV2_TYPE_IRONCLAD = 0x24,
+  CIV2_TYPE_DESTROYER = 0x25,
+  CIV2_TYPE_CRUISER = 0x26,
+  CIV2_TYPE_AEGIS_CRUISER = 0x27,
+  CIV2_TYPE_BATTLESHIP = 0x28,
+  CIV2_TYPE_SUBMARINE = 0x29,
+  CIV2_TYPE_CARRIER = 0x2A,
+  CIV2_TYPE_TRANSPORT = 0x2B,
+  CIV2_TYPE_CRUISE_MSL = 0x2C,
+  CIV2_TYPE_NUCLEAR_MSL = 0x2D,
+  CIV2_TYPE_DIPLOMAT = 0x2E,
+  CIV2_TYPE_SPY = 0x2F,
+  CIV2_TYPE_CARAVAN = 0x30,
+  CIV2_TYPE_FREIGHT = 0x31,
+  CIV2_TYPE_EXPLORER = 0x32,
 };
 
 /* 113 */
-#pragma pack(push, 1)
-struct T_Unit
+struct __unaligned __declspec(align(1)) T_Unit
 {
   __int16 X;
   __int16 Y;
-  __int16 Attributes;
-  char UnitType;
-  char CivIndex;
-  char MovePoints;
-  char field_9;
-  char field_A;
-  char MoveDirection;
-  char field_C;
-  char Counter;
-  char field_E;
-  char Orders;
-  char HomeCity;
+  WORD Attributes;
+  MACRO_CIV2_UNIT_TYPE UnitType;
+  __int8 CivIndex;
+  __int8 MovePoints;
+  BYTE Visibility;
+  BYTE HPLost;
+  __int8 MoveDirection;
+  char DebugSymbol;
+  __int8 Counter;
+  __int8 MoveIteration;
+  __int8 Orders;
+  BYTE HomeCity;
   char field_11;
   __int16 GotoX;
   __int16 GotoY;
@@ -1349,10 +1784,9 @@ struct T_Unit
   int ID;
   __int16 field_1E;
 };
-#pragma pack(pop)
 
 /* 114 */
-typedef T_CitySpritesInfo *P_CitySpritesInfo;
+typedef T_CitySprites *P_CitySprites;
 
 /* 115 */
 typedef T_CityWindow *P_CityWindow;
@@ -1462,22 +1896,20 @@ enum MACRO_VK
   VK_NONAME = 0xFC,
   VK_PA1 = 0xFD,
   VK_OEM_CLEAR = 0xFE,
-  WH_MIN = 0xFFFFFFFF,
 };
 
 /* 117 */
-enum MACRO_SB_HORZ
+enum MACRO_SB
 {
-  SB_HORZ = 0,
-  SB_VERT = 1,
-  SB_CTL = 2,
-  SB_BOTH = 3,
+  SB_HORZ = 0x0,
+  SB_VERT = 0x1,
+  SB_CTL = 0x2,
+  SB_BOTH = 0x3,
 };
 
 /* 118 */
 enum MACRO_WS
 {
-  WS_OVERLAPPED = 0x0,
   WS_POPUP = 0x80000000,
   WS_CHILD = 0x40000000,
   WS_MINIMIZE = 0x20000000,
@@ -1518,7 +1950,7 @@ enum MACRO_GWL
 };
 
 /* 120 */
-typedef T_Unit T_Units[2048];
+typedef T_Unit T_Units[2050];
 
 /* 121 */
 enum MACRO_FW
@@ -1614,41 +2046,6 @@ enum MACRO_MCIERR
   MCIERR_FILE_WRITE = 349,
   MCIERR_NO_IDENTITY = 350,
   MCIERR_CUSTOM_DRIVER_BASE = 512,
-  MCI_FIRST = 2048,
-  MCI_OPEN = 2051,
-  MCI_CLOSE = 2052,
-  MCI_ESCAPE = 2053,
-  MCI_PLAY = 2054,
-  MCI_SEEK = 2055,
-  MCI_STOP = 2056,
-  MCI_PAUSE = 2057,
-  MCI_INFO = 2058,
-  MCI_GETDEVCAPS = 2059,
-  MCI_SPIN = 2060,
-  MCI_SET = 2061,
-  MCI_STEP = 2062,
-  MCI_RECORD = 2063,
-  MCI_SYSINFO = 2064,
-  MCI_BREAK = 2065,
-  MCI_SAVE = 2067,
-  MCI_STATUS = 2068,
-  MCI_CUE = 2096,
-  MCI_REALIZE = 2112,
-  MCI_WINDOW = 2113,
-  MCI_PUT = 2114,
-  MCI_WHERE = 2115,
-  MCI_FREEZE = 2116,
-  MCI_UNFREEZE = 2117,
-  MCI_LOAD = 2128,
-  MCI_CUT = 2129,
-  MCI_COPY = 2130,
-  MCI_PASTE = 2131,
-  MCI_UPDATE = 2132,
-  MCI_RESUME = 2133,
-  MCI_DELETE = 2134,
-  MCI_USER_MESSAGES = 3072,
-  MCI_LAST = 4095,
-  MCI_ALL_DEVICE_ID = -1,
 };
 
 /* 123 */
@@ -2014,85 +2411,6 @@ struct _MIDL_STUB_MESSAGE
 };
 #pragma pack(pop)
 
-/* 157 */
-typedef _RPC_SYNTAX_IDENTIFIER *PRPC_SYNTAX_IDENTIFIER;
-
-/* 156 */
-struct _RPC_MESSAGE
-{
-  RPC_BINDING_HANDLE Handle;
-  unsigned __int32 DataRepresentation;
-  void *Buffer;
-  unsigned int BufferLength;
-  unsigned int ProcNum;
-  PRPC_SYNTAX_IDENTIFIER TransferSyntax;
-  void *RpcInterfaceInformation;
-  void *ReservedForRuntime;
-  void *ManagerEpv;
-  void *ImportContext;
-  unsigned __int32 RpcFlags;
-};
-
-/* 160 */
-struct _RPC_VERSION
-{
-  unsigned __int16 MajorVersion;
-  unsigned __int16 MinorVersion;
-};
-
-/* 159 */
-typedef _RPC_VERSION RPC_VERSION;
-
-/* 158 */
-struct _RPC_SYNTAX_IDENTIFIER
-{
-  GUID SyntaxGUID;
-  RPC_VERSION SyntaxVersion;
-};
-
-/* 165 */
-enum $2A6324B8E10DEE2666A6A5498DFC667B
-{
-  XLAT_SERVER = 0x1,
-  XLAT_CLIENT = 0x2,
-};
-
-/* 164 */
-typedef $2A6324B8E10DEE2666A6A5498DFC667B XLAT_SIDE;
-
-/* 163 */
-#pragma pack(push, 8)
-struct _FULL_PTR_XLAT_TABLES
-{
-  void *RefIdToPointer;
-  void *PointerToRefId;
-  unsigned __int32 NextRefId;
-  XLAT_SIDE XlatSide;
-};
-#pragma pack(pop)
-
-/* 167 */
-#pragma pack(push, 8)
-struct $3FA64165D15A4602C29B2D9B0DA4A5E9
-{
-  void *pad[2];
-  void *userContext;
-};
-#pragma pack(pop)
-
-/* 169 */
-#pragma pack(push, 8)
-struct $0F4C31D81B3E066615C27062B4195938
-{
-  __int32 Dimension;
-  unsigned __int32 *BufferConformanceMark;
-  unsigned __int32 *BufferVarianceMark;
-  unsigned __int32 *MaxCountArray;
-  unsigned __int32 *OffsetArray;
-  unsigned __int32 *ActualCountArray;
-};
-#pragma pack(pop)
-
 /* 177 */
 typedef _MIDL_STUB_MESSAGE *PMIDL_STUB_MESSAGE;
 
@@ -2169,6 +2487,80 @@ struct _NDR_CS_ROUTINES
 };
 #pragma pack(pop)
 
+/* 204 */
+typedef const unsigned __int8 *PFORMAT_STRING;
+
+/* 203 */
+#pragma pack(push, 8)
+struct _NDR_EXPR_DESC
+{
+  const unsigned __int16 *pOffset;
+  PFORMAT_STRING pFormatExpr;
+};
+#pragma pack(pop)
+
+/* 157 */
+typedef _RPC_SYNTAX_IDENTIFIER *PRPC_SYNTAX_IDENTIFIER;
+
+/* 156 */
+struct _RPC_MESSAGE
+{
+  RPC_BINDING_HANDLE Handle;
+  unsigned __int32 DataRepresentation;
+  void *Buffer;
+  unsigned int BufferLength;
+  unsigned int ProcNum;
+  PRPC_SYNTAX_IDENTIFIER TransferSyntax;
+  void *RpcInterfaceInformation;
+  void *ReservedForRuntime;
+  void *ManagerEpv;
+  void *ImportContext;
+  unsigned __int32 RpcFlags;
+};
+
+/* 165 */
+enum $2A6324B8E10DEE2666A6A5498DFC667B
+{
+  XLAT_SERVER = 0x1,
+  XLAT_CLIENT = 0x2,
+};
+
+/* 164 */
+typedef $2A6324B8E10DEE2666A6A5498DFC667B XLAT_SIDE;
+
+/* 163 */
+#pragma pack(push, 8)
+struct _FULL_PTR_XLAT_TABLES
+{
+  void *RefIdToPointer;
+  void *PointerToRefId;
+  unsigned __int32 NextRefId;
+  XLAT_SIDE XlatSide;
+};
+#pragma pack(pop)
+
+/* 167 */
+#pragma pack(push, 8)
+struct $3FA64165D15A4602C29B2D9B0DA4A5E9
+{
+  void *pad[2];
+  void *userContext;
+};
+#pragma pack(pop)
+
+/* 169 */
+#pragma pack(push, 8)
+struct $0F4C31D81B3E066615C27062B4195938
+{
+  __int32 Dimension;
+  unsigned __int32 *BufferConformanceMark;
+  unsigned __int32 *BufferVarianceMark;
+  unsigned __int32 *MaxCountArray;
+  unsigned __int32 *OffsetArray;
+  unsigned __int32 *ActualCountArray;
+};
+#pragma pack(pop)
+
 /* 195 */
 enum _IDL_CS_CONVERT
 {
@@ -2206,17 +2598,22 @@ struct _NDR_CS_SIZE_CONVERT_ROUTINES
 };
 #pragma pack(pop)
 
-/* 204 */
-typedef const unsigned __int8 *PFORMAT_STRING;
-
-/* 203 */
-#pragma pack(push, 8)
-struct _NDR_EXPR_DESC
+/* 160 */
+struct _RPC_VERSION
 {
-  const unsigned __int16 *pOffset;
-  PFORMAT_STRING pFormatExpr;
+  unsigned __int16 MajorVersion;
+  unsigned __int16 MinorVersion;
 };
-#pragma pack(pop)
+
+/* 159 */
+typedef _RPC_VERSION RPC_VERSION;
+
+/* 158 */
+struct _RPC_SYNTAX_IDENTIFIER
+{
+  GUID SyntaxGUID;
+  RPC_VERSION SyntaxVersion;
+};
 
 /* 205 */
 #pragma pack(push, 1)
@@ -2670,208 +3067,379 @@ struct _CONTEXT
 /* 245 */
 enum MACRO_MCI_NOTIFY
 {
-  MCI_NOTIFY_SUCCESSFUL = 0x1,
-  MCI_NOTIFY_SUPERSEDED = 0x2,
-  MCI_NOTIFY_ABORTED = 0x4,
-  MCI_NOTIFY_FAILURE = 0x8,
 };
 
-/* 248 */
-#pragma pack(push, 1)
-struct T_Civ
+/* 246 */
+typedef T_ParleyWin *P_ParleyWin;
+
+/* 451 */
+typedef tagRECT *LPRECT;
+
+/* 352 */
+typedef T_ControlInfoEdit *P_ControlInfoEdit;
+
+/* 359 */
+typedef T_ControlInfoCheckbox *P_ControlInfoCheckbox;
+
+/* 354 */
+typedef T_ControlInfoRadioGroup *P_ControlInfoRadioGroup;
+
+/* 514 */
+struct __unaligned T_ParleyWin
 {
-  __int8 Unknown1;
-  __int8 Unknown2;
-  __int32 Gold;
-  __int8 Unknown3;
-  __int8 Unknown4;
-  WORD Beakers;
-  __int8 Unknown5[11];
-  __int8 Government;
-  __int8 Unknown6[1406];
+  T_GraphicsInfo GraphicsInfo;
+  int Unknown_114;
+  int CivIndex;
+  int Unknown_11C;
+  int Unknown_120;
+  int Width;
+  int Height;
+  int Unknown_12C;
+  RECT Rect1;
+  RECT Rect2;
+  LPRECT pRect3;
+  int WideScreen;
+  int Unknown_158;
+  char z2a[132];
+  int Unknown_1E0;
+  int Unknown_1E4[2];
+  int Unknown_1EC;
+  int Unknown_1F0;
+  int Unknown_1F4;
+  int Unknown_1F8;
+  int Unknown_1FC;
+  int Unknown_200[2];
+  char z2b[4];
+  int Unknown_210[2];
+  int Unknown_214;
+  char z2c[28];
+  int Unknown_238;
+  int Unknown_23C;
+  T_WinButton WinButtons[3];
+  P_ControlInfoButton Button1;
+  P_ControlInfoEdit Edit1;
+  P_ControlInfoEdit Edit2;
+  P_ControlInfoEdit Edit3;
+  P_ControlInfoButton Button2;
+  P_ControlInfoButton Button3;
+  P_ControlInfoCheckbox Checkbox1[8];
+  P_ControlInfoCheckbox Checkbox2[8];
+  P_ControlInfoCheckbox Checkbox3;
+  P_ControlInfoCheckbox Checkbox4;
+  P_ControlInfoCheckbox Checkbox5;
+  BOOL RemainAnonymous;
+  BOOL MuteAnonymous;
+  BOOL BroadcastToAll;
+  int z3[8];
+  int z3a[8];
+  P_ControlInfoButton Button4;
+  P_ControlInfoButton Button5;
+  P_ControlInfoButton Button6;
+  P_ControlInfoButton Button7;
+  P_ControlInfoButton Button8;
+  P_ControlInfoButton Button9;
+  P_ControlInfoButton Button10;
+  P_ControlInfoButton Button11;
+  P_ControlInfoButton Button12;
+  P_ControlInfoCheckbox Checkbox6[2];
+  P_ControlInfoRadioGroup Radios[2];
+  P_ControlInfoEdit Edits[2];
+  P_ControlInfoScroll Scrolls[2];
+  P_ControlInfoListItem ListItems[2];
+  P_ControlInfoButton Buttons1[2];
+  P_ControlInfoButton Buttons2[2];
+  P_ControlInfoButton Buttons3[2];
+  P_ControlInfoButton Buttons4[2];
+  RECT Rect3;
+  char z5[2];
+  char Unknown_3BE;
+  char Unknown_3BF;
+  int Unknown_3C0[11];
+  int Unknown_3EC;
+  int Unknown_3F0[10245];
+  int Unknown_A404[6151];
+  int Unknown_10420[2];
+  int Unknown_10428;
+  int Unknown_1042C;
 };
-#pragma pack(pop)
 
-/* 247 */
-typedef T_Civ T_Civs[7];
+/* 351 */
+struct __unaligned T_ControlInfoEdit
+{
+  T_ControlInfo ControlInfo;
+  LPVOID ProcChange;
+  LPVOID ProcMaxText;
+  LPVOID Proc2;
+  __int8 Unknown_38;
+  __int8 Unknown_39;
+  __int8 Unknown_3A;
+  __int8 Unknown_3B;
+  int Unknown_3C;
+  P_FontInfo FontInfo;
+  int Unknown_44;
+};
 
-/* 249 */
-#pragma pack(push, 1)
-struct T_City
+/* 358 */
+struct __unaligned T_ControlInfoCheckbox
+{
+  T_ControlInfo ControlInfo;
+  void (__cdecl *ProcLButtonDown)(int a1, int a2);
+  BOOL Checked;
+  int Enabled;
+  P_FontInfo FontInfo;
+};
+
+/* 356 */
+typedef T_ControlInfoRadio *P_ControlInfoRadio;
+
+/* 353 */
+struct __unaligned T_ControlInfoRadioGroup
+{
+  T_ControlInfo ControlInfo;
+  LPVOID ProcLButtonDown;
+  LPVOID ProcAcceptChoice;
+  LPVOID ProcRButtonDown;
+  int NRadios;
+  int Columns;
+  int SelectedPos;
+  HGLOBAL hRadios;
+  P_ControlInfoRadio pRadios;
+  P_FontInfo FontInfo;
+};
+
+/* 355 */
+struct __unaligned T_ControlInfoRadio
+{
+  HWND HWindow;
+  RECT Rect;
+  int Index;
+  int Checked;
+  char Text[128];
+  char HotKey[4];
+  int HotKeyPos;
+};
+
+/* 635 */
+enum MACRO_CIV2_LEADER : __int16
+{
+  CIV2_LEADER_ROMANS = 0x0,
+  CIV2_LEADER_BABYLONIANS = 0x1,
+  CIV2_LEADER_GERMANS = 0x2,
+  CIV2_LEADER_EGYPTIANS = 0x3,
+  CIV2_LEADER_AMERICANS = 0x4,
+  CIV2_LEADER_GREEKS = 0x5,
+  CIV2_LEADER_INDIANS = 0x6,
+  CIV2_LEADER_RUSSIANS = 0x7,
+  CIV2_LEADER_ZULUS = 0x8,
+  CIV2_LEADER_FRENCH = 0x9,
+  CIV2_LEADER_AZTECS = 0xA,
+  CIV2_LEADER_CHINESE = 0xB,
+  CIV2_LEADER_ENGLISH = 0xC,
+  CIV2_LEADER_MONGOLS = 0xD,
+  CIV2_LEADER_CELTS = 0xE,
+  CIV2_LEADER_JAPANESE = 0xF,
+  CIV2_LEADER_VIKINGS = 0x10,
+  CIV2_LEADER_SPANISH = 0x11,
+  CIV2_LEADER_PERSIANS = 0x12,
+  CIV2_LEADER_CARTHAGINIANS = 0x13,
+  CIV2_LEADER_SIOUX = 0x14,
+};
+
+/* 631 */
+enum MACRO_CIV2_GOVERNMENT : unsigned __int8
+{
+  CIV2_GOVERNMENT_ANARCHY = 0x0,
+  CIV2_GOVERNMENT_DESPOTISM = 0x1,
+  CIV2_GOVERNMENT_MONARCHY = 0x2,
+  CIV2_GOVERNMENT_COMMUNISM = 0x3,
+  CIV2_GOVERNMENT_FUNDAMENTALISM = 0x4,
+  CIV2_GOVERNMENT_REPUBLIC = 0x5,
+  CIV2_GOVERNMENT_DEMOCRACY = 0x6,
+};
+
+/* 396 */
+struct __unaligned T_CivSub1
 {
   __int16 X;
   __int16 Y;
-  char byte_64F344;
-  char unk_64F345;
-  char byte_64F346;
-  char byte_64F347;
-  char Owner;
-  char Size;
-  char Founder;
-  char TurnsCaptured;
-  char byte_64F34C;
-  char RevealedSize[9];
-  int dword_64F356;
-  __int16 word_64F35A;
-  __int16 word_64F35C;
-  __int16 word_64F35E;
-  char Name[16];
-  int dword_64F370;
-  char byte_64F374[5];
-  char byte_64F379;
-  char byte_64F37A;
-  char byte_64F37B;
-  char byte_64F37C[2];
-  char byte_64F37E;
-  char byte_64F37F[2];
-  char byte_64F381;
-  char byte_64F382[2];
-  __int16 word_64F384;
-  __int16 word_64F386[2];
-  __int16 word_64F38A;
-  __int16 word_64F38C;
-  __int16 word_64F38E;
-  char byte_64F390;
-  char byte_64F391;
-  char byte_64F392;
-  char byte_64F393;
-  int ID;
+  BYTE Unknown_4;
+  BYTE Unknown_5;
 };
-#pragma pack(pop)
+
+/* 248 */
+struct __unaligned T_Civ
+{
+  WORD Flags;
+  int Gold;
+  MACRO_CIV2_LEADER Leader;
+  WORD Beakers;
+  __int16 ResearchingTech;
+  __int16 CapitalX;
+  __int16 TurnOfCityBuild;
+  BYTE Techs;
+  BYTE FutureTechs;
+  BYTE Unknown_12;
+  BYTE ScienceRate;
+  BYTE TaxRate;
+  MACRO_CIV2_GOVERNMENT Government;
+  __int8 SenateChances;
+  __int8 Unknown_17[4];
+  __int8 Unknown_1B;
+  __int16 Unknown_1C;
+  BYTE Reputation;
+  __int8 Unknown_1F;
+  LONG Treaties[8];
+  BYTE Attitude[8];
+  __int8 Reputation2[8];
+  BYTE Unknown_50[8];
+  __int8 Technologies[13];
+  __int8 Unknown_65;
+  __int16 MilitaryUnits;
+  __int16 Cities;
+  __int16 NavalUnitCount;
+  __int16 SumCitiesSize;
+  WORD DefAttSum;
+  WORD AttSum;
+  __int16 Population;
+  __int8 TechFirst[100];
+  BYTE DefMinUnitActive[62];
+  BYTE DefMinCasualty[62];
+  BYTE DefMinUnitBuilding[62];
+  WORD MilitaryUnitsPerLandMass[64];
+  WORD AttSumPerLandMass[64];
+  BYTE CityCountPerLandMass[64];
+  __int8 SumCitiesSizePerLandMass[64];
+  __int8 CaravansPerLandMass[64];
+  __int8 Unknown_352[64];
+  __int8 Unknown_392[64];
+  __int16 Unknown_3D2;
+  __int16 Unknown_3D4[7];
+  __int16 _LastContactTurn[8];
+  __int8 Unknown_3F2;
+  __int8 Unknown_3F3[10];
+  __int8 Unknown_3FD;
+  __int16 Unknown_3FE;
+  BYTE SpaceFlags;
+  __int8 Unknown_401;
+  __int16 SpaceShipETAYear;
+  __int16 SpaceShipLaunchYear;
+  __int16 SpaceShipPopulation;
+  __int16 SpaceShipParts[6];
+  T_CivSub1 Unknown_414[48];
+  T_CivSub1 Unknown_534[16];
+};
+
+/* 247 */
+typedef T_Civ T_Civs[8];
+
+/* 249 */
+struct __unaligned T_City
+{
+  __int16 X;
+  __int16 Y;
+  DWORD Attributes;
+  __int8 Owner;
+  __int8 Size;
+  __int8 Founder;
+  BYTE TurnsCaptured;
+  BYTE KnownTo;
+  __int8 RevealedSize[8];
+  char Unknown_15;
+  int Specialists;
+  __int16 FoodStorage;
+  __int16 BuildProgress;
+  __int16 BaseTrade;
+  char Name[16];
+  LONG Workers;
+  BYTE Improvements[5];
+  __int8 Building;
+  __int8 TradeRoutes;
+  __int8 SuppliedTradeItem[3];
+  __int8 DemandedTradeItem[3];
+  __int8 TradeCommodity[3];
+  __int16 TradePartner[3];
+  __int16 Science;
+  __int16 Tax;
+  __int16 Trade;
+  BYTE TotalFood;
+  BYTE TotalShield;
+  BYTE HappyCitizens;
+  BYTE UnHappyCitizens;
+  LONG ID;
+};
 
 /* 250 */
-typedef T_City T_Cities[64];
-
-/* 262 */
-typedef T_DrawInfo *P_DrawInfo;
-
-/* 252 */
-typedef tagSIZE SIZE;
-
-/* 251 */
-#pragma pack(push, 1)
-struct T_GraphicsInfo
-{
-  char Unknown1[20];
-  RECT ClientRectangle;
-  RECT WindowRectangle;
-  LONG SpriteArea;
-  LONG Unknown3[2];
-  P_DrawInfo DrawInfo;
-  char Unknown4[4];
-  T_WindowInfo WindowInfo;
-  char Unknown5[24];
-  POINT ClientTopLeft;
-  SIZE ClientSize;
-  char Unknown6[428];
-  __int16 MapCenterX;
-  __int16 MapCenterY;
-  __int16 MapZoom;
-  __int16 Unknown7;
-  RECT MapRect;
-  SIZE MapHalf;
-  char Unknown8[8];
-  SIZE MapCellSize;
-  SIZE MapCellSize2;
-  SIZE MapCellSize4;
-  char Unknown9[64];
-};
-#pragma pack(pop)
+typedef T_City T_Cities[256];
 
 /* 253 */
 typedef T_GraphicsInfo *P_GraphicsInfo;
 
-/* 255 */
-#pragma pack(push, 1)
-struct T_WindowStructure
-{
-  LONG Unknown1;
-  HWND HWindow;
-  char Unknown2[24];
-  HICON Icon;
-};
-#pragma pack(pop)
-
-/* 256 */
-typedef T_WindowStructure *P_WindowStructure;
-
-/* 257 */
-typedef T_WindowInfo *P_WindowInfo;
-
 /* 258 */
-struct __unaligned __declspec(align(1)) T_GameParameters
+struct __unaligned T_Game
 {
-  __int16 word_655AE8;
-  int dword_655AEA;
-  __int16 word_655AEE;
-  __int16 MapFlags;
+  WORD CustomFeatures;
+  int GraphicAndGameOptions;
+  WORD word_655AEE;
+  WORD MapFlags;
   __int16 word_655AF2;
-  __int16 word_655AF4;
+  __int16 _TutorialsShown;
   __int16 word_655AF6;
   __int16 Turn;
   __int16 Year;
   __int16 word_655AFC;
-  __int16 word_655AFE;
+  __int16 ActiveUnitIndex;
   __int16 word_655B00;
-  char PlayerTribeNumber;
-  char byte_655B03;
-  char byte_655B04;
-  char byte_655B05;
-  char byte_655B06;
-  char byte_655B07;
-  char DifficultyLevel;
-  char BarbarianActivity;
-  char TribesLeftInPlay;
-  char HumanPlayers;
-  char byte_655B0C;
-  char byte_655B0D;
-  char byte_655B0E;
-  char byte_655B0F;
-  __int16 word_655B10;
-  __int16 word_655B12;
-  __int16 word_655B14;
+  BYTE MultiType;
+  __int8 CurrentHumanCivIndex;
+  __int8 byte_655B04;
+  __int8 CurrentCivIndex;
+  __int8 byte_655B06;
+  BYTE RevealMap;
+  BYTE DifficultyLevel;
+  BYTE BarbarianActivity;
+  BYTE ActivePlayers;
+  BYTE ActiveHumanPlayers;
+  __int8 byte_655B0C;
+  BYTE Enemies;
+  __int8 WarmingRisk;
+  __int8 Warmings;
+  __int16 CityPollutionSquares;
+  __int16 PollutionSquares;
+  __int16 PeaceTurns;
   __int16 TotalUnits;
   __int16 TotalCities;
-  __int16 word_655B1A;
+  __int16 EnabledTechnologyCount;
   __int16 word_655B1C;
-  char byte_655B1E[34];
-  char byte_655B40;
-  char byte_655B41[3];
-  char byte_655B44;
+  BYTE TechsDiscoveredFirst[100];
+  BYTE TechsDiscovered[100];
+  __int16 WonderCities[28];
+  __int16 field_136;
+  BYTE HighestRankedHumanCivIndex;
+  BYTE LowestRankedHumanCivIndex;
+  BYTE CivsRating[8];
+  BYTE RankedCivOrder[8];
 };
 
 /* 259 */
-#pragma pack(push, 1)
-struct T_Leader
+struct __unaligned T_Leader
 {
   char Attack;
   char Expand;
   char Civilize;
-  char Female;
-  char byte_6554FC;
+  char Unknown1;
+  BYTE Gender;
   char CitiesBuilt;
-  __int16 Color;
+  __int16 ColorSet;
   __int16 Style;
-  __int16 word_655502;
-  __int16 word_655504;
-  __int16 word_655506;
-  __int16 word_655508;
-  __int16 word_65550A;
-  __int16 word_65550C[14];
+  __int16 NameIndex;
+  __int16 NationPlural;
+  __int16 NationAdjective;
+  __int16 NameIndexes[2];
+  __int16 GovernorName[7][2];
 };
-#pragma pack(pop)
 
 /* 260 */
 typedef T_Leader T_Leaders[21];
-
-/* 261 */
-#pragma pack(push, 1)
-struct T_DrawInfo
-{
-  int Unknown0;
-  HDC DeviceContext;
-};
-#pragma pack(pop)
 
 /* 263 */
 enum MACRO_SM
@@ -2922,21 +3490,3948 @@ enum MACRO_SM
   SM_CMOUSEBUTTONS = 43,
 };
 
-/* 264 */
-#pragma pack(push, 1)
-struct T_ControlInfoScroll
+/* 268 */
+typedef tagLOGPALETTE LOGPALETTE;
+
+/* 269 */
+struct tagLOGPALETTE
 {
-  int Unknown1;
-  int Unknown2;
-  P_WindowInfo WindowInfo;
-  RECT Rect;
-  HWND HWindow;
-  __int8 Unknown6[12];
-  int ProcRedraw;
-  int ProcTrack;
-  int PageSize;
-  int Unknown5;
-  int CurrentPosition;
+  WORD palVersion;
+  WORD palNumEntries;
+  PALETTEENTRY palPalEntry[1];
+};
+
+/* 303 */
+struct __unaligned T_MapWindow
+{
+  T_MSWindow MSWindow;
+  __int16 Unknown_2D8;
+  __int16 Unknown_2DA;
+  __int16 Unknown_2DC;
+  __int16 Unknown_2DE;
+  __int16 MapCenterX;
+  __int16 MapCenterY;
+  __int16 MapZoom;
+  __int16 Unknown_2E6;
+  RECT MapRect;
+  SIZE MapHalf;
+  SIZE Unknown_300;
+  SIZE MapCellSize;
+  SIZE MapCellSize2;
+  SIZE MapCellSize4;
+  SIZE Unknown_320;
+  SIZE ClientSize;
+  SIZE Unknown_330;
+  T_FontInfo FontInfo1;
+  T_FontInfo FontInfo2;
+  int PrevFont1Height;
+  int PrevFont2Height;
+  int Unknown_350;
+  int Unknown_354;
+  int Cursor;
+  int PrevMapZoom;
+  T_DrawPort DrawPortMouse;
+  T_DrawPort DrawPortMouse2;
+};
+
+/* 272 */
+typedef T_MapWindow T_MapWindows[8];
+
+/* 273 */
+struct __unaligned T_UnitType
+{
+  __int32 StringIndex;
+  LONG Abilities;
+  __int8 Until;
+  __int8 Domain;
+  __int8 Move;
+  __int8 Range;
+  __int8 Att;
+  __int8 Def;
+  __int8 HitPoints;
+  __int8 FirePower;
+  __int8 Cost;
+  __int8 Hold;
+  __int8 Role;
+  __int8 Preq;
+};
+
+/* 274 */
+typedef T_UnitType T_UnitTypes[62];
+
+/* 276 */
+#pragma pack(push, 1)
+struct T_Cosmic
+{
+  BYTE RoadMovementMultiplier;
+  BYTE ChanceTriremeLost;
+  BYTE CitizenEats;
+  BYTE RowsInFoodBox;
+  BYTE RowsInShieldBox;
+  BYTE SettlersEatUpToMonarchy;
+  BYTE SettlersEatFromCommunism;
+  BYTE CitySizeFirstUnhappinessChieftain;
+  BYTE RiotFactor;
+  BYTE AqueductSize;
+  BYTE SewerSystemSize;
+  BYTE TechParadigm;
+  BYTE BaseTransformTime;
+  BYTE FreeSupportMonarchy;
+  BYTE FreeSupportCommunism;
+  BYTE FreeSupportFundamentalism;
+  BYTE CommunismPalaceDistance;
+  BYTE FundamentalismLosesScience;
+  BYTE ShieldPenalty;
+  BYTE ParadropRange;
+  BYTE MassThrustParadigm;
+  BYTE FundamentalismMaxScience;
 };
 #pragma pack(pop)
+
+/* 277 */
+struct __unaligned T_RulesTerrain
+{
+  char ShortName[4];
+  int StringIndex;
+  __int8 MoveCost;
+  __int8 Defense;
+  BYTE Res[3];
+  __int8 TransformMod;
+  __int8 Mod[2];
+  BYTE Bonus[2];
+  __int8 Turns[2];
+  BYTE AI[2];
+  BYTE Byte16;
+  BYTE Byte17;
+};
+
+/* 278 */
+typedef T_RulesTerrain T_RulesTerrains[33];
+
+/* 279 */
+enum MACRO_GHND
+{
+  GHND = 66,
+};
+
+/* 280 */
+typedef _iobuf FILE;
+
+/* 281 */
+struct _iobuf
+{
+  char *_ptr;
+  int _cnt;
+  char *_base;
+  int _flag;
+  int _file;
+  int _charbuf;
+  int _bufsiz;
+  char *_tmpfname;
+};
+
+/* 283 */
+typedef char T_DlgStrParam[260];
+
+/* 282 */
+#pragma pack(push, 1)
+struct T_DlgParams
+{
+  int Number[6];
+  T_DlgStrParam String[12];
+};
+#pragma pack(pop)
+
+/* 284 */
+struct FuncInfoV1
+{
+  int magicNumber;
+  int maxState;
+  void *pUnwindMap;
+  int nTryBlocks;
+  void *pTryBlockMap;
+  int nIPMapEntries;
+  void *pIPtoStateMap;
+};
+
+/* 285 */
+struct UnwindMapEntry
+{
+  int toState;
+  void *action;
+};
+
+/* 286 */
+struct __unaligned T_GraphicsInfoAvi
+{
+  T_GraphicsInfo GraphicsInfo;
+  LPVOID Proc1;
+  int Unknown_118[1];
+  int Unknown_11C[2];
+  T_Palette Palette;
+  T_DrawPort DrawPort;
+  int Unknown_5A0[8];
+  BITMAPINFOHEADER BitMapInfoHeader1;
+  BITMAPINFOHEADER BitMapInfoHeader2;
+  int Unknown_5EC[256];
+  int Unknown_A10[6];
+};
+
+/* 287 */
+typedef T_GraphicsInfoAvi *P_GraphicsInfoAvi;
+
+/* 288 */
+struct __unaligned __declspec(align(1)) T_ColorSet
+{
+  int Color1;
+  int Color2;
+  int Color3;
+  int Color4;
+};
+
+/* 289 */
+typedef T_ColorSet T_ColorSets[8];
+
+/* 290 */
+struct __unaligned T_Improvement
+{
+  int StringIndex;
+  BYTE Cost;
+  BYTE Upkeep;
+  __int8 Preq;
+  __int8 Unknown3;
+};
+
+/* 291 */
+typedef T_Improvement T_Improvements[67];
+
+/* 292 */
+enum MACRO_PC
+{
+  PC_RESERVED = 0x1,
+  PC_EXPLICIT = 0x2,
+  PC_NOCOLLAPSE = 0x4,
+};
+
+/* 293 */
+enum MACRO_NUMCOLORS
+{
+  NUMCOLORS = 24,
+};
+
+/* 294 */
+enum MACRO_RASTERCAPS
+{
+  RASTERCAPS = 38,
+};
+
+/* 295 */
+enum MACRO_RC
+{
+  RC_BITBLT = 1,
+  RC_BANDING = 2,
+  RC_SCALING = 4,
+  RC_BITMAP64 = 8,
+  RC_GDI20_OUTPUT = 16,
+  RC_GDI20_STATE = 32,
+  RC_SAVEBITMAP = 64,
+  RC_DI_BITMAP = 128,
+  RC_PALETTE = 256,
+  RC_DIBTODEV = 512,
+  RC_BIGFONT = 1024,
+  RC_STRETCHBLT = 2048,
+  RC_FLOODFILL = 4096,
+  RC_STRETCHDIB = 8192,
+  RC_OP_DX_OUTPUT = 16384,
+  RC_DEVBITS = 32768,
+};
+
+/* 296 */
+enum MACRO_IDC
+{
+  IDC_ARROW = 32512,
+  IDC_IBEAM = 32513,
+  IDC_WAIT = 32514,
+  IDC_CROSS = 32515,
+  IDC_UPARROW = 32516,
+  IDC_SIZE = 32640,
+  IDC_ICON = 32641,
+  IDC_SIZENWSE = 32642,
+  IDC_SIZENESW = 32643,
+  IDC_SIZEWE = 32644,
+  IDC_SIZENS = 32645,
+  IDC_SIZEALL = 32646,
+  IDC_NO = 32648,
+  IDC_HAND = 32649,
+  IDC_APPSTARTING = 32650,
+  IDC_HELP = 32651,
+};
+
+/* 297 */
+struct __unaligned T_ControlBlock
+{
+  HGLOBAL hMem;
+  P_ControlInfo ControlInfo;
+  int Unknown_08;
+  HBITMAP BmpDisabled;
+  HBITMAP BmpUnchecked;
+  HBITMAP BmpChecked;
+  int _Pressed;
+  int _LButtonDown;
+  int Unknown_20;
+  P_ControlInfoRadio pRadios;
+  int Unknown_28;
+  int _BlockType;
+};
+
+/* 300 */
+enum MACRO_GW
+{
+  GW_HWNDFIRST = 0,
+  GW_HWNDLAST = 1,
+  GW_HWNDNEXT = 2,
+  GW_HWNDPREV = 3,
+  GW_OWNER = 4,
+  GW_CHILD = 5,
+  GW_ENABLEDPOPUP = 6,
+  GW_MAX = 6,
+};
+
+/* 302 */
+typedef T_WindowProcs *P_WindowProcs;
+
+/* 307 */
+enum MACRO_LOAD
+{
+  LOAD_LIBRARY_AS_DATAFILE = 0x2,
+  LOAD_WITH_ALTERED_SEARCH_PATH = 0x8,
+};
+
+/* 308 */
+enum MACRO_TRANSPARENT
+{
+  TRANSPARENT = 1,
+  OPAQUE = 2,
+};
+
+/* 313 */
+struct __unaligned T_AdvisorWindow
+{
+  T_MSWindow MSWindow;
+  T_DrawPort BgDrawPort;
+  T_ControlInfoButton ControlInfoButton1;
+  T_ControlInfoButton ControlInfoButton2;
+  T_ControlInfoButton ControlInfoButton3;
+  T_ControlInfoButton ControlInfoButton4;
+  T_ControlInfoScroll ControlInfoScroll;
+  int AdvisorType;
+  int Unknown_454;
+  int _Range;
+  int CurrCivIndex;
+  int ScrollPosition;
+  int ScrollPageSize;
+  int ListTop;
+  int _ListHeight;
+  int LineHeight;
+  int Height;
+  int Unknown_478;
+  int ItemsIn3Columns;
+  int Unknown_480;
+  int Unknown_484;
+  int Unknown_488;
+  int Width;
+  int Unknown_490;
+  int ScrollBarWidth;
+  int ControlsInitialized;
+  int Unknown_49C;
+  int Popup;
+};
+
+/* 314 */
+typedef T_AdvisorWindow *P_AdvisorWindow;
+
+/* 315 */
+enum MACRO_CW
+{
+  CW_USEDEFAULT = 0x80000000,
+};
+
+/* 318 */
+enum MACRO_HWND_DESKTOP
+{
+  HWND_DESKTOP = 0,
+};
+
+/* 319 */
+enum MACRO_HTNOWHERE
+{
+  HTNOWHERE = 0,
+  HTCLIENT = 1,
+  HTCAPTION = 2,
+};
+
+/* 320 */
+enum MACRO_HTBOTTOMRIGHT
+{
+  HTBOTTOMRIGHT = 17,
+};
+
+/* 321 */
+enum MACRO_HTRIGHT
+{
+  HTRIGHT = 11,
+};
+
+/* 322 */
+enum MACRO_HTTOPRIGHT
+{
+  HTTOPRIGHT = 14,
+};
+
+/* 323 */
+enum MACRO_HTLEFT
+{
+  HTLEFT = 10,
+};
+
+/* 324 */
+enum MACRO_HTBOTTOM
+{
+  HTBOTTOM = 15,
+  HTBOTTOMLEFT = 16,
+};
+
+/* 325 */
+enum MACRO_HTTOPLEFT
+{
+  HTTOPLEFT = 13,
+};
+
+/* 326 */
+enum MACRO_HTTOP
+{
+  HTTOP = 12,
+};
+
+/* 328 */
+typedef T_WinButton *P_WinButton;
+
+/* 329 */
+enum MACRO_BRUSH
+{
+  WHITE_BRUSH = 0,
+  LTGRAY_BRUSH = 1,
+  GRAY_BRUSH = 2,
+  DKGRAY_BRUSH = 3,
+  BLACK_BRUSH = 4,
+  NULL_BRUSH = 5,
+  HOLLOW_BRUSH = 5,
+};
+
+/* 331 */
+typedef T_MSWindow *P_MSWindow;
+
+/* 332 */
+struct __unaligned T_TaxWindow
+{
+  T_MSWindow MSWindow;
+  int CivIndex;
+  int MaxRate;
+  int TaxRateF;
+  int LuxuryRateF;
+  int ScienceRateF;
+  int TaxRate;
+  int LuxuryRate;
+  int ScienceRate;
+  int ClientWidth;
+  int ClientHeight;
+  int x0;
+  int y0;
+  int TotalIncome;
+  int TotalScience;
+  int TotalCost;
+  int PadX;
+  int PadY;
+  int ScrollW;
+  int ScrollBarHeight;
+  int ButtonW;
+  int ButtonH;
+  int FontHeight;
+  int yT;
+  int yL;
+  int yS;
+  int yGov;
+  int yTot;
+  int yDis;
+  int RateExceeded;
+  int Locks[3];
+  T_ControlInfoScroll ScrollTax;
+  T_ControlInfoScroll ScrollLuxury;
+  T_ControlInfoScroll ScrollScience;
+  T_ControlInfoCheckbox Checkbox[3];
+  T_ControlInfoButton Button;
+};
+
+/* 333 */
+typedef T_TaxWindow *P_TaxWindow;
+
+/* 334 */
+typedef T_MapWindow *P_MapWindow;
+
+/* 335 */
+struct __unaligned T_FontData
+{
+  HFONT hFont;
+  int Unknown_4;
+};
+
+/* 336 */
+typedef T_FontData *P_FontData;
+
+/* 337 */
+struct __unaligned T_Civ2Dat1
+{
+  __int16 Unknown_00;
+  __int16 Unknown_02;
+  __int16 DIFFICULTY;
+  __int16 Unknown_06;
+  __int16 GENDER;
+  __int16 ScienceRate;
+  __int16 TaxRate;
+  int GraphicAndGameOptions;
+  __int16 CityReportOptions;
+  __int16 ENEMIES;
+  __int16 Unknown_16;
+  __int16 BARBARITY;
+  __int16 Unknown_1A;
+  int Unknown_1C;
+  int Unknown_20;
+  int Unknown_24;
+  int Unknown_28;
+  int Unknown_2C;
+  int Unknown_30;
+  int Unknown_34;
+  int Unknown_38;
+  int Unknown_3C;
+  int Unknown_40;
+  __int16 RULES;
+  __int16 ACCELERATED;
+};
+
+/* 338 */
+struct __declspec(align(1)) T_Civ2Dat2
+{
+  __int16 MainMenuSelectedOption;
+  __int16 MultiTypeSelectedItem;
+  __int16 Unknown_4[4];
+  __int16 NetworkProtocol;
+  __int16 Unknown_E[53];
+  __int16 Unknown_78[162];
+};
+
+/* 339 */
+typedef tagRGBTRIPLE RGBTRIPLE;
+
+/* 340 */
+#pragma pack(push, 1)
+struct tagRGBTRIPLE
+{
+  BYTE rgbtBlue;
+  BYTE rgbtGreen;
+  BYTE rgbtRed;
+};
+#pragma pack(pop)
+
+/* 341 */
+typedef _SMALL_RECT SMALL_RECT;
+
+/* 343 */
+typedef __int16 SHORT;
+
+/* 342 */
+struct _SMALL_RECT
+{
+  SHORT Left;
+  SHORT Top;
+  SHORT Right;
+  SHORT Bottom;
+};
+
+/* 344 */
+struct __unaligned T_ShortWinRects
+{
+  __int16 Unknown_00;
+  SMALL_RECT Rects[13];
+};
+
+/* 345 */
+typedef T_ShortWinRects *P_ShortWinRects;
+
+/* 346 */
+struct __unaligned T_WinRects
+{
+  int Unknown_00;
+  RECT Rects[13];
+};
+
+/* 347 */
+typedef T_WinRects *P_WinRects;
+
+/* 348 */
+enum MACRO_SBS
+{
+  SBS_HORZ = 0x0,
+  SBS_VERT = 0x1,
+  SBS_TOPALIGN = 0x2,
+  SBS_LEFTALIGN = 0x2,
+  SBS_BOTTOMALIGN = 0x4,
+  SBS_RIGHTALIGN = 0x4,
+  SBS_SIZEBOXTOPLEFTALIGN = 0x2,
+  SBS_SIZEBOXBOTTOMRIGHTALIGN = 0x4,
+  SBS_SIZEBOX = 0x8,
+  SBS_SIZEGRIP = 0x10,
+};
+
+/* 367 */
+typedef T_ListboxItem *P_ListboxItem;
+
+/* 365 */
+typedef T_ListItem *P_ListItem;
+
+/* 380 */
+typedef T_DlgTextLine *P_DlgTextLine;
+
+/* 373 */
+typedef T_Edit *P_Edit;
+
+/* 558 */
+typedef T_ControlInfoListBox *P_ControlInfoListBox;
+
+/* 376 */
+struct __unaligned T_DlgButton
+{
+  int StdType;
+  int Left;
+};
+
+/* 349 */
+struct __unaligned T_DialogWindow
+{
+  P_GraphicsInfo GraphicsInfo;
+  P_DrawPort DrawPort;
+  P_FontInfo FontInfo1;
+  P_FontInfo FontInfo2;
+  P_FontInfo FontInfo3;
+  POINT Unknown_14;
+  int Height;
+  int NumTextLines;
+  int NumEdits;
+  int NumLines;
+  int NumListItems;
+  int NumButtonsStd;
+  int NumButtons;
+  int Columns;
+  int Flags;
+  SIZE ClientSize;
+  int ScrollOrientation;
+  int ListboxWidth[2];
+  int ListboxHeight[2];
+  int ListboxPageSize[2];
+  int Color1;
+  int Color2;
+  int Color3;
+  int Color4;
+  int Color5;
+  int Color6;
+  int Color7;
+  int RatioNumerator;
+  int RatioDenominator;
+  int Color8;
+  int Color9;
+  int Color10;
+  int Color11;
+  int Color12;
+  int Color13;
+  int Color14;
+  int Color15;
+  int Color16;
+  int Unknown_AC;
+  int Unknown_B0;
+  int Unknown_B4;
+  int VertPadding;
+  int HorzMargin;
+  int LineSpacing;
+  int TextIndent;
+  int Bevel;
+  int LRFrame;
+  int CaptionHeight;
+  int Unknown_D4;
+  int SelectedItem;
+  int PressedButton;
+  POINT Position;
+  POINT ClientTopLeft;
+  int Unknown_F0;
+  int Unknown_F4;
+  int Unknown_F8;
+  int Unknown_FC;
+  POINT ListTopLeft;
+  int Unknown_108;
+  int Unknown_10C;
+  int _EditsLeft;
+  int ButtonsTop;
+  int MaxWidth1;
+  int Width;
+  int MaxWidth2;
+  int Unknown_124;
+  int MaxWidth3;
+  int ButtonsWidth;
+  int _Zoom;
+  char *Title;
+  RECT Rects1[2];
+  RECT Rects2[2];
+  RECT Rects3[2];
+  RECT Rects4[2];
+  int Unknown_1B8[2];
+  int VScrollWidth[2];
+  int HScrollHeight[2];
+  int Unknown_1D0[2];
+  int Unknown_1D8[2];
+  int Unknown_1E0[2];
+  int ListboxInnerWidth[2];
+  int Unknown_1F0[2];
+  int Unknown_1F8;
+  int Unknown_1FC;
+  int Unknown_200[2];
+  int ListboxSpriteAreaWidth[2];
+  P_ListboxItem PageStartListboxItem[2];
+  int Unknown_218[2];
+  P_ListboxItem SelectedListboxItem;
+  P_ListItem SelectedListItem;
+  P_ListboxItem FirstListboxItem;
+  P_ListboxItem LastListboxItem;
+  P_DlgTextLine FirstTextLine;
+  P_ListItem FirstListItem;
+  P_Edit Edit;
+  LPVOID Proc1;
+  LPVOID Proc2;
+  LPVOID Proc3SpriteDraw;
+  LPVOID Proc4SpriteDraw;
+  LPVOID Proc5;
+  LPVOID Proc6;
+  T_Heap Heap;
+  __int16 Unknown_266;
+  P_ControlInfoRadioGroup RadioGroupControl;
+  P_ControlInfoCheckbox CheckboxControls;
+  P_ControlInfoEdit EditControls;
+  P_ControlInfoButton ButtonControls;
+  P_ControlInfoListBox ListBoxControls[2];
+  P_ControlInfoListItem ListItemControls;
+  P_ControlInfoScroll ScrollControls1[2];
+  P_ControlInfoScroll ScrollControls2[2];
+  char *ButtonTexts[6];
+  T_DlgButton Buttons[6];
+  int Unknown_2DC;
+  int Unknown_2E0;
+  int Unknown_2E4;
+  int Unknown_2E8;
+  int Unknown_2EC;
+  int Unknown_2F0;
+};
+
+/* 366 */
+struct __unaligned T_ListboxItem
+{
+  int Disabled;
+  int Index;
+  char *Text;
+  int ScrollOrientation;
+  P_ListboxItem Next;
+  P_ListboxItem Prev;
+};
+
+/* 364 */
+struct T_ListItem
+{
+  int Index;
+  int Unknown_04;
+  char *Text;
+  P_Sprite Sprite;
+  P_ListItem Next;
+};
+
+/* 379 */
+struct __unaligned T_DlgTextLine
+{
+  int Index;
+  int Flags;
+  char *Text;
+  int Size;
+  int Unknown_10;
+  int Unknown_14;
+  int Unknown_18;
+  P_DlgTextLine Next;
+};
+
+/* 372 */
+struct __unaligned T_Edit
+{
+  int Unknown_00;
+  int Width;
+  int Limit;
+  int Index;
+  char *_Label;
+  char *Text;
+  P_Edit NextEdit;
+};
+
+/* 557 */
+struct __unaligned T_ControlInfoListBox
+{
+  T_ControlInfo ControlInfo;
+  int Unknown_2C;
+  LPVOID ProcDblClk;
+  LPVOID ProcSelChange;
+  P_FontInfo FontInfo;
+};
+
+/* 350 */
+typedef T_DialogWindow *P_DialogWindow;
+
+/* 357 */
+typedef T_ControlBlock *P_ControlBlock;
+
+/* 360 */
+struct __unaligned T_ControlInfoListItems
+{
+  int Count;
+  T_ControlInfoListItem Controls[1];
+};
+
+/* 361 */
+typedef T_ControlInfoListItems *P_ControlInfoListItems;
+
+/* 363 */
+typedef T_Heap *P_Heap;
+
+/* 368 */
+struct __unaligned T_SideBarWindow
+{
+  T_MSWindow MSWindow;
+  BYTE Unknown_2D8;
+  __int8 Unknown_2D9;
+  __int8 Unknown_2DA;
+  __int8 Unknown_2DB;
+  int Unknown_2DC;
+  T_DrawPort DrawPort;
+  int Unknown_328;
+  int Unknown_32C;
+  T_FontInfo FontInfo;
+  int Unknown_338;
+  int Unknown_33C;
+  RECT Rect;
+};
+
+/* 369 */
+typedef T_SideBarWindow *P_SideBarWindow;
+
+/* 370 */
+struct __unaligned T_ControlInfoEdits
+{
+  int Count;
+  T_ControlInfoEdit Controls[1];
+};
+
+/* 371 */
+typedef T_ControlInfoEdits *P_ControlInfoEdits;
+
+/* 374 */
+struct __unaligned T_ControlInfoButtons
+{
+  int Count;
+  T_ControlInfoButton Controls[1];
+};
+
+/* 375 */
+typedef T_ControlInfoButtons *P_ControlInfoButtons;
+
+/* 377 */
+struct __unaligned T_Sound
+{
+  char Name[9];
+};
+
+/* 378 */
+typedef T_Sound T_Sounds[133];
+
+/* 381 */
+enum MACRO_DT
+{
+  DT_TOP = 0x0,
+  DT_LEFT = 0x0,
+  DT_CENTER = 0x1,
+  DT_RIGHT = 0x2,
+  DT_VCENTER = 0x4,
+  DT_BOTTOM = 0x8,
+  DT_WORDBREAK = 0x10,
+  DT_SINGLELINE = 0x20,
+  DT_EXPANDTABS = 0x40,
+  DT_TABSTOP = 0x80,
+  DT_NOCLIP = 0x100,
+  DT_EXTERNALLEADING = 0x200,
+  DT_CALCRECT = 0x400,
+  DT_NOPREFIX = 0x800,
+  DT_INTERNAL = 0x1000,
+  DT_EDITCONTROL = 0x2000,
+  DT_PATH_ELLIPSIS = 0x4000,
+  DT_END_ELLIPSIS = 0x8000,
+  DT_MODIFYSTRING = 0x10000,
+  DT_RTLREADING = 0x20000,
+  DT_WORD_ELLIPSIS = 0x40000,
+};
+
+/* 382 */
+enum MACRO_CIV2_DLG
+{
+  CIV2_DLG_HAS_CANCEL_BUTTON = 0x1,
+  CIV2_DLG_CHECKBOXES = 0x4,
+  CIV2_DLG_CREATED = 0x20,
+  CIV2_DLG_HAS_HELP_BUTTON = 0x40,
+  CIV2_DLG_CREATED_PARTS = 0x200,
+  CIV2_DLG_CLEAR_POPUP = 0x400,
+  CIV2_DLG_LISTBOX = 0x1000,
+  CIV2_DLG_CHOOSE = 0x2000,
+  CIV2_DLG_SYSTEMPOPUP = 0x10000,
+  CIV2_DLG_SYSTEMLISTBOX = 0x40000,
+  CIV2_DLG_SORTEDLISTBOX = 0x800000,
+  CIV2_DLG_FORCE_SCROLLBAR_FOR_LISTBOX = 0x1000000,
+};
+
+/* 383 */
+enum MACRO_SBCMD
+{
+  SB_LINEUP = 0x0,
+  SB_LINELEFT = 0x0,
+  SB_LINEDOWN = 0x1,
+  SB_LINERIGHT = 0x1,
+  SB_PAGEUP = 0x2,
+  SB_PAGELEFT = 0x2,
+  SB_PAGEDOWN = 0x3,
+  SB_PAGERIGHT = 0x3,
+  SB_THUMBPOSITION = 0x4,
+  SB_THUMBTRACK = 0x5,
+  SB_TOP = 0x6,
+  SB_LEFT = 0x6,
+  SB_BOTTOM = 0x7,
+  SB_RIGHT = 0x7,
+  SB_ENDSCROLL = 0x8,
+};
+
+/* 384 */
+enum MACRO_SC
+{
+  SC_SIZE = 0xF000,
+  SC_MOVE = 0xF010,
+  SC_MINIMIZE = 0xF020,
+  SC_MAXIMIZE = 0xF030,
+  SC_NEXTWINDOW = 0xF040,
+  SC_PREVWINDOW = 0xF050,
+  SC_CLOSE = 0xF060,
+  SC_VSCROLL = 0xF070,
+  SC_HSCROLL = 0xF080,
+  SC_MOUSEMENU = 0xF090,
+  SC_KEYMENU = 0xF100,
+  SC_ARRANGE = 0xF110,
+  SC_RESTORE = 0xF120,
+  SC_TASKLIST = 0xF130,
+  SC_SCREENSAVE = 0xF140,
+  SC_HOTKEY = 0xF150,
+  SC_DEFAULT = 0xF160,
+  SC_MONITORPOWER = 0xF170,
+  SC_CONTEXTHELP = 0xF180,
+  SC_SEPARATOR = 0xF00F,
+  SC_ICON = 0xF020,
+  SC_ZOOM = 0xF030,
+};
+
+/* 385 */
+enum MACRO_WH
+{
+  WH_MIN = -1,
+  WH_MSGFILTER = -1,
+  WH_JOURNALRECORD = 0,
+  WH_JOURNALPLAYBACK = 1,
+  WH_KEYBOARD = 2,
+  WH_GETMESSAGE = 3,
+  WH_CALLWNDPROC = 4,
+  WH_CBT = 5,
+  WH_SYSMSGFILTER = 6,
+  WH_MOUSE = 7,
+  WH_DEBUG = 9,
+  WH_SHELL = 10,
+  WH_FOREGROUNDIDLE = 11,
+  WH_CALLWNDPROCRET = 12,
+  WH_KEYBOARD_LL = 13,
+  WH_MOUSE_LL = 14,
+  WH_MAX = 14,
+  WH_MINHOOK = -1,
+  WH_MAXHOOK = 14,
+};
+
+/* 386 */
+struct __unaligned T_CityGlobals
+{
+  int BuildProgress;
+  char field_4[4];
+  BYTE field_8[28];
+  int CitizensNotWorking;
+  int HappyCitizens;
+  int Tax;
+  int field_30;
+  int AttUnitsInCity;
+  int RowsInFoodBox;
+  int field_3C;
+  int Support;
+  int ProdCorruption;
+  int field_48;
+  int LinkToCapital;
+  int Science;
+  int ShieldsInRow;
+  int TradeCorruption;
+  int Pollution;
+  int DistanceToCapital;
+  char field_64[4];
+  int TradeRevenue[3];
+  int AngryCitizens;
+  int field_78;
+  int BuildingType;
+  int UnhappyCitizens;
+  int field_84;
+  int field_88;
+  char field_8C[4];
+  int TileRes[3];
+  int TechPollution;
+  int TotalRes[3];
+  int _SomeCounter;
+  int Settlers;
+  int field_B4;
+  int field_B8;
+  int AttUnitsOfDiscontent;
+  int field_C0;
+  char field_C4[4];
+  BYTE UnhappyArray[5];
+  char field_CD[3];
+  int EnvLevel;
+  int Lux;
+  int Capital;
+  int FreeCitizens;
+  int SettlersEat;
+  int PaidUnits;
+  int field_E8;
+  char field_EC[4];
+  int field_F0;
+  int PrevFoodDelta;
+  BYTE HappyArray[5];
+  char field_FD[3];
+  BYTE AngryArray[5];
+  char field_105[59];
+};
+
+/* 387 */
+enum MACRO_CIV2_CURSOR
+{
+  CIV2_CURSOR_GO = 0x1FE,
+  CIV2_CURSOR_ARROW = 0x201,
+  CIV2_CURSOR_PARADROP = 0x202,
+  CIV2_CURSOR_PARADROPNO = 0x203,
+};
+
+/* 637 */
+enum MACRO_CIV2_TERRAIN_FEATURES : __int8
+{
+  CIV2_TERRAIN_FEATURE_NOTHING = 0x0,
+  CIV2_TERRAIN_FEATURE_UNIT_PRESENT = 0x1,
+  CIV2_TERRAIN_FEATURE_CITY_PRESENT = 0x2,
+  CIV2_TERRAIN_FEATURE_IRRIGATION = 0x4,
+  CIV2_TERRAIN_FEATURE_MINING = 0x8,
+  CIV2_TERRAIN_FEATURE_FARMLAND = 0xC,
+  CIV2_TERRAIN_FEATURE_ROAD = 0x10,
+  CIV2_TERRAIN_FEATURE_RAIL = 0x20,
+  CIV2_TERRAIN_FEATURE_RAILROAD = 0x30,
+  CIV2_TERRAIN_FEATURE_FORTRESS = 0x40,
+  CIV2_TERRAIN_FEATURE_AIRBASE = 0x42,
+  CIV2_TERRAIN_FEATURE_POLLUTION = 0x80,
+};
+
+/* 388 */
+struct __unaligned T_MapSquare
+{
+  BYTE TerrainType;
+  MACRO_CIV2_TERRAIN_FEATURES TerrainFeatures;
+  BYTE CityRadii;
+  BYTE MassIndex;
+  BYTE Visibility;
+  BYTE OwnershipAndFertility;
+};
+
+/* 389 */
+typedef T_MapSquare *P_MapSquare;
+
+/* 390 */
+typedef T_MapSquare T_MapSquares[1];
+
+/* 391 */
+typedef T_MapSquares *P_MapSquares;
+
+/* 573 */
+typedef T_PediaItemName *P_PediaItemName;
+
+/* 575 */
+typedef T_PediaLink *P_PediaLink;
+
+/* 392 */
+struct __unaligned T_PediaWindow
+{
+  T_GraphicsInfo GraphicsInfo;
+  int Unknown_114;
+  int Section;
+  int _Mode;
+  int SelectedItem;
+  int _PopupActiveFlag;
+  int HistoryDepth;
+  int HistoryItem[100];
+  int HistoryMode[100];
+  int HistorySection[100];
+  int Width;
+  int Height;
+  int CaptionHeight;
+  RECT Rect1;
+  RECT Rect2;
+  RECT Rect3;
+  char Header[64];
+  int Count1Advances;
+  int DescrIdx1Advances[100];
+  int RulesIdx1Advances[100];
+  int Count2Improvement;
+  int DescrIdx2Improvement[39];
+  int RulesIdx2Improvement[39];
+  int Count3Wonder;
+  int DescrIdx3Wonder[28];
+  int RulesIdx3Wonder[28];
+  int Count4UnitType;
+  int DescrIdx4UnitType[62];
+  int RulesIdx4UnitType[62];
+  int Count6Government;
+  int DescrIdx6Government[7];
+  int RulesIdx6Government[7];
+  int Count5Terrain;
+  int DescrIdx5Terrain[33];
+  int RulesIdx5Terrain[33];
+  int Count7Concept;
+  int DescrIdx7Concept[256];
+  int RulesIdx7Concept[256];
+  P_PediaItemName ItemNames1Advances;
+  P_PediaItemName ItemNames2Improvement;
+  P_PediaItemName ItemNames3Wonder;
+  P_PediaItemName ItemNames4UnitType;
+  P_PediaItemName ItemNames6Government;
+  P_PediaItemName ItemNames5Terrain;
+  P_PediaItemName ItemNames7Concept;
+  int Unknown_16F8;
+  int Unknown_16FC[2];
+  int SpriteCloseWidth;
+  int SpriteCloseHeight;
+  P_Sprite SpriteClose;
+  P_ControlInfoListItem ListItem;
+  T_ControlInfoButton Button1Info;
+  T_ControlInfoButton Button1Close;
+  T_ControlInfoButton Button2GoBack;
+  T_ControlInfoButton Button2Description;
+  T_ControlInfoButton Button2Close;
+  T_ControlInfoButton Button3GoBack;
+  T_ControlInfoButton Button3Close;
+  T_ControlInfoButton Button4GoBack;
+  T_ControlInfoButton Button4Info;
+  T_ControlInfoButton Button4Tree;
+  T_ControlInfoButton Button4Close;
+  T_ControlInfoButton Button5GoBack;
+  T_ControlInfoButton Button5Tree;
+  T_ControlInfoButton Button5Description;
+  T_ControlInfoButton Button5Close;
+  T_ControlInfoEdit Edit;
+  T_ControlInfoScroll Scroll;
+  P_ControlInfoListItem ListItem2;
+  RECT Rect4;
+  int _CurrentCount;
+  int _CurrentRulesIdx[256];
+  int SelectedItem_;
+  int FirstItem;
+  P_PediaLink Links;
+};
+
+/* 572 */
+struct __unaligned T_PediaItemName
+{
+  char *Text;
+  int Index;
+  P_PediaItemName Next;
+};
+
+/* 565 */
+struct __unaligned T_ControlInfoHyperText
+{
+  T_ControlInfo ControlInfo;
+  int Unknown_2C;
+  int Unknown_30;
+  LPVOID Proc;
+  int Unknown_38;
+  LPVOID Proc2;
+};
+
+/* 574 */
+struct __unaligned T_PediaLink
+{
+  int Index;
+  T_ControlInfoHyperText HyperText;
+  P_PediaLink Next;
+};
+
+/* 393 */
+typedef T_PediaWindow *P_PediaWindow;
+
+/* 536 */
+struct __unaligned T_MSModule
+{
+  HMODULE hModule;
+};
+
+/* 394 */
+struct __unaligned T_ThroneWindow
+{
+  T_WindowInfo1 WindowInfo1;
+  T_Palette Palette;
+  RECT Rect1;
+  T_MSModule MSModule;
+  int CivIndex;
+  T_GraphicsInfo GraphicsInfo;
+  T_DrawPort DrawPort;
+  int Unknown_660[1202];
+  int Unknown_1928;
+  int Unknown_192C;
+  T_DialogWindow DialogWindow;
+  RECT Rect2;
+  T_FontInfo FontInfo;
+  int Unknown_1C3C[2];
+};
+
+/* 395 */
+typedef T_ThroneWindow *P_ThroneWindow;
+
+/* 397 */
+typedef T_CivSub1 *P_CivSub1;
+
+/* 636 */
+struct __unaligned T_Mass
+{
+  __int16 LandSize;
+  __int16 FertileTileCount;
+  __int16 OceanSize;
+  __int8 Unknown_6;
+  __int8 CoastalAdjacency[8];
+  __int8 Unknown_F;
+};
+
+/* 398 */
+struct __unaligned T_SaveBlock1
+{
+  T_Mass mass[64];
+};
+
+/* 399 */
+struct __unaligned T_PowerGraph
+{
+  BYTE Value[150][8];
+};
+
+/* 400 */
+struct __unaligned T_SaveBlock3_SCN
+{
+  __int16 Flags;
+  char ScenName[80];
+  __int16 TechParadigm;
+  __int16 TurnYearIncrement;
+  __int16 StartingYear;
+  __int16 MaximumTurns;
+  __int16 ObjectivesProtagonist;
+  __int16 DecisiveVictoryThreshold;
+  __int16 MarginalVictoryThreshold;
+  __int16 MarginalDefeatThreshold;
+  __int16 DecisiveDefeatThreshold;
+};
+
+/* 401 */
+struct __unaligned T_SaveBlock4
+{
+  __int16 Count;
+  __int16 Turn[12];
+  __int8 Unknown_1A[12];
+  __int8 Unknown_26[12];
+  char NationPlural[12][24];
+};
+
+/* 402 */
+struct __unaligned T_SaveBlock5
+{
+  __int16 Unknown_00[8];
+  __int16 Unknown_10[8];
+  __int16 Unknown_20[8];
+  int Unknown_30;
+  char Unknown_34[8][32];
+  __int16 OpenGame;
+  __int16 KillCivOnRetire;
+  __int16 ShowHumanStartPos;
+  __int16 AllHumansCanChatFromStart;
+  __int16 SimultaneousMove;
+  __int8 Unknown_13E[294];
+  __int8 Unknown_264[8][32];
+  __int8 Unknown_364[256];
+  BYTE CivIndex;
+  __int8 Unknown_465;
+  __int16 Unknown_466;
+  __int16 Unknown_468;
+  __int16 Unknown_46A;
+  __int16 DoubleProduction;
+  __int16 DoubleMoves;
+  __int16 Unknown_470[18];
+};
+
+/* 403 */
+struct __unailgned;
+
+/* 404 */
+struct __unaligned T_MapHeader
+{
+  __int16 SizeX;
+  __int16 SizeY;
+  __int16 Area;
+  __int16 Flat;
+  __int16 Seed;
+  __int16 ArrayW;
+  __int16 ArrayH;
+};
+
+/* 405 */
+struct __unaligned T_PFData
+{
+  int UnitType;
+  int field_4;
+  int CivIndex;
+  int field_C;
+  int Debug;
+  int NeedDebug;
+};
+
+/* 410 */
+enum MACRO_MF
+{
+  MF_INSERT = 0x0,
+  MF_CHANGE = 0x80,
+  MF_APPEND = 0x100,
+  MF_DELETE = 0x200,
+  MF_REMOVE = 0x1000,
+  MF_BYCOMMAND = 0x0,
+  MF_BYPOSITION = 0x400,
+  MF_SEPARATOR = 0x800,
+  MF_ENABLED = 0x0,
+  MF_GRAYED = 0x1,
+  MF_DISABLED = 0x2,
+  MF_UNCHECKED = 0x0,
+  MF_CHECKED = 0x8,
+  MF_USECHECKBITMAPS = 0x200,
+  MF_STRING = 0x0,
+  MF_BITMAP = 0x4,
+  MF_OWNERDRAW = 0x100,
+  MF_POPUP = 0x10,
+  MF_MENUBARBREAK = 0x20,
+  MF_MENUBREAK = 0x40,
+  MF_UNHILITE = 0x0,
+  MF_HILITE = 0x80,
+  MF_DEFAULT = 0x1000,
+  MF_SYSMENU = 0x2000,
+  MF_HELP = 0x4000,
+  MF_RIGHTJUSTIFY = 0x4000,
+  MF_MOUSESELECT = 0x8000,
+  MF_END = 0x80,
+};
+
+/* 419 */
+typedef T_WindowInfo1 *P_WindowInfo1;
+
+/* 411 */
+struct __unaligned T_MenuInfo
+{
+  P_WindowInfo1 WindowInfo1;
+  P_MenuBar MenuBar;
+  int (__cdecl *Proc)(int, int);
+};
+
+/* 412 */
+struct __unaligned T_RulesCivilize
+{
+  char Name[4];
+  int TextIndex;
+  __int8 Unknown_08;
+  __int8 IsEnabled;
+  __int8 AiValue;
+  __int8 Modifier;
+  __int8 Category;
+  __int8 Epoch;
+  __int8 Preq[2];
+};
+
+/* 413 */
+typedef int T_Civilizes;
+
+/* 414 */
+typedef T_RulesCivilize T_RulesCivilizes[100];
+
+/* 415 */
+typedef T_RulesCivilizes P_RulesCivilizes;
+
+/* 416 */
+struct __unaligned T_CityViewWindow
+{
+  T_WindowInfo1 WindowInfo1BG;
+  T_GraphicsInfo GraphicsInfo;
+  T_DrawPort DrawPort1;
+  T_Palette Palette;
+  T_DrawPort DrawPortBuildings;
+  T_DrawPort DrawPortWonders;
+  T_MSModule MSModule;
+  T_Sprite Sprites1[60];
+  P_Sprite pSprites[60];
+  T_Sprite Sprites2[4];
+  T_Sprite Sprites3[4];
+  T_Sprite Sprites4[4];
+  T_Sprite Sprites5[4];
+  T_DrawPort DrawPort2;
+  int Landscape;
+  int Unknown_19E8[4];
+  int Unknown_19F8[93];
+  int Unknown_1B6C[72];
+  int Unknown_1C8C;
+  int CityIndex;
+  int TechLevel;
+  RECT Rect1;
+  T_FontInfo FontInfo;
+  int Unknown_04;
+};
+
+/* 417 */
+typedef T_CityViewWindow *P_CityViewWindow;
+
+/* 420 */
+enum MACRO_SEM
+{
+  SEM_FAILCRITICALERRORS = 0x1,
+  SEM_NOGPFAULTERRORBOX = 0x2,
+  SEM_NOALIGNMENTFAULTEXCEPT = 0x4,
+  SEM_NOOPENFILEERRORBOX = 0x8000,
+};
+
+/* 421 */
+enum MACRO_OF
+{
+  OF_READ = 0x0,
+  OF_WRITE = 0x1,
+  OF_READWRITE = 0x2,
+  OF_SHARE_COMPAT = 0x0,
+  OF_SHARE_EXCLUSIVE = 0x10,
+  OF_SHARE_DENY_WRITE = 0x20,
+  OF_SHARE_DENY_READ = 0x30,
+  OF_SHARE_DENY_NONE = 0x40,
+  OF_PARSE = 0x100,
+  OF_DELETE = 0x200,
+  OF_VERIFY = 0x400,
+  OF_CANCEL = 0x800,
+  OF_CREATE = 0x1000,
+  OF_PROMPT = 0x2000,
+  OF_EXIST = 0x4000,
+  OF_REOPEN = 0x8000,
+};
+
+/* 422 */
+enum MACRO_CALLBACK_TYPEMASK
+{
+  CALLBACK_TYPEMASK = 0x70000,
+  CALLBACK_NULL = 0x0,
+  CALLBACK_WINDOW = 0x10000,
+  CALLBACK_TASK = 0x20000,
+  CALLBACK_FUNCTION = 0x30000,
+  CALLBACK_THREAD = 0x20000,
+  CALLBACK_EVENT = 0x50000,
+};
+
+/* 423 */
+struct __unaligned T_SaveStruct6
+{
+  __int16 CityStyle;
+  char TextName[24];
+  char TextNationPlural[24];
+  char TextNationAdjective[24];
+  char TextGovernment[7][24];
+};
+
+/* 424 */
+typedef T_SaveStruct6 T_SaveBlock6[8];
+
+/* 431 */
+struct __unaligned T_ControlInfoComboBox
+{
+  T_ControlInfo ControlInfo;
+  int Count;
+  LPVOID ProcDblClk;
+  LPVOID ProcSelChange;
+};
+
+/* 425 */
+struct __unaligned T_EditorWindow
+{
+  T_MSWindow MSWindow;
+  int Width1;
+  int Height1;
+  int Width2;
+  int Height2;
+  int Height3;
+  int CurSel;
+  int Unknown2[3];
+  T_ControlInfoComboBox ComboBox[6];
+  T_ControlInfoEdit Edit[9];
+  T_ControlInfoButton Button[16];
+  T_ControlInfoListBox ListBox[3];
+  int Unknown4;
+  int Unknown5;
+};
+
+/* 426 */
+typedef T_EditorWindow *P_EditorWindow;
+
+/* 427 */
+struct __unaligned T_ScnEditorData
+{
+  int Var00;
+  int Var01;
+  int Var02;
+  int Var03;
+  int Var04;
+  int Var05;
+  int Var06;
+  int Var07;
+  int Var08;
+  int Var09;
+  int Var0A;
+  int Var0B;
+  int Var0C;
+  int Var0D;
+  int Var0E;
+  int Var0F;
+  int Var10;
+  int Var11;
+  int Var12;
+  int Var13;
+  int Var14;
+  int Var15;
+};
+
+/* 428 */
+typedef T_ScnEditorData T_ScnEditorDatas[100];
+
+/* 429 */
+struct __unaligned T_DebugInfo
+{
+  char Text1[1024];
+  char Text2[768];
+  int Flags;
+  int Unknown2;
+  int Unknown3;
+  int Unknown4;
+};
+
+/* 430 */
+typedef T_DebugInfo *P_DebugInfo;
+
+/* 432 */
+typedef T_ControlInfoComboBox *P_ControlInfoComboBox;
+
+/* 433 */
+struct __unaligned T_DrawStringInfo
+{
+  int Color1;
+  int Color2;
+  int dX;
+  int dY;
+  int a0or1;
+};
+
+/* 434 */
+struct __unaligned T_DiplomacyWindow
+{
+  T_WindowInfo1 WindowInfo1;
+  RECT Rect1;
+  T_GraphicsInfo GraphicsInfo;
+  T_DrawPort DrawPort;
+  T_Palette Palette;
+  T_MSModule MSModule;
+  T_GraphicsInfoAvi GraphicsInfoEx;
+  BYTE Leader2;
+  BYTE Civ2;
+  BYTE Civ1;
+  BYTE Epoch2;
+  char z1[4];
+};
+
+/* 435 */
+typedef T_DiplomacyWindow *P_DiplomacyWindow;
+
+/* 436 */
+struct _unaligned;
+
+/* 437 */
+struct __unaligned T_RGB
+{
+  BYTE Red;
+  BYTE Green;
+  BYTE Blue;
+};
+
+/* 438 */
+typedef T_RGB *P_RGB;
+
+/* 439 */
+struct __unaligned T_MSFile
+{
+  int ReadWrite;
+  HFILE hFile;
+  _OFSTRUCT ReOpenBuff;
+  LPVOID MappedAddress;
+  HANDLE Unknown_94;
+};
+
+/* 440 */
+typedef T_MSFile *P_MSFile;
+
+/* 441 */
+struct __unaligned T_RulesOrder
+{
+  int Name;
+  char Symbol;
+  char z2[3];
+};
+
+/* 442 */
+typedef T_RulesOrder T_RulesOrders[12];
+
+/* 446 */
+typedef int HRESULT;
+
+/* 445 */
+typedef GUID IID;
+
+/* 447 */
+typedef unsigned int ULONG;
+
+/* 448 */
+typedef IDirectDrawClipper *LPDIRECTDRAWCLIPPER;
+
+/* 460 */
+typedef tagPALETTEENTRY *LPPALETTEENTRY;
+
+/* 461 */
+typedef IDirectDrawPalette *LPDIRECTDRAWPALETTE;
+
+/* 464 */
+typedef _DDSURFACEDESC *LPDDSURFACEDESC;
+
+/* 480 */
+typedef IDirectDrawSurface *LPDIRECTDRAWSURFACE;
+
+/* 504 */
+typedef HRESULT (__stdcall *LPDDENUMMODESCALLBACK)(LPDDSURFACEDESC, LPVOID);
+
+/* 494 */
+typedef HRESULT (__stdcall *LPDDENUMSURFACESCALLBACK)(LPDIRECTDRAWSURFACE, LPDDSURFACEDESC, LPVOID);
+
+/* 507 */
+typedef _DDCAPS_DX7 DDCAPS_DX7;
+
+/* 506 */
+typedef DDCAPS_DX7 DDCAPS;
+
+/* 505 */
+typedef DDCAPS *LPDDCAPS;
+
+/* 456 */
+typedef DWORD *LPDWORD;
+
+/* 512 */
+typedef BOOL *LPBOOL;
+
+/* 443 */
+struct IDirectDrawVtbl
+{
+  HRESULT (__stdcall *QueryInterface)(IDirectDraw *This, const IID *const riid, LPVOID *ppvObj);
+  ULONG (__stdcall *AddRef)(IDirectDraw *This);
+  ULONG (__stdcall *Release)(IDirectDraw *This);
+  HRESULT (__stdcall *Compact)(IDirectDraw *This);
+  HRESULT (__stdcall *CreateClipper)(IDirectDraw *This, DWORD, LPDIRECTDRAWCLIPPER *, IUnknown *);
+  HRESULT (__stdcall *CreatePalette)(IDirectDraw *This, DWORD, LPPALETTEENTRY, LPDIRECTDRAWPALETTE *, IUnknown *);
+  HRESULT (__stdcall *CreateSurface)(IDirectDraw *This, LPDDSURFACEDESC, LPDIRECTDRAWSURFACE *, IUnknown *);
+  HRESULT (__stdcall *DuplicateSurface)(IDirectDraw *This, LPDIRECTDRAWSURFACE, LPDIRECTDRAWSURFACE *);
+  HRESULT (__stdcall *EnumDisplayModes)(IDirectDraw *This, DWORD, LPDDSURFACEDESC, LPVOID, LPDDENUMMODESCALLBACK);
+  HRESULT (__stdcall *EnumSurfaces)(IDirectDraw *This, DWORD, LPDDSURFACEDESC, LPVOID, LPDDENUMSURFACESCALLBACK);
+  HRESULT (__stdcall *FlipToGDISurface)(IDirectDraw *This);
+  HRESULT (__stdcall *GetCaps)(IDirectDraw *This, LPDDCAPS, LPDDCAPS);
+  HRESULT (__stdcall *GetDisplayMode)(IDirectDraw *This, LPDDSURFACEDESC);
+  HRESULT (__stdcall *GetFourCCCodes)(IDirectDraw *This, LPDWORD, LPDWORD);
+  HRESULT (__stdcall *GetGDISurface)(IDirectDraw *This, LPDIRECTDRAWSURFACE *);
+  HRESULT (__stdcall *GetMonitorFrequency)(IDirectDraw *This, LPDWORD);
+  HRESULT (__stdcall *GetScanLine)(IDirectDraw *This, LPDWORD);
+  HRESULT (__stdcall *GetVerticalBlankStatus)(IDirectDraw *This, LPBOOL);
+  HRESULT (__stdcall *Initialize)(IDirectDraw *This, GUID *);
+  HRESULT (__stdcall *RestoreDisplayMode)(IDirectDraw *This);
+  HRESULT (__stdcall *SetCooperativeLevel)(IDirectDraw *This, HWND, DWORD);
+  HRESULT (__stdcall *SetDisplayMode)(IDirectDraw *This, DWORD, DWORD, DWORD);
+  HRESULT (__stdcall *WaitForVerticalBlank)(IDirectDraw *This, DWORD, HANDLE);
+};
+
+/* 444 */
+struct IDirectDraw
+{
+  IDirectDrawVtbl *lpVtbl;
+};
+
+/* 449 */
+struct IDirectDrawClipper
+{
+  IDirectDrawClipperVtbl *lpVtbl;
+};
+
+/* 458 */
+#pragma pack(push, 8)
+struct IUnknown
+{
+  IUnknownVtbl *lpVtbl;
+};
+#pragma pack(pop)
+
+/* 462 */
+struct IDirectDrawPalette
+{
+  IDirectDrawPaletteVtbl *lpVtbl;
+};
+
+/* 466 */
+union _DDSURFACEDESC::$091DBF7D405BE25E65B16620C008128B
+{
+  LONG lPitch;
+  DWORD dwLinearSize;
+};
+
+/* 467 */
+union _DDSURFACEDESC::$9AB659F8D6A45F8C7834A76B9C40973B
+{
+  DWORD dwMipMapCount;
+  DWORD dwZBufferBitDepth;
+  DWORD dwRefreshRate;
+};
+
+/* 469 */
+struct _DDCOLORKEY
+{
+  DWORD dwColorSpaceLowValue;
+  DWORD dwColorSpaceHighValue;
+};
+
+/* 468 */
+typedef _DDCOLORKEY DDCOLORKEY;
+
+/* 472 */
+union _DDPIXELFORMAT::$F1D3FB4D78950D0942225445130999CB
+{
+  DWORD dwRGBBitCount;
+  DWORD dwYUVBitCount;
+  DWORD dwZBufferBitDepth;
+  DWORD dwAlphaBitDepth;
+  DWORD dwLuminanceBitCount;
+  DWORD dwBumpBitCount;
+  DWORD dwPrivateFormatBitCount;
+};
+
+/* 473 */
+union _DDPIXELFORMAT::$6A86D2BA2D533C5D3D5AB1F1491969D5
+{
+  DWORD dwRBitMask;
+  DWORD dwYBitMask;
+  DWORD dwStencilBitDepth;
+  DWORD dwLuminanceBitMask;
+  DWORD dwBumpDuBitMask;
+  DWORD dwOperations;
+};
+
+/* 475 */
+struct _DDPIXELFORMAT::$4689F3D0B997E93FAF3E67A693E85360::$A78036EB239B85FA27F661E6E98FFEA9
+{
+  WORD wFlipMSTypes;
+  WORD wBltMSTypes;
+};
+
+/* 474 */
+union _DDPIXELFORMAT::$4689F3D0B997E93FAF3E67A693E85360
+{
+  DWORD dwGBitMask;
+  DWORD dwUBitMask;
+  DWORD dwZBitMask;
+  DWORD dwBumpDvBitMask;
+  _DDPIXELFORMAT::$4689F3D0B997E93FAF3E67A693E85360::$A78036EB239B85FA27F661E6E98FFEA9 MultiSampleCaps;
+};
+
+/* 476 */
+union _DDPIXELFORMAT::$4C86B66084EB9B6F3AE81991D3FADB38
+{
+  DWORD dwBBitMask;
+  DWORD dwVBitMask;
+  DWORD dwStencilBitMask;
+  DWORD dwBumpLuminanceBitMask;
+};
+
+/* 477 */
+union _DDPIXELFORMAT::$23DF69239FC04D9BE22118E1AD8451FB
+{
+  DWORD dwRGBAlphaBitMask;
+  DWORD dwYUVAlphaBitMask;
+  DWORD dwLuminanceAlphaBitMask;
+  DWORD dwRGBZBitMask;
+  DWORD dwYUVZBitMask;
+};
+
+/* 471 */
+struct _DDPIXELFORMAT
+{
+  DWORD dwSize;
+  DWORD dwFlags;
+  DWORD dwFourCC;
+  union
+  {
+    DWORD dwRGBBitCount;
+    DWORD dwYUVBitCount;
+    DWORD dwZBufferBitDepth;
+    DWORD dwAlphaBitDepth;
+    DWORD dwLuminanceBitCount;
+    DWORD dwBumpBitCount;
+    DWORD dwPrivateFormatBitCount;
+  };
+  union
+  {
+    DWORD dwRBitMask;
+    DWORD dwYBitMask;
+    DWORD dwStencilBitDepth;
+    DWORD dwLuminanceBitMask;
+    DWORD dwBumpDuBitMask;
+    DWORD dwOperations;
+  };
+  union
+  {
+    DWORD dwGBitMask;
+    DWORD dwUBitMask;
+    DWORD dwZBitMask;
+    DWORD dwBumpDvBitMask;
+    _DDPIXELFORMAT::$4689F3D0B997E93FAF3E67A693E85360::$A78036EB239B85FA27F661E6E98FFEA9 MultiSampleCaps;
+  };
+  union
+  {
+    DWORD dwBBitMask;
+    DWORD dwVBitMask;
+    DWORD dwStencilBitMask;
+    DWORD dwBumpLuminanceBitMask;
+  };
+  union
+  {
+    DWORD dwRGBAlphaBitMask;
+    DWORD dwYUVAlphaBitMask;
+    DWORD dwLuminanceAlphaBitMask;
+    DWORD dwRGBZBitMask;
+    DWORD dwYUVZBitMask;
+  };
+};
+
+/* 470 */
+typedef _DDPIXELFORMAT DDPIXELFORMAT;
+
+/* 479 */
+struct _DDSCAPS
+{
+  DWORD dwCaps;
+};
+
+/* 478 */
+typedef _DDSCAPS DDSCAPS;
+
+/* 465 */
+struct _DDSURFACEDESC
+{
+  DWORD dwSize;
+  DWORD dwFlags;
+  DWORD dwHeight;
+  DWORD dwWidth;
+  union
+  {
+    LONG lPitch;
+    DWORD dwLinearSize;
+  };
+  DWORD dwBackBufferCount;
+  union
+  {
+    DWORD dwMipMapCount;
+    DWORD dwZBufferBitDepth;
+    DWORD dwRefreshRate;
+  };
+  DWORD dwAlphaBitDepth;
+  DWORD dwReserved;
+  LPVOID lpSurface;
+  DDCOLORKEY ddckCKDestOverlay;
+  DDCOLORKEY ddckCKDestBlt;
+  DDCOLORKEY ddckCKSrcOverlay;
+  DDCOLORKEY ddckCKSrcBlt;
+  DDPIXELFORMAT ddpfPixelFormat;
+  DDSCAPS ddsCaps;
+};
+
+/* 481 */
+struct IDirectDrawSurface
+{
+  IDirectDrawSurfaceVtbl *lpVtbl;
+};
+
+/* 511 */
+union _DDSCAPS2::$19AC68468C4510B3DC631A4E89752068
+{
+  DWORD dwCaps4;
+  DWORD dwVolumeDepth;
+};
+
+/* 510 */
+struct _DDSCAPS2
+{
+  DWORD dwCaps;
+  DWORD dwCaps2;
+  DWORD dwCaps3;
+  union
+  {
+    DWORD dwCaps4;
+    DWORD dwVolumeDepth;
+  };
+};
+
+/* 509 */
+typedef _DDSCAPS2 DDSCAPS2;
+
+/* 508 */
+struct _DDCAPS_DX7
+{
+  DWORD dwSize;
+  DWORD dwCaps;
+  DWORD dwCaps2;
+  DWORD dwCKeyCaps;
+  DWORD dwFXCaps;
+  DWORD dwFXAlphaCaps;
+  DWORD dwPalCaps;
+  DWORD dwSVCaps;
+  DWORD dwAlphaBltConstBitDepths;
+  DWORD dwAlphaBltPixelBitDepths;
+  DWORD dwAlphaBltSurfaceBitDepths;
+  DWORD dwAlphaOverlayConstBitDepths;
+  DWORD dwAlphaOverlayPixelBitDepths;
+  DWORD dwAlphaOverlaySurfaceBitDepths;
+  DWORD dwZBufferBitDepths;
+  DWORD dwVidMemTotal;
+  DWORD dwVidMemFree;
+  DWORD dwMaxVisibleOverlays;
+  DWORD dwCurrVisibleOverlays;
+  DWORD dwNumFourCCCodes;
+  DWORD dwAlignBoundarySrc;
+  DWORD dwAlignSizeSrc;
+  DWORD dwAlignBoundaryDest;
+  DWORD dwAlignSizeDest;
+  DWORD dwAlignStrideAlign;
+  DWORD dwRops[8];
+  DDSCAPS ddsOldCaps;
+  DWORD dwMinOverlayStretch;
+  DWORD dwMaxOverlayStretch;
+  DWORD dwMinLiveVideoStretch;
+  DWORD dwMaxLiveVideoStretch;
+  DWORD dwMinHwCodecStretch;
+  DWORD dwMaxHwCodecStretch;
+  DWORD dwReserved1;
+  DWORD dwReserved2;
+  DWORD dwReserved3;
+  DWORD dwSVBCaps;
+  DWORD dwSVBCKeyCaps;
+  DWORD dwSVBFXCaps;
+  DWORD dwSVBRops[8];
+  DWORD dwVSBCaps;
+  DWORD dwVSBCKeyCaps;
+  DWORD dwVSBFXCaps;
+  DWORD dwVSBRops[8];
+  DWORD dwSSBCaps;
+  DWORD dwSSBCKeyCaps;
+  DWORD dwSSBFXCaps;
+  DWORD dwSSBRops[8];
+  DWORD dwMaxVideoPorts;
+  DWORD dwCurrVideoPorts;
+  DWORD dwSVBCaps2;
+  DWORD dwNLVBCaps;
+  DWORD dwNLVBCaps2;
+  DWORD dwNLVBCKeyCaps;
+  DWORD dwNLVBFXCaps;
+  DWORD dwNLVBRops[8];
+  DDSCAPS2 ddsCaps;
+};
+
+/* 452 */
+typedef _RGNDATA *LPRGNDATA;
+
+/* 457 */
+typedef IDirectDraw *LPDIRECTDRAW;
+
+/* 450 */
+struct IDirectDrawClipperVtbl
+{
+  HRESULT (__stdcall *QueryInterface)(IDirectDrawClipper *This, const IID *const riid, LPVOID *ppvObj);
+  ULONG (__stdcall *AddRef)(IDirectDrawClipper *This);
+  ULONG (__stdcall *Release)(IDirectDrawClipper *This);
+  HRESULT (__stdcall *GetClipList)(IDirectDrawClipper *This, LPRECT, LPRGNDATA, LPDWORD);
+  HRESULT (__stdcall *GetHWnd)(IDirectDrawClipper *This, HWND *);
+  HRESULT (__stdcall *Initialize)(IDirectDrawClipper *This, LPDIRECTDRAW, DWORD);
+  HRESULT (__stdcall *IsClipListChanged)(IDirectDrawClipper *This, BOOL *);
+  HRESULT (__stdcall *SetClipList)(IDirectDrawClipper *This, LPRGNDATA, DWORD);
+  HRESULT (__stdcall *SetHWnd)(IDirectDrawClipper *This, DWORD, HWND);
+};
+
+/* 459 */
+#pragma pack(push, 8)
+struct IUnknownVtbl
+{
+  HRESULT (__stdcall *QueryInterface)(IUnknown *This, const IID *const riid, void **ppvObject);
+  ULONG (__stdcall *AddRef)(IUnknown *This);
+  ULONG (__stdcall *Release)(IUnknown *This);
+};
+#pragma pack(pop)
+
+/* 463 */
+struct IDirectDrawPaletteVtbl
+{
+  HRESULT (__stdcall *QueryInterface)(IDirectDrawPalette *This, const IID *const riid, LPVOID *ppvObj);
+  ULONG (__stdcall *AddRef)(IDirectDrawPalette *This);
+  ULONG (__stdcall *Release)(IDirectDrawPalette *This);
+  HRESULT (__stdcall *GetCaps)(IDirectDrawPalette *This, LPDWORD);
+  HRESULT (__stdcall *GetEntries)(IDirectDrawPalette *This, DWORD, DWORD, DWORD, LPPALETTEENTRY);
+  HRESULT (__stdcall *Initialize)(IDirectDrawPalette *This, LPDIRECTDRAW, DWORD, LPPALETTEENTRY);
+  HRESULT (__stdcall *SetEntries)(IDirectDrawPalette *This, DWORD, DWORD, DWORD, LPPALETTEENTRY);
+};
+
+/* 484 */
+typedef _DDBLTFX DDBLTFX;
+
+/* 483 */
+typedef DDBLTFX *LPDDBLTFX;
+
+/* 492 */
+typedef _DDBLTBATCH DDBLTBATCH;
+
+/* 491 */
+typedef DDBLTBATCH *LPDDBLTBATCH;
+
+/* 495 */
+typedef DDSCAPS *LPDDSCAPS;
+
+/* 496 */
+typedef DDCOLORKEY *LPDDCOLORKEY;
+
+/* 497 */
+typedef int *LPLONG;
+
+/* 498 */
+typedef DDPIXELFORMAT *LPDDPIXELFORMAT;
+
+/* 500 */
+typedef _DDOVERLAYFX DDOVERLAYFX;
+
+/* 499 */
+typedef DDOVERLAYFX *LPDDOVERLAYFX;
+
+/* 482 */
+struct IDirectDrawSurfaceVtbl
+{
+  HRESULT (__stdcall *QueryInterface)(IDirectDrawSurface *This, const IID *const riid, LPVOID *ppvObj);
+  ULONG (__stdcall *AddRef)(IDirectDrawSurface *This);
+  ULONG (__stdcall *Release)(IDirectDrawSurface *This);
+  HRESULT (__stdcall *AddAttachedSurface)(IDirectDrawSurface *This, LPDIRECTDRAWSURFACE);
+  HRESULT (__stdcall *AddOverlayDirtyRect)(IDirectDrawSurface *This, LPRECT);
+  HRESULT (__stdcall *Blt)(IDirectDrawSurface *This, LPRECT, LPDIRECTDRAWSURFACE, LPRECT, DWORD, LPDDBLTFX);
+  HRESULT (__stdcall *BltBatch)(IDirectDrawSurface *This, LPDDBLTBATCH, DWORD, DWORD);
+  HRESULT (__stdcall *BltFast)(IDirectDrawSurface *This, DWORD, DWORD, LPDIRECTDRAWSURFACE, LPRECT, DWORD);
+  HRESULT (__stdcall *DeleteAttachedSurface)(IDirectDrawSurface *This, DWORD, LPDIRECTDRAWSURFACE);
+  HRESULT (__stdcall *EnumAttachedSurfaces)(IDirectDrawSurface *This, LPVOID, LPDDENUMSURFACESCALLBACK);
+  HRESULT (__stdcall *EnumOverlayZOrders)(IDirectDrawSurface *This, DWORD, LPVOID, LPDDENUMSURFACESCALLBACK);
+  HRESULT (__stdcall *Flip)(IDirectDrawSurface *This, LPDIRECTDRAWSURFACE, DWORD);
+  HRESULT (__stdcall *GetAttachedSurface)(IDirectDrawSurface *This, LPDDSCAPS, LPDIRECTDRAWSURFACE *);
+  HRESULT (__stdcall *GetBltStatus)(IDirectDrawSurface *This, DWORD);
+  HRESULT (__stdcall *GetCaps)(IDirectDrawSurface *This, LPDDSCAPS);
+  HRESULT (__stdcall *GetClipper)(IDirectDrawSurface *This, LPDIRECTDRAWCLIPPER *);
+  HRESULT (__stdcall *GetColorKey)(IDirectDrawSurface *This, DWORD, LPDDCOLORKEY);
+  HRESULT (__stdcall *GetDC)(IDirectDrawSurface *This, HDC *);
+  HRESULT (__stdcall *GetFlipStatus)(IDirectDrawSurface *This, DWORD);
+  HRESULT (__stdcall *GetOverlayPosition)(IDirectDrawSurface *This, LPLONG, LPLONG);
+  HRESULT (__stdcall *GetPalette)(IDirectDrawSurface *This, LPDIRECTDRAWPALETTE *);
+  HRESULT (__stdcall *GetPixelFormat)(IDirectDrawSurface *This, LPDDPIXELFORMAT);
+  HRESULT (__stdcall *GetSurfaceDesc)(IDirectDrawSurface *This, LPDDSURFACEDESC);
+  HRESULT (__stdcall *Initialize)(IDirectDrawSurface *This, LPDIRECTDRAW, LPDDSURFACEDESC);
+  HRESULT (__stdcall *IsLost)(IDirectDrawSurface *This);
+  HRESULT (__stdcall *Lock)(IDirectDrawSurface *This, LPRECT, LPDDSURFACEDESC, DWORD, HANDLE);
+  HRESULT (__stdcall *ReleaseDC)(IDirectDrawSurface *This, HDC);
+  HRESULT (__stdcall *Restore)(IDirectDrawSurface *This);
+  HRESULT (__stdcall *SetClipper)(IDirectDrawSurface *This, LPDIRECTDRAWCLIPPER);
+  HRESULT (__stdcall *SetColorKey)(IDirectDrawSurface *This, DWORD, LPDDCOLORKEY);
+  HRESULT (__stdcall *SetOverlayPosition)(IDirectDrawSurface *This, LONG, LONG);
+  HRESULT (__stdcall *SetPalette)(IDirectDrawSurface *This, LPDIRECTDRAWPALETTE);
+  HRESULT (__stdcall *Unlock)(IDirectDrawSurface *This, LPVOID);
+  HRESULT (__stdcall *UpdateOverlay)(IDirectDrawSurface *This, LPRECT, LPDIRECTDRAWSURFACE, LPRECT, DWORD, LPDDOVERLAYFX);
+  HRESULT (__stdcall *UpdateOverlayDisplay)(IDirectDrawSurface *This, DWORD);
+  HRESULT (__stdcall *UpdateOverlayZOrder)(IDirectDrawSurface *This, DWORD, LPDIRECTDRAWSURFACE);
+};
+
+/* 455 */
+struct _RGNDATAHEADER
+{
+  DWORD dwSize;
+  DWORD iType;
+  DWORD nCount;
+  DWORD nRgnSize;
+  RECT rcBound;
+};
+
+/* 454 */
+typedef _RGNDATAHEADER RGNDATAHEADER;
+
+/* 453 */
+struct _RGNDATA
+{
+  RGNDATAHEADER rdh;
+  char Buffer[1];
+};
+
+/* 486 */
+union _DDBLTFX::$EA6EC20695B0AA8ECF92A441DE55A935
+{
+  DWORD dwZDestConst;
+  LPDIRECTDRAWSURFACE lpDDSZBufferDest;
+};
+
+/* 487 */
+union _DDBLTFX::$702C52B3655764E63C007A6B73D01C19
+{
+  DWORD dwZSrcConst;
+  LPDIRECTDRAWSURFACE lpDDSZBufferSrc;
+};
+
+/* 488 */
+union _DDBLTFX::$3639C047B3E88B857708792B1F3FEC83
+{
+  DWORD dwAlphaDestConst;
+  LPDIRECTDRAWSURFACE lpDDSAlphaDest;
+};
+
+/* 489 */
+union _DDBLTFX::$C0828DA952883A43DEF8D462ACC90C87
+{
+  DWORD dwAlphaSrcConst;
+  LPDIRECTDRAWSURFACE lpDDSAlphaSrc;
+};
+
+/* 490 */
+union _DDBLTFX::$4C109671A06E28B8127C40041AB5795C
+{
+  DWORD dwFillColor;
+  DWORD dwFillDepth;
+  DWORD dwFillPixel;
+  LPDIRECTDRAWSURFACE lpDDSPattern;
+};
+
+/* 485 */
+struct _DDBLTFX
+{
+  DWORD dwSize;
+  DWORD dwDDFX;
+  DWORD dwROP;
+  DWORD dwDDROP;
+  DWORD dwRotationAngle;
+  DWORD dwZBufferOpCode;
+  DWORD dwZBufferLow;
+  DWORD dwZBufferHigh;
+  DWORD dwZBufferBaseDest;
+  DWORD dwZDestConstBitDepth;
+  union
+  {
+    DWORD dwZDestConst;
+    LPDIRECTDRAWSURFACE lpDDSZBufferDest;
+  };
+  DWORD dwZSrcConstBitDepth;
+  union
+  {
+    DWORD dwZSrcConst;
+    LPDIRECTDRAWSURFACE lpDDSZBufferSrc;
+  };
+  DWORD dwAlphaEdgeBlendBitDepth;
+  DWORD dwAlphaEdgeBlend;
+  DWORD dwReserved;
+  DWORD dwAlphaDestConstBitDepth;
+  union
+  {
+    DWORD dwAlphaDestConst;
+    LPDIRECTDRAWSURFACE lpDDSAlphaDest;
+  };
+  DWORD dwAlphaSrcConstBitDepth;
+  union
+  {
+    DWORD dwAlphaSrcConst;
+    LPDIRECTDRAWSURFACE lpDDSAlphaSrc;
+  };
+  union
+  {
+    DWORD dwFillColor;
+    DWORD dwFillDepth;
+    DWORD dwFillPixel;
+    LPDIRECTDRAWSURFACE lpDDSPattern;
+  };
+  DDCOLORKEY ddckDestColorkey;
+  DDCOLORKEY ddckSrcColorkey;
+};
+
+/* 493 */
+struct _DDBLTBATCH
+{
+  LPRECT lprDest;
+  LPDIRECTDRAWSURFACE lpDDSSrc;
+  LPRECT lprSrc;
+  DWORD dwFlags;
+  LPDDBLTFX lpDDBltFx;
+};
+
+/* 502 */
+union _DDOVERLAYFX::$3639C047B3E88B857708792B1F3FEC83
+{
+  DWORD dwAlphaDestConst;
+  LPDIRECTDRAWSURFACE lpDDSAlphaDest;
+};
+
+/* 503 */
+union _DDOVERLAYFX::$C0828DA952883A43DEF8D462ACC90C87
+{
+  DWORD dwAlphaSrcConst;
+  LPDIRECTDRAWSURFACE lpDDSAlphaSrc;
+};
+
+/* 501 */
+struct _DDOVERLAYFX
+{
+  DWORD dwSize;
+  DWORD dwAlphaEdgeBlendBitDepth;
+  DWORD dwAlphaEdgeBlend;
+  DWORD dwReserved;
+  DWORD dwAlphaDestConstBitDepth;
+  union
+  {
+    DWORD dwAlphaDestConst;
+    LPDIRECTDRAWSURFACE lpDDSAlphaDest;
+  };
+  DWORD dwAlphaSrcConstBitDepth;
+  union
+  {
+    DWORD dwAlphaSrcConst;
+    LPDIRECTDRAWSURFACE lpDDSAlphaSrc;
+  };
+  DDCOLORKEY dckDestColorkey;
+  DDCOLORKEY dckSrcColorkey;
+  DWORD dwDDFX;
+  DWORD dwFlags;
+};
+
+/* 513 */
+enum MACRO_DDCAPS
+{
+  DDCAPS_3D = 0x1,
+  DDCAPS_ALIGNBOUNDARYDEST = 0x2,
+  DDCAPS_ALIGNSIZEDEST = 0x4,
+  DDCAPS_ALIGNBOUNDARYSRC = 0x8,
+  DDCAPS_ALIGNSIZESRC = 0x10,
+  DDCAPS_ALIGNSTRIDE = 0x20,
+  DDCAPS_BLT = 0x40,
+  DDCAPS_BLTQUEUE = 0x80,
+  DDCAPS_BLTFOURCC = 0x100,
+  DDCAPS_BLTSTRETCH = 0x200,
+  DDCAPS_GDI = 0x400,
+  DDCAPS_OVERLAY = 0x800,
+  DDCAPS_OVERLAYCANTCLIP = 0x1000,
+  DDCAPS_OVERLAYFOURCC = 0x2000,
+  DDCAPS_OVERLAYSTRETCH = 0x4000,
+  DDCAPS_PALETTE = 0x8000,
+  DDCAPS_PALETTEVSYNC = 0x10000,
+  DDCAPS_READSCANLINE = 0x20000,
+  DDCAPS_STEREOVIEW = 0x40000,
+  DDCAPS_VBI = 0x80000,
+  DDCAPS_ZBLTS = 0x100000,
+  DDCAPS_ZOVERLAYS = 0x200000,
+  DDCAPS_COLORKEY = 0x400000,
+  DDCAPS_ALPHA = 0x800000,
+  DDCAPS_COLORKEYHWASSIST = 0x1000000,
+  DDCAPS_NOHARDWARE = 0x2000000,
+  DDCAPS_BLTCOLORFILL = 0x4000000,
+  DDCAPS_BANKSWITCHED = 0x8000000,
+  DDCAPS_BLTDEPTHFILL = 0x10000000,
+  DDCAPS_CANCLIP = 0x20000000,
+  DDCAPS_CANCLIPSTRETCHED = 0x40000000,
+  DDCAPS_CANBLTSYSMEM = 0x80000000,
+};
+
+/* 515 */
+enum MACRO_SW
+{
+  SW_HIDE = 0,
+  SW_SHOWNORMAL = 1,
+  SW_NORMAL = 1,
+  SW_SHOWMINIMIZED = 2,
+  SW_SHOWMAXIMIZED = 3,
+  SW_MAXIMIZE = 3,
+  SW_SHOWNOACTIVATE = 4,
+  SW_SHOW = 5,
+  SW_MINIMIZE = 6,
+  SW_SHOWMINNOACTIVE = 7,
+  SW_SHOWNA = 8,
+  SW_RESTORE = 9,
+  SW_SHOWDEFAULT = 10,
+  SW_FORCEMINIMIZE = 11,
+  SW_MAX = 11,
+};
+
+/* 516 */
+enum MACRO_FILE_BEGIN
+{
+  FILE_BEGIN = 0,
+  FILE_CURRENT = 1,
+  FILE_END = 2,
+};
+
+/* 517 */
+struct __unaligned T_Bounds
+{
+  int Left;
+  int Top;
+  int Width;
+  int Height;
+};
+
+/* 518 */
+enum MACRO_FF
+{
+  FF_DONTCARE = 0,
+  FF_ROMAN = 16,
+  FF_SWISS = 32,
+  FF_MODERN = 48,
+  FF_SCRIPT = 64,
+  FF_DECORATIVE = 80,
+};
+
+/* 519 */
+enum MACRO_OUT
+{
+  OUT_DEFAULT_PRECIS = 0,
+  OUT_STRING_PRECIS = 1,
+  OUT_CHARACTER_PRECIS = 2,
+  OUT_STROKE_PRECIS = 3,
+  OUT_TT_PRECIS = 4,
+  OUT_DEVICE_PRECIS = 5,
+  OUT_RASTER_PRECIS = 6,
+  OUT_TT_ONLY_PRECIS = 7,
+  OUT_OUTLINE_PRECIS = 8,
+  OUT_SCREEN_OUTLINE_PRECIS = 9,
+};
+
+/* 520 */
+enum MACRO_CLIP
+{
+  CLIP_DEFAULT_PRECIS = 0,
+  CLIP_CHARACTER_PRECIS = 1,
+  CLIP_STROKE_PRECIS = 2,
+  CLIP_MASK = 15,
+  CLIP_LH_ANGLES = 16,
+  CLIP_TT_ALWAYS = 32,
+  CLIP_EMBEDDED = 128,
+};
+
+/* 521 */
+enum MACRO_CHARSET
+{
+  ANSI_CHARSET = 0,
+  DEFAULT_CHARSET = 1,
+  SYMBOL_CHARSET = 2,
+  SHIFTJIS_CHARSET = 128,
+  HANGEUL_CHARSET = 129,
+  HANGUL_CHARSET = 129,
+  GB2312_CHARSET = 134,
+  CHINESEBIG5_CHARSET = 136,
+  OEM_CHARSET = 255,
+  JOHAB_CHARSET = 130,
+  HEBREW_CHARSET = 177,
+  ARABIC_CHARSET = 178,
+  GREEK_CHARSET = 161,
+  TURKISH_CHARSET = 162,
+  VIETNAMESE_CHARSET = 163,
+  THAI_CHARSET = 222,
+  EASTEUROPE_CHARSET = 238,
+  RUSSIAN_CHARSET = 204,
+  MAC_CHARSET = 77,
+  BALTIC_CHARSET = 186,
+};
+
+/* 522 */
+enum MACRO_QUALITY
+{
+  DEFAULT_QUALITY = 0,
+  DRAFT_QUALITY = 1,
+  PROOF_QUALITY = 2,
+  NONANTIALIASED_QUALITY = 3,
+  ANTIALIASED_QUALITY = 4,
+};
+
+/* 523 */
+struct __unaligned T_IntroWindow
+{
+  T_MSWindow MSWindow;
+  int Width;
+  int Height;
+  int Number;
+  int ResLoaded;
+  RECT Rect1;
+  T_MSModule MSModule;
+  int Inknown_2FC;
+  T_DrawPort DrawPort;
+};
+
+/* 524 */
+typedef T_IntroWindow *P_IntroWindow;
+
+/* 525 */
+struct __unaligned T_DlgResult
+{
+  DWORD CheckBoxesBits;
+  int PressedButton;
+};
+
+/* 526 */
+struct __unaligned T_SpaceWindow
+{
+  T_WindowInfo1 WindowInfo1;
+  T_GraphicsInfo GraphicsInfo;
+  int CivIndex;
+  int z1;
+  RECT Rect1;
+  RECT Rect2;
+  T_MSModule MSModule;
+  T_Palette Palette;
+  int z2[131];
+  char Text[128];
+  int z2a;
+  int z2b;
+  int z2c;
+  T_FontInfo FontInfol;
+  T_FontInfo FontInfo2;
+  T_FontInfo FontInfo3;
+  RECT Rect3;
+  int z3[2];
+  T_DrawPort DrawPort;
+  T_Sprite Sprite1;
+  T_Sprite Sprite2;
+  T_Sprite Sprite3;
+  T_Sprite Sprite4;
+  T_Sprite Sprite5;
+  T_Sprite Sprite6;
+  T_Sprite Sprite7;
+  int z4[1202];
+  P_GraphicsInfoAvi GraphicsInfoEx;
+  int z4a[246];
+};
+
+/* 527 */
+typedef T_SpaceWindow *P_SpaceWindow;
+
+/* 528 */
+struct __unaligned T_Scores
+{
+  int field_0;
+  int Pollution;
+  int Wonders;
+  int Spaceship;
+  int Objectives_10;
+  int field_14;
+  int FutureTechs;
+  int TotalObjectives;
+  int Barbarians;
+  int Citizens;
+  int Bonus;
+  int Objectives_2C;
+  int SpaceshipPossible;
+  int Total;
+  int Peace;
+};
+
+/* 529 */
+struct __unaligned T_DialogDefaults
+{
+  int Color4;
+  int Color2;
+  int Color1;
+  int Color3;
+  int Color5;
+  int Color6;
+  int Color7;
+  int Color8;
+  int Color9;
+  int Color10;
+  int Color11;
+  int Color12;
+  int Color13;
+  int Color14;
+  int Color15;
+  int Color16;
+  int RatioNumerator;
+  int RatioDenominator;
+  void (__stdcall *Proc1)();
+  LPVOID Proc2;
+  LPVOID Proc3;
+};
+
+/* 533 */
+typedef T_ScenarioEvent *P_ScenarioEvent;
+
+/* 530 */
+struct __unaligned T_ScenarioEvents
+{
+  T_DialogWindow DialogWindow;
+  T_Heap Heap;
+  __int16 Unknown_306;
+  int NumberOfEvents;
+  P_ScenarioEvent pEvents;
+};
+
+/* 532 */
+struct __unaligned T_ScenarioEvent
+{
+  int Trigger;
+  int Action;
+  int Unknown_8;
+  int UnitType1;
+  int Unknown_10[2];
+  int CivIndex1;
+  int Unknown_1C[2];
+  int CivIndex2;
+  int Unknown_24;
+  int Turn;
+  int Denominator;
+  int Tech1;
+  char *pTexts[20];
+  int Unknown_88;
+  int CivIndex3;
+  int Unknown_90[3];
+  POINT Unknown_9C[4];
+  int Unknown_BC[3];
+  int CivIndex4b;
+  int Unknown_CC;
+  int CivIndex4a;
+  int Unknown_D4;
+  int CivIndex4;
+  int Unknown_DC;
+  int UnitType;
+  POINT Unknown_E4[10];
+  int Unknown_134;
+  int Unknown_138[17];
+  int ChangeMoneyAmount;
+  int Unknown_180;
+  char *pText;
+  int CDTrackN;
+  int TerrainType;
+  POINT Unknown_190[4];
+  int CivIndex5;
+  int Tech;
+  int CivIndex6;
+  P_ScenarioEvent Next;
+  P_ScenarioEvent Prev;
+};
+
+/* 531 */
+typedef T_ScenarioEvents *P_ScenarioEvents;
+
+/* 534 */
+struct __unaligned T_SomeStruct2
+{
+  int Numerator;
+  int Denominator;
+  int TickCount;
+  int Unknown_C[1024];
+};
+
+/* 535 */
+typedef T_SomeStruct2 *P_SomeStruct2;
+
+/* 537 */
+typedef T_MSModule *P_MSModule;
+
+/* 538 */
+typedef tagPAINTSTRUCT PAINTSTRUCT;
+
+/* 539 */
+enum MACRO_TA
+{
+  TA_NOUPDATECP = 0,
+  TA_UPDATECP = 1,
+  TA_LEFT = 0,
+  TA_RIGHT = 2,
+  TA_CENTER = 6,
+  TA_TOP = 0,
+  TA_BOTTOM = 8,
+  TA_BASELINE = 24,
+  TA_RTLREADING = 256,
+  TA_MASK = 287,
+};
+
+/* 540 */
+enum MACRO_DIB
+{
+  DIB_RGB_COLORS = 0,
+  DIB_PAL_COLORS = 1,
+};
+
+/* 541 */
+enum MACRO_WAVE_INVALIDFORMAT
+{
+  WAVE_INVALIDFORMAT = 0x0,
+  WAVE_FORMAT_1M08 = 0x1,
+  WAVE_FORMAT_1S08 = 0x2,
+  WAVE_FORMAT_1M16 = 0x4,
+  WAVE_FORMAT_1S16 = 0x8,
+  WAVE_FORMAT_2M08 = 0x10,
+  WAVE_FORMAT_2S08 = 0x20,
+  WAVE_FORMAT_2M16 = 0x40,
+  WAVE_FORMAT_2S16 = 0x80,
+  WAVE_FORMAT_4M08 = 0x100,
+  WAVE_FORMAT_4S08 = 0x200,
+  WAVE_FORMAT_4M16 = 0x400,
+  WAVE_FORMAT_4S16 = 0x800,
+  WAVE_FORMAT_PCM = 0x1,
+};
+
+/* 542 */
+enum MACRO_SND
+{
+  SND_SYNC = 0x0,
+  SND_ASYNC = 0x1,
+  SND_NODEFAULT = 0x2,
+  SND_MEMORY = 0x4,
+  SND_LOOP = 0x8,
+  SND_NOSTOP = 0x10,
+  SND_NOWAIT = 0x2000,
+  SND_ALIAS = 0x10000,
+  SND_ALIAS_ID = 0x110000,
+  SND_FILENAME = 0x20000,
+  SND_RESOURCE = 0x40004,
+  SND_PURGE = 0x40,
+  SND_APPLICATION = 0x80,
+  SND_ALIAS_START = 0x0,
+  SND_ALIAS_SYSTEMASTERISK = 0x2A53,
+  SND_ALIAS_SYSTEMQUESTION = 0x3F53,
+  SND_ALIAS_SYSTEMHAND = 0x4853,
+  SND_ALIAS_SYSTEMEXIT = 0x4553,
+  SND_ALIAS_SYSTEMSTART = 0x5353,
+  SND_ALIAS_SYSTEMWELCOME = 0x5753,
+  SND_ALIAS_SYSTEMEXCLAMATION = 0x2153,
+  SND_ALIAS_SYSTEMDEFAULT = 0x4453,
+};
+
+/* 544 */
+typedef T_SoundSystem *P_SoundSystem;
+
+/* 543 */
+struct __unaligned T_SoundSystem
+{
+  P_SoundSystem Unknown_0;
+  int Unknown_4;
+  HGLOBAL Unknown_8;
+  P_SoundSystem Unknown_C;
+  P_SoundSystem Unknown_10;
+  int Unknown_14;
+  int Unknown_18;
+  P_SoundSystem Unknown_1C;
+};
+
+/* 545 */
+struct __unaligned T_Civ2Art
+{
+  T_MSModule MSModule;
+  T_DrawPort DrawPort;
+  char Text[128];
+  T_Sprite Sprite1;
+  int Unknown_108[2];
+  int Unknown_110;
+  BYTE Unknown_111[4];
+};
+
+/* 546 */
+typedef T_Civ2Art *P_Civ2Art;
+
+/* 547 */
+enum MACRO_ICM_USER
+{
+  ICM_USER = 0x4000,
+  ICM_RESERVED_LOW = 0x5000,
+  ICM_RESERVED_HIGH = 0x6000,
+  ICM_GETSTATE = 0x5000,
+  ICM_SETSTATE = 0x5001,
+  ICM_GETINFO = 0x5002,
+  ICM_CONFIGURE = 0x500A,
+  ICM_ABOUT = 0x500B,
+  ICM_GETDEFAULTQUALITY = 0x501E,
+  ICM_GETQUALITY = 0x501F,
+  ICM_SETQUALITY = 0x5020,
+  ICM_SET = 0x5028,
+  ICM_GET = 0x5029,
+  ICM_FRAMERATE = 0x526D7246,
+  ICM_KEYFRAMERATE = 0x5279654B,
+  ICM_COMPRESS_GET_FORMAT = 0x4004,
+  ICM_COMPRESS_GET_SIZE = 0x4005,
+  ICM_COMPRESS_QUERY = 0x4006,
+  ICM_COMPRESS_BEGIN = 0x4007,
+  ICM_COMPRESS = 0x4008,
+  ICM_COMPRESS_END = 0x4009,
+  ICM_DECOMPRESS_GET_FORMAT = 0x400A,
+  ICM_DECOMPRESS_QUERY = 0x400B,
+  ICM_DECOMPRESS_BEGIN = 0x400C,
+  ICM_DECOMPRESS = 0x400D,
+  ICM_DECOMPRESS_END = 0x400E,
+  ICM_DECOMPRESS_SET_PALETTE = 0x401D,
+  ICM_DECOMPRESS_GET_PALETTE = 0x401E,
+  ICM_DRAW_QUERY = 0x401F,
+  ICM_DRAW_BEGIN = 0x400F,
+  ICM_DRAW_GET_PALETTE = 0x4010,
+  ICM_DRAW_START = 0x4012,
+  ICM_DRAW_STOP = 0x4013,
+  ICM_DRAW_END = 0x4015,
+  ICM_DRAW_GETTIME = 0x4020,
+  ICM_DRAW = 0x4021,
+  ICM_DRAW_WINDOW = 0x4022,
+  ICM_DRAW_SETTIME = 0x4023,
+  ICM_DRAW_REALIZE = 0x4024,
+  ICM_DRAW_FLUSH = 0x4025,
+  ICM_DRAW_RENDERBUFFER = 0x4026,
+  ICM_DRAW_START_PLAY = 0x4027,
+  ICM_DRAW_STOP_PLAY = 0x4028,
+  ICM_DRAW_SUGGESTFORMAT = 0x4032,
+  ICM_DRAW_CHANGEPALETTE = 0x4033,
+  ICM_GETBUFFERSWANTED = 0x4029,
+  ICM_GETDEFAULTKEYFRAMERATE = 0x402A,
+  ICM_DECOMPRESSEX_BEGIN = 0x403C,
+  ICM_DECOMPRESSEX_QUERY = 0x403D,
+  ICM_DECOMPRESSEX = 0x403E,
+  ICM_DECOMPRESSEX_END = 0x403F,
+  ICM_COMPRESS_FRAMES_INFO = 0x4046,
+  ICM_SET_STATUS_PROC = 0x4048,
+};
+
+/* 548 */
+enum MACRO_BI
+{
+  BI_RGB = 0,
+  BI_RLE8 = 1,
+  BI_RLE4 = 2,
+  BI_BITFIELDS = 3,
+};
+
+/* 549 */
+struct __unaligned T_Struct137C
+{
+  T_WindowInfo1 WindowInfo1;
+  T_Palette Palette;
+  T_GraphicsInfoAvi GraphicsInfoAvi;
+  T_MSModule MSModule;
+  int CivIndex;
+  T_FontInfo FontInfo;
+  char z1[1024];
+  T_DrawPort DrawPort;
+  RECT Rect1;
+};
+
+/* 550 */
+typedef T_Struct137C *P_Struct137C;
+
+/* 551 */
+struct __unaligned T_Struct708
+{
+  T_WindowInfo1 WindowInfo1;
+  T_Palette Palette;
+  T_GraphicsInfo GraphicsInfo;
+  T_DrawPort DrawPort;
+  T_MSModule MSModule;
+  T_Sprite Sprite1;
+  T_Sprite Sprite2;
+  int CivIndex;
+  char z1[4];
+  RECT Rect1;
+  RECT Rect2;
+  RECT Rect3;
+  int z3;
+  T_FontInfo FontInfo;
+};
+
+/* 552 */
+typedef T_Struct708 *P_Struct708;
+
+/* 553 */
+struct __unaligned T_Struct1180
+{
+  T_MSWindow MSWindow;
+  T_GraphicsInfoAvi GraphicsInfoAvi;
+  int aWonder;
+  T_DrawPort DrawPort;
+  T_Palette Palette;
+};
+
+/* 554 */
+typedef T_Struct1180 *P_Struct1180;
+
+/* 555 */
+struct __unaligned T_ControlInfoSprBut
+{
+  T_ControlInfo ControlInfo;
+  int z1[2];
+  T_DrawPort DrawPort1;
+  T_DrawPort DrawPort2;
+  P_Palette Palette;
+  BYTE z3;
+  BYTE z4[3];
+};
+
+/* 556 */
+typedef T_ControlInfoSprBut *P_ControlInfoSprBut;
+
+/* 559 */
+enum MACRO_CBN
+{
+  CBN_ERRSPACE = -1,
+  CBN_SELCHANGE = 1,
+  CBN_DBLCLK = 2,
+  CBN_SETFOCUS = 3,
+  CBN_KILLFOCUS = 4,
+  CBN_EDITCHANGE = 5,
+  CBN_EDITUPDATE = 6,
+  CBN_DROPDOWN = 7,
+  CBN_CLOSEUP = 8,
+  CBN_SELENDOK = 9,
+  CBN_SELENDCANCEL = 10,
+};
+
+/* 560 */
+enum MACRO_LBN
+{
+  LBN_ERRSPACE = -2,
+  LBN_SELCHANGE = 1,
+  LBN_DBLCLK = 2,
+  LBN_SELCANCEL = 3,
+  LBN_SETFOCUS = 4,
+  LBN_KILLFOCUS = 5,
+};
+
+/* 561 */
+enum MACRO_EN
+{
+  EN_SETFOCUS = 0x100,
+  EN_KILLFOCUS = 0x200,
+  EN_CHANGE = 0x300,
+  EN_UPDATE = 0x400,
+  EN_ERRSPACE = 0x500,
+  EN_MAXTEXT = 0x501,
+  EN_HSCROLL = 0x601,
+  EN_VSCROLL = 0x602,
+};
+
+/* 562 */
+struct __unaligned T_ControlInfoCheckboxes
+{
+  int Count;
+  T_ControlInfoCheckbox Controls[1];
+};
+
+/* 563 */
+typedef T_ControlInfoCheckboxes *P_ControlInfoCheckboxes;
+
+/* 564 */
+enum MACRO_ES_LEFT
+{
+  ES_LEFT = 0x0,
+  ES_CENTER = 0x1,
+  ES_RIGHT = 0x2,
+  ES_MULTILINE = 0x4,
+  ES_UPPERCASE = 0x8,
+  ES_LOWERCASE = 0x10,
+  ES_PASSWORD = 0x20,
+  ES_AUTOVSCROLL = 0x40,
+  ES_AUTOHSCROLL = 0x80,
+  ES_NOHIDESEL = 0x100,
+  ES_OEMCONVERT = 0x400,
+  ES_READONLY = 0x800,
+  ES_WANTRETURN = 0x1000,
+  ES_NUMBER = 0x2000,
+};
+
+/* 566 */
+typedef T_ControlInfoHyperText *P_ControlInfoHyperText;
+
+/* 567 */
+struct __unaligned T_Violation
+{
+  int Units;
+  int CityIndex;
+  int Value;
+  int Unknown_C;
+};
+
+/* 570 */
+typedef void (__cdecl *P_MrTimerProc)(UINT_PTR nIDEvent, int aCount);
+
+/* 568 */
+struct __unaligned T_MrTimer
+{
+  HWND hWindow;
+  P_MrTimerProc Procs[17];
+  int Count[17];
+  int z;
+};
+
+/* 569 */
+typedef T_MrTimer *P_MrTimer;
+
+/* 571 */
+enum MACRO_TIME_ONESHOT
+{
+  TIME_ONESHOT = 0x0,
+  TIME_PERIODIC = 0x1,
+  TIME_CALLBACK_FUNCTION = 0x0,
+  TIME_CALLBACK_EVENT_SET = 0x10,
+  TIME_CALLBACK_EVENT_PULSE = 0x20,
+};
+
+/* 576 */
+typedef tagBITMAPFILEHEADER BITMAPFILEHEADER;
+
+/* 577 */
+#pragma pack(push, 2)
+struct tagBITMAPFILEHEADER
+{
+  WORD bfType;
+  DWORD bfSize;
+  WORD bfReserved1;
+  WORD bfReserved2;
+  DWORD bfOffBits;
+};
+#pragma pack(pop)
+
+/* 579 */
+typedef tagMCI_OPEN_PARMSA MCI_OPEN_PARMSA;
+
+/* 578 */
+typedef MCI_OPEN_PARMSA MCI_OPEN_PARMS;
+
+/* 581 */
+typedef UINT MCIDEVICEID;
+
+/* 580 */
+#pragma pack(push, 1)
+struct tagMCI_OPEN_PARMSA
+{
+  DWORD_PTR dwCallback;
+  MCIDEVICEID wDeviceID;
+  LPCSTR lpstrDeviceType;
+  LPCSTR lpstrElementName;
+  LPCSTR lpstrAlias;
+};
+#pragma pack(pop)
+
+/* 582 */
+enum MACRO_MCI_FIRST : __int64
+{
+  MCI_FIRST = 2048,
+  MCI_OPEN = 2051,
+  MCI_CLOSE = 2052,
+  MCI_ESCAPE = 2053,
+  MCI_PLAY = 2054,
+  MCI_SEEK = 2055,
+  MCI_STOP = 2056,
+  MCI_PAUSE = 2057,
+  MCI_INFO = 2058,
+  MCI_GETDEVCAPS = 2059,
+  MCI_SPIN = 2060,
+  MCI_SET = 2061,
+  MCI_STEP = 2062,
+  MCI_RECORD = 2063,
+  MCI_SYSINFO = 2064,
+  MCI_BREAK = 2065,
+  MCI_SAVE = 2067,
+  MCI_STATUS = 2068,
+  MCI_CUE = 2096,
+  MCI_REALIZE = 2112,
+  MCI_WINDOW = 2113,
+  MCI_PUT = 2114,
+  MCI_WHERE = 2115,
+  MCI_FREEZE = 2116,
+  MCI_UNFREEZE = 2117,
+  MCI_LOAD = 2128,
+  MCI_CUT = 2129,
+  MCI_COPY = 2130,
+  MCI_PASTE = 2131,
+  MCI_UPDATE = 2132,
+  MCI_RESUME = 2133,
+  MCI_DELETE = 2134,
+  MCI_USER_MESSAGES = 3072,
+  MCI_LAST = 4095,
+  MCI_ALL_DEVICE_ID = 4294967295,
+  MCI_DEVTYPE_VCR = 513,
+  MCI_DEVTYPE_VIDEODISC = 514,
+  MCI_DEVTYPE_OVERLAY = 515,
+  MCI_DEVTYPE_CD_AUDIO = 516,
+  MCI_DEVTYPE_DAT = 517,
+  MCI_DEVTYPE_SCANNER = 518,
+  MCI_DEVTYPE_ANIMATION = 519,
+  MCI_DEVTYPE_DIGITAL_VIDEO = 520,
+  MCI_DEVTYPE_OTHER = 521,
+  MCI_DEVTYPE_WAVEFORM_AUDIO = 522,
+  MCI_DEVTYPE_SEQUENCER = 523,
+  MCI_DEVTYPE_FIRST = 513,
+  MCI_DEVTYPE_LAST = 523,
+  MCI_DEVTYPE_FIRST_USER = 4096,
+  MCI_MODE_NOT_READY = 524,
+  MCI_MODE_STOP = 525,
+  MCI_MODE_PLAY = 526,
+  MCI_MODE_RECORD = 527,
+  MCI_MODE_SEEK = 528,
+  MCI_MODE_PAUSE = 529,
+  MCI_MODE_OPEN = 530,
+  MCI_FORMAT_MILLISECONDS = 0,
+  MCI_FORMAT_HMS = 1,
+  MCI_FORMAT_MSF = 2,
+  MCI_FORMAT_FRAMES = 3,
+  MCI_FORMAT_SMPTE_24 = 4,
+  MCI_FORMAT_SMPTE_25 = 5,
+  MCI_FORMAT_SMPTE_30 = 6,
+  MCI_FORMAT_SMPTE_30DROP = 7,
+  MCI_FORMAT_BYTES = 8,
+  MCI_FORMAT_SAMPLES = 9,
+  MCI_FORMAT_TMSF = 10,
+  MCI_NOTIFY_SUCCESSFUL = 1,
+  MCI_NOTIFY_SUPERSEDED = 2,
+  MCI_NOTIFY_ABORTED = 4,
+  MCI_NOTIFY_FAILURE = 8,
+  MCI_NOTIFY = 1,
+  MCI_WAIT = 2,
+  MCI_FROM = 4,
+  MCI_TO = 8,
+  MCI_TRACK = 16,
+  MCI_OPEN_SHAREABLE = 256,
+  MCI_OPEN_ELEMENT = 512,
+  MCI_OPEN_ALIAS = 1024,
+  MCI_OPEN_ELEMENT_ID = 2048,
+  MCI_OPEN_TYPE_ID = 4096,
+  MCI_OPEN_TYPE = 8192,
+  MCI_SEEK_TO_START = 256,
+  MCI_SEEK_TO_END = 512,
+  MCI_STATUS_ITEM = 256,
+  MCI_STATUS_START = 512,
+  MCI_STATUS_LENGTH = 1,
+  MCI_STATUS_POSITION = 2,
+  MCI_STATUS_NUMBER_OF_TRACKS = 3,
+  MCI_STATUS_MODE = 4,
+  MCI_STATUS_MEDIA_PRESENT = 5,
+  MCI_STATUS_TIME_FORMAT = 6,
+  MCI_STATUS_READY = 7,
+  MCI_STATUS_CURRENT_TRACK = 8,
+  MCI_INFO_PRODUCT = 256,
+  MCI_INFO_FILE = 512,
+  MCI_INFO_MEDIA_UPC = 1024,
+  MCI_INFO_MEDIA_IDENTITY = 2048,
+  MCI_INFO_NAME = 4096,
+  MCI_INFO_COPYRIGHT = 8192,
+  MCI_GETDEVCAPS_ITEM = 256,
+  MCI_GETDEVCAPS_CAN_RECORD = 1,
+  MCI_GETDEVCAPS_HAS_AUDIO = 2,
+  MCI_GETDEVCAPS_HAS_VIDEO = 3,
+  MCI_GETDEVCAPS_DEVICE_TYPE = 4,
+  MCI_GETDEVCAPS_USES_FILES = 5,
+  MCI_GETDEVCAPS_COMPOUND_DEVICE = 6,
+  MCI_GETDEVCAPS_CAN_EJECT = 7,
+  MCI_GETDEVCAPS_CAN_PLAY = 8,
+  MCI_GETDEVCAPS_CAN_SAVE = 9,
+  MCI_SYSINFO_QUANTITY = 256,
+  MCI_SYSINFO_OPEN = 512,
+  MCI_SYSINFO_NAME = 1024,
+  MCI_SYSINFO_INSTALLNAME = 2048,
+  MCI_SET_DOOR_OPEN = 256,
+  MCI_SET_DOOR_CLOSED = 512,
+  MCI_SET_TIME_FORMAT = 1024,
+  MCI_SET_AUDIO = 2048,
+  MCI_SET_VIDEO = 4096,
+  MCI_SET_ON = 8192,
+  MCI_SET_OFF = 16384,
+  MCI_SET_AUDIO_ALL = 0,
+  MCI_SET_AUDIO_LEFT = 1,
+  MCI_SET_AUDIO_RIGHT = 2,
+  MCI_BREAK_KEY = 256,
+  MCI_BREAK_HWND = 512,
+  MCI_BREAK_OFF = 1024,
+  MCI_RECORD_INSERT = 256,
+  MCI_RECORD_OVERWRITE = 512,
+  MCI_SAVE_FILE = 256,
+  MCI_LOAD_FILE = 256,
+  MCI_VD_MODE_PARK = 1025,
+  MCI_VD_MEDIA_CLV = 1026,
+  MCI_VD_MEDIA_CAV = 1027,
+  MCI_VD_MEDIA_OTHER = 1028,
+  MCI_VD_FORMAT_TRACK = 16385,
+  MCI_VD_PLAY_REVERSE = 65536,
+  MCI_VD_PLAY_FAST = 131072,
+  MCI_VD_PLAY_SPEED = 262144,
+  MCI_VD_PLAY_SCAN = 524288,
+  MCI_VD_PLAY_SLOW = 1048576,
+  MCI_VD_SEEK_REVERSE = 65536,
+  MCI_VD_STATUS_SPEED = 16386,
+  MCI_VD_STATUS_FORWARD = 16387,
+  MCI_VD_STATUS_MEDIA_TYPE = 16388,
+  MCI_VD_STATUS_SIDE = 16389,
+  MCI_VD_STATUS_DISC_SIZE = 16390,
+  MCI_VD_GETDEVCAPS_CLV = 65536,
+  MCI_VD_GETDEVCAPS_CAV = 131072,
+  MCI_VD_SPIN_UP = 65536,
+  MCI_VD_SPIN_DOWN = 131072,
+  MCI_VD_GETDEVCAPS_CAN_REVERSE = 16386,
+  MCI_VD_GETDEVCAPS_FAST_RATE = 16387,
+  MCI_VD_GETDEVCAPS_SLOW_RATE = 16388,
+  MCI_VD_GETDEVCAPS_NORMAL_RATE = 16389,
+  MCI_VD_STEP_FRAMES = 65536,
+  MCI_VD_STEP_REVERSE = 131072,
+  MCI_VD_ESCAPE_STRING = 256,
+  MCI_CDA_STATUS_TYPE_TRACK = 16385,
+  MCI_CDA_TRACK_AUDIO = 1088,
+  MCI_CDA_TRACK_OTHER = 1089,
+  MCI_WAVE_PCM = 1152,
+  MCI_WAVE_MAPPER = 1153,
+  MCI_WAVE_OPEN_BUFFER = 65536,
+  MCI_WAVE_SET_FORMATTAG = 65536,
+  MCI_WAVE_SET_CHANNELS = 131072,
+  MCI_WAVE_SET_SAMPLESPERSEC = 262144,
+  MCI_WAVE_SET_AVGBYTESPERSEC = 524288,
+  MCI_WAVE_SET_BLOCKALIGN = 1048576,
+  MCI_WAVE_SET_BITSPERSAMPLE = 2097152,
+  MCI_WAVE_INPUT = 4194304,
+  MCI_WAVE_OUTPUT = 8388608,
+  MCI_WAVE_STATUS_FORMATTAG = 16385,
+  MCI_WAVE_STATUS_CHANNELS = 16386,
+  MCI_WAVE_STATUS_SAMPLESPERSEC = 16387,
+  MCI_WAVE_STATUS_AVGBYTESPERSEC = 16388,
+  MCI_WAVE_STATUS_BLOCKALIGN = 16389,
+  MCI_WAVE_STATUS_BITSPERSAMPLE = 16390,
+  MCI_WAVE_STATUS_LEVEL = 16391,
+  MCI_WAVE_SET_ANYINPUT = 67108864,
+  MCI_WAVE_SET_ANYOUTPUT = 134217728,
+  MCI_WAVE_GETDEVCAPS_INPUTS = 16385,
+  MCI_WAVE_GETDEVCAPS_OUTPUTS = 16386,
+  MCI_SEQ_DIV_PPQN = 1216,
+  MCI_SEQ_DIV_SMPTE_24 = 1217,
+  MCI_SEQ_DIV_SMPTE_25 = 1218,
+  MCI_SEQ_DIV_SMPTE_30DROP = 1219,
+  MCI_SEQ_DIV_SMPTE_30 = 1220,
+  MCI_SEQ_FORMAT_SONGPTR = 16385,
+  MCI_SEQ_FILE = 16386,
+  MCI_SEQ_MIDI = 16387,
+  MCI_SEQ_SMPTE = 16388,
+  MCI_SEQ_NONE = 65533,
+  MCI_SEQ_MAPPER = 65535,
+  MCI_SEQ_STATUS_TEMPO = 16386,
+  MCI_SEQ_STATUS_PORT = 16387,
+  MCI_SEQ_STATUS_SLAVE = 16391,
+  MCI_SEQ_STATUS_MASTER = 16392,
+  MCI_SEQ_STATUS_OFFSET = 16393,
+  MCI_SEQ_STATUS_DIVTYPE = 16394,
+  MCI_SEQ_STATUS_NAME = 16395,
+  MCI_SEQ_STATUS_COPYRIGHT = 16396,
+  MCI_SEQ_SET_TEMPO = 65536,
+  MCI_SEQ_SET_PORT = 131072,
+  MCI_SEQ_SET_SLAVE = 262144,
+  MCI_SEQ_SET_MASTER = 524288,
+  MCI_SEQ_SET_OFFSET = 16777216,
+  MCI_ANIM_OPEN_WS = 65536,
+  MCI_ANIM_OPEN_PARENT = 131072,
+  MCI_ANIM_OPEN_NOSTATIC = 262144,
+  MCI_ANIM_PLAY_SPEED = 65536,
+  MCI_ANIM_PLAY_REVERSE = 131072,
+  MCI_ANIM_PLAY_FAST = 262144,
+  MCI_ANIM_PLAY_SLOW = 524288,
+  MCI_ANIM_PLAY_SCAN = 1048576,
+  MCI_ANIM_STEP_REVERSE = 65536,
+  MCI_ANIM_STEP_FRAMES = 131072,
+  MCI_ANIM_STATUS_SPEED = 16385,
+  MCI_ANIM_STATUS_FORWARD = 16386,
+  MCI_ANIM_STATUS_HWND = 16387,
+  MCI_ANIM_STATUS_HPAL = 16388,
+  MCI_ANIM_STATUS_STRETCH = 16389,
+  MCI_ANIM_INFO_TEXT = 65536,
+  MCI_ANIM_GETDEVCAPS_CAN_REVERSE = 16385,
+  MCI_ANIM_GETDEVCAPS_FAST_RATE = 16386,
+  MCI_ANIM_GETDEVCAPS_SLOW_RATE = 16387,
+  MCI_ANIM_GETDEVCAPS_NORMAL_RATE = 16388,
+  MCI_ANIM_GETDEVCAPS_PALETTES = 16390,
+  MCI_ANIM_GETDEVCAPS_CAN_STRETCH = 16391,
+  MCI_ANIM_GETDEVCAPS_MAX_WINDOWS = 16392,
+  MCI_ANIM_REALIZE_NORM = 65536,
+  MCI_ANIM_REALIZE_BKGD = 131072,
+  MCI_ANIM_WINDOW_HWND = 65536,
+  MCI_ANIM_WINDOW_STATE = 262144,
+  MCI_ANIM_WINDOW_TEXT = 524288,
+  MCI_ANIM_WINDOW_ENABLE_STRETCH = 1048576,
+  MCI_ANIM_WINDOW_DISABLE_STRETCH = 2097152,
+  MCI_ANIM_WINDOW_DEFAULT = 0,
+  MCI_ANIM_RECT = 65536,
+  MCI_ANIM_PUT_SOURCE = 131072,
+  MCI_ANIM_PUT_DESTINATION = 262144,
+  MCI_ANIM_WHERE_SOURCE = 131072,
+  MCI_ANIM_WHERE_DESTINATION = 262144,
+  MCI_ANIM_UPDATE_HDC = 131072,
+  MCI_OVLY_OPEN_WS = 65536,
+  MCI_OVLY_OPEN_PARENT = 131072,
+  MCI_OVLY_STATUS_HWND = 16385,
+  MCI_OVLY_STATUS_STRETCH = 16386,
+  MCI_OVLY_INFO_TEXT = 65536,
+  MCI_OVLY_GETDEVCAPS_CAN_STRETCH = 16385,
+  MCI_OVLY_GETDEVCAPS_CAN_FREEZE = 16386,
+  MCI_OVLY_GETDEVCAPS_MAX_WINDOWS = 16387,
+  MCI_OVLY_WINDOW_HWND = 65536,
+  MCI_OVLY_WINDOW_STATE = 262144,
+  MCI_OVLY_WINDOW_TEXT = 524288,
+  MCI_OVLY_WINDOW_ENABLE_STRETCH = 1048576,
+  MCI_OVLY_WINDOW_DISABLE_STRETCH = 2097152,
+  MCI_OVLY_WINDOW_DEFAULT = 0,
+  MCI_OVLY_RECT = 65536,
+  MCI_OVLY_PUT_SOURCE = 131072,
+  MCI_OVLY_PUT_DESTINATION = 262144,
+  MCI_OVLY_PUT_FRAME = 524288,
+  MCI_OVLY_PUT_VIDEO = 1048576,
+  MCI_OVLY_WHERE_SOURCE = 131072,
+  MCI_OVLY_WHERE_DESTINATION = 262144,
+  MCI_OVLY_WHERE_FRAME = 524288,
+  MCI_OVLY_WHERE_VIDEO = 1048576,
+};
+
+/* 583 */
+typedef tagMCI_STATUS_PARMS MCI_STATUS_PARMS;
+
+/* 584 */
+#pragma pack(push, 1)
+struct tagMCI_STATUS_PARMS
+{
+  DWORD_PTR dwCallback;
+  DWORD_PTR dwReturn;
+  DWORD dwItem;
+  DWORD dwTrack;
+};
+#pragma pack(pop)
+
+/* 585 */
+typedef tagMCI_SET_PARMS MCI_SET_PARMS;
+
+/* 586 */
+#pragma pack(push, 1)
+struct tagMCI_SET_PARMS
+{
+  DWORD_PTR dwCallback;
+  DWORD dwTimeFormat;
+  DWORD dwAudio;
+};
+#pragma pack(pop)
+
+/* 587 */
+typedef tagMCI_PLAY_PARMS MCI_PLAY_PARMS;
+
+/* 588 */
+#pragma pack(push, 1)
+struct tagMCI_PLAY_PARMS
+{
+  DWORD_PTR dwCallback;
+  DWORD dwFrom;
+  DWORD dwTo;
+};
+#pragma pack(pop)
+
+/* 589 */
+typedef tagMCI_SEEK_PARMS MCI_SEEK_PARMS;
+
+/* 590 */
+#pragma pack(push, 1)
+struct tagMCI_SEEK_PARMS
+{
+  DWORD_PTR dwCallback;
+  DWORD dwTo;
+};
+#pragma pack(pop)
+
+/* 591 */
+struct T_MciInfo
+{
+  MCIDEVICEID SequencerId;
+  MCIDEVICEID CdAudioId;
+  MCIDEVICEID CdAudioId2;
+  int NumberOfTracks;
+};
+
+/* 592 */
+struct T_MciInfo2
+{
+  int _CanSwitchTrack;
+  int CustomCD;
+  int CurrentTrackN;
+  int _Ready;
+};
+
+/* 594 */
+struct __unaligned T_CasualtyRecord
+{
+  __int16 UnitType;
+  __int16 X;
+  __int16 Y;
+  __int16 Year;
+  __int16 Color3;
+  char NationPlural[24];
+};
+
+/* 593 */
+struct __unaligned T_CasualtyTimeline
+{
+  int Total[8];
+  int PrevTotal[8];
+  int IdxFrom[8];
+  int Idx[8];
+  T_CasualtyRecord Record[8][300];
+};
+
+/* 607 */
+typedef T_Net178 *P_Net178;
+
+/* 598 */
+struct __unaligned T_IGZInfo
+{
+  char IPAddr[32];
+  char LongName[64];
+  char ShortName[32];
+  char SessionName[64];
+  int bHost;
+};
+
+/* 604 */
+struct T_Net54
+{
+  int Unknown_0;
+  char Unknown_4[32];
+  char z1[32];
+  int Unknown_44;
+  int Unknown_48;
+  char bServer;
+  char Unknown_4D;
+  char Unknown_4E;
+  char Unknown_4F;
+  int Unknown_50;
+};
+
+/* 601 */
+typedef T_NetCur *P_NetCur;
+
+/* 610 */
+struct T_NetC
+{
+  int z1;
+  void *z2;
+  int z3;
+};
+
+/* 608 */
+struct __unaligned T_Net5DC0
+{
+  T_NetC NetC[2000];
+};
+
+/* 612 */
+struct T_Net5DD8
+{
+  T_Net5DC0 Net5DC0;
+  int head;
+  int tail;
+  int Unknown_5DC8;
+  int alphaHead;
+  int alphaTail;
+  int Unknown_5DD4;
+};
+
+/* 595 */
+struct T_NetMgr
+{
+  P_Net178 Net178;
+  int Unknown_4;
+  int z1111[70];
+  int Unknown_120;
+  T_IGZInfo IGZInfo;
+  int whichNetwork;
+  bool bConnectedToNet;
+  __int8 Unknown_1ED[2];
+  bool bServer;
+  BOOL IsIpxSpx;
+  int Unknown_1F4;
+  int Unknown_1F8;
+  int z11131;
+  int Unknown_200;
+  T_Net54 Net54[7];
+  int Net54Idx[8];
+  int CurrentCivIndex;
+  char IPAddr[32];
+  char Unknown_494[32];
+  char Unknown_4B4[32];
+  char Unknown_4D4[32];
+  char HostGameVersion[64];
+  char *pDescription;
+  int Unknown_538;
+  int Unknown_53C[8];
+  int Unknown_55C;
+  int Unknown_560;
+  int Unknown_564[2];
+  int TickCount;
+  P_DialogWindow DialogWindow;
+  int Unknown_574;
+  int ReturnCode;
+  char z1122[4];
+  int CallDepth;
+  int MaxCallDepth;
+  int MaxMessageQueueLoad;
+  int MaxAlphaMessageQueueLoad;
+  int z113[5];
+  __int16 z12;
+  char PathWorking[260];
+  char SaveDirectory[260];
+  char z16[2];
+  int Timeout;
+  int Unknown_7B4[6];
+  int Unknown_7CC;
+  int Unknown_7D0[13];
+  int Unknown_804;
+  int firstStackedDraw;
+  int lastStackedDraw;
+  int Unknown_810;
+  int MaxDrawStackLoad;
+  char z17[6400];
+  T_CasualtyTimeline CasualtyTimeline;
+  int _Simultaneous;
+  int _MaxPlayers;
+  int Unknown_16060[8];
+  int Unknown_16080[8];
+  int z33;
+  int Unknown_160A4;
+  int CityIndex;
+  int CivIndex;
+  int MouseX;
+  int MouseY;
+  int MouseRButton;
+  int z35[2];
+  void *Unknown_160C4;
+  char Unknown_160C8;
+  char z36[3];
+  P_NetCur Cur;
+  T_Net5DD8 Net5DD8;
+};
+
+/* 606 */
+struct T_Net178
+{
+  P_DialogWindow DialogWindow;
+  int Unknown_4;
+  int Unknown_8[32];
+  char _IPAddr[32];
+  char _GameName[32];
+  char Unknown_C8[32];
+  int Unknown_E8[25];
+  int Unknown_14C;
+  char Unknown_150[32];
+  char *Unknown_170;
+  int Unknown_174;
+};
+
+/* 600 */
+struct __unaligned T_NetCur
+{
+  char z1[32];
+  P_NetCur Cur1;
+  P_NetCur Cur2;
+  int TickCount;
+  char z22[68];
+  char z3[180];
+};
+
+/* 596 */
+typedef T_NetMgr *P_NetMgr;
+
+/* 597 */
+struct T_NetNode
+{
+  int Size;
+  int Unknown_4;
+  int Type;
+};
+
+/* 599 */
+typedef T_IGZInfo LobbyLaunchInfo;
+
+/* 602 */
+struct T_NetData
+{
+  int z1;
+  int Message;
+  int Size;
+  int Unknown_C;
+  __int8 Unknown_10[4];
+  int z2;
+  int Unknown_18;
+  int Unknown_1C;
+  __int8 Unknown_20[4];
+  int Unknown_24[4];
+  char z3[64];
+  T_NetCur Cur;
+};
+
+/* 603 */
+typedef T_NetData *P_NetData;
+
+/* 605 */
+typedef T_Net54 *P_Net3;
+
+/* 609 */
+typedef T_Net5DC0 *P_Net5DC0;
+
+/* 611 */
+typedef T_NetC *P_NetC;
+
+/* 613 */
+typedef T_Net5DD8 *P_Net5DD8;
+
+/* 616 */
+struct T_NetMsgHead
+{
+  int Unknown_0;
+  int Type;
+  int Size;
+  int Unknown_C;
+};
+
+/* 614 */
+struct T_NetMsg
+{
+  T_NetMsgHead Head;
+  int Par[7];
+};
+
+/* 615 */
+typedef T_NetMsg *P_NetMsg;
+
+/* 617 */
+typedef T_NetMsgHead *P_NetMsgHead;
+
+/* 618 */
+struct T_NetGSI
+{
+  int Size;
+  int Size4;
+  int Type;
+  int _Checksum;
+  int Offset;
+  void *pData;
+};
+
+/* 619 */
+typedef T_NetGSI *P_NetGSI;
+
+/* 620 */
+typedef T_NetNode *P_NetNode;
+
+/* 621 */
+struct T_CouncilWindow
+{
+  T_GraphicsInfo GraphicsInfo1;
+  T_GraphicsInfoAvi GraphicsInfoAvi;
+  T_DialogWindow DialogWindow;
+  T_MSModule MSModule;
+  __int8 File[32];
+  int Epoch;
+  int Rating[5];
+  int CivIndex;
+  int Anarchy;
+  __int8 SectionName[5][3];
+  __int8 Unknown_E80[809];
+  int Unknown_11AC;
+  RECT Rect;
+  T_ControlInfoButton Button1;
+  T_ControlInfoButton Button2;
+  T_ControlInfoButton Button3;
+  T_ControlInfoButton Button4;
+  T_ControlInfoButton Button5;
+  T_ControlInfoButton Button6;
+};
+
+/* 622 */
+typedef T_CouncilWindow *P_CouncilWindow;
+
+/* 623 */
+enum MACRO_CIV2_UNIT_ROLE
+{
+  CIV2_ROLE_ATTACK = 0x0,
+  CIV2_ROLE_DEFEND = 0x1,
+  CIV2_ROLE_NAVAL_SUPERIORITY = 0x2,
+  CIV2_ROLE_AIR_SUPERIORITY = 0x3,
+  CIV2_ROLE_SEA_TRANSPORT = 0x4,
+  CIV2_ROLE_SETTLE = 0x5,
+  CIV2_ROLE_DIPLOMACY = 0x6,
+  CIV2_ROLE_TRADE = 0x7,
+};
+
+/* 624 */
+enum MACRO_CIV2_TREATY
+{
+  CIV2_TREATY_CONTACT = 0x1,
+  CIV2_TREATY_CEASE_FIRE = 0x2,
+  CIV2_TREATY_PEACE = 0x4,
+  CIV2_TREATY_ALLIANCE = 0x8,
+  CIV2_TREATY_VENDETTA = 0x10,
+  CIV2_TREATY_EMBASSY = 0x80,
+  CIV2_TREATY_WAR = 0x2000,
+  CIV2_TREATY_TRUCE = 0x4000,
+  CIV2_TREATY_ACCEPTED_TRIBUTE = 0x40000,
+};
+
+/* 626 */
+enum MACRO_CIV2_TECH
+{
+  CIV2_TECH_ADVANCED_FLIGHT = 0x0,
+  CIV2_TECH_ALPHABET = 0x1,
+  CIV2_TECH_AMPHIBIOUS_WARFARE = 0x2,
+  CIV2_TECH_ASTRONOMY = 0x3,
+  CIV2_TECH_ATOMIC_THEORY = 0x4,
+  CIV2_TECH_AUTOMOBILE = 0x5,
+  CIV2_TECH_BANKING = 0x6,
+  CIV2_TECH_BRIDGE_BUILDING = 0x7,
+  CIV2_TECH_BRONZE_WORKING = 0x8,
+  CIV2_TECH_CEREMONIAL_BURIAL = 0x9,
+  CIV2_TECH_CHEMISTRY = 0xA,
+  CIV2_TECH_CHIVALRY = 0xB,
+  CIV2_TECH_CODE_OF_LAWS = 0xC,
+  CIV2_TECH_COMBINED_ARMS = 0xD,
+  CIV2_TECH_COMBUSTION = 0xE,
+  CIV2_TECH_COMMUNISM = 0xF,
+  CIV2_TECH_COMPUTERS = 0x10,
+  CIV2_TECH_CONSCRIPTION = 0x11,
+  CIV2_TECH_CONSTRUCTION = 0x12,
+  CIV2_TECH_THE_CORPORATION = 0x13,
+  CIV2_TECH_CURRENCY = 0x14,
+  CIV2_TECH_DEMOCRACY = 0x15,
+  CIV2_TECH_ECONOMICS = 0x16,
+  CIV2_TECH_ELECTRICITY = 0x17,
+  CIV2_TECH_ELECTRONICS = 0x18,
+  CIV2_TECH_ENGINEERING = 0x19,
+  CIV2_TECH_ENVIRONMENTALISM = 0x1A,
+  CIV2_TECH_ESPIONAGE = 0x1B,
+  CIV2_TECH_EXPLOSIVES = 0x1C,
+  CIV2_TECH_FEUDALISM = 0x1D,
+  CIV2_TECH_FLIGHT = 0x1E,
+  CIV2_TECH_FUNDAMENTALISM = 0x1F,
+  CIV2_TECH_FUSION_POWER = 0x20,
+  CIV2_TECH_GENETIC_ENGINEERING = 0x21,
+  CIV2_TECH_GUERRILLA_WARFARE = 0x22,
+  CIV2_TECH_GUNPOWDER = 0x23,
+  CIV2_TECH_HORSEBACK_RIDING = 0x24,
+  CIV2_TECH_INDUSTRIALIZATION = 0x25,
+  CIV2_TECH_INVENTION = 0x26,
+  CIV2_TECH_IRON_WORKING = 0x27,
+  CIV2_TECH_LABOR_UNION = 0x28,
+  CIV2_TECH_THE_LASER = 0x29,
+  CIV2_TECH_LEADERSHIP = 0x2A,
+  CIV2_TECH_LITERACY = 0x2B,
+  CIV2_TECH_MACHINE_TOOLS = 0x2C,
+  CIV2_TECH_MAGNETISM = 0x2D,
+  CIV2_TECH_MAP_MAKING = 0x2E,
+  CIV2_TECH_MASONRY = 0x2F,
+  CIV2_TECH_MASS_PRODUCTION = 0x30,
+  CIV2_TECH_MATHEMATICS = 0x31,
+  CIV2_TECH_MEDICINE = 0x32,
+  CIV2_TECH_METALLURGY = 0x33,
+  CIV2_TECH_MINIATURIZATION = 0x34,
+  CIV2_TECH_MOBILE_WARFARE = 0x35,
+  CIV2_TECH_MONARCHY = 0x36,
+  CIV2_TECH_MONOTHEISM = 0x37,
+  CIV2_TECH_MYSTICISM = 0x38,
+  CIV2_TECH_NAVIGATION = 0x39,
+  CIV2_TECH_NUCLEAR_FISSION = 0x3A,
+  CIV2_TECH_NUCLEAR_POWER = 0x3B,
+  CIV2_TECH_PHILOSOPHY = 0x3C,
+  CIV2_TECH_PHYSICS = 0x3D,
+  CIV2_TECH_PLASTICS = 0x3E,
+  CIV2_TECH_PLUMBING = 0x3F,
+  CIV2_TECH_POLYTHEISM = 0x40,
+  CIV2_TECH_POTTERY = 0x41,
+  CIV2_TECH_RADIO = 0x42,
+  CIV2_TECH_RAILROAD = 0x43,
+  CIV2_TECH_RECYCLING = 0x44,
+  CIV2_TECH_REFINING = 0x45,
+  CIV2_TECH_REFRIGERATION = 0x46,
+  CIV2_TECH_THE_REPUBLIC = 0x47,
+  CIV2_TECH_ROBOTICS = 0x48,
+  CIV2_TECH_ROCKETRY = 0x49,
+  CIV2_TECH_SANITATION = 0x4A,
+  CIV2_TECH_SEAFARING = 0x4B,
+  CIV2_TECH_SPACE_FLIGHT = 0x4C,
+  CIV2_TECH_STEALTH = 0x4D,
+  CIV2_TECH_STEAM_ENGINE = 0x4E,
+  CIV2_TECH_STEEL = 0x4F,
+  CIV2_TECH_SUPERCONDUCTOR = 0x50,
+  CIV2_TECH_TACTICS = 0x51,
+  CIV2_TECH_THEOLOGY = 0x52,
+  CIV2_TECH_THEORY_OF_GRAVITY = 0x53,
+  CIV2_TECH_TRADE = 0x54,
+  CIV2_TECH_UNIVERSITY = 0x55,
+  CIV2_TECH_WARRIOR_CODE = 0x56,
+  CIV2_TECH_THE_WHEEL = 0x57,
+  CIV2_TECH_WRITING = 0x58,
+  CIV2_TECH_FUTURE_TECHNOLOGY = 0x59,
+};
+
+/* 627 */
+enum MACRO_CIV2_DOMAIN
+{
+  CIV2_DOMAIN_GROUND = 0x0,
+  CIV2_DOMAIN_AIR = 0x1,
+  CIV2_DOMAIN_SEA = 0x2,
+};
+
+/* 628 */
+enum MACRO_CIV2_UNIT_ATTRIBUTES
+{
+  CIV2_UNIT_ATTR_VIOLATING = 0x4,
+  CIV2_UNIT_ATTR_PARADROPPED = 0x10,
+  CIV2_UNIT_ATTR_CAUSES_DISCONTENT = 0x400,
+  CIV2_UNIT_ATTR_SUPPORTED = 0x800,
+  CIV2_UNIT_ATTR_VETERAN = 0x2000,
+  CIV2_UNIT_ATTR_WAIT = 0x4000,
+};
+
+/* 629 */
+enum MACRO_CIV2_CITY_ATTRIBUTES
+{
+  CIV2_CITY_ATTR_DISORDER = 0x1,
+  CIV2_CITY_ATTR_WLTKD = 0x2,
+  CIV2_CITY_ATTR_IMPROVEMENT_SOLD = 0x4,
+  CIV2_CITY_ATTR_TECHNOLOGY_STOLEN = 0x8,
+  CIV2_CITY_ATTR_COASTAL = 0x80,
+  CIV2_CITY_ATTR_CAN_BUILD_HYDRO_PLANT = 0x800,
+  CIV2_CITY_ATTR_HAS_TRADE_UNIT = 0x1000,
+  CIV2_CITY_ATTR_AIRLIFTED = 0x10000,
+  CIV2_CITY_ATTR_UPDATE_SUPPLY_DEMAND = 0x20000,
+  CIV2_CITY_ATTR_CAN_BUILD_SHIPS = 0x200000,
+  CIV2_CITY_ATTR_INVESTIGATED_BY_SPY = 0x400000,
+  CIV2_CITY_ATTR_X1_OBJECTIVE = 0x4000000,
+  CIV2_CITY_ATTR_X3_MAJOR_OBJECTIVE = 0x10000000,
+};
+
+/* 630 */
+enum MACRO_CIV2_WONDER
+{
+  CIV2_WONDER_PYRAMIDS = 0x0,
+  CIV2_WONDER_HANGING_GARDENS = 0x1,
+  CIV2_WONDER_COLOSSUS = 0x2,
+  CIV2_WONDER_LIGHTHOUSE = 0x3,
+  CIV2_WONDER_GREAT_LIBRARY = 0x4,
+  CIV2_WONDER_ORACLE = 0x5,
+  CIV2_WONDER_GREAT_WALL = 0x6,
+  CIV2_WONDER_SUN_TZUS_WAR_ACADEMY = 0x7,
+  CIV2_WONDER_KING_RICHARDS_CRUSADE = 0x8,
+  CIV2_WONDER_MARCO_POLOS_EMBASSY = 0x9,
+  CIV2_WONDER_MICHELANGELOS_CHAPEL = 0xA,
+  CIV2_WONDER_COPERNICUS_OBSERVATORY = 0xB,
+  CIV2_WONDER_MAGELLANS_EXPEDITION = 0xC,
+  CIV2_WONDER_SHAKESPEARES_THEATRE = 0xD,
+  CIV2_WONDER_LEONARDOS_WORKSHOP = 0xE,
+  CIV2_WONDER_J_S_BACHS_CATHEDRAL = 0xF,
+  CIV2_WONDER_ISAAC_NEWTONS_COLLEGE = 0x10,
+  CIV2_WONDER_ADAM_SMITHS_TRADING_CO = 0x11,
+  CIV2_WONDER_DARWINS_VOYAGE = 0x12,
+  CIV2_WONDER_STATUE_OF_LIBERTY = 0x13,
+  CIV2_WONDER_EIFFEL_TOWER = 0x14,
+  CIV2_WONDER_WOMENS_SUFFRAGE = 0x15,
+  CIV2_WONDER_HOOVER_DAM = 0x16,
+  CIV2_WONDER_MANHATTAN_PROJECT = 0x17,
+  CIV2_WONDER_UNITED_NATIONS = 0x18,
+  CIV2_WONDER_APOLLO_PROGRAM = 0x19,
+  CIV2_WONDER_SETI_PROGRAM = 0x1A,
+  CIV2_WONDER_CURE_FOR_CANCER = 0x1B,
+  CIV2_WONDER_MAX_ = 0x1C,
+};
+
+/* 632 */
+enum MACRO_CIV2_IMPROVEMENT
+{
+  CIV2_IMPROVEMENT_NOTHING = 0x0,
+  CIV2_IMPROVEMENT_PALACE = 0x1,
+  CIV2_IMPROVEMENT_BARRACKS = 0x2,
+  CIV2_IMPROVEMENT_GRANARY = 0x3,
+  CIV2_IMPROVEMENT_TEMPLE = 0x4,
+  CIV2_IMPROVEMENT_MARKETPLACE = 0x5,
+  CIV2_IMPROVEMENT_LIBRARY = 0x6,
+  CIV2_IMPROVEMENT_COURTHOUSE = 0x7,
+  CIV2_IMPROVEMENT_CITY_WALLS = 0x8,
+  CIV2_IMPROVEMENT_AQUEDUCT = 0x9,
+  CIV2_IMPROVEMENT_BANK = 0xA,
+  CIV2_IMPROVEMENT_CATHEDRAL = 0xB,
+  CIV2_IMPROVEMENT_UNIVERSITY = 0xC,
+  CIV2_IMPROVEMENT_MASS_TRANSIT = 0xD,
+  CIV2_IMPROVEMENT_COLOSSEUM = 0xE,
+  CIV2_IMPROVEMENT_FACTORY = 0xF,
+  CIV2_IMPROVEMENT_MANUFACTURING_PLANT = 0x10,
+  CIV2_IMPROVEMENT_SDI_DEFENSE = 0x11,
+  CIV2_IMPROVEMENT_RECYCLING_CENTER = 0x12,
+  CIV2_IMPROVEMENT_POWER_PLANT = 0x13,
+  CIV2_IMPROVEMENT_HYDRO_PLANT = 0x14,
+  CIV2_IMPROVEMENT_NUCLEAR_PLANT = 0x15,
+  CIV2_IMPROVEMENT_STOCK_EXCHANGE = 0x16,
+  CIV2_IMPROVEMENT_SEWER_SYSTEM = 0x17,
+  CIV2_IMPROVEMENT_SUPERMARKET = 0x18,
+  CIV2_IMPROVEMENT_SUPERHIGHWAYS = 0x19,
+  CIV2_IMPROVEMENT_RESEARCH_LAB = 0x1A,
+  CIV2_IMPROVEMENT_SAM_MISSILE_BATTERY = 0x1B,
+  CIV2_IMPROVEMENT_COASTAL_FORTRESS = 0x1C,
+  CIV2_IMPROVEMENT_SOLAR_PLANT = 0x1D,
+  CIV2_IMPROVEMENT_HARBOR = 0x1E,
+  CIV2_IMPROVEMENT_OFFSHORE_PLATFORM = 0x1F,
+  CIV2_IMPROVEMENT_AIRPORT = 0x20,
+  CIV2_IMPROVEMENT_POLICE_STATION = 0x21,
+  CIV2_IMPROVEMENT_PORT_FACILITY = 0x22,
+  CIV2_IMPROVEMENT_SS_STRUCTURAL = 0x23,
+  CIV2_IMPROVEMENT_SS_COMPONENT = 0x24,
+  CIV2_IMPROVEMENT_SS_MODULE = 0x25,
+  CIV2_IMPROVEMENT_CAPITALIZATION = 0x26,
+};
+
+/* 633 */
+enum MACRO_CIV2_TERRAIN : __int8
+{
+  CIV2_TERRAIN_DESERT = 0x0,
+  CIV2_TERRAIN_PLAINS = 0x1,
+  CIV2_TERRAIN_GRASSLAND = 0x2,
+  CIV2_TERRAIN_FOREST = 0x3,
+  CIV2_TERRAIN_HILLS = 0x4,
+  CIV2_TERRAIN_MOUNTAINS = 0x5,
+  CIV2_TERRAIN_TUNDRA = 0x6,
+  CIV2_TERRAIN_GLACIER = 0x7,
+  CIV2_TERRAIN_SWAMP = 0x8,
+  CIV2_TERRAIN_JUNGLE = 0x9,
+  CIV2_TERRAIN_OCEAN = 0xA,
+  CIV2_TERRAIN_RIVER = 0x80,
+};
+
+/* 634 */
+enum MACRO_CIV2_TADING_COMMODITY
+{
+  CIV2_COMMODITY_HIDES = 0x0,
+  CIV2_COMMODITY_WOOL = 0x1,
+  CIV2_COMMODITY_BEADS = 0x2,
+  CIV2_COMMODITY_CLOTH = 0x3,
+  CIV2_COMMODITY_SALT = 0x4,
+  CIV2_COMMODITY_COAL = 0x5,
+  CIV2_COMMODITY_COPPER = 0x6,
+  CIV2_COMMODITY_DYE = 0x7,
+  CIV2_COMMODITY_WINE = 0x8,
+  CIV2_COMMODITY_SILK = 0x9,
+  CIV2_COMMODITY_SILVER = 0xA,
+  CIV2_COMMODITY_SPICE = 0xB,
+  CIV2_COMMODITY_GEMS = 0xC,
+  CIV2_COMMODITY_GOLD = 0xD,
+  CIV2_COMMODITY_OIL = 0xE,
+  CIV2_COMMODITY_URANIUM = 0xF,
+};
+
+/* 639 */
+enum MACRO_BOOL
+{
+  FALSE = 0,
+  TRUE = 1,
+};
+
+/* 640 */
+enum MACRO_CIV2_UNIT_ABILITIES
+{
+  CIV2_UNIT_ABILITIES_SEE_2 = 0x1,
+  CIV2_UNIT_ABILITIES_IGNORE_ZOC = 0x2,
+  CIV2_UNIT_ABILITIES_AMPHIBIOUS = 0x4,
+  CIV2_UNIT_ABILITIES_SUBMARINE = 0x8,
+  CIV2_UNIT_ABILITIES_ATTACK_AIR = 0x10,
+  CIV2_UNIT_ABILITIES_COASTAL = 0x20,
+  CIV2_UNIT_ABILITIES_NEGATES_WALLS = 0x40,
+  CIV2_UNIT_ABILITIES_CARRY_AIR = 0x80,
+  CIV2_UNIT_ABILITIES_PARADROP = 0x100,
+  CIV2_UNIT_ABILITIES_ALL_AS_ROAD = 0x200,
+  CIV2_UNIT_ABILITIES_X2_VS_HORSE = 0x400,
+  CIV2_UNIT_ABILITIES_FUNDAMENTALISM_ONLY = 0x800,
+  CIV2_UNIT_ABILITIES_DESTROYED_AFTER = 0x1000,
+  CIV2_UNIT_ABILITIES_X2_VS_AIR = 0x2000,
+  CIV2_UNIT_ABILITIES_SPOT_SUBMARINES = 0x4000,
+};
+
+/* 641 */
+enum MACRO_CIV2_ORDER
+{
+  CIV2_ORDER_FORTIFY = 0x1,
+  CIV2_ORDER_FORTIFIED = 0x2,
+  CIV2_ORDER_SLEEP = 0x3,
+  CIV2_ORDER_BUILD_FORTRESS = 0x4,
+  CIV2_ORDER_BUILD_ROAD_RAILROAD = 0x5,
+  CIV2_ORDER_BUILD_IRRIGATION = 0x65,
+  CIV2_ORDER_BUILD_MINE = 0x7,
+  CIV2_ORDER_TRANSFORM_TERRAIN = 0x8,
+  CIV2_ORDER_CLEAN_UP_POLLUTION = 0x9,
+  CIV2_ORDER_BUILD_AIRBASE = 0xA,
+  CIV2_ORDER_GO_TO = 0xB,
+  CIV2_ORDER_GO_TO2 = 0x1B,
+  CIV2_ORDER_NO_ORDERS = 0xFF,
+};
+
+/* 642 */
+enum MACRO_CIV2_CUSTOM_FEATURES
+{
+  CIV2_CUSTOM_FEATURE_SIMPLIFIED_COMBAT = 0x10,
+  CIV2_CUSTOM_FEATURE_FLAT_WORLD = 0x8000,
+  CIV2_CUSTOM_FEATURE_BLOODLUST_NO_SPACESHIPS = 0x80,
+  CIV2_CUSTOM_FEATURE_DONT_RESTART_ELIMINATED_PLAYERS = 0x100,
+};
 
