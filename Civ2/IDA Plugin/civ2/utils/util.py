@@ -54,6 +54,11 @@ def print_expr(expr):
     print_to_log(text_expr)
 
 
+def print_blk(blk):
+    vp = vd_printer_t()
+    blk._print(vp)
+
+
 def print_to_log(msg):
     LogMessages.append(msg)
 
@@ -74,3 +79,23 @@ def is_insn_mov_ds_seg(insn):
 def print_mba(mba):
     vp = vd_printer_t()
     mba._print(vp)
+
+
+def all_blocks_in_mba(mba: mba_t):
+    blk = mba.blocks
+    while blk:
+        yield blk
+        blk = blk.nextb
+
+
+def all_insns_in_block(blk: mblock_t, i1: minsn_t = None, backwards: bool = False):
+    if backwards:
+        insn = blk.tail if i1 is None else i1
+        while insn:
+            yield insn
+            insn = insn.prev
+    else:
+        insn = blk.head if i1 is None else i1
+        while insn:
+            yield insn
+            insn = insn.next

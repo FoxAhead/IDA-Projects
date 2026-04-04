@@ -17,7 +17,7 @@ from ida_hexrays import *
 import os
 from civ2.config import Config
 import civ2.opts.statictxt
-from civ2.util import *
+from civ2.utils import *
 
 def run(cfunc):
     civ2.opts.statictxt.load_static_texts()

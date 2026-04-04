@@ -41,8 +41,8 @@ def get_function_info(funcea):
     if tinfo.is_void():
         print('VOID')
 
-    get_rettype = tinfo.get_rettype()
-    ret = FuncArgument(-1, str(get_rettype), '', get_rettype.is_ptr(), get_rettype.get_pointed_object().dstr())
+    ret_tinfo = tinfo.get_rettype()
+    ret = FuncArgument(-1, str(ret_tinfo), '', ret_tinfo.is_ptr(), ret_tinfo.get_pointed_object().dstr())
     full_name = get_func_name(funcea)
     name = get_clean_name(full_name)
     if func_is_crt(funcea):
@@ -51,11 +51,24 @@ def get_function_info(funcea):
     func.full_name = full_name
 
     for i in range(function_details.size()):
-        argument_type = ida_typeinf.print_tinfo('', 0, 0, PRTYPE_1LINE, function_details[i].type, '', '')
+        argument_tinfo = resolve_to_base_type(function_details[i].type)
+        argument_type = ida_typeinf.print_tinfo('', 0, 0, PRTYPE_1LINE, argument_tinfo, '', '')
         argument_name = function_details[i].name
-        func.arguments.append(FuncArgument(i, argument_type, argument_name, function_details[i].type.is_ptr(), function_details[i].type.get_pointed_object().dstr()))
+        func.arguments.append(FuncArgument(i, argument_type, argument_name, argument_tinfo.is_ptr(), argument_tinfo.get_pointed_object().dstr()))
 
     return func
+
+
+def resolve_to_base_type(tinfo):
+    if tinfo.is_enum():
+        size = tinfo.get_size()
+        if size == 1:
+            tinfo.create_simple_type(ida_typeinf.BT_INT8)
+        elif size == 2:
+            tinfo.create_simple_type(ida_typeinf.BT_INT16)
+        elif size == 4:
+            tinfo.create_simple_type(ida_typeinf.BT_INT32)
+    return tinfo
 
 
 def func_is_crt(ea):
@@ -141,4 +154,3 @@ def analyze_crefs(funcs, recreate=False):
                 if recreate:
                     recreate_tinfo(jfunc.address)
                 print()
-

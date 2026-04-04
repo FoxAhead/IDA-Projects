@@ -1,7 +1,8 @@
 import ida_kernwin
 import ida_hexrays
 from civ2.opts import *
-from civ2.util import *
+from civ2.opts import GlbOptManager
+from civ2.utils import *
 
 
 class HxeHooks(ida_hexrays.Hexrays_Hooks):
@@ -10,12 +11,16 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
 
     def __init__(self, actions):
         self.actions = actions
+
+        GlbOptManager.clear()
+        GlbOptManager.register(opt1.Opt())
         ida_hexrays.Hexrays_Hooks.__init__(self)
 
     def flowchart(self, fc):
         # BEGIN OF OPTIMIZATIONS
         LogMessages.clear()
         ea = 0
+        GlbOptManager.iteration = 0
         return 0
 
     def refresh_pseudocode(self, vu):
@@ -28,6 +33,7 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
             print()
         LogMessages.clear()
         ea = 0
+        GlbOptManager.iteration = 0
         return 0
 
     def microcode(self, mba):
@@ -59,11 +65,15 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
         return 0
 
     def glbopt(self, mba):
-        r1 = 0
+        # r1 = 0
         # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
         # r1 = opt4.run(mba)
         # print("GLBOPT END")
-        return r1
+        # return r1
+        # self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        r = GlbOptManager.run(mba)
+        # self.debug_print_func("END")
+        return MERR_OK if r else MERR_LOOP
 
     def populating_popup(self, widget, popup_handle, vu):
         for name, data in self.actions.items():
