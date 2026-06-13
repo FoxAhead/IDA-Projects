@@ -10,6 +10,9 @@ class Config:
     crc32: int = 0
     startea: int = 0
 
+    def __class_getitem__(cls, item):
+        return cls.NAME_ADDRESSES[cls.target].get(item, 0)
+
     @classmethod
     def init(cls, filename="config.yaml"):
         script_dir = os.path.dirname(__file__)

@@ -36,9 +36,9 @@ class InsnBuilder(object):
         self.opn = self.opn + 1
         return self
 
-    def n(self, n, ea=0xFFFFFFFF):
+    def n(self, n, ea=0xFFFFFFFF, opnum=0):
         # print("InsnBuilder n: %s" % n)
-        self._op().make_number(n, self.size, ea)
+        self._op().make_number(n, self.size, ea, opnum)
         # print("InsnBuilder n: %s" % text_insn(self._insn))
         return self
 

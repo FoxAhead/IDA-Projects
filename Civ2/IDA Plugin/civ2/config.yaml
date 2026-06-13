@@ -2,20 +2,29 @@ Civ2 MGE:
   CRC32:
     - 0x4F37F726
   start: 0x005F6E90
-  LABELS_FNAME: "labels.txt"
+  LABELSTXT_FNAME: "MGE\\Labels.txt"
+  GAMETXT_FNAME: "MGE\\Game.txt"
+  DEBUGTXT_FNAME: "MGE\\DEBUG.txt"
   txtStrcatLabelString: 0x00401BF4
   txtAppendLabelString: 0x00403896
   StrcatLabelString: 0x00403995
   GetStringInList: 0x00403387
   UpdateMenuItem: 0x004023A1
+  Game_GraphicAndGameOptions: 0x00655AEA
+  Game_MapFlags: 0x00655AF0
+  sub_4025EA: 0x004025EA
 
 Civ2 ToT:
   CRC32:
     - 0x1BB98E07
   start: 0x005B54E0
-  LABELS_FNAME: "labelsToT.txt"
+  LABELSTXT_FNAME: "ToT\\Labels.txt"
+  GAMETXT_FNAME: "ToT\\Game.txt"
+  DEBUGTXT_FNAME: "ToT\\DEBUG.txt"
   txtStrcatLabelString: 0x00409520
   txtAppendLabelString: 0x00000000  # TODO
   StrcatLabelString: 0x0048F30B
   GetStringInList: 0x0042095E
   UpdateMenuItem: 0x00000000  # TODO
+  Game_GraphicAndGameOptions: 0x00000000  # TODO
+  Game_MapFlags: 0x00000000  # TODO

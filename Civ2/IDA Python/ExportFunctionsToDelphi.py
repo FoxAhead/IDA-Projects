@@ -61,7 +61,7 @@ def convert_type(type):
     # Better boolean typing combination:
     # C side: BOOL
     # Pascal side: Boolean avoiding direct comparison to True and False
-    if type in ['bool', 'BOOL']:
+    if type in ['bool', 'BOOL', 'MACRO_BOOL']:
         return 'Boolean'
 
     if type in ['RECT', 'tagRECT', 'struct tagRECT']:
@@ -87,6 +87,8 @@ def convert_argument(argument):
                 argument.name = new_name
         elif argument.name[0] == 'n' and argument.name[1].isupper():
             # Remove first small 'n' letter followed by second capital letter
+            argument.name = argument.name[1:]
+        elif argument.name.startswith('bDo'):
             argument.name = argument.name[1:]
         argument.name = argument.name[0].upper() + argument.name[1:]
     argument.custom_type = lib.is_custom_type(argument.type)

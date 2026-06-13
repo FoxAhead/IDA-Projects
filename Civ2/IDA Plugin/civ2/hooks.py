@@ -1,3 +1,5 @@
+import inspect
+
 import ida_kernwin
 import ida_hexrays
 from civ2.opts import *
@@ -6,22 +8,33 @@ from civ2.utils import *
 
 
 class HxeHooks(ida_hexrays.Hexrays_Hooks):
-    cnt = 0
-    ea = 0
 
-    def __init__(self, actions):
-        self.actions = actions
+    def __init__(self, *args):
+        self.debug = False
+        self.cnt = 0
+        self.ea = 0
+
+        self.opt2 = None
 
         GlbOptManager.clear()
         GlbOptManager.register(opt1.Opt())
-        ida_hexrays.Hexrays_Hooks.__init__(self)
+        #GlbOptManager.register(opt2.Opt())
+        super().__init__(*args)
 
     def flowchart(self, fc):
+        self.debug_print_func("BEGIN")
         # BEGIN OF OPTIMIZATIONS
+        self.opt2 = opt2.Opt()
         LogMessages.clear()
-        ea = 0
+        self.ea = 0
         GlbOptManager.iteration = 0
+        self.debug_print_func("END")
         return 0
+
+    def debug_print_func(self, p=""):
+        if self.debug:
+            name = inspect.stack()[1].function.upper()
+            print("%s %s:" % (name, p))
 
     def refresh_pseudocode(self, vu):
         # END OF OPTIMIZATIONS
@@ -32,67 +45,110 @@ class HxeHooks(ida_hexrays.Hexrays_Hooks):
                 print(msg)
             print()
         LogMessages.clear()
-        ea = 0
+        self.ea = 0
         GlbOptManager.iteration = 0
         return 0
 
+    # maturity = 0
+    def stkpnts(self, mba, _sps):
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        self.ea = mba.entry_ea
+        #self.opt2.spds(mba)
+        self.debug_print_func("END")
+        return 0
+
+    # maturity = 0
+    def prolog(self, mba, fc, reachable_blocks, decomp_flags):
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        self.opt2.collect_eh_info(mba, fc, reachable_blocks)
+        self.debug_print_func("END")
+        return 0
+
+    # maturity = 0
     def microcode(self, mba):
-        # self.ea = mba.entry_ea
-        # opt3.run(mba)
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        #self.opt2.keep_blocks(mba)
+        #self.opt2.run1(mba)  # JUMPOUT
+        #print_mba(mba)
+        self.debug_print_func("END")
         return 0
 
+    # maturity = 1 (MMAT_GENERATED)
     def preoptimized(self, mba):
-        # print("PREOPTIMIZED BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        # opt9.run(mba)    # JUMPOUT
-        # opt6.run(mba)    # __CHP
-        # opt2.run_a(mba)  # mov 0 assertion
-        # opt7.run(mba)    # Prolog/Epilog
-        # opt8.run(mba)    # SAR EDX, 1Fh
-        # print("PREOPTIMIZED END")
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        #self.opt2.run(mba)  # JUMPOUT
+        #print_mba(mba)
+        # self.opt2.run_make_goto_back(mba)
+        #self.opt2.run_copy_cleanup_insns(mba)
+        # print_mba(mba)
+        self.opt2.run_copy_cleanup_blocks(mba)
+        # print_mba(mba)
+        #self.opt2.spds(mba)
+        self.debug_print_func("END")
         return 0
 
+    # maturity = 2 (MMAT_PREOPTIMIZED)
     def locopt(self, mba):
-        # opt2.run_b(mba)
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        #print_mba(mba)
+        self.debug_print_func("END")
         return 0
 
+    # maturity = 3 (MMAT_LOCOPT)
     def resolve_stkaddrs(self, mba):
-        # print_mba(mba)
-        # print_mba(mba)
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        #self.opt2.run2(mba)  # JUMPOUT
+        #self.opt2.run_mmat_locopt(mba)
+        #self.opt2.spds(mba)
+        #print_mba(mba)
+        self.debug_print_func("END")
+        return 0
+
+    # maturity = 4? (MMAT_CALLS)
+    def build_callinfo(self, blk, type, callinfo):
+        self.debug_print_func("BEGIN: blk=%d, flags=%.8X" % (blk.serial, blk.flags), )
+        self.debug_print_func("END")
+        return 0
+
+    # maturity = 5 (MMAT_GLBOPT1)
+    def prealloc(self, mba):
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        r = MERR_OK
+        #r = self.opt2.run_change_eas(mba)
+        #print_mba(mba)
+        self.debug_print_func("END")
+        return r
+
+    # maturity = 6 (MMAT_GLBOPT2)
+    def glbopt(self, mba):
+        self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
+        r = GlbOptManager.run(mba)
+        self.debug_print_func("END")
+        #print_mba(mba)
+        return MERR_OK if r else MERR_LOOP
+
+    def maturity(self, cfunc: cfunc_t, new_maturity):
+        self.debug_print_func("BEGIN: cfunc.maturity=%d, new_maturity=%d" % (cfunc.maturity, new_maturity))
+        #opt19.run(cfunc)
+        opt1.set_enums(cfunc)
+        # opt1.fix_casts(cfunc)
+        self.debug_print_func("END")
         return 0
 
     def combine(self, blk, insn):
-        # opt1.run(blk, insn)
-        return 0
-
-    def glbopt(self, mba):
-        # r1 = 0
-        # print("GLBOPT BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        # r1 = opt4.run(mba)
-        # print("GLBOPT END")
-        # return r1
-        # self.debug_print_func("BEGIN: maturity=%s, reqmat=%s" % (mba.maturity, mba.reqmat))
-        r = GlbOptManager.run(mba)
+        # self.debug_print_func("BEGIN: blk=%d, flags=%.8X" % (blk.serial, blk.flags), )
         # self.debug_print_func("END")
-        return MERR_OK if r else MERR_LOOP
-
-    def populating_popup(self, widget, popup_handle, vu):
-        for name, data in self.actions.items():
-            label, shotcut = data
-            ida_kernwin.attach_action_to_popup(
-                vu.ct,
-                popup_handle,
-                name,
-                "Civ2Plugin/"
-            )
         return 0
 
     def print_func(self, cfunc, printer):
         # Note: we can't print/str()-ify 'cfunc' here,
         # because that'll call print_func() us recursively.
-        # opt5.run(cfunc)
+        self.debug_print_func("BEGIN: maturity=%s" % (cfunc.maturity))
+        self.debug_print_func("END")
         return 0
 
     def func_printed(self, cfunc):
-        opt5.run(cfunc)
+        self.debug_print_func("BEGIN: maturity=%s" % (cfunc.maturity))
+        opt5.run(cfunc)  # LABELS.TXT
+        self.debug_print_func("END")
         return 0
-

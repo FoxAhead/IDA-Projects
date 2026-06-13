@@ -3,6 +3,15 @@ import ida_pro
 import ida_lines
 import idc
 
+REG_EAX = 8
+REG_EDX = 12
+REG_ECX = 16
+REG_EBX = 20
+REG_ESP = 24
+REG_EDI = 32
+REG_ESI = 36
+REG_DS = 104
+
 LogMessages = []
 
 
@@ -12,6 +21,10 @@ def text_expr(expr):
 
 def text_insn(insn):
     return "%.8X: %s" % (insn.ea if insn else 0, insn.dstr() if insn else None)
+
+
+def hex_eas(eas):
+    return ", ".join("%.6X" % ea for ea in eas)
 
 
 def get_expr_name(expr):

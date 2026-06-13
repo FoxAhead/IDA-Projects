@@ -1,0 +1,687 @@
+;
+; Debug/Cheat popups
+;
+
+@MOTD
+@width=480
+@title=Civilization II
+...
+
+@TOOMANYCITIES
+Too many cities!
+
+@ENDOFTURN
+End of turn = %NUMBER0
+
+@DANGER
+@title=Danger Will Robinson!
+^Fact: %STRING0
+^Data: %NUMBER0 / %NUMBER1 / %NUMBER2
+
+@DANGERHEX
+@title=Danger Will Robinson!
+^Fact: %STRING0
+^Hex: %HEX0 / %HEX1 / %HEX2
+
+@GAVETECH
+All technologies given.
+
+@TOOKTECH
+All technologies taken.
+
+@GAVEALL
+Gave all improvements.
+
+@TOOKALL
+Took all improvements.
+
+@FREEBIE
+>Pouf!< Construction complete.
+
+@MEMORY
+^System resources = %NUMBER0.
+
+@REVEALMAP
+@title=Select Map View
+
+@SETHUMAN
+@title=Select Human Player
+
+@KILLCIV
+@title=Delete Which Civilization
+
+@PICKPLAYER
+@title=Pick A Player
+
+@MONEY
+@title=Change %STRING0 Treasury
+@width=300
+%STRING0 treasury currently {%NUMBER0$}.
+
+New treasury:
+
+@TERRAIN
+@title=Select Terrain Features
+@width=420
+@checkbox
+@button=Terrain
+@options
+Irrigation
+Mining (Irr & Min = Farm)
+Road
+Railroad
+Fortress
+Airbase
+Pollution
+
+@TERRAIN1
+@title=Select Terrain Type
+@width=300
+
+@GAMEYEAR
+@title=Change # Of Turns Elapsed
+@width=300
+# Turns Elapsed: %NUMBER0.
+
+New # Turns:
+
+@CREATEUNIT
+@title=Select Unit To Create
+@width=480
+@listbox
+@button=Foreign
+@button=Veteran
+@button=Obs.
+@button=Adv.
+
+@MOVEDEBUG
+@title=Move Debug
+@x=0
+@y=0
+@width=200
+@options
+Close
+Zoom out
+Zoom in
+Center on start
+Center on stop
+
+
+@GOODYX
+@title=X Value
+@width=300
+@options
+X:
+
+@GOODYY
+@title=Y Value
+@width=300
+@options
+Y:
+
+@GOODYMAP
+@title=Map Value
+@width=300
+@options
+Map:
+
+@GOODYDIV
+@title=Div Value
+@width=300
+@options
+Div:
+
+@NETLIST
+@title=List of Net Players
+@width=320
+
+@TURNCOUNT
+@title=Turn Value
+@width=300
+(Enter -1 for every turn)
+
+Turn:
+
+
+@TURNINTERVAL
+@title=Interval Value
+@width=300
+
+Interval:
+
+
+@RANDOMDENOM
+@title=Random Turn Denominator
+@width=300
+Enter a number from 1 to 1000
+
+Denominator:
+
+
+@CITYNAME
+@title=City Name
+@width=300
+Enter the city name
+
+City:
+
+
+@HOMECITYNAME
+@title=Home City Name
+@width=300
+Enter home city
+
+City:
+
+
+@TALKERTYPE
+@title=Type of Negotiator
+@width=300
+
+Human
+Computer
+Human or Computer
+
+
+@CDTRACK
+@title=CD Track Number
+@width=300
+Enter CD track to play from %NUMBER0 to %NUMBER1
+
+Track Number:
+
+
+@WAVFILE
+@title=File Name
+@width=300
+Enter the name of the Wav File
+
+Filename:
+
+
+@AMOUNT
+@title=Money Amount
+@width=300
+Enter an amount
+
+Amount:
+
+
+@NUMUNITS
+@title=Number to Move
+(Enter -1 for all)
+@width=200
+
+Number:
+
+
+@VETERAN
+@title=Veteran Status
+@width=200
+Is this unit a veteran?
+
+No
+Yes
+
+
+@TERRAINTYPE
+@title=Terrain Type
+@width=200
+
+Desired terrain type:
+
+
+@MAPRECT
+@title=Map Rectangle
+@width=200
+
+Coordinates:
+
+
+@LOCATION
+@title=Destination
+@width=200
+
+Coordinates:
+
+
+@LOCATIONNUM
+@title=Destination %NUMBER0
+@width=200
+
+Coordinates:
+
+
+@PLAYSOUND
+@title=Copy a Sound
+@button=Play
+Press Play to listen, OK to accept, or Cancel to abort
+WARNING:  clicking OK to accept cannot be undone
+
+
+@TERRNAME
+@title=Rename Terrain
+@width=300
+Enter the new terrain name
+
+Terrain:
+
+
+@TECHNAME
+@title=Rename Technological Advance
+@width=300
+Enter the new advance name
+
+Advance:
+
+
+@IMPRNAME
+@title=Rename City Improvement
+@width=300
+Enter the new improvement name
+
+Improvement:
+
+
+@UNITNAME
+@title=Rename Unit
+@width=300
+Enter the new unit name
+
+Unit:
+
+
+@CITYMISC
+@width=330
+@title=Select Icon to Edit
+@columns=2
+@options
+Fortify
+Air Base
+Flag 1
+Flag 2
+Flag 3
+Flag 4
+Flag 5
+Flag 6
+Flag 7
+Flag 8
+Fortress
+Occupied Air Base
+Flag 1a
+Flag 2a
+Flag 3a
+Flag 4a
+Flag 5a
+Flag 6a
+Flag 7a
+Flag 8a
+
+
+@IMPRMISC
+@width=330
+@title=Select Icon to Edit
+@options
+Cursor
+Explosion 1
+Explosion 2
+Explosion 3
+Explosion 4
+Explosion 5
+Explosion 6
+Explosion 7
+Explosion 8
+
+
+@FOREST
+@width=330
+@title=Select Forest to Edit
+@button=Help
+@columns=2
+@options
+Background
+Forest 1
+Forest 2
+Forest 3
+Forest 4
+Forest 5
+Forest 6
+Forest 7
+Forest 8
+Forest 9
+Forest 10
+Forest 11
+Forest 12
+Forest 13
+Forest 14
+Forest 15
+Forest 16
+
+
+@HILLS
+@width=330
+@title=Select Hill to Edit
+@button=Help
+@columns=2
+@options
+Background
+Hill 1
+Hill 2
+Hill 3
+Hill 4
+Hill 5
+Hill 6
+Hill 7
+Hill 8
+Hill 9
+Hill 10
+Hill 11
+Hill 12
+Hill 13
+Hill 14
+Hill 15
+Hill 16
+
+
+@MOUNTAINS
+@width=330
+@title=Select Mountain to Edit
+@button=Help
+@columns=2
+@options
+Background
+Mountain 1
+Mountain 2
+Mountain 3
+Mountain 4
+Mountain 5
+Mountain 6
+Mountain 7
+Mountain 8
+Mountain 9
+Mountain 10
+Mountain 11
+Mountain 12
+Mountain 13
+Mountain 14
+Mountain 15
+Mountain 16
+
+
+@RIVER
+@width=330
+@title=Select River to Edit
+@button=Help
+@columns=2
+@options
+River 1
+River 2
+River 3
+River 4
+River 5
+River 6
+River 7
+River 8
+River 9
+River 10
+River 11
+River 12
+River 13
+River 14
+River 15
+River 16
+Mouth 1
+Mouth 2
+Mouth 3
+Mouth 4
+
+
+@COAST
+@width=400
+@title=Select Coastline to Edit
+@button=Help
+@columns=4
+@options
+Coast 1
+Coast 2
+Coast 3
+Coast 4
+Coast 5
+Coast 6
+Coast 7
+Coast 8
+Coast 9
+Coast 10
+Coast 11
+Coast 12
+Coast 13
+Coast 14
+Coast 15
+Coast 16
+Coast 17
+Coast 18
+Coast 19
+Coast 20
+Coast 21
+Coast 22
+Coast 23
+Coast 24
+Coast 25
+Coast 26
+Coast 27
+Coast 28
+Coast 29
+Coast 30
+Coast 31
+Coast 32
+
+
+@TRIBENAME
+@title=Rename Tribe
+@width=300
+Enter the new tribe name
+
+Tribe:
+
+
+@LEADERS
+@width=330
+@title=Select Leader Gender to Rename
+@options
+Male
+Female
+
+
+@LEADERNAME
+@title=Rename Leader
+@width=300
+Enter the new leader name
+
+Leader:
+
+
+@RENAMECITY
+@title=Select City to Rename
+@listbox
+
+
+@CITYRENAME
+@title=Rename City
+@width=300
+Enter the new city name
+
+City:
+
+
+@EDITCOSMIC
+Road movement multiplier
+1 in x chance Trireme lost (mod. by Seafaring, Navigation)
+# of food each citizen eats per turn
+# of rows in food box (rows * city_size+1 = box)
+# of rows in shield box
+Settlers eat (govt <= Monarchy)
+Settlers eat (govt >= Communism)
+City size for first unhappiness at Chieftain level
+Riot factor based on # cities (higher factor lessens the effect)
+Aqueduct needed to exceed this size
+Sewer System needed to exceed this size
+Tech paradigm (higher # slows research)
+Base time for engineers to transform terrain (x2)
+Monarchy  pays support for all units past this
+Communism pays support for all units past this
+Fundamentalism pays support for all units past this
+Communism is equivalent of this palace distance.
+Fundamentalism loses this % of science
+Percent shield penalty for production type change
+Max paradrop range
+Mass/Thrust paradigm (increasing slows spaceship time)
+Max effective science rate in fundamentalism (x10, so 5 = 50%)
+
+
+@CPEDIT
+@title=New Value
+@width=300
+Enter the new value (range %NUMBER0 to %NUMBER1)
+
+Value:
+
+
+@RENAMECOMMO
+@title=Select Commodity to Rename
+@listbox
+
+
+@COMMONAME
+@title=Rename Commodity
+@width=300
+Enter the new commodity name
+
+Commodity:
+
+
+@RENAMEGOVT
+@title=Select Government to Rename
+@listbox
+
+
+@GOVTNAME
+@title=Rename Government
+@width=300
+Enter the new government name
+
+Government:
+
+
+@RENAMETITLE
+@title=Select Title to Rename
+@listbox
+
+
+@TITLENAME
+@title=Rename Government Title
+@width=300
+Enter the new title
+
+Title:
+
+
+@NEWFOLDER
+@title=New Scenario Folder
+@width=300
+Enter the new scenario folder name
+
+Scenario:
+
+
+@DIREXISTS
+@title=Error Directory Exists
+Please select another name
+(%STRING0)
+
+
+@RUSURE
+@title=Warning
+@width=220
+^This action cannot be undone
+^Press OK to continue
+
+
+@TERRMISC
+@width=330
+@title=Select Icon to Edit
+@button=Help
+@columns=2
+@options
+Irrigation
+Farmland
+Mining
+Road 1
+Road 2
+Road 3
+Road 4
+Road 5
+Road 6
+Road 7
+Road 8
+Road 9
+Pollution
+Resource
+Goody Hut
+Railroad 1
+Railroad 2
+Railroad 3
+Railroad 4
+Railroad 5
+Railroad 6
+Railroad 7
+Railroad 8
+Railroad 9
+
+
+@ODDTERRAIN
+@width=330
+The icons you wish to import are in an odd numbered
+terrain file.  Please select an odd numbered file.
+(terrain1, terrain3, etc.)
+
+
+@EVENTERRAIN
+@width=330
+The icons you wish to import are in an even numbered
+terrain file.  Please select an even numbered file.
+(terrain2, terrain4, etc.)
+
+
+@OUTOFMEMORY
+@width=330
+The buffer for scenario events is full.  If you wish to
+add anything more, you must first free up some space.
+
+
+@BADNAME
+@title=Illegal File Name
+File name contains an illegal character
+^Please select another name (%STRING0)
+
+
+@NOCITY
+@title=City Name Not Found
+@width=200
+"%STRING0" not found.
+^Use it anyway?
+
+Yes
+No
+
+
+@NOTICE
+@title=Value Out of Range
+Please note: one or more of the values you entered in this
+editor are out of range and have been automatically adjusted.
+Please review these changes before continuing.
+
+
+
+
+
+@end

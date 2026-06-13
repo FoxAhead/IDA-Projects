@@ -61,13 +61,22 @@ def get_function_info(funcea):
 
 def resolve_to_base_type(tinfo):
     if tinfo.is_enum():
-        size = tinfo.get_size()
-        if size == 1:
-            tinfo.create_simple_type(ida_typeinf.BT_INT8)
-        elif size == 2:
-            tinfo.create_simple_type(ida_typeinf.BT_INT16)
-        elif size == 4:
-            tinfo.create_simple_type(ida_typeinf.BT_INT32)
+        if tinfo.dstr() == 'MACRO_BOOL':
+            tinfo.get_named_type(cvar.idati, 'BOOL')
+        else:
+            size = tinfo.get_size()
+            t = 0
+            if size == 1:
+                t = ida_typeinf.BT_INT8
+            elif size == 2:
+                t = ida_typeinf.BT_INT16
+            elif size == 4:
+                t = ida_typeinf.BT_INT32
+            if t > 0:
+                if tinfo.get_sign() == 2:
+                    t = t | ida_typeinf.BTMT_UNSIGNED
+                tinfo.create_simple_type(t)
+
     return tinfo
 
 
