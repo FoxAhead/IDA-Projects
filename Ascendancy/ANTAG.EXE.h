@@ -187,10 +187,10 @@ struct __attribute__((packed)) T_CFile
 {
   int fh;
   T_Name256 fname;
-  int d4;
+  int oflags;
   int index;
-  void *d;
-  int Unknown_110;
+  void *pPreloadBuf;
+  int preloaded;
   int Unknown_114;
 };
 
@@ -243,7 +243,7 @@ struct __attribute__((packed)) T_WinEntry
 {
   int activeCount;
   T_WndA2 *pWndA2;
-  int c;
+  int Unknown_8;
 };
 
 /* 73 */
@@ -303,14 +303,14 @@ struct __attribute__((packed)) T_WinMsg
 };
 
 /* 25 */
-struct __attribute__((packed)) T_SomeStruct5
+struct __attribute__((packed)) T_RepeatingEvent
 {
-  int a;
-  __int16 b;
-  int c;
-  int d;
-  int e;
-  int f;
+  int _target;
+  __int16 _message;
+  int _param1;
+  int _param2;
+  int _interval;
+  int _nextFireTime;
 };
 
 /* 254 */
@@ -387,10 +387,11 @@ struct __attribute__((packed)) T_WinMgr
   WORD _activeStateCount;
   __int16 state;
   __int16 Unknown_422A;
-  T_WinMsg messageQueue[64];
+  T_WinMsg messageQueue1[32];
+  T_WinMsg messageQueue2[32];
   WORD messageQueueCount;
-  T_SomeStruct5 b1[16];
-  __int16 counter1;
+  T_RepeatingEvent repeatingEvents[16];
+  WORD repeatingEventsCount;
   T_WinEventSmall winEventsSmall[16];
   WORD winEventSmallNum;
   HTIMER timer;
@@ -402,13 +403,13 @@ struct __attribute__((packed)) T_WinMgr
   T_GameEvent gameEvents[32];
   int Unknown_489E;
   int Unknown_48A2;
-  int aaa;
-  int bbb;
+  int Unknown_48A6;
+  int Unknown_48AA;
   int Unknown_48AE;
   int Unknown_48B2;
   int _time;
   int winEventsNum;
-  int Unknown_48BE;
+  int winEventIndex;
   T_WinEvent winEvents[5000];
   int Unknown_21D82[4];
   P_Wnd13DBGWND pWnd13DBGWND;
@@ -430,11 +431,11 @@ typedef T_WndA2 *P_WndA2;
 typedef P_WndA2 T_ChildWindows[20];
 
 /* 308 */
-struct __attribute__((packed)) T_Type19
+struct __attribute__((packed)) T_WinItem
 {
-  char Unknown_0;
+  BYTE winItemType;
   int cacheIndex;
-  int _shapeNumber;
+  int shapeNumber;
   WORD hotX;
   WORD hotY;
 };
@@ -451,8 +452,8 @@ struct __attribute__((packed)) T_WndA2
   _DWORD Unknown_1A;
   WORD shapeNumber;
   char name[21];
-  _DWORD Unknown_35;
-  _DWORD Unknown_39;
+  BOOL _visible;
+  BOOL _mouseFocused;
   _DWORD _mouseFocus;
   int index;
   WORD sendMessage;
@@ -466,9 +467,9 @@ struct __attribute__((packed)) T_WndA2
   int parentIndex;
   T_ChildWindows *children;
   WORD childrenNum;
-  T_Type19 _t19[4];
-  WORD _t19Num;
-  _DWORD Unknown_A3;
+  T_WinItem winItems[4];
+  WORD winItemsCount;
+  BOOL _hidden;
   P_Procs pProcs;
 };
 
@@ -567,7 +568,7 @@ struct T_Rect
 /* 24 */
 struct __attribute__((packed)) T_Type5
 {
-  P_GSystem a;
+  P_GSystem gsystem;
   T_Rect rect;
 };
 
@@ -593,8 +594,8 @@ struct __attribute__((packed)) T_GSystem
 {
   WINDOW window;
   PANE pane;
-  int a;
-  int b;
+  int Unknown_28;
+  int Unknown_2C;
   T_Name255 fname;
   int Unknown_12F;
   T_Palette palette1;
@@ -607,7 +608,7 @@ struct __attribute__((packed)) T_GSystem
 };
 
 /* 26 */
-typedef T_SomeStruct5 *P_SomeStruct5;
+typedef T_RepeatingEvent *P_RepeatingEvent;
 
 /* 29 */
 struct __attribute__((packed)) T_StaticStrings
@@ -651,8 +652,8 @@ struct __attribute__((packed)) T_Wnd
   int parentIndex;
   T_ChildWindows *children;
   WORD childrenNum;
-  T_Type19 _t19[4];
-  WORD _t19Num;
+  T_WinItem winItems[4];
+  WORD winItemsCount;
   _DWORD Unknown_A3;
 };
 
@@ -665,10 +666,10 @@ typedef T_Control *P_Control;
 /* 38 */
 struct __attribute__((packed)) T_Wnd03CTW
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   P_Control pControls;
   __int16 numControls;
-  __int16 e;
+  __int16 Unknown_B1;
 };
 
 /* 359 */
@@ -689,7 +690,7 @@ typedef T_Wnd03CTW *P_Wnd03CTW;
 /* 40 */
 struct __attribute__((packed)) T_Wnd25TW
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   int buttonState;
 };
 
@@ -702,8 +703,8 @@ typedef T_GameEvent *P_GameEvent;
 /* 42 */
 struct __attribute__((packed)) T_Wnd23EW
 {
-  T_WndA2 a2;
-  char z[3050];
+  T_WndA2 super;
+  char Unknown_A8[3050];
   char Unknown_C95[27];
   char Unknown_CB0[243];
   char Unknown_DA3[12];
@@ -786,7 +787,7 @@ typedef void (__fastcall *P_DrawItemFunc)(PANE *pPane, void *pData, int param1, 
 /* 195 */
 struct __attribute__((packed)) T_Wnd10LB
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   char *_choiceText;
   int Unknown_AF;
   int hasScrollBar;
@@ -871,7 +872,7 @@ struct T_Wnd02COSWt1
 /* 238 */
 struct __attribute__((packed)) T_Wnd02COSW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   void *Unknown_AB;
   void *Unknown_AF;
   P_CWDisplayItem pDisplayItems;
@@ -968,8 +969,8 @@ struct __attribute__((packed)) T_Planet
   UBYTE buildingPlanetItemIndex;
   UWORD maximumPopulation2;
   UBYTE raceIndex;
-  BYTE byte58;
-  BYTE byte59;
+  BYTE Unknown_58;
+  BYTE Unknown_59;
   int Unknown_5A;
   int Unknown_5E;
   int invincible;
@@ -1107,17 +1108,17 @@ typedef T_Wnd04BM *P_Wnd04BM;
 /* 48 */
 struct __attribute__((packed)) T_Wnd19BC
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   T_Target target;
   BYTE Unknown_B0;
   int Unknown_B1;
   P_Wnd10LB pWnd10LB;
   BYTE Unknown_B9;
-  BYTE h;
+  BYTE Unknown_BA;
   P_Wnd04BM pWnd04BM;
   int Unknown_BF;
-  char z;
-  int j1;
+  char Unknown_C3;
+  int Unknown_C4;
   T_Vector3D Unknown_C8;
   WORD Unknown_D4;
   int Unknown_D6;
@@ -1204,7 +1205,7 @@ struct T_Wnd04BMt1
 /* 221 */
 struct __attribute__((packed)) T_Wnd04BM
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   P_Wnd19BC pWnd19BC;
   P_BatDisplayItem pBatDisplayItem;
   P_Target pTarget2;
@@ -1334,22 +1335,22 @@ struct __attribute__((packed)) T_Type2
 {
   T_CFile cfile;
   FLIC_HEADER flicHeader;
-  void *pBuf_198;
-  int dword19C;
+  void *pBuf1;
+  int Unknown_19C;
   int Unknown_1A0;
   int Unknown_1A4;
-  void *pBuf_1A8;
-  void *pBuf_1AC;
-  _DWORD dword1B0;
-  _DWORD dword1B4;
+  void *pBuf2;
+  void *pBuf3;
+  _DWORD Unknown_1B0;
+  _DWORD Unknown_1B4;
   WINDOW window;
   PANE pane;
   int timerFrequency;
-  void *pBuf2;
+  void *pBuf4;
   void *pFlicBuffer;
   _DWORD dword1EC;
-  void *pBuf3;
-  int gap1F4;
+  void *pBuf5;
+  int Unknown_1F4;
   int Unknown_1F8;
   int Unknown_1FC;
   int Unknown_200;
@@ -1382,7 +1383,7 @@ struct __attribute__((packed)) T_Type2
 /* 50 */
 struct __attribute__((packed)) T_Wnd01FLIC
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   T_Type2 t2;
 };
 
@@ -1580,8 +1581,7 @@ struct VDI_HDR
 typedef T_WinEntry *P_WinEntry;
 
 /* 82 */
-#pragma pack(push, 1)
-struct T_Keyboard
+struct __attribute__((packed)) T_Keyboard
 {
   int Pressed;
   int Alt;
@@ -1591,13 +1591,12 @@ struct T_Keyboard
   int NumLock;
   int ScrollLock;
   int Insert;
-  int i;
+  int Unknown_20;
   UWORD ScanCode;
   UWORD ASCIIChar;
   WORD Flags;
-  WORD k;
+  WORD Unknown_2A;
 };
-#pragma pack(pop)
 
 /* 85 */
 enum MACRO_VFX_BOOL
@@ -1614,7 +1613,7 @@ struct __attribute__((packed)) T_Race
   UBYTE colorSet;
   BOOL extinct;
   P_Star homeStar;
-  char z1[400];
+  char Unknown_B[400];
   __int16 Unknown_19B;
   BYTE ability;
   int daysAfterAbilityUse;
@@ -1973,9 +1972,9 @@ struct T_SavBlock0Header
   int day;
   int races;
   int _playerRaceIndex;
-  int z1[7];
-  int z2[7];
-  int z3[7];
+  int Unknown_C[7];
+  int Unknown_28[7];
+  int Unknown_44[7];
   int playerShipsNum;
   int playerPlanetsNum;
   int playerTechsNum;
@@ -2130,7 +2129,7 @@ typedef T_ConnectionGroup *P_ConnectionGroup;
 struct __attribute__((packed)) T_Gizmo
 {
   char name[28];
-  char z[22];
+  char Unknown_1C[22];
   BYTE cat;
   UWORD flags;
   UBYTE resReq;
@@ -2350,10 +2349,10 @@ struct __attribute__((packed)) T_SSystem
   int _notstarted2;
   MDI_DRIVER *mdidrv;
   DIG_DRIVER *digdrv;
-  int a;
+  int Unknown_223;
   int playing;
   int musicOff;
-  int z2;
+  int Unknown_22F;
   int Unknown_233;
   char bufNum;
   void *digitalMusicBuf1;
@@ -2389,7 +2388,7 @@ typedef T_Sector *P_V3D;
 /* 163 */
 struct __attribute__((packed)) T_Type09s
 {
-  T_ConnectionGroup a[24];
+  T_ConnectionGroup connectionGroups[24];
 };
 
 /* 162 */
@@ -2438,9 +2437,9 @@ enum MACRO_SEEK
 /* 169 */
 struct __attribute__((packed)) T_Type09c
 {
-  float c;
-  float e;
-  float f;
+  float Unknown_0;
+  float Unknown_4;
+  float Unknown_8;
 };
 
 /* 173 */
@@ -2468,7 +2467,7 @@ struct __attribute__((packed)) T_Research
   UWORD num;
   T_Tech techs[100];
   T_ResCurrent current;
-  int b;
+  int Unknown_1D6A;
   int allTechForShipReported;
 };
 
@@ -2596,7 +2595,7 @@ typedef T_Wnd12IW *P_Wnd12IW;
 /* 199 */
 struct __attribute__((packed)) T_Wnd11LW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   char Unknown[3893];
 };
 
@@ -2622,7 +2621,7 @@ typedef T_Wnd07PW *P_Wnd07PW;
 /* 203 */
 struct __attribute__((packed)) T_Wnd06RSW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   WORD Unknown_AB;
   char Unknown_AD[4];
 };
@@ -2633,7 +2632,7 @@ typedef T_Wnd06RSW *P_Wnd06RSW;
 /* 205 */
 struct __attribute__((packed)) T_Wnd09RW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   T_Camera camera;
   T_Vector3D vectors[100];
   WORD Unknown_5F3[100];
@@ -2650,7 +2649,7 @@ typedef T_Wnd09RW *P_Wnd9RW;
 /* 207 */
 struct __attribute__((packed)) T_Wnd14PSW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   UWORD squareIndex;
 };
 
@@ -2660,7 +2659,7 @@ typedef T_Wnd14PSW *P_Wnd14PSW;
 /* 209 */
 struct __attribute__((packed)) T_Wnd15NT
 {
-  T_WndA2 a;
+  T_WndA2 super;
   int Unknown;
 };
 
@@ -2670,14 +2669,14 @@ typedef T_Wnd15NT *P_Wnd15NT;
 /* 215 */
 struct __attribute__((packed)) T_TypeA11
 {
-  T_WndA2 a;
+  T_WndA2 super;
   P_Wnd10LB pListBox;
 };
 
 /* 211 */
 struct __attribute__((packed)) T_Wnd16SW
 {
-  T_TypeA11 a;
+  T_TypeA11 super;
   char Unknown_AF[2];
 };
 
@@ -2703,7 +2702,7 @@ typedef char T_Text200[200];
 /* 217 */
 struct __attribute__((packed)) T_Wnd18NG
 {
-  T_WndA2 a;
+  T_WndA2 super;
   P_Wnd10LB pListBox;
   T_Text200 *speciesDescriptions;
   __int16 Unknown_B3;
@@ -2728,7 +2727,7 @@ typedef T_Wnd22AW *P_Wnd22AW;
 /* 223 */
 struct __attribute__((packed)) T_Wnd08SW
 {
-  T_WndA2 a;
+  T_WndA2 super;
   P_Ship pShip;
   int Unknown_AF[2];
   int Unknown_B7;
@@ -2899,7 +2898,7 @@ enum MACRO_ASCEND_EP
 typedef T_Matrix3x3D *P_Matrix3x3D;
 
 /* 270 */
-enum MACRO_ASCEND_PI
+enum MACRO_ASCEND_PI : __int8
 {
   ASCEND_PI_00_FACTORY = 0x0,
   ASCEND_PI_01_AGRIPLOT = 0x1,
@@ -2990,8 +2989,8 @@ typedef T_WinState *P_WinState;
 /* 281 */
 struct T_Type7
 {
-  BYTE a;
-  BYTE b;
+  BYTE Unknown_0;
+  BYTE Unknown_1;
 };
 
 /* 282 */
@@ -3392,7 +3391,7 @@ typedef int FSREGAPI;
 /* 336 */
 struct __attribute__((packed)) T_InputSystem
 {
-  char Unknown00;
+  char Unknown_00;
 };
 
 /* 337 */
@@ -3440,15 +3439,38 @@ enum MACRO_ASCEND_WIN_EVENTS
 /* 349 */
 enum MACRO_ASCEND_WIN_MESSAGES
 {
+  ASCEND_WM_ACTIVATE = 0x1,
+  ASCEND_WM_DEACTIVATE = 0x2,
+  ASCEND_WM_KEYBOARD = 0x3,
+  ASCEND_WM_LEFTCLICK = 0x4,
+  ASCEND_WM_RIGHTCLICK = 0x5,
+  ASCEND_WM_LOSEFOCUS = 0x6,
+  ASCEND_WM_GAINFOCUS = 0x7,
+  ASCEND_WM_MOUSEMOVE = 0x8,
+  ASCEND_WM_HELP = 0xC,
+  ASCEND_WM_UNKNOWN_D = 0xD,
+  ASCEND_WM_SHOW = 0xE,
+  ASCEND_WM_HIDE = 0xF,
+  ASCEND_WM_DBGWND_SHOWWINDOWS = 0xC8,
+  ASCEND_WM_DBGWND_CLOSEMSG1 = 0xC9,
+  ASCEND_WM_DBGWND_CLOSEMSG2 = 0xCA,
+  ASCEND_WM_DBGWND_WINDOWS = 0x3EA,
   ASCEND_WM_DBGWND_MEMORY = 0x3EB,
   ASCEND_WM_DBGWND_CACHE = 0x3EC,
   ASCEND_WM_DBGWND_PALETTE = 0x3ED,
+  ASCEND_WM_DBGWND_MUSIC = 0x3EE,
+  ASCEND_WM_DBGWND_PALETTE_SEL = 0x3F1,
+  ASCEND_WM_LIST_ITEMCLICK = 0x1C01,
+  ASCEND_WM_LIST_ITEMDBLCLICK = 0x1C02,
+  ASCEND_WM_LIST_SCROLLUP = 0x191,
+  ASCEND_WM_LIST_SCROLLDOWN = 0x192,
+  ASCEND_WM_LIST_SCROLLSTOP = 0x193,
 };
 
 /* 353 */
 struct __attribute__((packed)) T_Wnd05RW
 {
-  T_WndA2 a;
+  T_WndA2 super;
 };
 
 /* 354 */
@@ -3457,7 +3479,7 @@ typedef T_Wnd05RW *P_Wnd05RW;
 /* 355 */
 struct __attribute__((packed)) T_Wnd26MW
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   int Unknown_AB;
   __int16 Unknown_AF;
   __int16 Unknown_B1;
@@ -3469,7 +3491,7 @@ typedef T_Wnd26MW *P_Wnd26MW;
 /* 357 */
 struct __attribute__((packed)) T_WndEDITWND
 {
-  T_WndA2 a2;
+  T_WndA2 super;
   char *pText;
   WORD maxTextLength;
   WORD textLength;
@@ -3488,13 +3510,13 @@ struct __attribute__((packed)) T_Type1
 {
   T_Vector3D vectors1[100];
   T_Type16 t16[100];
-  int z1[100];
+  int Unknown_12C0[100];
   T_Vector3D vectors2[100];
   int Unknown_1900;
   int Unknown_1904;
   int Unknown_1908;
   T_Camera pCamera;
-  float z2[25];
+  float Unknown_19A4[25];
 };
 
 /* 365 */
@@ -3503,7 +3525,7 @@ typedef T_Type1 *P_Type1;
 /* 366 */
 struct __attribute__((packed)) T_Wnd24EW
 {
-  T_WndA2 a2;
+  T_WndA2 super;
 };
 
 /* 367 */
@@ -3512,7 +3534,7 @@ typedef T_Wnd24EW *P_Wnd24EW;
 /* 368 */
 struct __attribute__((packed)) T_Wnd30EW
 {
-  T_WndA2 a2;
+  T_WndA2 super;
 };
 
 /* 369 */
@@ -3524,7 +3546,7 @@ typedef T_SubtitleInstruction *P_SubtitleInstruction;
 /* 375 */
 struct __attribute__((packed)) T_Type03
 {
-  char a[19];
+  char Unknown_0[19];
   __int16 posX;
   __int16 posY;
 };
@@ -3612,5 +3634,15 @@ enum MACRO_ASCEND_DIP_RESPONSE
   ASCEND_DR_ACCEPT_OfferPeace = 0x1B,
   ASCEND_DR_REJECT_OfferPeace = 0x1C,
   ASCEND_DR_NoDipResponse = 0x1D,
+};
+
+/* 389 */
+typedef T_WinItem *P_WinItem;
+
+/* 390 */
+struct __attribute__((packed)) T_StringPoolInfo
+{
+  WORD Unknown_00;
+  WORD Length;
 };
 
